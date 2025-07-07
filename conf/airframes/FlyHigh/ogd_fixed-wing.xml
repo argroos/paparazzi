@@ -57,6 +57,9 @@
       <define name="DEBUG_GPS_UBX_UCENTER" value="TRUE" />
     </module>
 
+  <module name="trisonica">
+      <configure name="TRISONICA_UART" value="UART6"/>
+    </module>
 
     <module name="humid_sht.xml">
       <define name="SHT_DAT_GPIO" value="GPIOB,GPIO1"/>
