@@ -1,0 +1,116 @@
+<dump>
+  <flight_plan security_height="20" name="Zugspitze_Sounding_150m" max_dist_from_home="250" lon0="10.976841" lat0="47.414098" ground_alt="2575" alt="2595">
+    <header></header>
+    <waypoints>
+      <waypoint name="HOME" lon="10.976841" lat="47.414098" x="0.00" y="0.00"/>
+      <waypoint name="Profile" lon="10.975838" lat="47.414537" x="-76.90" y="46.86"/>
+    </waypoints>
+    <exceptions>
+      <exception deroute="Standby" cond="10.5 > PowerVoltage()"/>
+    </exceptions>
+    <blocks>
+      <block name="Wait GPS" no="0">
+        <set var="autopilot.kill_throttle" value="1" no="0"/>
+        <while cond="!GpsFixValid()" no="1"/>
+      </block>
+      <block name="Geo init" no="1">
+        <while cond="LessThan(NavBlockTime(), 10)" no="0"/>
+      </block>
+      <block name="Waiting for Remote Control" no="2">
+        <while cond="RCLost()" no="0"/>
+      </block>
+      <block name="Holding point" no="3">
+        <set var="autopilot.kill_throttle" value="1" no="0"/>
+        <attitude vmode="throttle" throttle="0" roll="0" no="1"/>
+      </block>
+      <block strip_icon="takeoff.png" strip_button="Takeoff (wp CLIMB)" name="Takeoff" key="t" group="home" no="4">
+        <set var="autopilot.kill_throttle" value="0" no="0"/>
+        <set var="autopilot.flight_time" value="0" no="1"/>
+        <set var="autopilot.kill_throttle" value="0" no="2"/>
+      </block>
+      <block name="Climb" no="5">
+        <circle wp="Profile" vmode="throttle" until="GetPosAlt() > ground_alt+150" throttle="0.85" radius="-60" pitch="25" no="0"/>
+        <deroute block="Circle" no="1"/>
+      </block>
+      <block name="Circle" no="6">
+        <circle wp="Profile" vmode="alt" until="stage_time > 60" throttle="0.70" radius="-60" alt="GetAltRef() + 150" no="0"/>
+        <exception deroute="Down" cond="GetPosAlt() > GetAltRef() + 180"/>
+        <deroute block="Descent" no="1"/>
+      </block>
+      <block name="Descent" no="7">
+        <circle wp="Profile" vmode="throttle" until="GetAltRef() + 15 > GetPosAlt()" throttle="0.55" radius="-60" pitch="2" no="0"/>
+        <exception deroute="Down" cond="GetPosAlt() > GetAltRef() + 180"/>
+        <deroute block="Standby" no="1"/>
+      </block>
+      <block name="Down" no="8">
+        <circle wp="Profile" vmode="throttle" until="ground_alt+50 > GetPosAlt()" throttle="0.60" radius="-60" pitch="-15" no="0"/>
+        <deroute block="Standby" no="1"/>
+      </block>
+      <block strip_icon="home.png" strip_button="Standby" name="Standby" key="Ctrl+a" group="home" no="9">
+        <circle wp="HOME" radius="-60" no="0"/>
+      </block>
+      <block name="HOME" no="10">
+        <home no="0"/>
+      </block>
+    </blocks>
+  </flight_plan>
+  <stages>
+    <stage block="10" block_name="HOME" stage="0">
+      <home no="0"/>
+    </stage>
+    <stage block="9" block_name="Standby" stage="0">
+      <circle wp="HOME" radius="-60" no="0"/>
+    </stage>
+    <stage block="8" block_name="Down" stage="1">
+      <deroute block="Standby" no="1"/>
+    </stage>
+    <stage block="8" block_name="Down" stage="0">
+      <circle wp="Profile" vmode="throttle" until="ground_alt+50 > GetPosAlt()" throttle="0.60" radius="-60" pitch="-15" no="0"/>
+    </stage>
+    <stage block="7" block_name="Descent" stage="1">
+      <deroute block="Standby" no="1"/>
+    </stage>
+    <stage block="7" block_name="Descent" stage="0">
+      <circle wp="Profile" vmode="throttle" until="GetAltRef() + 15 > GetPosAlt()" throttle="0.55" radius="-60" pitch="2" no="0"/>
+    </stage>
+    <stage block="6" block_name="Circle" stage="1">
+      <deroute block="Descent" no="1"/>
+    </stage>
+    <stage block="6" block_name="Circle" stage="0">
+      <circle wp="Profile" vmode="alt" until="stage_time > 60" throttle="0.70" radius="-60" alt="GetAltRef() + 150" no="0"/>
+    </stage>
+    <stage block="5" block_name="Climb" stage="1">
+      <deroute block="Circle" no="1"/>
+    </stage>
+    <stage block="5" block_name="Climb" stage="0">
+      <circle wp="Profile" vmode="throttle" until="GetPosAlt() > ground_alt+150" throttle="0.85" radius="-60" pitch="25" no="0"/>
+    </stage>
+    <stage block="4" block_name="Takeoff" stage="2">
+      <set var="autopilot.kill_throttle" value="0" no="2"/>
+    </stage>
+    <stage block="4" block_name="Takeoff" stage="1">
+      <set var="autopilot.flight_time" value="0" no="1"/>
+    </stage>
+    <stage block="4" block_name="Takeoff" stage="0">
+      <set var="autopilot.kill_throttle" value="0" no="0"/>
+    </stage>
+    <stage block="3" block_name="Holding point" stage="1">
+      <attitude vmode="throttle" throttle="0" roll="0" no="1"/>
+    </stage>
+    <stage block="3" block_name="Holding point" stage="0">
+      <set var="autopilot.kill_throttle" value="1" no="0"/>
+    </stage>
+    <stage block="2" block_name="Waiting for Remote Control" stage="0">
+      <while cond="RCLost()" no="0"/>
+    </stage>
+    <stage block="1" block_name="Geo init" stage="0">
+      <while cond="LessThan(NavBlockTime(), 10)" no="0"/>
+    </stage>
+    <stage block="0" block_name="Wait GPS" stage="1">
+      <while cond="!GpsFixValid()" no="1"/>
+    </stage>
+    <stage block="0" block_name="Wait GPS" stage="0">
+      <set var="autopilot.kill_throttle" value="1" no="0"/>
+    </stage>
+  </stages>
+</dump>

@@ -1,0 +1,358 @@
+ARM GAS  /tmp/cc4iGNdc.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"baro_board.c"
+  13              		.text
+  14              		.section	.text.baro_init,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	baro_init
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	baro_init, %function
+  24              	baro_init:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27 0000 08B5     		push	{r3, lr}
+  28 0002 0649     		ldr	r1, .L4
+  29 0004 0648     		ldr	r0, .L4+4
+  30 0006 C022     		movs	r2, #192
+  31 0008 FFF7FEFF 		bl	mpl3115_init
+  32 000c 0549     		ldr	r1, .L4+8
+  33 000e 064B     		ldr	r3, .L4+12
+  34 0010 1420     		movs	r0, #20
+  35 0012 0022     		movs	r2, #0
+  36 0014 0880     		strh	r0, [r1]	@ movhi
+  37 0016 1A70     		strb	r2, [r3]
+  38 0018 08BD     		pop	{r3, pc}
+  39              	.L5:
+  40 001a 00BF     		.align	2
+  41              	.L4:
+  42 001c 00000000 		.word	i2c1
+  43 0020 00000000 		.word	.LANCHOR0
+  44 0024 00000000 		.word	.LANCHOR1
+  45 0028 00000000 		.word	.LANCHOR2
+  46              		.size	baro_init, .-baro_init
+  47              		.section	.text.baro_periodic,"ax",%progbits
+  48              		.align	1
+  49              		.p2align 4,,15
+  50              		.global	baro_periodic
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  54              		.fpu fpv4-sp-d16
+  55              		.type	baro_periodic, %function
+  56              	baro_periodic:
+  57              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/cc4iGNdc.s 			page 2
+
+
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  60 0000 0E4B     		ldr	r3, .L18
+  61 0002 93F85630 		ldrb	r3, [r3, #86]	@ zero_extendqisi2
+  62 0006 9BB1     		cbz	r3, .L6
+  63 0008 0D4A     		ldr	r2, .L18+4
+  64 000a 1388     		ldrh	r3, [r2]
+  65 000c 43B1     		cbz	r3, .L9
+  66 000e 0D49     		ldr	r1, .L18+8
+  67 0010 91F85200 		ldrb	r0, [r1, #82]	@ zero_extendqisi2
+  68 0014 20B1     		cbz	r0, .L9
+  69 0016 013B     		subs	r3, r3, #1
+  70 0018 0020     		movs	r0, #0
+  71 001a 1380     		strh	r3, [r2]	@ movhi
+  72 001c 81F85200 		strb	r0, [r1, #82]
+  73              	.L9:
+  74 0020 094A     		ldr	r2, .L18+12
+  75 0022 1388     		ldrh	r3, [r2]
+  76 0024 0133     		adds	r3, r3, #1
+  77 0026 9BB2     		uxth	r3, r3
+  78 0028 092B     		cmp	r3, #9
+  79 002a 02D8     		bhi	.L10
+  80 002c 1380     		strh	r3, [r2]	@ movhi
+  81 002e 7047     		bx	lr
+  82              	.L6:
+  83 0030 7047     		bx	lr
+  84              	.L10:
+  85 0032 0023     		movs	r3, #0
+  86 0034 0348     		ldr	r0, .L18+8
+  87 0036 1380     		strh	r3, [r2]	@ movhi
+  88 0038 FFF7FEBF 		b	mpl3115_periodic
+  89              	.L19:
+  90              		.align	2
+  91              	.L18:
+  92 003c 00000000 		.word	imu_apogee
+  93 0040 00000000 		.word	.LANCHOR1
+  94 0044 00000000 		.word	.LANCHOR0
+  95 0048 00000000 		.word	.LANCHOR3
+  96              		.size	baro_periodic, .-baro_periodic
+  97              		.section	.rodata.apogee_baro_event.str1.4,"aMS",%progbits,1
+  98              		.align	2
+  99              	.LC0:
+ 100 0000 41504F47 		.ascii	"APOGEE_BARO: Pres(Pa) Temp(degC) GPS_fix TOW(ms) We"
+ 100      45455F42 
+ 100      41524F3A 
+ 100      20507265 
+ 100      73285061 
+ 101 0033 656B204C 		.ascii	"ek Lat(1e7deg) Lon(1e7deg) HMSL(mm) gpseed(cm/s) co"
+ 101      61742831 
+ 101      65376465 
+ 101      6729204C 
+ 101      6F6E2831 
+ 102 0066 75727365 		.ascii	"urse(1e7deg) climb(cm/s)\012\000"
+ 102      28316537 
+ 102      64656729 
+ 102      20636C69 
+ 102      6D622863 
+ARM GAS  /tmp/cc4iGNdc.s 			page 3
+
+
+ 103              		.global	__aeabi_f2d
+ 104              		.align	2
+ 105              	.LC1:
+ 106 0080 61706F67 		.ascii	"apogee_baro: %9.4f %9.4f %d %d %d   %d %d %d   %d %"
+ 106      65655F62 
+ 106      61726F3A 
+ 106      2025392E 
+ 106      34662025 
+ 107 00b3 64202564 		.ascii	"d %d\012\000"
+ 107      0A00
+ 108              		.section	.text.apogee_baro_event,"ax",%progbits
+ 109              		.align	1
+ 110              		.p2align 4,,15
+ 111              		.global	apogee_baro_event
+ 112              		.syntax unified
+ 113              		.thumb
+ 114              		.thumb_func
+ 115              		.fpu fpv4-sp-d16
+ 116              		.type	apogee_baro_event, %function
+ 117              	apogee_baro_event:
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 121 0004 434D     		ldr	r5, .L49
+ 122 0006 8DB0     		sub	sp, sp, #52
+ 123 0008 2846     		mov	r0, r5
+ 124 000a FFF7FEFF 		bl	mpl3115_event
+ 125 000e 95F85230 		ldrb	r3, [r5, #82]	@ zero_extendqisi2
+ 126 0012 13B1     		cbz	r3, .L20
+ 127 0014 404B     		ldr	r3, .L49+4
+ 128 0016 1B88     		ldrh	r3, [r3]
+ 129 0018 13B1     		cbz	r3, .L45
+ 130              	.L20:
+ 131 001a 0DB0     		add	sp, sp, #52
+ 132              		@ sp needed
+ 133 001c BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 134              	.L45:
+ 135 0020 FFF7FEFF 		bl	get_sys_time_usec
+ 136 0024 DFF80481 		ldr	r8, .L49+24
+ 137 0028 D5ED167A 		vldr.32	s15, [r5, #88]	@ int
+ 138 002c D8F80040 		ldr	r4, [r8]
+ 139 0030 FBEECF7A 		vcvt.f32.u32	s15, s15, #2
+ 140 0034 0646     		mov	r6, r0
+ 141 0036 17EE907A 		vmov	r7, s15
+ 142 003a 24B9     		cbnz	r4, .L24
+ 143 003c 0FE0     		b	.L29
+ 144              	.L46:
+ 145 003e 8342     		cmp	r3, r0
+ 146 0040 08D0     		beq	.L27
+ 147 0042 A468     		ldr	r4, [r4, #8]
+ 148 0044 5CB1     		cbz	r4, .L29
+ 149              	.L24:
+ 150 0046 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 151 0048 FF2B     		cmp	r3, #255
+ 152 004a 3A46     		mov	r2, r7	@ float
+ 153 004c 3146     		mov	r1, r6
+ 154 004e 4FF00100 		mov	r0, #1
+ARM GAS  /tmp/cc4iGNdc.s 			page 4
+
+
+ 155 0052 F4D1     		bne	.L46
+ 156              	.L27:
+ 157 0054 6368     		ldr	r3, [r4, #4]
+ 158 0056 9847     		blx	r3
+ 159 0058 A468     		ldr	r4, [r4, #8]
+ 160 005a 002C     		cmp	r4, #0
+ 161 005c F3D1     		bne	.L24
+ 162              	.L29:
+ 163 005e B5F95660 		ldrsh	r6, [r5, #86]
+ 164 0062 D8F80C40 		ldr	r4, [r8, #12]
+ 165 0066 07EE906A 		vmov	s15, r6	@ int
+ 166 006a FAEECE7A 		vcvt.f32.s32	s15, s15, #4
+ 167 006e 17EE906A 		vmov	r6, s15
+ 168 0072 24B9     		cbnz	r4, .L25
+ 169 0074 0EE0     		b	.L26
+ 170              	.L47:
+ 171 0076 8342     		cmp	r3, r0
+ 172 0078 07D0     		beq	.L31
+ 173 007a A468     		ldr	r4, [r4, #8]
+ 174 007c 54B1     		cbz	r4, .L26
+ 175              	.L25:
+ 176 007e 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 177 0080 FF2B     		cmp	r3, #255
+ 178 0082 3146     		mov	r1, r6	@ float
+ 179 0084 4FF00100 		mov	r0, #1
+ 180 0088 F5D1     		bne	.L47
+ 181              	.L31:
+ 182 008a 6368     		ldr	r3, [r4, #4]
+ 183 008c 9847     		blx	r3
+ 184 008e A468     		ldr	r4, [r4, #8]
+ 185 0090 002C     		cmp	r4, #0
+ 186 0092 F4D1     		bne	.L25
+ 187              	.L26:
+ 188 0094 DFF89880 		ldr	r8, .L49+28
+ 189 0098 98F90040 		ldrsb	r4, [r8]
+ 190 009c 0023     		movs	r3, #0
+ 191 009e 85F85230 		strb	r3, [r5, #82]
+ 192 00a2 631C     		adds	r3, r4, #1
+ 193 00a4 B9D0     		beq	.L20
+ 194 00a6 1D4D     		ldr	r5, .L49+8
+ 195 00a8 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 196 00aa 4BB3     		cbz	r3, .L48
+ 197              	.L33:
+ 198 00ac 3846     		mov	r0, r7	@ float
+ 199 00ae FFF7FEFF 		bl	__aeabi_f2d
+ 200 00b2 1B4B     		ldr	r3, .L49+12
+ 201 00b4 5A6C     		ldr	r2, [r3, #68]
+ 202 00b6 5242     		rsbs	r2, r2, #0
+ 203 00b8 0A92     		str	r2, [sp, #40]
+ 204 00ba DA6C     		ldr	r2, [r3, #76]
+ 205 00bc 0992     		str	r2, [sp, #36]
+ 206 00be B3F84820 		ldrh	r2, [r3, #72]
+ 207 00c2 0892     		str	r2, [sp, #32]
+ 208 00c4 DA6A     		ldr	r2, [r3, #44]
+ 209 00c6 0792     		str	r2, [sp, #28]
+ 210 00c8 5A69     		ldr	r2, [r3, #20]
+ 211 00ca 0692     		str	r2, [sp, #24]
+ARM GAS  /tmp/cc4iGNdc.s 			page 5
+
+
+ 212 00cc 1A69     		ldr	r2, [r3, #16]
+ 213 00ce 0592     		str	r2, [sp, #20]
+ 214 00d0 B3F86820 		ldrh	r2, [r3, #104]
+ 215 00d4 0492     		str	r2, [sp, #16]
+ 216 00d6 DA6E     		ldr	r2, [r3, #108]
+ 217 00d8 0392     		str	r2, [sp, #12]
+ 218 00da 93F86730 		ldrb	r3, [r3, #103]	@ zero_extendqisi2
+ 219 00de 0293     		str	r3, [sp, #8]
+ 220 00e0 8046     		mov	r8, r0
+ 221 00e2 3046     		mov	r0, r6	@ float
+ 222 00e4 8946     		mov	r9, r1
+ 223 00e6 FFF7FEFF 		bl	__aeabi_f2d
+ 224 00ea 4246     		mov	r2, r8
+ 225 00ec CDE90001 		strd	r0, [sp]
+ 226 00f0 4B46     		mov	r3, r9
+ 227 00f2 0C49     		ldr	r1, .L49+16
+ 228 00f4 2046     		mov	r0, r4
+ 229 00f6 FFF7FEFF 		bl	sdLogWriteLog
+ 230 00fa 0DB0     		add	sp, sp, #52
+ 231              		@ sp needed
+ 232 00fc BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 233              	.L48:
+ 234 0100 2046     		mov	r0, r4
+ 235 0102 0949     		ldr	r1, .L49+20
+ 236 0104 FFF7FEFF 		bl	sdLogWriteLog
+ 237 0108 0123     		movs	r3, #1
+ 238 010a 98F90040 		ldrsb	r4, [r8]
+ 239 010e 2B70     		strb	r3, [r5]
+ 240 0110 CCE7     		b	.L33
+ 241              	.L50:
+ 242 0112 00BF     		.align	2
+ 243              	.L49:
+ 244 0114 00000000 		.word	.LANCHOR0
+ 245 0118 00000000 		.word	.LANCHOR1
+ 246 011c 00000000 		.word	.LANCHOR2
+ 247 0120 00000000 		.word	gps
+ 248 0124 80000000 		.word	.LC1
+ 249 0128 00000000 		.word	.LC0
+ 250 012c 00000000 		.word	abi_queues
+ 251 0130 00000000 		.word	pprzLogFile
+ 252              		.size	apogee_baro_event, .-apogee_baro_event
+ 253              		.global	apogee_baro
+ 254              		.global	startup_cnt
+ 255              		.global	log_apogee_baro_started
+ 256              		.section	.bss.apogee_baro,"aw",%nobits
+ 257              		.align	2
+ 258              		.set	.LANCHOR0,. + 0
+ 259              		.type	apogee_baro, %object
+ 260              		.size	apogee_baro, 96
+ 261              	apogee_baro:
+ 262 0000 00000000 		.space	96
+ 262      00000000 
+ 262      00000000 
+ 262      00000000 
+ 262      00000000 
+ 263              		.section	.bss.log_apogee_baro_started,"aw",%nobits
+ 264              		.set	.LANCHOR2,. + 0
+ARM GAS  /tmp/cc4iGNdc.s 			page 6
+
+
+ 265              		.type	log_apogee_baro_started, %object
+ 266              		.size	log_apogee_baro_started, 1
+ 267              	log_apogee_baro_started:
+ 268 0000 00       		.space	1
+ 269              		.section	.bss.prescaler.0,"aw",%nobits
+ 270              		.align	1
+ 271              		.set	.LANCHOR3,. + 0
+ 272              		.type	prescaler.0, %object
+ 273              		.size	prescaler.0, 2
+ 274              	prescaler.0:
+ 275 0000 0000     		.space	2
+ 276              		.section	.bss.startup_cnt,"aw",%nobits
+ 277              		.align	1
+ 278              		.set	.LANCHOR1,. + 0
+ 279              		.type	startup_cnt, %object
+ 280              		.size	startup_cnt, 2
+ 281              	startup_cnt:
+ 282 0000 0000     		.space	2
+ 283              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cc4iGNdc.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 baro_board.c
+     /tmp/cc4iGNdc.s:15     .text.baro_init:0000000000000000 $t
+     /tmp/cc4iGNdc.s:24     .text.baro_init:0000000000000000 baro_init
+     /tmp/cc4iGNdc.s:42     .text.baro_init:000000000000001c $d
+     /tmp/cc4iGNdc.s:48     .text.baro_periodic:0000000000000000 $t
+     /tmp/cc4iGNdc.s:56     .text.baro_periodic:0000000000000000 baro_periodic
+     /tmp/cc4iGNdc.s:92     .text.baro_periodic:000000000000003c $d
+     /tmp/cc4iGNdc.s:98     .rodata.apogee_baro_event.str1.4:0000000000000000 $d
+     /tmp/cc4iGNdc.s:109    .text.apogee_baro_event:0000000000000000 $t
+     /tmp/cc4iGNdc.s:117    .text.apogee_baro_event:0000000000000000 apogee_baro_event
+     /tmp/cc4iGNdc.s:244    .text.apogee_baro_event:0000000000000114 $d
+     /tmp/cc4iGNdc.s:261    .bss.apogee_baro:0000000000000000 apogee_baro
+     /tmp/cc4iGNdc.s:281    .bss.startup_cnt:0000000000000000 startup_cnt
+     /tmp/cc4iGNdc.s:267    .bss.log_apogee_baro_started:0000000000000000 log_apogee_baro_started
+     /tmp/cc4iGNdc.s:257    .bss.apogee_baro:0000000000000000 $d
+     /tmp/cc4iGNdc.s:268    .bss.log_apogee_baro_started:0000000000000000 $d
+     /tmp/cc4iGNdc.s:270    .bss.prescaler.0:0000000000000000 $d
+     /tmp/cc4iGNdc.s:274    .bss.prescaler.0:0000000000000000 prescaler.0
+     /tmp/cc4iGNdc.s:277    .bss.startup_cnt:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+mpl3115_init
+i2c1
+mpl3115_periodic
+imu_apogee
+__aeabi_f2d
+mpl3115_event
+get_sys_time_usec
+sdLogWriteLog
+gps
+abi_queues
+pprzLogFile

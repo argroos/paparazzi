@@ -1,0 +1,695 @@
+ARM GAS  /tmp/ccyvtvMh.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"autopilot_static.c"
+  13              		.text
+  14              		.section	.text.autopilot_static_init,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	autopilot_static_init
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	autopilot_static_init, %function
+  24              	autopilot_static_init:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 0349     		ldr	r1, .L3
+  29 0002 044B     		ldr	r3, .L3+4
+  30 0004 0220     		movs	r0, #2
+  31 0006 0022     		movs	r2, #0
+  32 0008 0870     		strb	r0, [r1]
+  33 000a 1A70     		strb	r2, [r3]
+  34 000c 7047     		bx	lr
+  35              	.L4:
+  36 000e 00BF     		.align	2
+  37              	.L3:
+  38 0010 00000000 		.word	autopilot
+  39 0014 00000000 		.word	lateral_mode
+  40              		.size	autopilot_static_init, .-autopilot_static_init
+  41              		.section	.text.autopilot_static_periodic,"ax",%progbits
+  42              		.align	1
+  43              		.p2align 4,,15
+  44              		.global	autopilot_static_periodic
+  45              		.syntax unified
+  46              		.thumb
+  47              		.thumb_func
+  48              		.fpu fpv4-sp-d16
+  49              		.type	autopilot_static_periodic, %function
+  50              	autopilot_static_periodic:
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  53              		@ link register save eliminated.
+  54 0000 7047     		bx	lr
+  55              		.size	autopilot_static_periodic, .-autopilot_static_periodic
+  56              		.global	__aeabi_f2d
+  57              		.global	__aeabi_dmul
+ARM GAS  /tmp/ccyvtvMh.s 			page 2
+
+
+  58              		.global	__aeabi_dadd
+  59              		.global	__aeabi_d2f
+  60 0002 00BF     		.section	.text.autopilot_static_on_rc_frame,"ax",%progbits
+  61              		.align	1
+  62              		.p2align 4,,15
+  63              		.global	autopilot_static_on_rc_frame
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  67              		.fpu fpv4-sp-d16
+  68              		.type	autopilot_static_on_rc_frame, %function
+  69              	autopilot_static_on_rc_frame:
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72 0000 70B5     		push	{r4, r5, r6, lr}
+  73 0002 2DED028B 		vpush.64	{d8}
+  74 0006 FFF7FEFF 		bl	autopilot_get_mode
+  75 000a 0128     		cmp	r0, #1
+  76 000c 16D1     		bne	.L7
+  77 000e 3A4C     		ldr	r4, .L25+16
+  78 0010 6579     		ldrb	r5, [r4, #5]	@ zero_extendqisi2
+  79 0012 012D     		cmp	r5, #1
+  80 0014 30D8     		bhi	.L24
+  81 0016 394A     		ldr	r2, .L25+20
+  82 0018 0023     		movs	r3, #0
+  83 001a 1846     		mov	r0, r3	@ float
+  84 001c 1360     		str	r3, [r2]	@ float
+  85              	.L9:
+  86 001e 384B     		ldr	r3, .L25+24
+  87 0020 1860     		str	r0, [r3]	@ float
+  88              	.L10:
+  89 0022 FFF7FEFF 		bl	autopilot_get_mode
+  90 0026 00BB     		cbnz	r0, .L12
+  91              	.L15:
+  92 0028 334A     		ldr	r2, .L25+16
+  93 002a 5379     		ldrb	r3, [r2, #5]	@ zero_extendqisi2
+  94 002c 0BB1     		cbz	r3, .L14
+  95 002e B2F90630 		ldrsh	r3, [r2, #6]
+  96              	.L14:
+  97 0032 344A     		ldr	r2, .L25+28
+  98 0034 BDEC028B 		vldm	sp!, {d8}
+  99 0038 1380     		strh	r3, [r2]	@ movhi
+ 100 003a 70BD     		pop	{r4, r5, r6, pc}
+ 101              	.L7:
+ 102 003c FFF7FEFF 		bl	autopilot_get_mode
+ 103 0040 0028     		cmp	r0, #0
+ 104 0042 EED1     		bne	.L10
+ 105 0044 2C4A     		ldr	r2, .L25+16
+ 106 0046 3049     		ldr	r1, .L25+32
+ 107 0048 5079     		ldrb	r0, [r2, #5]	@ zero_extendqisi2
+ 108 004a B2F90630 		ldrsh	r3, [r2, #6]
+ 109 004e 1489     		ldrh	r4, [r2, #8]
+ 110 0050 5289     		ldrh	r2, [r2, #10]
+ 111 0052 0B80     		strh	r3, [r1]	@ movhi
+ 112 0054 0028     		cmp	r0, #0
+ 113 0056 2D48     		ldr	r0, .L25+36
+ 114 0058 4C80     		strh	r4, [r1, #2]	@ movhi
+ARM GAS  /tmp/ccyvtvMh.s 			page 3
+
+
+ 115 005a 08BF     		it	eq
+ 116 005c 0023     		moveq	r3, #0
+ 117 005e 8A80     		strh	r2, [r1, #4]	@ movhi
+ 118 0060 8380     		strh	r3, [r0, #4]	@ movhi
+ 119 0062 FFF7FEFF 		bl	autopilot_get_mode
+ 120 0066 0028     		cmp	r0, #0
+ 121 0068 DED0     		beq	.L15
+ 122              	.L12:
+ 123 006a FFF7FEFF 		bl	autopilot_get_mode
+ 124 006e 0128     		cmp	r0, #1
+ 125 0070 DAD0     		beq	.L15
+ 126 0072 BDEC028B 		vldm	sp!, {d8}
+ 127 0076 70BD     		pop	{r4, r5, r6, pc}
+ 128              	.L24:
+ 129 0078 B4F90830 		ldrsh	r3, [r4, #8]
+ 130 007c 9FED248A 		vldr.32	s16, .L25+40
+ 131 0080 1E4E     		ldr	r6, .L25+20
+ 132 0082 07EE903A 		vmov	s15, r3	@ int
+ 133 0086 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 134 008a C7EE887A 		vdiv.f32	s15, s15, s16
+ 135 008e 17EE900A 		vmov	r0, s15
+ 136 0092 FFF7FEFF 		bl	__aeabi_f2d
+ 137 0096 14A3     		adr	r3, .L25
+ 138 0098 D3E90023 		ldrd	r2, [r3]
+ 139 009c FFF7FEFF 		bl	__aeabi_dmul
+ 140 00a0 0022     		movs	r2, #0
+ 141 00a2 0023     		movs	r3, #0
+ 142 00a4 FFF7FEFF 		bl	__aeabi_dadd
+ 143 00a8 FFF7FEFF 		bl	__aeabi_d2f
+ 144 00ac 022D     		cmp	r5, #2
+ 145 00ae 3060     		str	r0, [r6]	@ float
+ 146 00b0 17D0     		beq	.L17
+ 147 00b2 B4F90A30 		ldrsh	r3, [r4, #10]
+ 148 00b6 07EE903A 		vmov	s15, r3	@ int
+ 149 00ba F8EEE77A 		vcvt.f32.s32	s15, s15
+ 150 00be C7EE887A 		vdiv.f32	s15, s15, s16
+ 151 00c2 17EE900A 		vmov	r0, s15
+ 152 00c6 FFF7FEFF 		bl	__aeabi_f2d
+ 153 00ca 09A3     		adr	r3, .L25+8
+ 154 00cc D3E90023 		ldrd	r2, [r3]
+ 155 00d0 FFF7FEFF 		bl	__aeabi_dmul
+ 156 00d4 0022     		movs	r2, #0
+ 157 00d6 0023     		movs	r3, #0
+ 158 00d8 FFF7FEFF 		bl	__aeabi_dadd
+ 159 00dc FFF7FEFF 		bl	__aeabi_d2f
+ 160 00e0 9DE7     		b	.L9
+ 161              	.L17:
+ 162 00e2 0020     		movs	r0, #0
+ 163 00e4 9BE7     		b	.L9
+ 164              	.L26:
+ 165 00e6 00BF     		.align	3
+ 166              	.L25:
+ 167 00e8 A038DB37 		.word	937113760
+ 168 00ec 52C1F03F 		.word	1072742738
+ 169 00f0 BB6C2A41 		.word	1093299387
+ 170 00f4 358CF33F 		.word	1072925749
+ 171 00f8 00000000 		.word	radio_control
+ARM GAS  /tmp/ccyvtvMh.s 			page 4
+
+
+ 172 00fc 00000000 		.word	h_ctl_roll_setpoint
+ 173 0100 00000000 		.word	h_ctl_pitch_setpoint
+ 174 0104 00000000 		.word	v_ctl_throttle_setpoint
+ 175 0108 00000000 		.word	commands
+ 176 010c 00000000 		.word	autopilot
+ 177 0110 00001646 		.word	1175846912
+ 178              		.size	autopilot_static_on_rc_frame, .-autopilot_static_on_rc_frame
+ 179              		.section	.text.autopilot_static_set_mode,"ax",%progbits
+ 180              		.align	1
+ 181              		.p2align 4,,15
+ 182              		.global	autopilot_static_set_mode
+ 183              		.syntax unified
+ 184              		.thumb
+ 185              		.thumb_func
+ 186              		.fpu fpv4-sp-d16
+ 187              		.type	autopilot_static_set_mode, %function
+ 188              	autopilot_static_set_mode:
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 0, uses_anonymous_args = 0
+ 191              		@ link register save eliminated.
+ 192 0000 024B     		ldr	r3, .L29
+ 193 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 194 0004 8242     		cmp	r2, r0
+ 195 0006 18BF     		it	ne
+ 196 0008 1870     		strbne	r0, [r3]
+ 197 000a 7047     		bx	lr
+ 198              	.L30:
+ 199              		.align	2
+ 200              	.L29:
+ 201 000c 00000000 		.word	autopilot
+ 202              		.size	autopilot_static_set_mode, .-autopilot_static_set_mode
+ 203              		.section	.text.autopilot_static_SetModeHandler,"ax",%progbits
+ 204              		.align	1
+ 205              		.p2align 4,,15
+ 206              		.global	autopilot_static_SetModeHandler
+ 207              		.syntax unified
+ 208              		.thumb
+ 209              		.thumb_func
+ 210              		.fpu fpv4-sp-d16
+ 211              		.type	autopilot_static_SetModeHandler, %function
+ 212              	autopilot_static_SetModeHandler:
+ 213              		@ args = 0, pretend = 0, frame = 8
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+ 216 0000 07EE900A 		vmov	s15, r0
+ 217 0004 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 218 0008 82B0     		sub	sp, sp, #8
+ 219 000a 054A     		ldr	r2, .L34
+ 220 000c CDED017A 		vstr.32	s15, [sp, #4]	@ int
+ 221 0010 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
+ 222 0012 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 223 0016 9942     		cmp	r1, r3
+ 224 0018 18BF     		it	ne
+ 225 001a 1370     		strbne	r3, [r2]
+ 226 001c 02B0     		add	sp, sp, #8
+ 227              		@ sp needed
+ 228 001e 7047     		bx	lr
+ARM GAS  /tmp/ccyvtvMh.s 			page 5
+
+
+ 229              	.L35:
+ 230              		.align	2
+ 231              	.L34:
+ 232 0020 00000000 		.word	autopilot
+ 233              		.size	autopilot_static_SetModeHandler, .-autopilot_static_SetModeHandler
+ 234              		.section	.text.autopilot_static_set_motors_on,"ax",%progbits
+ 235              		.align	1
+ 236              		.p2align 4,,15
+ 237              		.global	autopilot_static_set_motors_on
+ 238              		.syntax unified
+ 239              		.thumb
+ 240              		.thumb_func
+ 241              		.fpu fpv4-sp-d16
+ 242              		.type	autopilot_static_set_motors_on, %function
+ 243              	autopilot_static_set_motors_on:
+ 244              		@ args = 0, pretend = 0, frame = 0
+ 245              		@ frame_needed = 0, uses_anonymous_args = 0
+ 246              		@ link register save eliminated.
+ 247 0000 014B     		ldr	r3, .L37
+ 248 0002 D871     		strb	r0, [r3, #7]
+ 249 0004 7047     		bx	lr
+ 250              	.L38:
+ 251 0006 00BF     		.align	2
+ 252              	.L37:
+ 253 0008 00000000 		.word	autopilot
+ 254              		.size	autopilot_static_set_motors_on, .-autopilot_static_set_motors_on
+ 255              		.section	.text.navigation_task,"ax",%progbits
+ 256              		.align	1
+ 257              		.p2align 4,,15
+ 258              		.global	navigation_task
+ 259              		.syntax unified
+ 260              		.thumb
+ 261              		.thumb_func
+ 262              		.fpu fpv4-sp-d16
+ 263              		.type	navigation_task, %function
+ 264              	navigation_task:
+ 265              		@ args = 0, pretend = 0, frame = 0
+ 266              		@ frame_needed = 0, uses_anonymous_args = 0
+ 267 0000 08B5     		push	{r3, lr}
+ 268 0002 FFF7FEFF 		bl	common_nav_periodic_task
+ 269 0006 FFF7FEFF 		bl	autopilot_get_mode
+ 270 000a 0328     		cmp	r0, #3
+ 271 000c 2AD0     		beq	.L56
+ 272 000e FFF7FEFF 		bl	autopilot_get_mode
+ 273 0012 0428     		cmp	r0, #4
+ 274 0014 12D0     		beq	.L57
+ 275 0016 FFF7FEFF 		bl	nav_periodic_task
+ 276              	.L41:
+ 277 001a 144B     		ldr	r3, .L59
+ 278 001c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 279 001e 032B     		cmp	r3, #3
+ 280 0020 12D0     		beq	.L58
+ 281              	.L43:
+ 282 0022 FFF7FEFF 		bl	autopilot_get_mode
+ 283 0026 0228     		cmp	r0, #2
+ 284 0028 14D0     		beq	.L47
+ 285              	.L44:
+ARM GAS  /tmp/ccyvtvMh.s 			page 6
+
+
+ 286 002a FFF7FEFF 		bl	autopilot_get_mode
+ 287 002e 0328     		cmp	r0, #3
+ 288 0030 10D0     		beq	.L47
+ 289 0032 FFF7FEFF 		bl	autopilot_get_mode
+ 290 0036 0428     		cmp	r0, #4
+ 291 0038 0CD0     		beq	.L47
+ 292              	.L39:
+ 293 003a 08BD     		pop	{r3, pc}
+ 294              	.L57:
+ 295 003c FFF7FEFF 		bl	nav_without_gps
+ 296 0040 0A4B     		ldr	r3, .L59
+ 297 0042 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 298 0044 032B     		cmp	r3, #3
+ 299 0046 ECD1     		bne	.L43
+ 300              	.L58:
+ 301 0048 FFF7FEFF 		bl	v_ctl_altitude_loop
+ 302 004c FFF7FEFF 		bl	autopilot_get_mode
+ 303 0050 0228     		cmp	r0, #2
+ 304 0052 EAD1     		bne	.L44
+ 305              	.L47:
+ 306 0054 064B     		ldr	r3, .L59+4
+ 307 0056 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 308 0058 022B     		cmp	r3, #2
+ 309 005a EED9     		bls	.L39
+ 310 005c BDE80840 		pop	{r3, lr}
+ 311 0060 FFF7FEBF 		b	h_ctl_course_loop
+ 312              	.L56:
+ 313 0064 FFF7FEFF 		bl	nav_home
+ 314 0068 D7E7     		b	.L41
+ 315              	.L60:
+ 316 006a 00BF     		.align	2
+ 317              	.L59:
+ 318 006c 00000000 		.word	v_ctl_mode
+ 319 0070 00000000 		.word	lateral_mode
+ 320              		.size	navigation_task, .-navigation_task
+ 321              		.section	.text.autopilot_failsafe_checks,"ax",%progbits
+ 322              		.align	1
+ 323              		.p2align 4,,15
+ 324              		.global	autopilot_failsafe_checks
+ 325              		.syntax unified
+ 326              		.thumb
+ 327              		.thumb_func
+ 328              		.fpu fpv4-sp-d16
+ 329              		.type	autopilot_failsafe_checks, %function
+ 330              	autopilot_failsafe_checks:
+ 331              		@ args = 0, pretend = 0, frame = 0
+ 332              		@ frame_needed = 0, uses_anonymous_args = 0
+ 333 0000 70B5     		push	{r4, r5, r6, lr}
+ 334 0002 444D     		ldr	r5, .L117
+ 335 0004 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 336 0006 022B     		cmp	r3, #2
+ 337 0008 1DD1     		bne	.L111
+ 338 000a 0024     		movs	r4, #0
+ 339              	.L62:
+ 340 000c FFF7FEFF 		bl	autopilot_get_mode
+ 341 0010 0128     		cmp	r0, #1
+ 342 0012 02D0     		beq	.L68
+ARM GAS  /tmp/ccyvtvMh.s 			page 7
+
+
+ 343 0014 FFF7FEFF 		bl	autopilot_get_mode
+ 344 0018 28BB     		cbnz	r0, .L66
+ 345              	.L68:
+ 346 001a 0320     		movs	r0, #3
+ 347 001c FFF7FEFF 		bl	autopilot_set_mode
+ 348 0020 3D4E     		ldr	r6, .L117+4
+ 349 0022 7388     		ldrh	r3, [r6, #2]
+ 350 0024 2043     		orrs	r0, r0, r4
+ 351 0026 C4B2     		uxtb	r4, r0
+ 352 0028 0BBB     		cbnz	r3, .L69
+ 353              	.L113:
+ 354 002a FFF7FEFF 		bl	autopilot_get_mode
+ 355 002e 0228     		cmp	r0, #2
+ 356 0030 1DD1     		bne	.L69
+ 357 0032 6B79     		ldrb	r3, [r5, #5]	@ zero_extendqisi2
+ 358 0034 DBB1     		cbz	r3, .L69
+ 359 0036 B5F90630 		ldrsh	r3, [r5, #6]
+ 360 003a B3F5075F 		cmp	r3, #8640
+ 361 003e 16DD     		ble	.L69
+ 362 0040 0123     		movs	r3, #1
+ 363 0042 B372     		strb	r3, [r6, #10]
+ 364 0044 15E0     		b	.L70
+ 365              	.L111:
+ 366 0046 FFF7FEFF 		bl	autopilot_get_mode
+ 367 004a 0328     		cmp	r0, #3
+ 368 004c 01D0     		beq	.L63
+ 369 004e FFF7FEFF 		bl	autopilot_get_mode
+ 370              	.L63:
+ 371 0052 6B79     		ldrb	r3, [r5, #5]	@ zero_extendqisi2
+ 372 0054 042B     		cmp	r3, #4
+ 373 0056 30D8     		bhi	.L112
+ 374 0058 0120     		movs	r0, #1
+ 375              	.L65:
+ 376 005a FFF7FEFF 		bl	autopilot_set_mode
+ 377 005e 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 378 0060 022B     		cmp	r3, #2
+ 379 0062 0446     		mov	r4, r0
+ 380 0064 D2D0     		beq	.L62
+ 381              	.L66:
+ 382 0066 2C4E     		ldr	r6, .L117+4
+ 383 0068 7388     		ldrh	r3, [r6, #2]
+ 384 006a 002B     		cmp	r3, #0
+ 385 006c DDD0     		beq	.L113
+ 386              	.L69:
+ 387 006e B37A     		ldrb	r3, [r6, #10]	@ zero_extendqisi2
+ 388 0070 5BB1     		cbz	r3, .L71
+ 389              	.L70:
+ 390 0072 2A4B     		ldr	r3, .L117+8
+ 391 0074 2A4A     		ldr	r2, .L117+12
+ 392 0076 1B68     		ldr	r3, [r3]
+ 393 0078 D2F8B821 		ldr	r2, [r2, #440]
+ 394 007c 9B1A     		subs	r3, r3, r2
+ 395 007e 022B     		cmp	r3, #2
+ 396 0080 26D8     		bhi	.L114
+ 397 0082 284D     		ldr	r5, .L117+16
+ 398 0084 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 399 0086 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccyvtvMh.s 			page 8
+
+
+ 400 0088 38D1     		bne	.L115
+ 401              	.L71:
+ 402 008a FFF7FEFF 		bl	autopilot_get_mode
+ 403 008e 0328     		cmp	r0, #3
+ 404 0090 0DD0     		beq	.L75
+ 405 0092 FFF7FEFF 		bl	autopilot_get_mode
+ 406 0096 0428     		cmp	r0, #4
+ 407 0098 09D0     		beq	.L75
+ 408 009a B37A     		ldrb	r3, [r6, #10]	@ zero_extendqisi2
+ 409 009c 3BB1     		cbz	r3, .L75
+ 410 009e 224B     		ldr	r3, .L117+20
+ 411 00a0 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 412 00a2 23B1     		cbz	r3, .L75
+ 413 00a4 0320     		movs	r0, #3
+ 414 00a6 FFF7FEFF 		bl	autopilot_set_mode
+ 415 00aa 2043     		orrs	r0, r0, r4
+ 416 00ac C4B2     		uxtb	r4, r0
+ 417              	.L75:
+ 418 00ae 04B9     		cbnz	r4, .L116
+ 419 00b0 70BD     		pop	{r4, r5, r6, pc}
+ 420              	.L116:
+ 421 00b2 BDE87040 		pop	{r4, r5, r6, lr}
+ 422 00b6 FFF7FEBF 		b	autopilot_send_mode
+ 423              	.L112:
+ 424 00ba B5F90E00 		ldrsh	r0, [r5, #14]
+ 425 00be B0F5965F 		cmp	r0, #4800
+ 426 00c2 24DC     		bgt	.L79
+ 427 00c4 10F5965F 		cmn	r0, #4800
+ 428 00c8 D4BF     		ite	le
+ 429 00ca 0020     		movle	r0, #0
+ 430 00cc 0120     		movgt	r0, #1
+ 431 00ce C4E7     		b	.L65
+ 432              	.L114:
+ 433 00d0 FFF7FEFF 		bl	autopilot_get_mode
+ 434 00d4 0228     		cmp	r0, #2
+ 435 00d6 03D0     		beq	.L74
+ 436 00d8 FFF7FEFF 		bl	autopilot_get_mode
+ 437 00dc 0328     		cmp	r0, #3
+ 438 00de D4D1     		bne	.L71
+ 439              	.L74:
+ 440 00e0 FFF7FEFF 		bl	autopilot_get_mode
+ 441 00e4 114B     		ldr	r3, .L117+24
+ 442 00e6 0246     		mov	r2, r0
+ 443 00e8 0420     		movs	r0, #4
+ 444 00ea 1A70     		strb	r2, [r3]
+ 445 00ec FFF7FEFF 		bl	autopilot_set_mode
+ 446 00f0 0C4B     		ldr	r3, .L117+16
+ 447 00f2 2043     		orrs	r0, r0, r4
+ 448 00f4 0122     		movs	r2, #1
+ 449 00f6 C4B2     		uxtb	r4, r0
+ 450 00f8 1A70     		strb	r2, [r3]
+ 451 00fa C6E7     		b	.L71
+ 452              	.L115:
+ 453 00fc 0B4B     		ldr	r3, .L117+24
+ 454 00fe 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 455 0100 FFF7FEFF 		bl	autopilot_set_mode
+ 456 0104 0023     		movs	r3, #0
+ARM GAS  /tmp/ccyvtvMh.s 			page 9
+
+
+ 457 0106 2043     		orrs	r0, r0, r4
+ 458 0108 C4B2     		uxtb	r4, r0
+ 459 010a 2B70     		strb	r3, [r5]
+ 460 010c BDE7     		b	.L71
+ 461              	.L79:
+ 462 010e 0220     		movs	r0, #2
+ 463 0110 A3E7     		b	.L65
+ 464              	.L118:
+ 465 0112 00BF     		.align	2
+ 466              	.L117:
+ 467 0114 00000000 		.word	radio_control
+ 468 0118 00000000 		.word	autopilot
+ 469 011c 00000000 		.word	sys_time
+ 470 0120 00000000 		.word	gps
+ 471 0124 00000000 		.word	.LANCHOR1
+ 472 0128 00000000 		.word	too_far_from_home
+ 473 012c 00000000 		.word	.LANCHOR0
+ 474              		.size	autopilot_failsafe_checks, .-autopilot_failsafe_checks
+ 475              		.section	.text.attitude_loop,"ax",%progbits
+ 476              		.align	1
+ 477              		.p2align 4,,15
+ 478              		.global	attitude_loop
+ 479              		.syntax unified
+ 480              		.thumb
+ 481              		.thumb_func
+ 482              		.fpu fpv4-sp-d16
+ 483              		.type	attitude_loop, %function
+ 484              	attitude_loop:
+ 485              		@ args = 0, pretend = 0, frame = 0
+ 486              		@ frame_needed = 0, uses_anonymous_args = 0
+ 487 0000 10B5     		push	{r4, lr}
+ 488 0002 FFF7FEFF 		bl	autopilot_get_mode
+ 489 0006 0128     		cmp	r0, #1
+ 490 0008 1DD9     		bls	.L121
+ 491 000a 294B     		ldr	r3, .L142
+ 492 000c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 493 000e 012B     		cmp	r3, #1
+ 494 0010 30D0     		beq	.L139
+ 495 0012 01D9     		bls	.L138
+ 496 0014 FFF7FEFF 		bl	v_ctl_climb_loop
+ 497              	.L138:
+ 498 0018 264B     		ldr	r3, .L142+4
+ 499 001a D3ED007A 		vldr.32	s15, [r3]
+ 500 001e BEEE007A 		vmov.f32	s14, #-5.0e-1
+ 501 0022 F4EEC77A 		vcmpe.f32	s15, s14
+ 502 0026 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 503 002a 34DC     		bgt	.L125
+ 504              	.L141:
+ 505 002c 224B     		ldr	r3, .L142+8
+ 506 002e 83ED007A 		vstr.32	s14, [r3]
+ 507              	.L126:
+ 508 0032 224B     		ldr	r3, .L142+12
+ 509 0034 1A7A     		ldrb	r2, [r3, #8]	@ zero_extendqisi2
+ 510 0036 1AB9     		cbnz	r2, .L129
+ 511 0038 5A88     		ldrh	r2, [r3, #2]
+ 512 003a 22B9     		cbnz	r2, .L121
+ 513 003c 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ARM GAS  /tmp/ccyvtvMh.s 			page 10
+
+
+ 514 003e 13B9     		cbnz	r3, .L121
+ 515              	.L129:
+ 516 0040 1F4B     		ldr	r3, .L142+16
+ 517 0042 0022     		movs	r2, #0
+ 518 0044 1A80     		strh	r2, [r3]	@ movhi
+ 519              	.L121:
+ 520 0046 FFF7FEFF 		bl	autopilot_get_mode
+ 521 004a 00B9     		cbnz	r0, .L140
+ 522 004c 10BD     		pop	{r4, pc}
+ 523              	.L140:
+ 524 004e FFF7FEFF 		bl	h_ctl_attitude_loop
+ 525 0052 FFF7FEFF 		bl	v_ctl_throttle_slew
+ 526 0056 1B4B     		ldr	r3, .L142+20
+ 527 0058 1B49     		ldr	r1, .L142+24
+ 528 005a 1A88     		ldrh	r2, [r3]
+ 529 005c 1B48     		ldr	r0, .L142+28
+ 530 005e 1C4B     		ldr	r3, .L142+32
+ 531 0060 164C     		ldr	r4, .L142+12
+ 532 0062 B1F90010 		ldrsh	r1, [r1]
+ 533 0066 0088     		ldrh	r0, [r0]
+ 534 0068 1980     		strh	r1, [r3]	@ movhi
+ 535 006a 5242     		rsbs	r2, r2, #0
+ 536 006c A180     		strh	r1, [r4, #4]	@ movhi
+ 537 006e 5A80     		strh	r2, [r3, #2]	@ movhi
+ 538 0070 9880     		strh	r0, [r3, #4]	@ movhi
+ 539 0072 10BD     		pop	{r4, pc}
+ 540              	.L139:
+ 541 0074 174B     		ldr	r3, .L142+36
+ 542 0076 1849     		ldr	r1, .L142+40
+ 543 0078 D3ED007A 		vldr.32	s15, [r3]
+ 544 007c 104A     		ldr	r2, .L142+16
+ 545 007e 0D4B     		ldr	r3, .L142+4
+ 546 0080 0988     		ldrh	r1, [r1]
+ 547 0082 1180     		strh	r1, [r2]	@ movhi
+ 548 0084 BEEE007A 		vmov.f32	s14, #-5.0e-1
+ 549 0088 F4EEC77A 		vcmpe.f32	s15, s14
+ 550 008c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 551 0090 C3ED007A 		vstr.32	s15, [r3]
+ 552 0094 CADD     		ble	.L141
+ 553              	.L125:
+ 554 0096 B6EE007A 		vmov.f32	s14, #5.0e-1
+ 555 009a 074B     		ldr	r3, .L142+8
+ 556 009c F4EEC77A 		vcmpe.f32	s15, s14
+ 557 00a0 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 558 00a4 4CBF     		ite	mi
+ 559 00a6 C3ED007A 		vstrmi.32	s15, [r3]
+ 560 00aa 83ED007A 		vstrpl.32	s14, [r3]
+ 561 00ae C0E7     		b	.L126
+ 562              	.L143:
+ 563              		.align	2
+ 564              	.L142:
+ 565 00b0 00000000 		.word	v_ctl_mode
+ 566 00b4 00000000 		.word	v_ctl_pitch_setpoint
+ 567 00b8 00000000 		.word	h_ctl_pitch_setpoint
+ 568 00bc 00000000 		.word	autopilot
+ 569 00c0 00000000 		.word	v_ctl_throttle_setpoint
+ 570 00c4 00000000 		.word	h_ctl_aileron_setpoint
+ARM GAS  /tmp/ccyvtvMh.s 			page 11
+
+
+ 571 00c8 00000000 		.word	v_ctl_throttle_slewed
+ 572 00cc 00000000 		.word	h_ctl_elevator_setpoint
+ 573 00d0 00000000 		.word	commands
+ 574 00d4 00000000 		.word	nav_pitch
+ 575 00d8 00000000 		.word	nav_throttle_setpoint
+ 576              		.size	attitude_loop, .-attitude_loop
+ 577              		.section	.bss.gps_lost.0,"aw",%nobits
+ 578              		.set	.LANCHOR1,. + 0
+ 579              		.type	gps_lost.0, %object
+ 580              		.size	gps_lost.0, 1
+ 581              	gps_lost.0:
+ 582 0000 00       		.space	1
+ 583              		.section	.bss.last_pprz_mode.1,"aw",%nobits
+ 584              		.set	.LANCHOR0,. + 0
+ 585              		.type	last_pprz_mode.1, %object
+ 586              		.size	last_pprz_mode.1, 1
+ 587              	last_pprz_mode.1:
+ 588 0000 00       		.space	1
+ 589              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccyvtvMh.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 autopilot_static.c
+     /tmp/ccyvtvMh.s:15     .text.autopilot_static_init:0000000000000000 $t
+     /tmp/ccyvtvMh.s:24     .text.autopilot_static_init:0000000000000000 autopilot_static_init
+     /tmp/ccyvtvMh.s:38     .text.autopilot_static_init:0000000000000010 $d
+     /tmp/ccyvtvMh.s:42     .text.autopilot_static_periodic:0000000000000000 $t
+     /tmp/ccyvtvMh.s:50     .text.autopilot_static_periodic:0000000000000000 autopilot_static_periodic
+     /tmp/ccyvtvMh.s:61     .text.autopilot_static_on_rc_frame:0000000000000000 $t
+     /tmp/ccyvtvMh.s:69     .text.autopilot_static_on_rc_frame:0000000000000000 autopilot_static_on_rc_frame
+     /tmp/ccyvtvMh.s:167    .text.autopilot_static_on_rc_frame:00000000000000e8 $d
+     /tmp/ccyvtvMh.s:180    .text.autopilot_static_set_mode:0000000000000000 $t
+     /tmp/ccyvtvMh.s:188    .text.autopilot_static_set_mode:0000000000000000 autopilot_static_set_mode
+     /tmp/ccyvtvMh.s:201    .text.autopilot_static_set_mode:000000000000000c $d
+     /tmp/ccyvtvMh.s:204    .text.autopilot_static_SetModeHandler:0000000000000000 $t
+     /tmp/ccyvtvMh.s:212    .text.autopilot_static_SetModeHandler:0000000000000000 autopilot_static_SetModeHandler
+     /tmp/ccyvtvMh.s:232    .text.autopilot_static_SetModeHandler:0000000000000020 $d
+     /tmp/ccyvtvMh.s:235    .text.autopilot_static_set_motors_on:0000000000000000 $t
+     /tmp/ccyvtvMh.s:243    .text.autopilot_static_set_motors_on:0000000000000000 autopilot_static_set_motors_on
+     /tmp/ccyvtvMh.s:253    .text.autopilot_static_set_motors_on:0000000000000008 $d
+     /tmp/ccyvtvMh.s:256    .text.navigation_task:0000000000000000 $t
+     /tmp/ccyvtvMh.s:264    .text.navigation_task:0000000000000000 navigation_task
+     /tmp/ccyvtvMh.s:318    .text.navigation_task:000000000000006c $d
+     /tmp/ccyvtvMh.s:322    .text.autopilot_failsafe_checks:0000000000000000 $t
+     /tmp/ccyvtvMh.s:330    .text.autopilot_failsafe_checks:0000000000000000 autopilot_failsafe_checks
+     /tmp/ccyvtvMh.s:467    .text.autopilot_failsafe_checks:0000000000000114 $d
+     /tmp/ccyvtvMh.s:476    .text.attitude_loop:0000000000000000 $t
+     /tmp/ccyvtvMh.s:484    .text.attitude_loop:0000000000000000 attitude_loop
+     /tmp/ccyvtvMh.s:565    .text.attitude_loop:00000000000000b0 $d
+     /tmp/ccyvtvMh.s:581    .bss.gps_lost.0:0000000000000000 gps_lost.0
+     /tmp/ccyvtvMh.s:582    .bss.gps_lost.0:0000000000000000 $d
+     /tmp/ccyvtvMh.s:587    .bss.last_pprz_mode.1:0000000000000000 last_pprz_mode.1
+     /tmp/ccyvtvMh.s:588    .bss.last_pprz_mode.1:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+autopilot
+lateral_mode
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_dadd
+__aeabi_d2f
+autopilot_get_mode
+radio_control
+h_ctl_roll_setpoint
+h_ctl_pitch_setpoint
+v_ctl_throttle_setpoint
+commands
+common_nav_periodic_task
+nav_periodic_task
+nav_without_gps
+v_ctl_altitude_loop
+h_ctl_course_loop
+nav_home
+v_ctl_mode
+autopilot_set_mode
+autopilot_send_mode
+sys_time
+gps
+ARM GAS  /tmp/ccyvtvMh.s 			page 13
+
+
+too_far_from_home
+v_ctl_climb_loop
+h_ctl_attitude_loop
+v_ctl_throttle_slew
+v_ctl_pitch_setpoint
+h_ctl_aileron_setpoint
+v_ctl_throttle_slewed
+h_ctl_elevator_setpoint
+nav_pitch
+nav_throttle_setpoint

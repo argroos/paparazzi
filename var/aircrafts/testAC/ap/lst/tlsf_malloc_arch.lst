@@ -1,0 +1,354 @@
+ARM GAS  /tmp/ccx0DMEe.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"tlsf_malloc_arch.c"
+  13              		.text
+  14              		.section	.text.stat_tlsf_walker,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	stat_tlsf_walker, %function
+  23              	stat_tlsf_walker:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 1AB1     		cbz	r2, .L2
+  28 0002 5A68     		ldr	r2, [r3, #4]
+  29 0004 1144     		add	r1, r1, r2
+  30 0006 5960     		str	r1, [r3, #4]
+  31 0008 7047     		bx	lr
+  32              	.L2:
+  33 000a 1A68     		ldr	r2, [r3]
+  34 000c 1144     		add	r1, r1, r2
+  35 000e 1960     		str	r1, [r3]
+  36 0010 7047     		bx	lr
+  37              		.size	stat_tlsf_walker, .-stat_tlsf_walker
+  38 0012 00BF     		.section	.text.tlsf_init_heaps,"ax",%progbits
+  39              		.align	1
+  40              		.p2align 4,,15
+  41              		.global	tlsf_init_heaps
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+  46              		.type	tlsf_init_heaps, %function
+  47              	tlsf_init_heaps:
+  48              		@ args = 0, pretend = 0, frame = 0
+  49              		@ frame_needed = 0, uses_anonymous_args = 0
+  50 0000 10B5     		push	{r4, lr}
+  51 0002 054C     		ldr	r4, .L7
+  52 0004 054B     		ldr	r3, .L7+4
+  53 0006 0648     		ldr	r0, .L7+8
+  54 0008 6360     		str	r3, [r4, #4]
+  55 000a 0022     		movs	r2, #0
+  56 000c 4FF48041 		mov	r1, #16384
+  57 0010 FFF7FEFF 		bl	tlsf_create_with_pool
+ARM GAS  /tmp/ccx0DMEe.s 			page 2
+
+
+  58 0014 2060     		str	r0, [r4]
+  59 0016 10BD     		pop	{r4, pc}
+  60              	.L8:
+  61              		.align	2
+  62              	.L7:
+  63 0018 00000000 		.word	.LANCHOR0
+  64 001c 00000000 		.word	.LANCHOR1
+  65 0020 00000000 		.word	HEAP_CCM_buffer
+  66              		.size	tlsf_init_heaps, .-tlsf_init_heaps
+  67              		.section	.text.tlsf_get_heap_addr,"ax",%progbits
+  68              		.align	1
+  69              		.p2align 4,,15
+  70              		.global	tlsf_get_heap_addr
+  71              		.syntax unified
+  72              		.thumb
+  73              		.thumb_func
+  74              		.fpu fpv4-sp-d16
+  75              		.type	tlsf_get_heap_addr, %function
+  76              	tlsf_get_heap_addr:
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+  80 0000 0068     		ldr	r0, [r0]
+  81 0002 7047     		bx	lr
+  82              		.size	tlsf_get_heap_addr, .-tlsf_get_heap_addr
+  83              		.section	.text.tlsf_malloc_r,"ax",%progbits
+  84              		.align	1
+  85              		.p2align 4,,15
+  86              		.global	tlsf_malloc_r
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  90              		.fpu fpv4-sp-d16
+  91              		.type	tlsf_malloc_r, %function
+  92              	tlsf_malloc_r:
+  93              		@ args = 0, pretend = 0, frame = 8
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95 0000 30B5     		push	{r4, r5, lr}
+  96 0002 0446     		mov	r4, r0
+  97 0004 83B0     		sub	sp, sp, #12
+  98 0006 4068     		ldr	r0, [r0, #4]
+  99 0008 0191     		str	r1, [sp, #4]
+ 100 000a FFF7FEFF 		bl	chMtxLock
+ 101 000e 0199     		ldr	r1, [sp, #4]
+ 102 0010 2068     		ldr	r0, [r4]
+ 103 0012 FFF7FEFF 		bl	tlsf_malloc
+ 104 0016 0546     		mov	r5, r0
+ 105 0018 6068     		ldr	r0, [r4, #4]
+ 106 001a FFF7FEFF 		bl	chMtxUnlock
+ 107 001e 2846     		mov	r0, r5
+ 108 0020 03B0     		add	sp, sp, #12
+ 109              		@ sp needed
+ 110 0022 30BD     		pop	{r4, r5, pc}
+ 111              		.size	tlsf_malloc_r, .-tlsf_malloc_r
+ 112              		.section	.text.tlsf_memalign_r,"ax",%progbits
+ 113              		.align	1
+ 114              		.p2align 4,,15
+ARM GAS  /tmp/ccx0DMEe.s 			page 3
+
+
+ 115              		.global	tlsf_memalign_r
+ 116              		.syntax unified
+ 117              		.thumb
+ 118              		.thumb_func
+ 119              		.fpu fpv4-sp-d16
+ 120              		.type	tlsf_memalign_r, %function
+ 121              	tlsf_memalign_r:
+ 122              		@ args = 0, pretend = 0, frame = 8
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124 0000 30B5     		push	{r4, r5, lr}
+ 125 0002 0446     		mov	r4, r0
+ 126 0004 83B0     		sub	sp, sp, #12
+ 127 0006 4068     		ldr	r0, [r0, #4]
+ 128 0008 CDE90021 		strd	r2, r1, [sp]
+ 129 000c FFF7FEFF 		bl	chMtxLock
+ 130 0010 DDE90021 		ldrd	r2, r1, [sp]
+ 131 0014 2068     		ldr	r0, [r4]
+ 132 0016 FFF7FEFF 		bl	tlsf_memalign
+ 133 001a 0546     		mov	r5, r0
+ 134 001c 6068     		ldr	r0, [r4, #4]
+ 135 001e FFF7FEFF 		bl	chMtxUnlock
+ 136 0022 2846     		mov	r0, r5
+ 137 0024 03B0     		add	sp, sp, #12
+ 138              		@ sp needed
+ 139 0026 30BD     		pop	{r4, r5, pc}
+ 140              		.size	tlsf_memalign_r, .-tlsf_memalign_r
+ 141              		.section	.text.tlsf_realloc_r,"ax",%progbits
+ 142              		.align	1
+ 143              		.p2align 4,,15
+ 144              		.global	tlsf_realloc_r
+ 145              		.syntax unified
+ 146              		.thumb
+ 147              		.thumb_func
+ 148              		.fpu fpv4-sp-d16
+ 149              		.type	tlsf_realloc_r, %function
+ 150              	tlsf_realloc_r:
+ 151              		@ args = 0, pretend = 0, frame = 8
+ 152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153 0000 30B5     		push	{r4, r5, lr}
+ 154 0002 0446     		mov	r4, r0
+ 155 0004 83B0     		sub	sp, sp, #12
+ 156 0006 4068     		ldr	r0, [r0, #4]
+ 157 0008 CDE90021 		strd	r2, r1, [sp]
+ 158 000c FFF7FEFF 		bl	chMtxLock
+ 159 0010 DDE90021 		ldrd	r2, r1, [sp]
+ 160 0014 2068     		ldr	r0, [r4]
+ 161 0016 FFF7FEFF 		bl	tlsf_realloc
+ 162 001a 0546     		mov	r5, r0
+ 163 001c 6068     		ldr	r0, [r4, #4]
+ 164 001e FFF7FEFF 		bl	chMtxUnlock
+ 165 0022 2846     		mov	r0, r5
+ 166 0024 03B0     		add	sp, sp, #12
+ 167              		@ sp needed
+ 168 0026 30BD     		pop	{r4, r5, pc}
+ 169              		.size	tlsf_realloc_r, .-tlsf_realloc_r
+ 170              		.section	.text.tlsf_free_r,"ax",%progbits
+ 171              		.align	1
+ARM GAS  /tmp/ccx0DMEe.s 			page 4
+
+
+ 172              		.p2align 4,,15
+ 173              		.global	tlsf_free_r
+ 174              		.syntax unified
+ 175              		.thumb
+ 176              		.thumb_func
+ 177              		.fpu fpv4-sp-d16
+ 178              		.type	tlsf_free_r, %function
+ 179              	tlsf_free_r:
+ 180              		@ args = 0, pretend = 0, frame = 8
+ 181              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182 0000 10B5     		push	{r4, lr}
+ 183 0002 0446     		mov	r4, r0
+ 184 0004 82B0     		sub	sp, sp, #8
+ 185 0006 4068     		ldr	r0, [r0, #4]
+ 186 0008 0191     		str	r1, [sp, #4]
+ 187 000a FFF7FEFF 		bl	chMtxLock
+ 188 000e 2068     		ldr	r0, [r4]
+ 189 0010 0199     		ldr	r1, [sp, #4]
+ 190 0012 FFF7FEFF 		bl	tlsf_free
+ 191 0016 6068     		ldr	r0, [r4, #4]
+ 192 0018 02B0     		add	sp, sp, #8
+ 193              		@ sp needed
+ 194 001a BDE81040 		pop	{r4, lr}
+ 195 001e FFF7FEBF 		b	chMtxUnlock
+ 196              		.size	tlsf_free_r, .-tlsf_free_r
+ 197 0022 00BF     		.section	.text.tlsf_stat_r,"ax",%progbits
+ 198              		.align	1
+ 199              		.p2align 4,,15
+ 200              		.global	tlsf_stat_r
+ 201              		.syntax unified
+ 202              		.thumb
+ 203              		.thumb_func
+ 204              		.fpu fpv4-sp-d16
+ 205              		.type	tlsf_stat_r, %function
+ 206              	tlsf_stat_r:
+ 207              		@ args = 0, pretend = 0, frame = 0
+ 208              		@ frame_needed = 0, uses_anonymous_args = 0
+ 209 0000 38B5     		push	{r3, r4, r5, lr}
+ 210 0002 0023     		movs	r3, #0
+ 211 0004 0446     		mov	r4, r0
+ 212 0006 4068     		ldr	r0, [r0, #4]
+ 213 0008 C1E90033 		strd	r3, r3, [r1]
+ 214 000c 0D46     		mov	r5, r1
+ 215 000e FFF7FEFF 		bl	chMtxLock
+ 216 0012 2068     		ldr	r0, [r4]
+ 217 0014 FFF7FEFF 		bl	tlsf_get_pool
+ 218 0018 2A46     		mov	r2, r5
+ 219 001a 0449     		ldr	r1, .L20
+ 220 001c FFF7FEFF 		bl	tlsf_walk_pool
+ 221 0020 6068     		ldr	r0, [r4, #4]
+ 222 0022 BDE83840 		pop	{r3, r4, r5, lr}
+ 223 0026 FFF7FEBF 		b	chMtxUnlock
+ 224              	.L21:
+ 225 002a 00BF     		.align	2
+ 226              	.L20:
+ 227 002c 00000000 		.word	stat_tlsf_walker
+ 228              		.size	tlsf_stat_r, .-tlsf_stat_r
+ARM GAS  /tmp/ccx0DMEe.s 			page 5
+
+
+ 229              		.section	.text.tlsf_check_r,"ax",%progbits
+ 230              		.align	1
+ 231              		.p2align 4,,15
+ 232              		.global	tlsf_check_r
+ 233              		.syntax unified
+ 234              		.thumb
+ 235              		.thumb_func
+ 236              		.fpu fpv4-sp-d16
+ 237              		.type	tlsf_check_r, %function
+ 238              	tlsf_check_r:
+ 239              		@ args = 0, pretend = 0, frame = 0
+ 240              		@ frame_needed = 0, uses_anonymous_args = 0
+ 241 0000 38B5     		push	{r3, r4, r5, lr}
+ 242 0002 0446     		mov	r4, r0
+ 243 0004 4068     		ldr	r0, [r0, #4]
+ 244 0006 FFF7FEFF 		bl	chMtxLock
+ 245 000a 2068     		ldr	r0, [r4]
+ 246 000c FFF7FEFF 		bl	tlsf_check
+ 247 0010 28B1     		cbz	r0, .L26
+ 248 0012 0546     		mov	r5, r0
+ 249 0014 6068     		ldr	r0, [r4, #4]
+ 250 0016 FFF7FEFF 		bl	chMtxUnlock
+ 251 001a 2846     		mov	r0, r5
+ 252 001c 38BD     		pop	{r3, r4, r5, pc}
+ 253              	.L26:
+ 254 001e 2068     		ldr	r0, [r4]
+ 255 0020 FFF7FEFF 		bl	tlsf_get_pool
+ 256 0024 FFF7FEFF 		bl	tlsf_check_pool
+ 257 0028 0546     		mov	r5, r0
+ 258 002a 6068     		ldr	r0, [r4, #4]
+ 259 002c FFF7FEFF 		bl	chMtxUnlock
+ 260 0030 2846     		mov	r0, r5
+ 261 0032 38BD     		pop	{r3, r4, r5, pc}
+ 262              		.size	tlsf_check_r, .-tlsf_check_r
+ 263              		.global	ccmHeap
+ 264              		.section	.bss.ccmHeap,"aw",%nobits
+ 265              		.align	2
+ 266              		.set	.LANCHOR0,. + 0
+ 267              		.type	ccmHeap, %object
+ 268              		.size	ccmHeap, 8
+ 269              	ccmHeap:
+ 270 0000 00000000 		.space	8
+ 270      00000000 
+ 271              		.section	.data.HEAP_CCM_mtx,"aw"
+ 272              		.align	2
+ 273              		.set	.LANCHOR1,. + 0
+ 274              		.type	HEAP_CCM_mtx, %object
+ 275              		.size	HEAP_CCM_mtx, 16
+ 276              	HEAP_CCM_mtx:
+ 277 0000 00000000 		.word	HEAP_CCM_mtx
+ 278 0004 00000000 		.word	HEAP_CCM_mtx
+ 279 0008 00000000 		.word	0
+ 280 000c 00000000 		.word	0
+ 281              		.section	.ram4,"aw"
+ 282              		.align	3
+ 283              		.type	HEAP_CCM_buffer, %object
+ 284              		.size	HEAP_CCM_buffer, 16384
+ARM GAS  /tmp/ccx0DMEe.s 			page 6
+
+
+ 285              	HEAP_CCM_buffer:
+ 286 0000 00000000 		.space	16384
+ 286      00000000 
+ 286      00000000 
+ 286      00000000 
+ 286      00000000 
+ 287              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccx0DMEe.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 tlsf_malloc_arch.c
+     /tmp/ccx0DMEe.s:15     .text.stat_tlsf_walker:0000000000000000 $t
+     /tmp/ccx0DMEe.s:23     .text.stat_tlsf_walker:0000000000000000 stat_tlsf_walker
+     /tmp/ccx0DMEe.s:39     .text.tlsf_init_heaps:0000000000000000 $t
+     /tmp/ccx0DMEe.s:47     .text.tlsf_init_heaps:0000000000000000 tlsf_init_heaps
+     /tmp/ccx0DMEe.s:63     .text.tlsf_init_heaps:0000000000000018 $d
+     /tmp/ccx0DMEe.s:285    .ram4:0000000000000000 HEAP_CCM_buffer
+     /tmp/ccx0DMEe.s:68     .text.tlsf_get_heap_addr:0000000000000000 $t
+     /tmp/ccx0DMEe.s:76     .text.tlsf_get_heap_addr:0000000000000000 tlsf_get_heap_addr
+     /tmp/ccx0DMEe.s:84     .text.tlsf_malloc_r:0000000000000000 $t
+     /tmp/ccx0DMEe.s:92     .text.tlsf_malloc_r:0000000000000000 tlsf_malloc_r
+     /tmp/ccx0DMEe.s:113    .text.tlsf_memalign_r:0000000000000000 $t
+     /tmp/ccx0DMEe.s:121    .text.tlsf_memalign_r:0000000000000000 tlsf_memalign_r
+     /tmp/ccx0DMEe.s:142    .text.tlsf_realloc_r:0000000000000000 $t
+     /tmp/ccx0DMEe.s:150    .text.tlsf_realloc_r:0000000000000000 tlsf_realloc_r
+     /tmp/ccx0DMEe.s:171    .text.tlsf_free_r:0000000000000000 $t
+     /tmp/ccx0DMEe.s:179    .text.tlsf_free_r:0000000000000000 tlsf_free_r
+     /tmp/ccx0DMEe.s:198    .text.tlsf_stat_r:0000000000000000 $t
+     /tmp/ccx0DMEe.s:206    .text.tlsf_stat_r:0000000000000000 tlsf_stat_r
+     /tmp/ccx0DMEe.s:227    .text.tlsf_stat_r:000000000000002c $d
+     /tmp/ccx0DMEe.s:230    .text.tlsf_check_r:0000000000000000 $t
+     /tmp/ccx0DMEe.s:238    .text.tlsf_check_r:0000000000000000 tlsf_check_r
+     /tmp/ccx0DMEe.s:269    .bss.ccmHeap:0000000000000000 ccmHeap
+     /tmp/ccx0DMEe.s:265    .bss.ccmHeap:0000000000000000 $d
+     /tmp/ccx0DMEe.s:272    .data.HEAP_CCM_mtx:0000000000000000 $d
+     /tmp/ccx0DMEe.s:276    .data.HEAP_CCM_mtx:0000000000000000 HEAP_CCM_mtx
+     /tmp/ccx0DMEe.s:282    .ram4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+tlsf_create_with_pool
+chMtxLock
+tlsf_malloc
+chMtxUnlock
+tlsf_memalign
+tlsf_realloc
+tlsf_free
+tlsf_get_pool
+tlsf_walk_pool
+tlsf_check
+tlsf_check_pool

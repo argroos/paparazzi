@@ -1,0 +1,222 @@
+ARM GAS  /tmp/ccW7BUqH.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"actuators_pwm_arch.c"
+  13              		.text
+  14              		.section	.text.actuators_pwm_arch_init,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	actuators_pwm_arch_init
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	actuators_pwm_arch_init, %function
+  24              	actuators_pwm_arch_init:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  28 0004 1C4F     		ldr	r7, .L4
+  29 0006 DFF88480 		ldr	r8, .L4+20
+  30 000a 1C4D     		ldr	r5, .L4+4
+  31 000c 1C4E     		ldr	r6, .L4+8
+  32 000e 0124     		movs	r4, #1
+  33 0010 3846     		mov	r0, r7
+  34 0012 0123     		movs	r3, #1
+  35 0014 0222     		movs	r2, #2
+  36 0016 0021     		movs	r1, #0
+  37 0018 FFF7FEFF 		bl	gpio_setup_pin_af
+  38 001c 2346     		mov	r3, r4
+  39 001e 2246     		mov	r2, r4
+  40 0020 4046     		mov	r0, r8
+  41 0022 0221     		movs	r1, #2
+  42 0024 EC61     		str	r4, [r5, #28]
+  43 0026 FFF7FEFF 		bl	gpio_setup_pin_af
+  44 002a 2346     		mov	r3, r4
+  45 002c 3846     		mov	r0, r7
+  46 002e 0222     		movs	r2, #2
+  47 0030 0521     		movs	r1, #5
+  48 0032 F461     		str	r4, [r6, #28]
+  49 0034 FFF7FEFF 		bl	gpio_setup_pin_af
+  50 0038 2346     		mov	r3, r4
+  51 003a 3846     		mov	r0, r7
+  52 003c 0222     		movs	r2, #2
+  53 003e 0421     		movs	r1, #4
+  54 0040 6C61     		str	r4, [r5, #20]
+  55 0042 FFF7FEFF 		bl	gpio_setup_pin_af
+  56 0046 3846     		mov	r0, r7
+  57 0048 2346     		mov	r3, r4
+ARM GAS  /tmp/ccW7BUqH.s 			page 2
+
+
+  58 004a 2246     		mov	r2, r4
+  59 004c 0321     		movs	r1, #3
+  60 004e EC60     		str	r4, [r5, #12]
+  61 0050 FFF7FEFF 		bl	gpio_setup_pin_af
+  62 0054 2346     		mov	r3, r4
+  63 0056 4046     		mov	r0, r8
+  64 0058 2246     		mov	r2, r4
+  65 005a 0F21     		movs	r1, #15
+  66 005c 7461     		str	r4, [r6, #20]
+  67 005e FFF7FEFF 		bl	gpio_setup_pin_af
+  68 0062 3146     		mov	r1, r6
+  69 0064 0748     		ldr	r0, .L4+12
+  70 0066 F460     		str	r4, [r6, #12]
+  71 0068 FFF7FEFF 		bl	pwmStart
+  72 006c 2946     		mov	r1, r5
+  73 006e 0648     		ldr	r0, .L4+16
+  74 0070 BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+  75 0074 FFF7FEBF 		b	pwmStart
+  76              	.L5:
+  77              		.align	2
+  78              	.L4:
+  79 0078 00040240 		.word	1073873920
+  80 007c 00000000 		.word	.LANCHOR0
+  81 0080 00000000 		.word	.LANCHOR1
+  82 0084 00000000 		.word	PWMD2
+  83 0088 00000000 		.word	PWMD3
+  84 008c 00000240 		.word	1073872896
+  85              		.size	actuators_pwm_arch_init, .-actuators_pwm_arch_init
+  86              		.section	.text.actuators_pwm_commit,"ax",%progbits
+  87              		.align	1
+  88              		.p2align 4,,15
+  89              		.global	actuators_pwm_commit
+  90              		.syntax unified
+  91              		.thumb
+  92              		.thumb_func
+  93              		.fpu fpv4-sp-d16
+  94              		.type	actuators_pwm_commit, %function
+  95              	actuators_pwm_commit:
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98 0000 70B5     		push	{r4, r5, r6, lr}
+  99 0002 114C     		ldr	r4, .L8
+ 100 0004 114E     		ldr	r6, .L8+4
+ 101 0006 124D     		ldr	r5, .L8+8
+ 102 0008 2268     		ldr	r2, [r4]
+ 103 000a 3046     		mov	r0, r6
+ 104 000c 0221     		movs	r1, #2
+ 105 000e FFF7FEFF 		bl	pwmEnableChannel
+ 106 0012 6268     		ldr	r2, [r4, #4]
+ 107 0014 2846     		mov	r0, r5
+ 108 0016 0221     		movs	r1, #2
+ 109 0018 FFF7FEFF 		bl	pwmEnableChannel
+ 110 001c A268     		ldr	r2, [r4, #8]
+ 111 001e 3046     		mov	r0, r6
+ 112 0020 0121     		movs	r1, #1
+ 113 0022 FFF7FEFF 		bl	pwmEnableChannel
+ 114 0026 E268     		ldr	r2, [r4, #12]
+ARM GAS  /tmp/ccW7BUqH.s 			page 3
+
+
+ 115 0028 3046     		mov	r0, r6
+ 116 002a 0021     		movs	r1, #0
+ 117 002c FFF7FEFF 		bl	pwmEnableChannel
+ 118 0030 2269     		ldr	r2, [r4, #16]
+ 119 0032 2846     		mov	r0, r5
+ 120 0034 0121     		movs	r1, #1
+ 121 0036 FFF7FEFF 		bl	pwmEnableChannel
+ 122 003a 6269     		ldr	r2, [r4, #20]
+ 123 003c 2846     		mov	r0, r5
+ 124 003e 0021     		movs	r1, #0
+ 125 0040 BDE87040 		pop	{r4, r5, r6, lr}
+ 126 0044 FFF7FEBF 		b	pwmEnableChannel
+ 127              	.L9:
+ 128              		.align	2
+ 129              	.L8:
+ 130 0048 00000000 		.word	.LANCHOR2
+ 131 004c 00000000 		.word	PWMD3
+ 132 0050 00000000 		.word	PWMD2
+ 133              		.size	actuators_pwm_commit, .-actuators_pwm_commit
+ 134              		.global	actuators_pwm_values
+ 135              		.section	.bss.actuators_pwm_values,"aw",%nobits
+ 136              		.align	2
+ 137              		.set	.LANCHOR2,. + 0
+ 138              		.type	actuators_pwm_values, %object
+ 139              		.size	actuators_pwm_values, 32
+ 140              	actuators_pwm_values:
+ 141 0000 00000000 		.space	32
+ 141      00000000 
+ 141      00000000 
+ 141      00000000 
+ 141      00000000 
+ 142              		.section	.data.pwmcfg2,"aw"
+ 143              		.align	2
+ 144              		.set	.LANCHOR1,. + 0
+ 145              		.type	pwmcfg2, %object
+ 146              		.size	pwmcfg2, 56
+ 147              	pwmcfg2:
+ 148 0000 40420F00 		.word	1000000
+ 149 0004 A8610000 		.word	25000
+ 150 0008 00000000 		.word	0
+ 151 000c 00000000 		.word	0
+ 152 0010 00000000 		.word	0
+ 153 0014 00000000 		.word	0
+ 154 0018 00000000 		.word	0
+ 155 001c 00000000 		.word	0
+ 156 0020 00000000 		.word	0
+ 157 0024 00000000 		.word	0
+ 158 0028 00000000 		.word	0
+ 159 002c 00000000 		.word	0
+ 160 0030 00000000 		.word	0
+ 161 0034 00000000 		.word	0
+ 162              		.section	.data.pwmcfg3,"aw"
+ 163              		.align	2
+ 164              		.set	.LANCHOR0,. + 0
+ 165              		.type	pwmcfg3, %object
+ 166              		.size	pwmcfg3, 56
+ 167              	pwmcfg3:
+ARM GAS  /tmp/ccW7BUqH.s 			page 4
+
+
+ 168 0000 40420F00 		.word	1000000
+ 169 0004 A8610000 		.word	25000
+ 170 0008 00000000 		.word	0
+ 171 000c 00000000 		.word	0
+ 172 0010 00000000 		.word	0
+ 173 0014 00000000 		.word	0
+ 174 0018 00000000 		.word	0
+ 175 001c 00000000 		.word	0
+ 176 0020 00000000 		.word	0
+ 177 0024 00000000 		.word	0
+ 178 0028 00000000 		.word	0
+ 179 002c 00000000 		.word	0
+ 180 0030 00000000 		.word	0
+ 181 0034 00000000 		.word	0
+ 182              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccW7BUqH.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 actuators_pwm_arch.c
+     /tmp/ccW7BUqH.s:15     .text.actuators_pwm_arch_init:0000000000000000 $t
+     /tmp/ccW7BUqH.s:24     .text.actuators_pwm_arch_init:0000000000000000 actuators_pwm_arch_init
+     /tmp/ccW7BUqH.s:79     .text.actuators_pwm_arch_init:0000000000000078 $d
+     /tmp/ccW7BUqH.s:87     .text.actuators_pwm_commit:0000000000000000 $t
+     /tmp/ccW7BUqH.s:95     .text.actuators_pwm_commit:0000000000000000 actuators_pwm_commit
+     /tmp/ccW7BUqH.s:130    .text.actuators_pwm_commit:0000000000000048 $d
+     /tmp/ccW7BUqH.s:140    .bss.actuators_pwm_values:0000000000000000 actuators_pwm_values
+     /tmp/ccW7BUqH.s:136    .bss.actuators_pwm_values:0000000000000000 $d
+     /tmp/ccW7BUqH.s:143    .data.pwmcfg2:0000000000000000 $d
+     /tmp/ccW7BUqH.s:147    .data.pwmcfg2:0000000000000000 pwmcfg2
+     /tmp/ccW7BUqH.s:163    .data.pwmcfg3:0000000000000000 $d
+     /tmp/ccW7BUqH.s:167    .data.pwmcfg3:0000000000000000 pwmcfg3
+
+UNDEFINED SYMBOLS
+gpio_setup_pin_af
+pwmStart
+PWMD2
+PWMD3
+pwmEnableChannel

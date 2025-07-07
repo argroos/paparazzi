@@ -1,0 +1,66 @@
+ARM GAS  /tmp/ccUlT93W.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"pprzlog_tp.c"
+  13              		.text
+  14              		.section	.text.pprzlog_tp_init,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	pprzlog_tp_init
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	pprzlog_tp_init, %function
+  24              	pprzlog_tp_init:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 0149     		ldr	r1, .L3
+  29 0002 0248     		ldr	r0, .L3+4
+  30 0004 FFF7FEBF 		b	pprzlog_transport_init
+  31              	.L4:
+  32              		.align	2
+  33              	.L3:
+  34 0008 00000000 		.word	get_sys_time_usec100
+  35 000c 00000000 		.word	.LANCHOR0
+  36              		.size	pprzlog_tp_init, .-pprzlog_tp_init
+  37              		.global	pprzlog_tp
+  38              		.section	.bss.pprzlog_tp,"aw",%nobits
+  39              		.align	2
+  40              		.set	.LANCHOR0,. + 0
+  41              		.type	pprzlog_tp, %object
+  42              		.size	pprzlog_tp, 44
+  43              	pprzlog_tp:
+  44 0000 00000000 		.space	44
+  44      00000000 
+  44      00000000 
+  44      00000000 
+  44      00000000 
+  45              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccUlT93W.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 pprzlog_tp.c
+     /tmp/ccUlT93W.s:15     .text.pprzlog_tp_init:0000000000000000 $t
+     /tmp/ccUlT93W.s:24     .text.pprzlog_tp_init:0000000000000000 pprzlog_tp_init
+     /tmp/ccUlT93W.s:34     .text.pprzlog_tp_init:0000000000000008 $d
+     /tmp/ccUlT93W.s:43     .bss.pprzlog_tp:0000000000000000 pprzlog_tp
+     /tmp/ccUlT93W.s:39     .bss.pprzlog_tp:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+pprzlog_transport_init
+get_sys_time_usec100

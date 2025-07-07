@@ -1,0 +1,65 @@
+ARM GAS  /tmp/cckGuI8E.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"guidance_h.c"
+  13              		.text
+  14              		.section	.text.h_ctl_guidance_loop,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	h_ctl_guidance_loop
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	h_ctl_guidance_loop, %function
+  24              	h_ctl_guidance_loop:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27 0000 08B5     		push	{r3, lr}
+  28 0002 064B     		ldr	r3, .L6
+  29 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  30 0006 022B     		cmp	r3, #2
+  31 0008 04D8     		bhi	.L5
+  32              	.L2:
+  33 000a 054A     		ldr	r2, .L6+4
+  34 000c 054B     		ldr	r3, .L6+8
+  35 000e 1268     		ldr	r2, [r2]	@ float
+  36 0010 1A60     		str	r2, [r3]	@ float
+  37 0012 08BD     		pop	{r3, pc}
+  38              	.L5:
+  39 0014 FFF7FEFF 		bl	h_ctl_course_loop
+  40 0018 F7E7     		b	.L2
+  41              	.L7:
+  42 001a 00BF     		.align	2
+  43              	.L6:
+  44 001c 00000000 		.word	lateral_mode
+  45 0020 00000000 		.word	v_ctl_pitch_setpoint
+  46 0024 00000000 		.word	h_ctl_pitch_setpoint
+  47              		.size	h_ctl_guidance_loop, .-h_ctl_guidance_loop
+  48              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cckGuI8E.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 guidance_h.c
+     /tmp/cckGuI8E.s:15     .text.h_ctl_guidance_loop:0000000000000000 $t
+     /tmp/cckGuI8E.s:24     .text.h_ctl_guidance_loop:0000000000000000 h_ctl_guidance_loop
+     /tmp/cckGuI8E.s:44     .text.h_ctl_guidance_loop:000000000000001c $d
+
+UNDEFINED SYMBOLS
+h_ctl_course_loop
+lateral_mode
+v_ctl_pitch_setpoint
+h_ctl_pitch_setpoint

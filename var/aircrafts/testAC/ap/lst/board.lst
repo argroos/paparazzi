@@ -1,0 +1,254 @@
+ARM GAS  /tmp/ccvLsT3l.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"board.c"
+  13              		.text
+  14              		.section	.text.__early_init,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	__early_init
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	__early_init, %function
+  24              	__early_init:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27 0000 564B     		ldr	r3, .L4
+  28 0002 DFF8A0C1 		ldr	ip, .L4+72
+  29 0006 1A69     		ldr	r2, [r3, #16]
+  30 0008 40F2FF11 		movw	r1, #511
+  31 000c 0A43     		orrs	r2, r2, r1
+  32 000e 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  33 0012 1A61     		str	r2, [r3, #16]
+  34 0014 1A69     		ldr	r2, [r3, #16]
+  35 0016 DFF890E1 		ldr	lr, .L4+76
+  36 001a DFF890A1 		ldr	r10, .L4+80
+  37 001e 504F     		ldr	r7, .L4+4
+  38 0020 504E     		ldr	r6, .L4+8
+  39 0022 514D     		ldr	r5, .L4+12
+  40 0024 514C     		ldr	r4, .L4+16
+  41 0026 22F4FF72 		bic	r2, r2, #510
+  42 002a 22F00102 		bic	r2, r2, #1
+  43 002e 1A61     		str	r2, [r3, #16]
+  44 0030 1A69     		ldr	r2, [r3, #16]
+  45 0032 1A6B     		ldr	r2, [r3, #48]
+  46 0034 0A43     		orrs	r2, r2, r1
+  47 0036 1A63     		str	r2, [r3, #48]
+  48 0038 1A6D     		ldr	r2, [r3, #80]
+  49 003a 0A43     		orrs	r2, r2, r1
+  50 003c 1A65     		str	r2, [r3, #80]
+  51 003e 4FF40070 		mov	r0, #512
+  52 0042 4B4A     		ldr	r2, .L4+20
+  53 0044 1B6D     		ldr	r3, [r3, #80]
+  54 0046 CEF80400 		str	r0, [lr, #4]
+  55 004a CEF80820 		str	r2, [lr, #8]
+  56 004e 494A     		ldr	r2, .L4+24
+  57 0050 4948     		ldr	r0, .L4+28
+ARM GAS  /tmp/ccvLsT3l.s 			page 2
+
+
+  58 0052 4A49     		ldr	r1, .L4+32
+  59 0054 4FF40023 		mov	r3, #524288
+  60 0058 47F6EB5B 		movw	fp, #32235
+  61 005c CEF80C30 		str	r3, [lr, #12]
+  62 0060 CEF814B0 		str	fp, [lr, #20]
+  63 0064 CEF820A0 		str	r10, [lr, #32]
+  64 0068 CEF82420 		str	r2, [lr, #36]
+  65 006c 02F11A42 		add	r2, r2, #-1711276032
+  66 0070 02F51802 		add	r2, r2, #9961472
+  67 0074 02F2A942 		addw	r2, r2, #1193
+  68 0078 CEF80020 		str	r2, [lr]
+  69 007c 404A     		ldr	r2, .L4+36
+  70 007e 4CF6845E 		movw	lr, #52612
+  71 0082 CCF804E0 		str	lr, [ip, #4]
+  72 0086 CCF80820 		str	r2, [ip, #8]
+  73 008a 3E4A     		ldr	r2, .L4+40
+  74 008c CCF80C20 		str	r2, [ip, #12]
+  75 0090 4FF47F5E 		mov	lr, #16320
+  76 0094 3C4A     		ldr	r2, .L4+44
+  77 0096 CCF814E0 		str	lr, [ip, #20]
+  78 009a CCF82020 		str	r2, [ip, #32]
+  79 009e 44F2044E 		movw	lr, #17412
+  80 00a2 3A4A     		ldr	r2, .L4+48
+  81 00a4 CCF824E0 		str	lr, [ip, #36]
+  82 00a8 4FF03009 		mov	r9, #48
+  83 00ac CCF80020 		str	r2, [ip]
+  84 00b0 374A     		ldr	r2, .L4+52
+  85 00b2 C7F80490 		str	r9, [r7, #4]
+  86 00b6 4DF6C07C 		movw	ip, #57280
+  87 00ba BA60     		str	r2, [r7, #8]
+  88 00bc 354A     		ldr	r2, .L4+56
+  89 00be FA60     		str	r2, [r7, #12]
+  90 00c0 C7F814C0 		str	ip, [r7, #20]
+  91 00c4 344A     		ldr	r2, .L4+60
+  92 00c6 4FF0084C 		mov	ip, #-2013265920
+  93 00ca C7F820C0 		str	ip, [r7, #32]
+  94 00ce 7A62     		str	r2, [r7, #36]
+  95 00d0 324A     		ldr	r2, .L4+64
+  96 00d2 3A60     		str	r2, [r7]
+  97 00d4 02F18062 		add	r2, r2, #67108864
+  98 00d8 0023     		movs	r3, #0
+  99 00da 02F65522 		addw	r2, r2, #2645
+ 100 00de 0427     		movs	r7, #4
+ 101 00e0 7360     		str	r3, [r6, #4]
+ 102 00e2 C6F80890 		str	r9, [r6, #8]
+ 103 00e6 F260     		str	r2, [r6, #12]
+ 104 00e8 7761     		str	r7, [r6, #20]
+ 105 00ea 4FF44067 		mov	r7, #3072
+ 106 00ee 3762     		str	r7, [r6, #32]
+ 107 00f0 4FF0AA38 		mov	r8, #-1431655766
+ 108 00f4 2027     		movs	r7, #32
+ 109 00f6 7362     		str	r3, [r6, #36]
+ 110 00f8 0632     		adds	r2, r2, #6
+ 111 00fa 3760     		str	r7, [r6]
+ 112 00fc 6B60     		str	r3, [r5, #4]
+ 113 00fe AB60     		str	r3, [r5, #8]
+ 114 0100 C5F80C80 		str	r8, [r5, #12]
+ARM GAS  /tmp/ccvLsT3l.s 			page 3
+
+
+ 115 0104 6B61     		str	r3, [r5, #20]
+ 116 0106 2B62     		str	r3, [r5, #32]
+ 117 0108 6B62     		str	r3, [r5, #36]
+ 118 010a 2B60     		str	r3, [r5]
+ 119 010c 6360     		str	r3, [r4, #4]
+ 120 010e A360     		str	r3, [r4, #8]
+ 121 0110 C4F80C80 		str	r8, [r4, #12]
+ 122 0114 6361     		str	r3, [r4, #20]
+ 123 0116 2362     		str	r3, [r4, #32]
+ 124 0118 6362     		str	r3, [r4, #36]
+ 125 011a 2360     		str	r3, [r4]
+ 126 011c 4360     		str	r3, [r0, #4]
+ 127 011e 8360     		str	r3, [r0, #8]
+ 128 0120 C0F80C80 		str	r8, [r0, #12]
+ 129 0124 4361     		str	r3, [r0, #20]
+ 130 0126 0362     		str	r3, [r0, #32]
+ 131 0128 4362     		str	r3, [r0, #36]
+ 132 012a 0360     		str	r3, [r0]
+ 133 012c 0F20     		movs	r0, #15
+ 134 012e 4B60     		str	r3, [r1, #4]
+ 135 0130 8860     		str	r0, [r1, #8]
+ 136 0132 CA60     		str	r2, [r1, #12]
+ 137 0134 0320     		movs	r0, #3
+ 138 0136 1A4A     		ldr	r2, .L4+68
+ 139 0138 4861     		str	r0, [r1, #20]
+ 140 013a 0A20     		movs	r0, #10
+ 141 013c 0B62     		str	r3, [r1, #32]
+ 142 013e 4B62     		str	r3, [r1, #36]
+ 143 0140 0860     		str	r0, [r1]
+ 144 0142 5360     		str	r3, [r2, #4]
+ 145 0144 9360     		str	r3, [r2, #8]
+ 146 0146 C2F80C80 		str	r8, [r2, #12]
+ 147 014a 5361     		str	r3, [r2, #20]
+ 148 014c BDE8F04F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 149 0150 1362     		str	r3, [r2, #32]
+ 150 0152 5362     		str	r3, [r2, #36]
+ 151 0154 1360     		str	r3, [r2]
+ 152 0156 FFF7FEBF 		b	stm32_clock_init
+ 153              	.L5:
+ 154 015a 00BF     		.align	2
+ 155              	.L4:
+ 156 015c 00380240 		.word	1073887232
+ 157 0160 00080240 		.word	1073874944
+ 158 0164 000C0240 		.word	1073875968
+ 159 0168 00100240 		.word	1073876992
+ 160 016c 00140240 		.word	1073878016
+ 161 0170 FFFCF3FF 		.word	-787201
+ 162 0174 01A70A10 		.word	269133569
+ 163 0178 00180240 		.word	1073879040
+ 164 017c 001C0240 		.word	1073880064
+ 165 0180 CFFFFF0F 		.word	268435407
+ 166 0184 00405110 		.word	273760256
+ 167 0188 22102247 		.word	1193414690
+ 168 018c 8AAAA605 		.word	94808714
+ 169 0190 00F0FFF3 		.word	-201330688
+ 170 0194 20005500 		.word	5570592
+ 171 0198 CCCC0C00 		.word	838860
+ARM GAS  /tmp/ccvLsT3l.s 			page 4
+
+
+ 172 019c 45A0AAA6 		.word	-1498767291
+ 173 01a0 00200240 		.word	1073881088
+ 174 01a4 00040240 		.word	1073873920
+ 175 01a8 00000240 		.word	1073872896
+ 176 01ac 88715055 		.word	1431335304
+ 177              		.size	__early_init, .-__early_init
+ 178              		.section	.text.sdc_lld_is_card_inserted,"ax",%progbits
+ 179              		.align	1
+ 180              		.p2align 4,,15
+ 181              		.global	sdc_lld_is_card_inserted
+ 182              		.syntax unified
+ 183              		.thumb
+ 184              		.thumb_func
+ 185              		.fpu fpv4-sp-d16
+ 186              		.type	sdc_lld_is_card_inserted, %function
+ 187              	sdc_lld_is_card_inserted:
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 0, uses_anonymous_args = 0
+ 190              		@ link register save eliminated.
+ 191 0000 0120     		movs	r0, #1
+ 192 0002 7047     		bx	lr
+ 193              		.size	sdc_lld_is_card_inserted, .-sdc_lld_is_card_inserted
+ 194              		.section	.text.sdc_lld_is_write_protected,"ax",%progbits
+ 195              		.align	1
+ 196              		.p2align 4,,15
+ 197              		.global	sdc_lld_is_write_protected
+ 198              		.syntax unified
+ 199              		.thumb
+ 200              		.thumb_func
+ 201              		.fpu fpv4-sp-d16
+ 202              		.type	sdc_lld_is_write_protected, %function
+ 203              	sdc_lld_is_write_protected:
+ 204              		@ args = 0, pretend = 0, frame = 0
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206              		@ link register save eliminated.
+ 207 0000 0020     		movs	r0, #0
+ 208 0002 7047     		bx	lr
+ 209              		.size	sdc_lld_is_write_protected, .-sdc_lld_is_write_protected
+ 210              		.section	.text.boardInit,"ax",%progbits
+ 211              		.align	1
+ 212              		.p2align 4,,15
+ 213              		.global	boardInit
+ 214              		.syntax unified
+ 215              		.thumb
+ 216              		.thumb_func
+ 217              		.fpu fpv4-sp-d16
+ 218              		.type	boardInit, %function
+ 219              	boardInit:
+ 220              		@ args = 0, pretend = 0, frame = 0
+ 221              		@ frame_needed = 0, uses_anonymous_args = 0
+ 222              		@ link register save eliminated.
+ 223 0000 7047     		bx	lr
+ 224              		.size	boardInit, .-boardInit
+ 225 0002 00BF     		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccvLsT3l.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 board.c
+     /tmp/ccvLsT3l.s:15     .text.__early_init:0000000000000000 $t
+     /tmp/ccvLsT3l.s:24     .text.__early_init:0000000000000000 __early_init
+     /tmp/ccvLsT3l.s:156    .text.__early_init:000000000000015c $d
+     /tmp/ccvLsT3l.s:179    .text.sdc_lld_is_card_inserted:0000000000000000 $t
+     /tmp/ccvLsT3l.s:187    .text.sdc_lld_is_card_inserted:0000000000000000 sdc_lld_is_card_inserted
+     /tmp/ccvLsT3l.s:195    .text.sdc_lld_is_write_protected:0000000000000000 $t
+     /tmp/ccvLsT3l.s:203    .text.sdc_lld_is_write_protected:0000000000000000 sdc_lld_is_write_protected
+     /tmp/ccvLsT3l.s:211    .text.boardInit:0000000000000000 $t
+     /tmp/ccvLsT3l.s:219    .text.boardInit:0000000000000000 boardInit
+
+UNDEFINED SYMBOLS
+stm32_clock_init

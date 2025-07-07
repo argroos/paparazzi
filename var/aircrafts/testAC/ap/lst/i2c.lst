@@ -1,0 +1,815 @@
+ARM GAS  /tmp/ccyIo2oo.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"i2c.c"
+  13              		.text
+  14              		.section	.rodata.pprzlink_msg_v2_send_I2C_ERRORS.constprop.0.str1.4,"aMS",%progbits,1
+  15              		.align	2
+  16              	.LC0:
+  17 0000 4932435F 		.ascii	"I2C_ERRORS\000"
+  17      4552524F 
+  17      525300
+  18              		.section	.text.pprzlink_msg_v2_send_I2C_ERRORS.constprop.0,"ax",%progbits
+  19              		.align	1
+  20              		.p2align 4,,15
+  21              		.arch armv7e-m
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  25              		.fpu fpv4-sp-d16
+  26              		.type	pprzlink_msg_v2_send_I2C_ERRORS.constprop.0, %function
+  27              	pprzlink_msg_v2_send_I2C_ERRORS.constprop.0:
+  28              		@ args = 36, pretend = 0, frame = 8
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  31 0004 1F46     		mov	r7, r3
+  32 0006 84B0     		sub	sp, sp, #16
+  33 0008 4368     		ldr	r3, [r0, #4]
+  34 000a 0025     		movs	r5, #0
+  35 000c 1B68     		ldr	r3, [r3]
+  36 000e 0395     		str	r5, [sp, #12]
+  37 0010 0446     		mov	r4, r0
+  38 0012 8946     		mov	r9, r1
+  39 0014 1D21     		movs	r1, #29
+  40 0016 9046     		mov	r8, r2
+  41 0018 9847     		blx	r3
+  42 001a 6368     		ldr	r3, [r4, #4]
+  43 001c 0646     		mov	r6, r0
+  44 001e 82B2     		uxth	r2, r0
+  45 0020 5B68     		ldr	r3, [r3, #4]
+  46 0022 03A9     		add	r1, sp, #12
+  47 0024 2046     		mov	r0, r4
+  48 0026 9847     		blx	r3
+  49 0028 0028     		cmp	r0, #0
+  50 002a 00F0BD80 		beq	.L2
+  51 002e 6368     		ldr	r3, [r4, #4]
+  52 0030 3146     		mov	r1, r6
+  53 0032 2046     		mov	r0, r4
+  54 0034 DB69     		ldr	r3, [r3, #28]
+  55 0036 9847     		blx	r3
+ARM GAS  /tmp/ccyIo2oo.s 			page 2
+
+
+  56 0038 6368     		ldr	r3, [r4, #4]
+  57 003a 0399     		ldr	r1, [sp, #12]
+  58 003c 1B69     		ldr	r3, [r3, #16]
+  59 003e 2046     		mov	r0, r4
+  60 0040 1D22     		movs	r2, #29
+  61 0042 9847     		blx	r3
+  62 0044 0094     		str	r4, [sp]
+  63 0046 6368     		ldr	r3, [r4, #4]
+  64 0048 0399     		ldr	r1, [sp, #12]
+  65 004a 4FF0010A 		mov	r10, #1
+  66 004e CDF804A0 		str	r10, [sp, #4]
+  67 0052 9E68     		ldr	r6, [r3, #8]
+  68 0054 2046     		mov	r0, r4
+  69 0056 2B46     		mov	r3, r5
+  70 0058 0222     		movs	r2, #2
+  71 005a B047     		blx	r6
+  72 005c 0195     		str	r5, [sp, #4]
+  73 005e 6368     		ldr	r3, [r4, #4]
+  74 0060 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+  75 0062 0092     		str	r2, [sp]
+  76 0064 DE68     		ldr	r6, [r3, #12]
+  77 0066 0399     		ldr	r1, [sp, #12]
+  78 0068 2B46     		mov	r3, r5
+  79 006a 2046     		mov	r0, r4
+  80 006c 0222     		movs	r2, #2
+  81 006e B047     		blx	r6
+  82 0070 0195     		str	r5, [sp, #4]
+  83 0072 A078     		ldrb	r0, [r4, #2]	@ zero_extendqisi2
+  84 0074 0399     		ldr	r1, [sp, #12]
+  85 0076 0001     		lsls	r0, r0, #4
+  86 0078 40EA0A00 		orr	r0, r0, r10
+  87 007c C0B2     		uxtb	r0, r0
+  88 007e 0090     		str	r0, [sp]
+  89 0080 6368     		ldr	r3, [r4, #4]
+  90 0082 2046     		mov	r0, r4
+  91 0084 DE68     		ldr	r6, [r3, #12]
+  92 0086 0222     		movs	r2, #2
+  93 0088 2B46     		mov	r3, r5
+  94 008a B047     		blx	r6
+  95 008c 4A4A     		ldr	r2, .L6
+  96 008e 6368     		ldr	r3, [r4, #4]
+  97 0090 0192     		str	r2, [sp, #4]
+  98 0092 FD22     		movs	r2, #253
+  99 0094 0092     		str	r2, [sp]
+ 100 0096 DE68     		ldr	r6, [r3, #12]
+ 101 0098 0399     		ldr	r1, [sp, #12]
+ 102 009a 2B46     		mov	r3, r5
+ 103 009c 2046     		mov	r0, r4
+ 104 009e 0222     		movs	r2, #2
+ 105 00a0 B047     		blx	r6
+ 106 00a2 0226     		movs	r6, #2
+ 107 00a4 CDF80090 		str	r9, [sp]
+ 108 00a8 0196     		str	r6, [sp, #4]
+ 109 00aa 6368     		ldr	r3, [r4, #4]
+ 110 00ac 0399     		ldr	r1, [sp, #12]
+ 111 00ae D3F80890 		ldr	r9, [r3, #8]
+ 112 00b2 2046     		mov	r0, r4
+ARM GAS  /tmp/ccyIo2oo.s 			page 3
+
+
+ 113 00b4 2B46     		mov	r3, r5
+ 114 00b6 0422     		movs	r2, #4
+ 115 00b8 C847     		blx	r9
+ 116 00ba CDE90086 		strd	r8, r6, [sp]
+ 117 00be 6368     		ldr	r3, [r4, #4]
+ 118 00c0 0399     		ldr	r1, [sp, #12]
+ 119 00c2 D3F80880 		ldr	r8, [r3, #8]
+ 120 00c6 2046     		mov	r0, r4
+ 121 00c8 2B46     		mov	r3, r5
+ 122 00ca 0422     		movs	r2, #4
+ 123 00cc C047     		blx	r8
+ 124 00ce CDE90076 		strd	r7, r6, [sp]
+ 125 00d2 6368     		ldr	r3, [r4, #4]
+ 126 00d4 0399     		ldr	r1, [sp, #12]
+ 127 00d6 9F68     		ldr	r7, [r3, #8]
+ 128 00d8 2046     		mov	r0, r4
+ 129 00da 2B46     		mov	r3, r5
+ 130 00dc 0422     		movs	r2, #4
+ 131 00de B847     		blx	r7
+ 132 00e0 6368     		ldr	r3, [r4, #4]
+ 133 00e2 0C9A     		ldr	r2, [sp, #48]
+ 134 00e4 0092     		str	r2, [sp]
+ 135 00e6 0196     		str	r6, [sp, #4]
+ 136 00e8 9F68     		ldr	r7, [r3, #8]
+ 137 00ea 0399     		ldr	r1, [sp, #12]
+ 138 00ec 2B46     		mov	r3, r5
+ 139 00ee 2046     		mov	r0, r4
+ 140 00f0 0422     		movs	r2, #4
+ 141 00f2 B847     		blx	r7
+ 142 00f4 6368     		ldr	r3, [r4, #4]
+ 143 00f6 0D9A     		ldr	r2, [sp, #52]
+ 144 00f8 0092     		str	r2, [sp]
+ 145 00fa 0196     		str	r6, [sp, #4]
+ 146 00fc 9F68     		ldr	r7, [r3, #8]
+ 147 00fe 0399     		ldr	r1, [sp, #12]
+ 148 0100 2B46     		mov	r3, r5
+ 149 0102 2046     		mov	r0, r4
+ 150 0104 0422     		movs	r2, #4
+ 151 0106 B847     		blx	r7
+ 152 0108 6368     		ldr	r3, [r4, #4]
+ 153 010a 0E9A     		ldr	r2, [sp, #56]
+ 154 010c 0092     		str	r2, [sp]
+ 155 010e 0196     		str	r6, [sp, #4]
+ 156 0110 9F68     		ldr	r7, [r3, #8]
+ 157 0112 0399     		ldr	r1, [sp, #12]
+ 158 0114 2B46     		mov	r3, r5
+ 159 0116 2046     		mov	r0, r4
+ 160 0118 0422     		movs	r2, #4
+ 161 011a B847     		blx	r7
+ 162 011c 6368     		ldr	r3, [r4, #4]
+ 163 011e 0F9A     		ldr	r2, [sp, #60]
+ 164 0120 0092     		str	r2, [sp]
+ 165 0122 0196     		str	r6, [sp, #4]
+ 166 0124 9F68     		ldr	r7, [r3, #8]
+ 167 0126 0399     		ldr	r1, [sp, #12]
+ 168 0128 2B46     		mov	r3, r5
+ 169 012a 2046     		mov	r0, r4
+ARM GAS  /tmp/ccyIo2oo.s 			page 4
+
+
+ 170 012c 0422     		movs	r2, #4
+ 171 012e B847     		blx	r7
+ 172 0130 6368     		ldr	r3, [r4, #4]
+ 173 0132 109A     		ldr	r2, [sp, #64]
+ 174 0134 0092     		str	r2, [sp]
+ 175 0136 0196     		str	r6, [sp, #4]
+ 176 0138 9F68     		ldr	r7, [r3, #8]
+ 177 013a 0399     		ldr	r1, [sp, #12]
+ 178 013c 2B46     		mov	r3, r5
+ 179 013e 2046     		mov	r0, r4
+ 180 0140 0422     		movs	r2, #4
+ 181 0142 B847     		blx	r7
+ 182 0144 6368     		ldr	r3, [r4, #4]
+ 183 0146 119A     		ldr	r2, [sp, #68]
+ 184 0148 0092     		str	r2, [sp]
+ 185 014a 0196     		str	r6, [sp, #4]
+ 186 014c 9F68     		ldr	r7, [r3, #8]
+ 187 014e 0399     		ldr	r1, [sp, #12]
+ 188 0150 2B46     		mov	r3, r5
+ 189 0152 2046     		mov	r0, r4
+ 190 0154 0422     		movs	r2, #4
+ 191 0156 B847     		blx	r7
+ 192 0158 6368     		ldr	r3, [r4, #4]
+ 193 015a 129A     		ldr	r2, [sp, #72]
+ 194 015c 0092     		str	r2, [sp]
+ 195 015e 0196     		str	r6, [sp, #4]
+ 196 0160 9F68     		ldr	r7, [r3, #8]
+ 197 0162 0399     		ldr	r1, [sp, #12]
+ 198 0164 2B46     		mov	r3, r5
+ 199 0166 2046     		mov	r0, r4
+ 200 0168 0422     		movs	r2, #4
+ 201 016a B847     		blx	r7
+ 202 016c 139A     		ldr	r2, [sp, #76]
+ 203 016e 6368     		ldr	r3, [r4, #4]
+ 204 0170 0092     		str	r2, [sp]
+ 205 0172 0422     		movs	r2, #4
+ 206 0174 0192     		str	r2, [sp, #4]
+ 207 0176 9F68     		ldr	r7, [r3, #8]
+ 208 0178 0399     		ldr	r1, [sp, #12]
+ 209 017a 2B46     		mov	r3, r5
+ 210 017c 2046     		mov	r0, r4
+ 211 017e 0622     		movs	r2, #6
+ 212 0180 B847     		blx	r7
+ 213 0182 6368     		ldr	r3, [r4, #4]
+ 214 0184 149A     		ldr	r2, [sp, #80]
+ 215 0186 0092     		str	r2, [sp]
+ 216 0188 CDF804A0 		str	r10, [sp, #4]
+ 217 018c 0399     		ldr	r1, [sp, #12]
+ 218 018e 9F68     		ldr	r7, [r3, #8]
+ 219 0190 3246     		mov	r2, r6
+ 220 0192 2B46     		mov	r3, r5
+ 221 0194 2046     		mov	r0, r4
+ 222 0196 B847     		blx	r7
+ 223 0198 6368     		ldr	r3, [r4, #4]
+ 224 019a 0399     		ldr	r1, [sp, #12]
+ 225 019c 5B69     		ldr	r3, [r3, #20]
+ 226 019e 2046     		mov	r0, r4
+ARM GAS  /tmp/ccyIo2oo.s 			page 5
+
+
+ 227 01a0 9847     		blx	r3
+ 228 01a2 04B0     		add	sp, sp, #16
+ 229              		@ sp needed
+ 230 01a4 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 231              	.L2:
+ 232 01a8 6368     		ldr	r3, [r4, #4]
+ 233 01aa 2046     		mov	r0, r4
+ 234 01ac 9B69     		ldr	r3, [r3, #24]
+ 235 01ae 9847     		blx	r3
+ 236 01b0 04B0     		add	sp, sp, #16
+ 237              		@ sp needed
+ 238 01b2 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 239              	.L7:
+ 240 01b6 00BF     		.align	2
+ 241              	.L6:
+ 242 01b8 00000000 		.word	.LC0
+ 243              		.size	pprzlink_msg_v2_send_I2C_ERRORS.constprop.0, .-pprzlink_msg_v2_send_I2C_ERRORS.constprop.0
+ 244              		.section	.text.send_i2c_err,"ax",%progbits
+ 245              		.align	1
+ 246              		.p2align 4,,15
+ 247              		.syntax unified
+ 248              		.thumb
+ 249              		.thumb_func
+ 250              		.fpu fpv4-sp-d16
+ 251              		.type	send_i2c_err, %function
+ 252              	send_i2c_err:
+ 253              		@ args = 0, pretend = 0, frame = 40
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255 0000 10B5     		push	{r4, lr}
+ 256 0002 334C     		ldr	r4, .L17
+ 257 0004 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 258 0006 012B     		cmp	r3, #1
+ 259 0008 94B0     		sub	sp, sp, #80
+ 260 000a 5FD0     		beq	.L9
+ 261 000c 022B     		cmp	r3, #2
+ 262 000e 55D1     		bne	.L11
+ 263 0010 304A     		ldr	r2, .L17+4
+ 264              	.L15:
+ 265 0012 D26B     		ldr	r2, [r2, #60]
+ 266 0014 B2F800E0 		ldrh	lr, [r2]
+ 267 0018 ADF82CE0 		strh	lr, [sp, #44]	@ movhi
+ 268 001c B2F802E0 		ldrh	lr, [r2, #2]
+ 269 0020 ADF82EE0 		strh	lr, [sp, #46]	@ movhi
+ 270 0024 B2F804E0 		ldrh	lr, [r2, #4]
+ 271 0028 ADF830E0 		strh	lr, [sp, #48]	@ movhi
+ 272 002c B2F806E0 		ldrh	lr, [r2, #6]
+ 273 0030 ADF832E0 		strh	lr, [sp, #50]	@ movhi
+ 274 0034 B2F808E0 		ldrh	lr, [r2, #8]
+ 275 0038 ADF834E0 		strh	lr, [sp, #52]	@ movhi
+ 276 003c B2F80AE0 		ldrh	lr, [r2, #10]
+ 277 0040 ADF836E0 		strh	lr, [sp, #54]	@ movhi
+ 278 0044 B2F80CE0 		ldrh	lr, [r2, #12]
+ 279 0048 ADF838E0 		strh	lr, [sp, #56]	@ movhi
+ 280 004c B2F80EE0 		ldrh	lr, [r2, #14]
+ 281 0050 ADF83AE0 		strh	lr, [sp, #58]	@ movhi
+ 282 0054 B2F810E0 		ldrh	lr, [r2, #16]
+ 283 0058 ADF83CE0 		strh	lr, [sp, #60]	@ movhi
+ARM GAS  /tmp/ccyIo2oo.s 			page 6
+
+
+ 284 005c B2F812E0 		ldrh	lr, [r2, #18]
+ 285 0060 5269     		ldr	r2, [r2, #20]
+ 286 0062 1092     		str	r2, [sp, #64]
+ 287 0064 CDE91201 		strd	r0, r1, [sp, #72]
+ 288 0068 8DF82B30 		strb	r3, [sp, #43]
+ 289 006c 0022     		movs	r2, #0
+ 290 006e 0DF12B00 		add	r0, sp, #43
+ 291 0072 10AB     		add	r3, sp, #64
+ 292 0074 CDE90730 		strd	r3, r0, [sp, #28]
+ 293 0078 4FF0030C 		mov	ip, #3
+ 294 007c 8DF84620 		strb	r2, [sp, #70]
+ 295 0080 0DF13E01 		add	r1, sp, #62
+ 296 0084 0FAA     		add	r2, sp, #60
+ 297 0086 0DF13A00 		add	r0, sp, #58
+ 298 008a 0EAB     		add	r3, sp, #56
+ 299 008c CDE90521 		strd	r2, r1, [sp, #20]
+ 300 0090 ADF83EE0 		strh	lr, [sp, #62]	@ movhi
+ 301 0094 ADF844C0 		strh	ip, [sp, #68]	@ movhi
+ 302 0098 0DF13601 		add	r1, sp, #54
+ 303 009c CDE90330 		strd	r3, r0, [sp, #12]
+ 304 00a0 0DAA     		add	r2, sp, #52
+ 305 00a2 0DF13203 		add	r3, sp, #50
+ 306 00a6 CDE90121 		strd	r2, r1, [sp, #4]
+ 307 00aa 0093     		str	r3, [sp]
+ 308 00ac 0DF12E02 		add	r2, sp, #46
+ 309 00b0 0CAB     		add	r3, sp, #48
+ 310 00b2 0BA9     		add	r1, sp, #44
+ 311 00b4 11A8     		add	r0, sp, #68
+ 312 00b6 FFF7FEFF 		bl	pprzlink_msg_v2_send_I2C_ERRORS.constprop.0
+ 313 00ba 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 314              	.L11:
+ 315 00bc 0133     		adds	r3, r3, #1
+ 316 00be DBB2     		uxtb	r3, r3
+ 317 00c0 072B     		cmp	r3, #7
+ 318 00c2 08BF     		it	eq
+ 319 00c4 0023     		moveq	r3, #0
+ 320 00c6 2370     		strb	r3, [r4]
+ 321 00c8 14B0     		add	sp, sp, #80
+ 322              		@ sp needed
+ 323 00ca 10BD     		pop	{r4, pc}
+ 324              	.L9:
+ 325 00cc 024A     		ldr	r2, .L17+8
+ 326 00ce A0E7     		b	.L15
+ 327              	.L18:
+ 328              		.align	2
+ 329              	.L17:
+ 330 00d0 00000000 		.word	.LANCHOR0
+ 331 00d4 00000000 		.word	.LANCHOR2
+ 332 00d8 00000000 		.word	.LANCHOR1
+ 333              		.size	send_i2c_err, .-send_i2c_err
+ 334              		.section	.text.i2c1_init,"ax",%progbits
+ 335              		.align	1
+ 336              		.p2align 4,,15
+ 337              		.global	i2c1_init
+ 338              		.syntax unified
+ 339              		.thumb
+ 340              		.thumb_func
+ARM GAS  /tmp/ccyIo2oo.s 			page 7
+
+
+ 341              		.fpu fpv4-sp-d16
+ 342              		.type	i2c1_init, %function
+ 343              	i2c1_init:
+ 344              		@ args = 0, pretend = 0, frame = 0
+ 345              		@ frame_needed = 0, uses_anonymous_args = 0
+ 346 0000 10B5     		push	{r4, lr}
+ 347 0002 074B     		ldr	r3, .L21
+ 348 0004 074A     		ldr	r2, .L21+4
+ 349 0006 0848     		ldr	r0, .L21+8
+ 350 0008 0024     		movs	r4, #0
+ 351 000a 1C86     		strh	r4, [r3, #48]	@ movhi
+ 352 000c FD21     		movs	r1, #253
+ 353 000e 83F83240 		strb	r4, [r3, #50]
+ 354 0012 5C63     		str	r4, [r3, #52]
+ 355 0014 FFF7FEFF 		bl	register_periodic_telemetry
+ 356 0018 BDE81040 		pop	{r4, lr}
+ 357 001c FFF7FEBF 		b	i2c1_hw_init
+ 358              	.L22:
+ 359              		.align	2
+ 360              	.L21:
+ 361 0020 00000000 		.word	.LANCHOR1
+ 362 0024 00000000 		.word	send_i2c_err
+ 363 0028 00000000 		.word	pprz_telemetry
+ 364              		.size	i2c1_init, .-i2c1_init
+ 365              		.section	.text.i2c2_init,"ax",%progbits
+ 366              		.align	1
+ 367              		.p2align 4,,15
+ 368              		.global	i2c2_init
+ 369              		.syntax unified
+ 370              		.thumb
+ 371              		.thumb_func
+ 372              		.fpu fpv4-sp-d16
+ 373              		.type	i2c2_init, %function
+ 374              	i2c2_init:
+ 375              		@ args = 0, pretend = 0, frame = 0
+ 376              		@ frame_needed = 0, uses_anonymous_args = 0
+ 377 0000 10B5     		push	{r4, lr}
+ 378 0002 074B     		ldr	r3, .L25
+ 379 0004 074A     		ldr	r2, .L25+4
+ 380 0006 0848     		ldr	r0, .L25+8
+ 381 0008 0024     		movs	r4, #0
+ 382 000a 1C86     		strh	r4, [r3, #48]	@ movhi
+ 383 000c FD21     		movs	r1, #253
+ 384 000e 83F83240 		strb	r4, [r3, #50]
+ 385 0012 5C63     		str	r4, [r3, #52]
+ 386 0014 FFF7FEFF 		bl	register_periodic_telemetry
+ 387 0018 BDE81040 		pop	{r4, lr}
+ 388 001c FFF7FEBF 		b	i2c2_hw_init
+ 389              	.L26:
+ 390              		.align	2
+ 391              	.L25:
+ 392 0020 00000000 		.word	.LANCHOR2
+ 393 0024 00000000 		.word	send_i2c_err
+ 394 0028 00000000 		.word	pprz_telemetry
+ 395              		.size	i2c2_init, .-i2c2_init
+ 396              		.section	.text.i2c_init,"ax",%progbits
+ 397              		.align	1
+ARM GAS  /tmp/ccyIo2oo.s 			page 8
+
+
+ 398              		.p2align 4,,15
+ 399              		.global	i2c_init
+ 400              		.syntax unified
+ 401              		.thumb
+ 402              		.thumb_func
+ 403              		.fpu fpv4-sp-d16
+ 404              		.type	i2c_init, %function
+ 405              	i2c_init:
+ 406              		@ args = 0, pretend = 0, frame = 0
+ 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 408              		@ link register save eliminated.
+ 409 0000 0346     		mov	r3, r0
+ 410 0002 0021     		movs	r1, #0
+ 411 0004 1986     		strh	r1, [r3, #48]	@ movhi
+ 412 0006 83F83210 		strb	r1, [r3, #50]
+ 413 000a 5963     		str	r1, [r3, #52]
+ 414 000c 024A     		ldr	r2, .L28
+ 415 000e 0348     		ldr	r0, .L28+4
+ 416 0010 FD21     		movs	r1, #253
+ 417 0012 FFF7FEBF 		b	register_periodic_telemetry
+ 418              	.L29:
+ 419 0016 00BF     		.align	2
+ 420              	.L28:
+ 421 0018 00000000 		.word	send_i2c_err
+ 422 001c 00000000 		.word	pprz_telemetry
+ 423              		.size	i2c_init, .-i2c_init
+ 424              		.section	.text.i2c_transmit,"ax",%progbits
+ 425              		.align	1
+ 426              		.p2align 4,,15
+ 427              		.global	i2c_transmit
+ 428              		.syntax unified
+ 429              		.thumb
+ 430              		.thumb_func
+ 431              		.fpu fpv4-sp-d16
+ 432              		.type	i2c_transmit, %function
+ 433              	i2c_transmit:
+ 434              		@ args = 0, pretend = 0, frame = 0
+ 435              		@ frame_needed = 0, uses_anonymous_args = 0
+ 436              		@ link register save eliminated.
+ 437 0000 0B71     		strb	r3, [r1, #4]
+ 438 0002 0023     		movs	r3, #0
+ 439 0004 4A70     		strb	r2, [r1, #1]
+ 440 0006 0B70     		strb	r3, [r1]
+ 441 0008 4268     		ldr	r2, [r0, #4]
+ 442 000a 4B80     		strh	r3, [r1, #2]	@ movhi
+ 443 000c 1047     		bx	r2
+ 444              		.size	i2c_transmit, .-i2c_transmit
+ 445 000e 00BF     		.section	.text.i2c_receive,"ax",%progbits
+ 446              		.align	1
+ 447              		.p2align 4,,15
+ 448              		.global	i2c_receive
+ 449              		.syntax unified
+ 450              		.thumb
+ 451              		.thumb_func
+ 452              		.fpu fpv4-sp-d16
+ 453              		.type	i2c_receive, %function
+ 454              	i2c_receive:
+ARM GAS  /tmp/ccyIo2oo.s 			page 9
+
+
+ 455              		@ args = 0, pretend = 0, frame = 0
+ 456              		@ frame_needed = 0, uses_anonymous_args = 0
+ 457              		@ link register save eliminated.
+ 458 0000 4B80     		strh	r3, [r1, #2]	@ movhi
+ 459 0002 0123     		movs	r3, #1
+ 460 0004 0B70     		strb	r3, [r1]
+ 461 0006 0023     		movs	r3, #0
+ 462 0008 4A70     		strb	r2, [r1, #1]
+ 463 000a 0B71     		strb	r3, [r1, #4]
+ 464 000c 4368     		ldr	r3, [r0, #4]
+ 465 000e 1847     		bx	r3
+ 466              		.size	i2c_receive, .-i2c_receive
+ 467              		.section	.text.i2c_transceive,"ax",%progbits
+ 468              		.align	1
+ 469              		.p2align 4,,15
+ 470              		.global	i2c_transceive
+ 471              		.syntax unified
+ 472              		.thumb
+ 473              		.thumb_func
+ 474              		.fpu fpv4-sp-d16
+ 475              		.type	i2c_transceive, %function
+ 476              	i2c_transceive:
+ 477              		@ args = 4, pretend = 0, frame = 0
+ 478              		@ frame_needed = 0, uses_anonymous_args = 0
+ 479              		@ link register save eliminated.
+ 480 0000 0B71     		strb	r3, [r1, #4]
+ 481 0002 0223     		movs	r3, #2
+ 482 0004 4A70     		strb	r2, [r1, #1]
+ 483 0006 0B70     		strb	r3, [r1]
+ 484 0008 BDF80020 		ldrh	r2, [sp]
+ 485 000c 4368     		ldr	r3, [r0, #4]
+ 486 000e 4A80     		strh	r2, [r1, #2]	@ movhi
+ 487 0010 1847     		bx	r3
+ 488              		.size	i2c_transceive, .-i2c_transceive
+ 489 0012 00BF     		.section	.text.i2c_blocking_transmit,"ax",%progbits
+ 490              		.align	1
+ 491              		.p2align 4,,15
+ 492              		.global	i2c_blocking_transmit
+ 493              		.syntax unified
+ 494              		.thumb
+ 495              		.thumb_func
+ 496              		.fpu fpv4-sp-d16
+ 497              		.type	i2c_blocking_transmit, %function
+ 498              	i2c_blocking_transmit:
+ 499              		@ args = 0, pretend = 0, frame = 0
+ 500              		@ frame_needed = 0, uses_anonymous_args = 0
+ 501 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 502 0002 0B71     		strb	r3, [r1, #4]
+ 503 0004 0023     		movs	r3, #0
+ 504 0006 4A70     		strb	r2, [r1, #1]
+ 505 0008 0B70     		strb	r3, [r1]
+ 506 000a 4268     		ldr	r2, [r0, #4]
+ 507 000c 4B80     		strh	r3, [r1, #2]	@ movhi
+ 508 000e 2DED028B 		vpush.64	{d8}
+ 509 0012 0546     		mov	r5, r0
+ 510 0014 0E46     		mov	r6, r1
+ 511 0016 9047     		blx	r2
+ARM GAS  /tmp/ccyIo2oo.s 			page 10
+
+
+ 512 0018 0746     		mov	r7, r0
+ 513 001a A0B3     		cbz	r0, .L34
+ 514 001c 1C4C     		ldr	r4, .L53
+ 515 001e D4ED007A 		vldr.32	s15, [r4]	@ int
+ 516 0022 94ED567A 		vldr.32	s14, [r4, #344]	@ int
+ 517 0026 D4ED016A 		vldr.32	s13, [r4, #4]	@ int
+ 518 002a B8EE477A 		vcvt.f32.u32	s14, s14
+ 519 002e F8EE666A 		vcvt.f32.u32	s13, s13
+ 520 0032 F8EE677A 		vcvt.f32.u32	s15, s15
+ 521 0036 86EE878A 		vdiv.f32	s16, s13, s14
+ 522 003a F7EE008A 		vmov.f32	s17, #1.0e+0
+ 523 003e 38EE278A 		vadd.f32	s16, s16, s15
+ 524              	.L35:
+ 525 0042 96F82530 		ldrb	r3, [r6, #37]	@ zero_extendqisi2
+ 526 0046 2846     		mov	r0, r5
+ 527 0048 1BB1     		cbz	r3, .L38
+ 528 004a 96F82530 		ldrb	r3, [r6, #37]	@ zero_extendqisi2
+ 529 004e 012B     		cmp	r3, #1
+ 530 0050 19D1     		bne	.L34
+ 531              	.L38:
+ 532 0052 EB68     		ldr	r3, [r5, #12]
+ 533 0054 03B1     		cbz	r3, .L36
+ 534 0056 9847     		blx	r3
+ 535              	.L36:
+ 536 0058 94ED007A 		vldr.32	s14, [r4]	@ int
+ 537 005c D4ED567A 		vldr.32	s15, [r4, #344]	@ int
+ 538 0060 94ED016A 		vldr.32	s12, [r4, #4]	@ int
+ 539 0064 F8EE676A 		vcvt.f32.u32	s13, s15
+ 540 0068 B8EE466A 		vcvt.f32.u32	s12, s12
+ 541 006c B8EE477A 		vcvt.f32.u32	s14, s14
+ 542 0070 C6EE267A 		vdiv.f32	s15, s12, s13
+ 543 0074 77EE877A 		vadd.f32	s15, s15, s14
+ 544 0078 77EEC87A 		vsub.f32	s15, s15, s16
+ 545 007c F4EEE87A 		vcmpe.f32	s15, s17
+ 546 0080 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 547 0084 DDDD     		ble	.L35
+ 548              	.L34:
+ 549 0086 BDEC028B 		vldm	sp!, {d8}
+ 550 008a 3846     		mov	r0, r7
+ 551 008c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 552              	.L54:
+ 553 008e 00BF     		.align	2
+ 554              	.L53:
+ 555 0090 00000000 		.word	sys_time
+ 556              		.size	i2c_blocking_transmit, .-i2c_blocking_transmit
+ 557              		.section	.text.i2c_blocking_receive,"ax",%progbits
+ 558              		.align	1
+ 559              		.p2align 4,,15
+ 560              		.global	i2c_blocking_receive
+ 561              		.syntax unified
+ 562              		.thumb
+ 563              		.thumb_func
+ 564              		.fpu fpv4-sp-d16
+ 565              		.type	i2c_blocking_receive, %function
+ 566              	i2c_blocking_receive:
+ 567              		@ args = 0, pretend = 0, frame = 0
+ 568              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccyIo2oo.s 			page 11
+
+
+ 569 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 570 0002 4B80     		strh	r3, [r1, #2]	@ movhi
+ 571 0004 0123     		movs	r3, #1
+ 572 0006 0B70     		strb	r3, [r1]
+ 573 0008 0023     		movs	r3, #0
+ 574 000a 4A70     		strb	r2, [r1, #1]
+ 575 000c 0B71     		strb	r3, [r1, #4]
+ 576 000e 2DED028B 		vpush.64	{d8}
+ 577 0012 4368     		ldr	r3, [r0, #4]
+ 578 0014 0546     		mov	r5, r0
+ 579 0016 0E46     		mov	r6, r1
+ 580 0018 9847     		blx	r3
+ 581 001a 0746     		mov	r7, r0
+ 582 001c A0B3     		cbz	r0, .L56
+ 583 001e 1C4C     		ldr	r4, .L75
+ 584 0020 D4ED007A 		vldr.32	s15, [r4]	@ int
+ 585 0024 94ED567A 		vldr.32	s14, [r4, #344]	@ int
+ 586 0028 D4ED016A 		vldr.32	s13, [r4, #4]	@ int
+ 587 002c B8EE477A 		vcvt.f32.u32	s14, s14
+ 588 0030 F8EE666A 		vcvt.f32.u32	s13, s13
+ 589 0034 F8EE677A 		vcvt.f32.u32	s15, s15
+ 590 0038 86EE878A 		vdiv.f32	s16, s13, s14
+ 591 003c F7EE008A 		vmov.f32	s17, #1.0e+0
+ 592 0040 38EE278A 		vadd.f32	s16, s16, s15
+ 593              	.L57:
+ 594 0044 96F82530 		ldrb	r3, [r6, #37]	@ zero_extendqisi2
+ 595 0048 2846     		mov	r0, r5
+ 596 004a 1BB1     		cbz	r3, .L60
+ 597 004c 96F82530 		ldrb	r3, [r6, #37]	@ zero_extendqisi2
+ 598 0050 012B     		cmp	r3, #1
+ 599 0052 19D1     		bne	.L56
+ 600              	.L60:
+ 601 0054 EB68     		ldr	r3, [r5, #12]
+ 602 0056 03B1     		cbz	r3, .L58
+ 603 0058 9847     		blx	r3
+ 604              	.L58:
+ 605 005a 94ED007A 		vldr.32	s14, [r4]	@ int
+ 606 005e D4ED567A 		vldr.32	s15, [r4, #344]	@ int
+ 607 0062 94ED016A 		vldr.32	s12, [r4, #4]	@ int
+ 608 0066 F8EE676A 		vcvt.f32.u32	s13, s15
+ 609 006a B8EE466A 		vcvt.f32.u32	s12, s12
+ 610 006e B8EE477A 		vcvt.f32.u32	s14, s14
+ 611 0072 C6EE267A 		vdiv.f32	s15, s12, s13
+ 612 0076 77EE877A 		vadd.f32	s15, s15, s14
+ 613 007a 77EEC87A 		vsub.f32	s15, s15, s16
+ 614 007e F4EEE87A 		vcmpe.f32	s15, s17
+ 615 0082 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 616 0086 DDDD     		ble	.L57
+ 617              	.L56:
+ 618 0088 BDEC028B 		vldm	sp!, {d8}
+ 619 008c 3846     		mov	r0, r7
+ 620 008e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 621              	.L76:
+ 622              		.align	2
+ 623              	.L75:
+ 624 0090 00000000 		.word	sys_time
+ 625              		.size	i2c_blocking_receive, .-i2c_blocking_receive
+ARM GAS  /tmp/ccyIo2oo.s 			page 12
+
+
+ 626              		.section	.text.i2c_blocking_transceive,"ax",%progbits
+ 627              		.align	1
+ 628              		.p2align 4,,15
+ 629              		.global	i2c_blocking_transceive
+ 630              		.syntax unified
+ 631              		.thumb
+ 632              		.thumb_func
+ 633              		.fpu fpv4-sp-d16
+ 634              		.type	i2c_blocking_transceive, %function
+ 635              	i2c_blocking_transceive:
+ 636              		@ args = 4, pretend = 0, frame = 0
+ 637              		@ frame_needed = 0, uses_anonymous_args = 0
+ 638 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 639 0002 2DED028B 		vpush.64	{d8}
+ 640 0006 0B71     		strb	r3, [r1, #4]
+ 641 0008 0223     		movs	r3, #2
+ 642 000a 4A70     		strb	r2, [r1, #1]
+ 643 000c 0B70     		strb	r3, [r1]
+ 644 000e BDF82020 		ldrh	r2, [sp, #32]
+ 645 0012 4368     		ldr	r3, [r0, #4]
+ 646 0014 4A80     		strh	r2, [r1, #2]	@ movhi
+ 647 0016 0546     		mov	r5, r0
+ 648 0018 0E46     		mov	r6, r1
+ 649 001a 9847     		blx	r3
+ 650 001c 0746     		mov	r7, r0
+ 651 001e A0B3     		cbz	r0, .L78
+ 652 0020 1C4C     		ldr	r4, .L97
+ 653 0022 D4ED007A 		vldr.32	s15, [r4]	@ int
+ 654 0026 94ED567A 		vldr.32	s14, [r4, #344]	@ int
+ 655 002a D4ED016A 		vldr.32	s13, [r4, #4]	@ int
+ 656 002e B8EE477A 		vcvt.f32.u32	s14, s14
+ 657 0032 F8EE666A 		vcvt.f32.u32	s13, s13
+ 658 0036 F8EE677A 		vcvt.f32.u32	s15, s15
+ 659 003a 86EE878A 		vdiv.f32	s16, s13, s14
+ 660 003e F7EE008A 		vmov.f32	s17, #1.0e+0
+ 661 0042 38EE278A 		vadd.f32	s16, s16, s15
+ 662              	.L79:
+ 663 0046 96F82530 		ldrb	r3, [r6, #37]	@ zero_extendqisi2
+ 664 004a 2846     		mov	r0, r5
+ 665 004c 1BB1     		cbz	r3, .L82
+ 666 004e 96F82530 		ldrb	r3, [r6, #37]	@ zero_extendqisi2
+ 667 0052 012B     		cmp	r3, #1
+ 668 0054 19D1     		bne	.L78
+ 669              	.L82:
+ 670 0056 EB68     		ldr	r3, [r5, #12]
+ 671 0058 03B1     		cbz	r3, .L80
+ 672 005a 9847     		blx	r3
+ 673              	.L80:
+ 674 005c 94ED007A 		vldr.32	s14, [r4]	@ int
+ 675 0060 D4ED567A 		vldr.32	s15, [r4, #344]	@ int
+ 676 0064 94ED016A 		vldr.32	s12, [r4, #4]	@ int
+ 677 0068 F8EE676A 		vcvt.f32.u32	s13, s15
+ 678 006c B8EE466A 		vcvt.f32.u32	s12, s12
+ 679 0070 B8EE477A 		vcvt.f32.u32	s14, s14
+ 680 0074 C6EE267A 		vdiv.f32	s15, s12, s13
+ 681 0078 77EE877A 		vadd.f32	s15, s15, s14
+ 682 007c 77EEC87A 		vsub.f32	s15, s15, s16
+ARM GAS  /tmp/ccyIo2oo.s 			page 13
+
+
+ 683 0080 F4EEE87A 		vcmpe.f32	s15, s17
+ 684 0084 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 685 0088 DDDD     		ble	.L79
+ 686              	.L78:
+ 687 008a BDEC028B 		vldm	sp!, {d8}
+ 688 008e 3846     		mov	r0, r7
+ 689 0090 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 690              	.L98:
+ 691 0092 00BF     		.align	2
+ 692              	.L97:
+ 693 0094 00000000 		.word	sys_time
+ 694              		.size	i2c_blocking_transceive, .-i2c_blocking_transceive
+ 695              		.global	i2c2
+ 696              		.global	i2c1
+ 697              		.section	.bss._i2c_nb_cnt.0,"aw",%nobits
+ 698              		.set	.LANCHOR0,. + 0
+ 699              		.type	_i2c_nb_cnt.0, %object
+ 700              		.size	_i2c_nb_cnt.0, 1
+ 701              	_i2c_nb_cnt.0:
+ 702 0000 00       		.space	1
+ 703              		.section	.bss.i2c1,"aw",%nobits
+ 704              		.align	2
+ 705              		.set	.LANCHOR1,. + 0
+ 706              		.type	i2c1, %object
+ 707              		.size	i2c1, 68
+ 708              	i2c1:
+ 709 0000 00000000 		.space	68
+ 709      00000000 
+ 709      00000000 
+ 709      00000000 
+ 709      00000000 
+ 710              		.section	.bss.i2c2,"aw",%nobits
+ 711              		.align	2
+ 712              		.set	.LANCHOR2,. + 0
+ 713              		.type	i2c2, %object
+ 714              		.size	i2c2, 68
+ 715              	i2c2:
+ 716 0000 00000000 		.space	68
+ 716      00000000 
+ 716      00000000 
+ 716      00000000 
+ 716      00000000 
+ 717              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccyIo2oo.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 i2c.c
+     /tmp/ccyIo2oo.s:15     .rodata.pprzlink_msg_v2_send_I2C_ERRORS.constprop.0.str1.4:0000000000000000 $d
+     /tmp/ccyIo2oo.s:19     .text.pprzlink_msg_v2_send_I2C_ERRORS.constprop.0:0000000000000000 $t
+     /tmp/ccyIo2oo.s:27     .text.pprzlink_msg_v2_send_I2C_ERRORS.constprop.0:0000000000000000 pprzlink_msg_v2_send_I2C_ERRORS.constprop.0
+     /tmp/ccyIo2oo.s:242    .text.pprzlink_msg_v2_send_I2C_ERRORS.constprop.0:00000000000001b8 $d
+     /tmp/ccyIo2oo.s:245    .text.send_i2c_err:0000000000000000 $t
+     /tmp/ccyIo2oo.s:252    .text.send_i2c_err:0000000000000000 send_i2c_err
+     /tmp/ccyIo2oo.s:330    .text.send_i2c_err:00000000000000d0 $d
+     /tmp/ccyIo2oo.s:335    .text.i2c1_init:0000000000000000 $t
+     /tmp/ccyIo2oo.s:343    .text.i2c1_init:0000000000000000 i2c1_init
+     /tmp/ccyIo2oo.s:361    .text.i2c1_init:0000000000000020 $d
+     /tmp/ccyIo2oo.s:366    .text.i2c2_init:0000000000000000 $t
+     /tmp/ccyIo2oo.s:374    .text.i2c2_init:0000000000000000 i2c2_init
+     /tmp/ccyIo2oo.s:392    .text.i2c2_init:0000000000000020 $d
+     /tmp/ccyIo2oo.s:397    .text.i2c_init:0000000000000000 $t
+     /tmp/ccyIo2oo.s:405    .text.i2c_init:0000000000000000 i2c_init
+     /tmp/ccyIo2oo.s:421    .text.i2c_init:0000000000000018 $d
+     /tmp/ccyIo2oo.s:425    .text.i2c_transmit:0000000000000000 $t
+     /tmp/ccyIo2oo.s:433    .text.i2c_transmit:0000000000000000 i2c_transmit
+     /tmp/ccyIo2oo.s:446    .text.i2c_receive:0000000000000000 $t
+     /tmp/ccyIo2oo.s:454    .text.i2c_receive:0000000000000000 i2c_receive
+     /tmp/ccyIo2oo.s:468    .text.i2c_transceive:0000000000000000 $t
+     /tmp/ccyIo2oo.s:476    .text.i2c_transceive:0000000000000000 i2c_transceive
+     /tmp/ccyIo2oo.s:490    .text.i2c_blocking_transmit:0000000000000000 $t
+     /tmp/ccyIo2oo.s:498    .text.i2c_blocking_transmit:0000000000000000 i2c_blocking_transmit
+     /tmp/ccyIo2oo.s:555    .text.i2c_blocking_transmit:0000000000000090 $d
+     /tmp/ccyIo2oo.s:558    .text.i2c_blocking_receive:0000000000000000 $t
+     /tmp/ccyIo2oo.s:566    .text.i2c_blocking_receive:0000000000000000 i2c_blocking_receive
+     /tmp/ccyIo2oo.s:624    .text.i2c_blocking_receive:0000000000000090 $d
+     /tmp/ccyIo2oo.s:627    .text.i2c_blocking_transceive:0000000000000000 $t
+     /tmp/ccyIo2oo.s:635    .text.i2c_blocking_transceive:0000000000000000 i2c_blocking_transceive
+     /tmp/ccyIo2oo.s:693    .text.i2c_blocking_transceive:0000000000000094 $d
+     /tmp/ccyIo2oo.s:715    .bss.i2c2:0000000000000000 i2c2
+     /tmp/ccyIo2oo.s:708    .bss.i2c1:0000000000000000 i2c1
+     /tmp/ccyIo2oo.s:701    .bss._i2c_nb_cnt.0:0000000000000000 _i2c_nb_cnt.0
+     /tmp/ccyIo2oo.s:702    .bss._i2c_nb_cnt.0:0000000000000000 $d
+     /tmp/ccyIo2oo.s:704    .bss.i2c1:0000000000000000 $d
+     /tmp/ccyIo2oo.s:711    .bss.i2c2:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+register_periodic_telemetry
+i2c1_hw_init
+pprz_telemetry
+i2c2_hw_init
+sys_time

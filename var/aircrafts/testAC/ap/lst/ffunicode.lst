@@ -1,0 +1,759 @@
+ARM GAS  /tmp/cc9nhykM.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"ffunicode.c"
+  13              		.text
+  14              		.section	.text.ff_uni2oem,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	ff_uni2oem
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	ff_uni2oem, %function
+  24              	ff_uni2oem:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 7F28     		cmp	r0, #127
+  29 0002 18D9     		bls	.L11
+  30 0004 B0F5803F 		cmp	r0, #65536
+  31 0008 03D2     		bcs	.L8
+  32 000a 40F25233 		movw	r3, #850
+  33 000e 9942     		cmp	r1, r3
+  34 0010 01D0     		beq	.L13
+  35              	.L8:
+  36 0012 0020     		movs	r0, #0
+  37 0014 7047     		bx	lr
+  38              	.L13:
+  39 0016 0949     		ldr	r1, .L14
+  40 0018 0023     		movs	r3, #0
+  41 001a C722     		movs	r2, #199
+  42 001c 03E0     		b	.L4
+  43              	.L6:
+  44 001e 802B     		cmp	r3, #128
+  45 0020 F7D0     		beq	.L8
+  46 0022 31F8022F 		ldrh	r2, [r1, #2]!
+  47              	.L4:
+  48 0026 8242     		cmp	r2, r0
+  49 0028 1FFA83FC 		uxth	ip, r3
+  50 002c 03F10103 		add	r3, r3, #1
+  51 0030 F5D1     		bne	.L6
+  52 0032 0CF18000 		add	r0, ip, #128
+  53              	.L11:
+  54 0036 80B2     		uxth	r0, r0
+  55 0038 7047     		bx	lr
+  56              	.L15:
+  57 003a 00BF     		.align	2
+ARM GAS  /tmp/cc9nhykM.s 			page 2
+
+
+  58              	.L14:
+  59 003c 00000000 		.word	.LANCHOR0
+  60              		.size	ff_uni2oem, .-ff_uni2oem
+  61              		.section	.text.ff_oem2uni,"ax",%progbits
+  62              		.align	1
+  63              		.p2align 4,,15
+  64              		.global	ff_oem2uni
+  65              		.syntax unified
+  66              		.thumb
+  67              		.thumb_func
+  68              		.fpu fpv4-sp-d16
+  69              		.type	ff_oem2uni, %function
+  70              	ff_oem2uni:
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73              		@ link register save eliminated.
+  74 0000 7F28     		cmp	r0, #127
+  75 0002 04D9     		bls	.L17
+  76 0004 40F25233 		movw	r3, #850
+  77 0008 9942     		cmp	r1, r3
+  78 000a 01D0     		beq	.L20
+  79              	.L19:
+  80 000c 0020     		movs	r0, #0
+  81              	.L17:
+  82 000e 7047     		bx	lr
+  83              	.L20:
+  84 0010 FF28     		cmp	r0, #255
+  85 0012 FBD8     		bhi	.L19
+  86 0014 00F10040 		add	r0, r0, #-2147483648
+  87 0018 024B     		ldr	r3, .L21
+  88 001a 8038     		subs	r0, r0, #128
+  89 001c 33F81000 		ldrh	r0, [r3, r0, lsl #1]
+  90 0020 7047     		bx	lr
+  91              	.L22:
+  92 0022 00BF     		.align	2
+  93              	.L21:
+  94 0024 00000000 		.word	.LANCHOR0
+  95              		.size	ff_oem2uni, .-ff_oem2uni
+  96              		.section	.text.ff_wtoupper,"ax",%progbits
+  97              		.align	1
+  98              		.p2align 4,,15
+  99              		.global	ff_wtoupper
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 103              		.fpu fpv4-sp-d16
+ 104              		.type	ff_wtoupper, %function
+ 105              	ff_wtoupper:
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108 0000 B0F5803F 		cmp	r0, #65536
+ 109 0004 21D2     		bcs	.L46
+ 110 0006 2B4A     		ldr	r2, .L51
+ 111 0008 2B4B     		ldr	r3, .L51+4
+ 112 000a B0F5805F 		cmp	r0, #4096
+ 113 000e 30B5     		push	{r4, r5, lr}
+ 114 0010 41F67D51 		movw	r1, #7549
+ARM GAS  /tmp/cc9nhykM.s 			page 3
+
+
+ 115 0014 84B2     		uxth	r4, r0
+ 116 0016 34BF     		ite	cc
+ 117 0018 6121     		movcc	r1, #97
+ 118 001a 1346     		movcs	r3, r2
+ 119              	.L40:
+ 120 001c 0433     		adds	r3, r3, #4
+ 121 001e 0FE0     		b	.L39
+ 122              	.L50:
+ 123 0020 8C42     		cmp	r4, r1
+ 124 0022 10D3     		bcc	.L26
+ 125 0024 33F8022C 		ldrh	r2, [r3, #-2]
+ 126 0028 5FFA82FC 		uxtb	ip, r2
+ 127 002c 0CEB010E 		add	lr, ip, r1
+ 128 0030 7045     		cmp	r0, lr
+ 129 0032 4FEA1222 		lsr	r2, r2, #8
+ 130 0036 09DB     		blt	.L49
+ 131 0038 0433     		adds	r3, r3, #4
+ 132 003a 82B1     		cbz	r2, .L38
+ 133 003c 33F8041C 		ldrh	r1, [r3, #-4]
+ 134              	.L39:
+ 135 0040 1D46     		mov	r5, r3
+ 136 0042 0029     		cmp	r1, #0
+ 137 0044 ECD1     		bne	.L50
+ 138              	.L26:
+ 139 0046 2046     		mov	r0, r4
+ 140 0048 30BD     		pop	{r4, r5, pc}
+ 141              	.L46:
+ 142 004a 7047     		bx	lr
+ 143              	.L49:
+ 144 004c 082A     		cmp	r2, #8
+ 145 004e FAD8     		bhi	.L26
+ 146 0050 DFE802F0 		tbb	[pc, r2]
+ 147              	.L29:
+ 148 0054 2C       		.byte	(.L37-.L29)/2
+ 149 0055 26       		.byte	(.L36-.L29)/2
+ 150 0056 22       		.byte	(.L35-.L29)/2
+ 151 0057 1E       		.byte	(.L34-.L29)/2
+ 152 0058 1A       		.byte	(.L33-.L29)/2
+ 153 0059 16       		.byte	(.L32-.L29)/2
+ 154 005a 12       		.byte	(.L31-.L29)/2
+ 155 005b 0E       		.byte	(.L30-.L29)/2
+ 156 005c 0A       		.byte	(.L28-.L29)/2
+ 157 005d 00       		.p2align 1
+ 158              	.L38:
+ 159 005e 35F81C10 		ldrh	r1, [r5, ip, lsl #1]
+ 160 0062 05EB4C03 		add	r3, r5, ip, lsl #1
+ 161 0066 D9E7     		b	.L40
+ 162              	.L28:
+ 163 0068 A4F5E353 		sub	r3, r4, #7264
+ 164 006c 9CB2     		uxth	r4, r3
+ 165 006e EAE7     		b	.L26
+ 166              	.L30:
+ 167 0070 A4F15003 		sub	r3, r4, #80
+ 168 0074 9CB2     		uxth	r4, r3
+ 169 0076 E6E7     		b	.L26
+ 170              	.L31:
+ 171 0078 04F10803 		add	r3, r4, #8
+ARM GAS  /tmp/cc9nhykM.s 			page 4
+
+
+ 172 007c 9CB2     		uxth	r4, r3
+ 173 007e E2E7     		b	.L26
+ 174              	.L32:
+ 175 0080 A4F11A03 		sub	r3, r4, #26
+ 176 0084 9CB2     		uxth	r4, r3
+ 177 0086 DEE7     		b	.L26
+ 178              	.L33:
+ 179 0088 A4F13003 		sub	r3, r4, #48
+ 180 008c 9CB2     		uxth	r4, r3
+ 181 008e DAE7     		b	.L26
+ 182              	.L34:
+ 183 0090 A4F12003 		sub	r3, r4, #32
+ 184 0094 9CB2     		uxth	r4, r3
+ 185 0096 D6E7     		b	.L26
+ 186              	.L35:
+ 187 0098 A4F11003 		sub	r3, r4, #16
+ 188 009c 9CB2     		uxth	r4, r3
+ 189 009e D2E7     		b	.L26
+ 190              	.L36:
+ 191 00a0 631A     		subs	r3, r4, r1
+ 192 00a2 03F00103 		and	r3, r3, #1
+ 193 00a6 E31A     		subs	r3, r4, r3
+ 194 00a8 9CB2     		uxth	r4, r3
+ 195 00aa CCE7     		b	.L26
+ 196              	.L37:
+ 197 00ac 411A     		subs	r1, r0, r1
+ 198 00ae 33F81140 		ldrh	r4, [r3, r1, lsl #1]
+ 199 00b2 C8E7     		b	.L26
+ 200              	.L52:
+ 201              		.align	2
+ 202              	.L51:
+ 203 00b4 00000000 		.word	.LANCHOR2
+ 204 00b8 00000000 		.word	.LANCHOR1
+ 205              		.size	ff_wtoupper, .-ff_wtoupper
+ 206              		.section	.rodata.cvt1.1,"a"
+ 207              		.align	2
+ 208              		.set	.LANCHOR1,. + 0
+ 209              		.type	cvt1.1, %object
+ 210              		.size	cvt1.1, 498
+ 211              	cvt1.1:
+ 212 0000 6100     		.short	97
+ 213 0002 1A03     		.short	794
+ 214 0004 E000     		.short	224
+ 215 0006 1703     		.short	791
+ 216 0008 F800     		.short	248
+ 217 000a 0703     		.short	775
+ 218 000c FF00     		.short	255
+ 219 000e 0100     		.short	1
+ 220 0010 7801     		.short	376
+ 221 0012 0001     		.short	256
+ 222 0014 3001     		.short	304
+ 223 0016 3201     		.short	306
+ 224 0018 0601     		.short	262
+ 225 001a 3901     		.short	313
+ 226 001c 1001     		.short	272
+ 227 001e 4A01     		.short	330
+ 228 0020 2E01     		.short	302
+ARM GAS  /tmp/cc9nhykM.s 			page 5
+
+
+ 229 0022 7901     		.short	377
+ 230 0024 0601     		.short	262
+ 231 0026 8001     		.short	384
+ 232 0028 4D00     		.short	77
+ 233 002a 4302     		.short	579
+ 234 002c 8101     		.short	385
+ 235 002e 8201     		.short	386
+ 236 0030 8201     		.short	386
+ 237 0032 8401     		.short	388
+ 238 0034 8401     		.short	388
+ 239 0036 8601     		.short	390
+ 240 0038 8701     		.short	391
+ 241 003a 8701     		.short	391
+ 242 003c 8901     		.short	393
+ 243 003e 8A01     		.short	394
+ 244 0040 8B01     		.short	395
+ 245 0042 8B01     		.short	395
+ 246 0044 8D01     		.short	397
+ 247 0046 8E01     		.short	398
+ 248 0048 8F01     		.short	399
+ 249 004a 9001     		.short	400
+ 250 004c 9101     		.short	401
+ 251 004e 9101     		.short	401
+ 252 0050 9301     		.short	403
+ 253 0052 9401     		.short	404
+ 254 0054 F601     		.short	502
+ 255 0056 9601     		.short	406
+ 256 0058 9701     		.short	407
+ 257 005a 9801     		.short	408
+ 258 005c 9801     		.short	408
+ 259 005e 3D02     		.short	573
+ 260 0060 9B01     		.short	411
+ 261 0062 9C01     		.short	412
+ 262 0064 9D01     		.short	413
+ 263 0066 2002     		.short	544
+ 264 0068 9F01     		.short	415
+ 265 006a A001     		.short	416
+ 266 006c A001     		.short	416
+ 267 006e A201     		.short	418
+ 268 0070 A201     		.short	418
+ 269 0072 A401     		.short	420
+ 270 0074 A401     		.short	420
+ 271 0076 A601     		.short	422
+ 272 0078 A701     		.short	423
+ 273 007a A701     		.short	423
+ 274 007c A901     		.short	425
+ 275 007e AA01     		.short	426
+ 276 0080 AB01     		.short	427
+ 277 0082 AC01     		.short	428
+ 278 0084 AC01     		.short	428
+ 279 0086 AE01     		.short	430
+ 280 0088 AF01     		.short	431
+ 281 008a AF01     		.short	431
+ 282 008c B101     		.short	433
+ 283 008e B201     		.short	434
+ 284 0090 B301     		.short	435
+ 285 0092 B301     		.short	435
+ARM GAS  /tmp/cc9nhykM.s 			page 6
+
+
+ 286 0094 B501     		.short	437
+ 287 0096 B501     		.short	437
+ 288 0098 B701     		.short	439
+ 289 009a B801     		.short	440
+ 290 009c B801     		.short	440
+ 291 009e BA01     		.short	442
+ 292 00a0 BB01     		.short	443
+ 293 00a2 BC01     		.short	444
+ 294 00a4 BC01     		.short	444
+ 295 00a6 BE01     		.short	446
+ 296 00a8 F701     		.short	503
+ 297 00aa C001     		.short	448
+ 298 00ac C101     		.short	449
+ 299 00ae C201     		.short	450
+ 300 00b0 C301     		.short	451
+ 301 00b2 C401     		.short	452
+ 302 00b4 C501     		.short	453
+ 303 00b6 C401     		.short	452
+ 304 00b8 C701     		.short	455
+ 305 00ba C801     		.short	456
+ 306 00bc C701     		.short	455
+ 307 00be CA01     		.short	458
+ 308 00c0 CB01     		.short	459
+ 309 00c2 CA01     		.short	458
+ 310 00c4 CD01     		.short	461
+ 311 00c6 1001     		.short	272
+ 312 00c8 DD01     		.short	477
+ 313 00ca 0100     		.short	1
+ 314 00cc 8E01     		.short	398
+ 315 00ce DE01     		.short	478
+ 316 00d0 1201     		.short	274
+ 317 00d2 F301     		.short	499
+ 318 00d4 0300     		.short	3
+ 319 00d6 F101     		.short	497
+ 320 00d8 F401     		.short	500
+ 321 00da F401     		.short	500
+ 322 00dc F801     		.short	504
+ 323 00de 2801     		.short	296
+ 324 00e0 2202     		.short	546
+ 325 00e2 1201     		.short	274
+ 326 00e4 3A02     		.short	570
+ 327 00e6 0900     		.short	9
+ 328 00e8 652C     		.short	11365
+ 329 00ea 3B02     		.short	571
+ 330 00ec 3B02     		.short	571
+ 331 00ee 3D02     		.short	573
+ 332 00f0 662C     		.short	11366
+ 333 00f2 3F02     		.short	575
+ 334 00f4 4002     		.short	576
+ 335 00f6 4102     		.short	577
+ 336 00f8 4102     		.short	577
+ 337 00fa 4602     		.short	582
+ 338 00fc 0A01     		.short	266
+ 339 00fe 5302     		.short	595
+ 340 0100 4000     		.short	64
+ 341 0102 8101     		.short	385
+ 342 0104 8601     		.short	390
+ARM GAS  /tmp/cc9nhykM.s 			page 7
+
+
+ 343 0106 5502     		.short	597
+ 344 0108 8901     		.short	393
+ 345 010a 8A01     		.short	394
+ 346 010c 5802     		.short	600
+ 347 010e 8F01     		.short	399
+ 348 0110 5A02     		.short	602
+ 349 0112 9001     		.short	400
+ 350 0114 5C02     		.short	604
+ 351 0116 5D02     		.short	605
+ 352 0118 5E02     		.short	606
+ 353 011a 5F02     		.short	607
+ 354 011c 9301     		.short	403
+ 355 011e 6102     		.short	609
+ 356 0120 6202     		.short	610
+ 357 0122 9401     		.short	404
+ 358 0124 6402     		.short	612
+ 359 0126 6502     		.short	613
+ 360 0128 6602     		.short	614
+ 361 012a 6702     		.short	615
+ 362 012c 9701     		.short	407
+ 363 012e 9601     		.short	406
+ 364 0130 6A02     		.short	618
+ 365 0132 622C     		.short	11362
+ 366 0134 6C02     		.short	620
+ 367 0136 6D02     		.short	621
+ 368 0138 6E02     		.short	622
+ 369 013a 9C01     		.short	412
+ 370 013c 7002     		.short	624
+ 371 013e 7102     		.short	625
+ 372 0140 9D01     		.short	413
+ 373 0142 7302     		.short	627
+ 374 0144 7402     		.short	628
+ 375 0146 9F01     		.short	415
+ 376 0148 7602     		.short	630
+ 377 014a 7702     		.short	631
+ 378 014c 7802     		.short	632
+ 379 014e 7902     		.short	633
+ 380 0150 7A02     		.short	634
+ 381 0152 7B02     		.short	635
+ 382 0154 7C02     		.short	636
+ 383 0156 642C     		.short	11364
+ 384 0158 7E02     		.short	638
+ 385 015a 7F02     		.short	639
+ 386 015c A601     		.short	422
+ 387 015e 8102     		.short	641
+ 388 0160 8202     		.short	642
+ 389 0162 A901     		.short	425
+ 390 0164 8402     		.short	644
+ 391 0166 8502     		.short	645
+ 392 0168 8602     		.short	646
+ 393 016a 8702     		.short	647
+ 394 016c AE01     		.short	430
+ 395 016e 4402     		.short	580
+ 396 0170 B101     		.short	433
+ 397 0172 B201     		.short	434
+ 398 0174 4502     		.short	581
+ 399 0176 8D02     		.short	653
+ARM GAS  /tmp/cc9nhykM.s 			page 8
+
+
+ 400 0178 8E02     		.short	654
+ 401 017a 8F02     		.short	655
+ 402 017c 9002     		.short	656
+ 403 017e 9102     		.short	657
+ 404 0180 B701     		.short	439
+ 405 0182 7B03     		.short	891
+ 406 0184 0300     		.short	3
+ 407 0186 FD03     		.short	1021
+ 408 0188 FE03     		.short	1022
+ 409 018a FF03     		.short	1023
+ 410 018c AC03     		.short	940
+ 411 018e 0400     		.short	4
+ 412 0190 8603     		.short	902
+ 413 0192 8803     		.short	904
+ 414 0194 8903     		.short	905
+ 415 0196 8A03     		.short	906
+ 416 0198 B103     		.short	945
+ 417 019a 1103     		.short	785
+ 418 019c C203     		.short	962
+ 419 019e 0200     		.short	2
+ 420 01a0 A303     		.short	931
+ 421 01a2 A303     		.short	931
+ 422 01a4 C403     		.short	964
+ 423 01a6 0803     		.short	776
+ 424 01a8 CC03     		.short	972
+ 425 01aa 0300     		.short	3
+ 426 01ac 8C03     		.short	908
+ 427 01ae 8E03     		.short	910
+ 428 01b0 8F03     		.short	911
+ 429 01b2 D803     		.short	984
+ 430 01b4 1801     		.short	280
+ 431 01b6 F203     		.short	1010
+ 432 01b8 0A00     		.short	10
+ 433 01ba F903     		.short	1017
+ 434 01bc F303     		.short	1011
+ 435 01be F403     		.short	1012
+ 436 01c0 F503     		.short	1013
+ 437 01c2 F603     		.short	1014
+ 438 01c4 F703     		.short	1015
+ 439 01c6 F703     		.short	1015
+ 440 01c8 F903     		.short	1017
+ 441 01ca FA03     		.short	1018
+ 442 01cc FA03     		.short	1018
+ 443 01ce 3004     		.short	1072
+ 444 01d0 2003     		.short	800
+ 445 01d2 5004     		.short	1104
+ 446 01d4 1007     		.short	1808
+ 447 01d6 6004     		.short	1120
+ 448 01d8 2201     		.short	290
+ 449 01da 8A04     		.short	1162
+ 450 01dc 3601     		.short	310
+ 451 01de C104     		.short	1217
+ 452 01e0 0E01     		.short	270
+ 453 01e2 CF04     		.short	1231
+ 454 01e4 0100     		.short	1
+ 455 01e6 C004     		.short	1216
+ 456 01e8 D004     		.short	1232
+ARM GAS  /tmp/cc9nhykM.s 			page 9
+
+
+ 457 01ea 4401     		.short	324
+ 458 01ec 6105     		.short	1377
+ 459 01ee 2604     		.short	1062
+ 460 01f0 0000     		.short	0
+ 461              		.section	.rodata.cvt2.0,"a"
+ 462              		.align	2
+ 463              		.set	.LANCHOR2,. + 0
+ 464              		.type	cvt2.0, %object
+ 465              		.size	cvt2.0, 188
+ 466              	cvt2.0:
+ 467 0000 7D1D     		.short	7549
+ 468 0002 0100     		.short	1
+ 469 0004 632C     		.short	11363
+ 470 0006 001E     		.short	7680
+ 471 0008 9601     		.short	406
+ 472 000a A01E     		.short	7840
+ 473 000c 5A01     		.short	346
+ 474 000e 001F     		.short	7936
+ 475 0010 0806     		.short	1544
+ 476 0012 101F     		.short	7952
+ 477 0014 0606     		.short	1542
+ 478 0016 201F     		.short	7968
+ 479 0018 0806     		.short	1544
+ 480 001a 301F     		.short	7984
+ 481 001c 0806     		.short	1544
+ 482 001e 401F     		.short	8000
+ 483 0020 0606     		.short	1542
+ 484 0022 511F     		.short	8017
+ 485 0024 0700     		.short	7
+ 486 0026 591F     		.short	8025
+ 487 0028 521F     		.short	8018
+ 488 002a 5B1F     		.short	8027
+ 489 002c 541F     		.short	8020
+ 490 002e 5D1F     		.short	8029
+ 491 0030 561F     		.short	8022
+ 492 0032 5F1F     		.short	8031
+ 493 0034 601F     		.short	8032
+ 494 0036 0806     		.short	1544
+ 495 0038 701F     		.short	8048
+ 496 003a 0E00     		.short	14
+ 497 003c BA1F     		.short	8122
+ 498 003e BB1F     		.short	8123
+ 499 0040 C81F     		.short	8136
+ 500 0042 C91F     		.short	8137
+ 501 0044 CA1F     		.short	8138
+ 502 0046 CB1F     		.short	8139
+ 503 0048 DA1F     		.short	8154
+ 504 004a DB1F     		.short	8155
+ 505 004c F81F     		.short	8184
+ 506 004e F91F     		.short	8185
+ 507 0050 EA1F     		.short	8170
+ 508 0052 EB1F     		.short	8171
+ 509 0054 FA1F     		.short	8186
+ 510 0056 FB1F     		.short	8187
+ 511 0058 801F     		.short	8064
+ 512 005a 0806     		.short	1544
+ 513 005c 901F     		.short	8080
+ARM GAS  /tmp/cc9nhykM.s 			page 10
+
+
+ 514 005e 0806     		.short	1544
+ 515 0060 A01F     		.short	8096
+ 516 0062 0806     		.short	1544
+ 517 0064 B01F     		.short	8112
+ 518 0066 0400     		.short	4
+ 519 0068 B81F     		.short	8120
+ 520 006a B91F     		.short	8121
+ 521 006c B21F     		.short	8114
+ 522 006e BC1F     		.short	8124
+ 523 0070 CC1F     		.short	8140
+ 524 0072 0100     		.short	1
+ 525 0074 C31F     		.short	8131
+ 526 0076 D01F     		.short	8144
+ 527 0078 0206     		.short	1538
+ 528 007a E01F     		.short	8160
+ 529 007c 0206     		.short	1538
+ 530 007e E51F     		.short	8165
+ 531 0080 0100     		.short	1
+ 532 0082 EC1F     		.short	8172
+ 533 0084 F31F     		.short	8179
+ 534 0086 0100     		.short	1
+ 535 0088 FC1F     		.short	8188
+ 536 008a 4E21     		.short	8526
+ 537 008c 0100     		.short	1
+ 538 008e 3221     		.short	8498
+ 539 0090 7021     		.short	8560
+ 540 0092 1002     		.short	528
+ 541 0094 8421     		.short	8580
+ 542 0096 0100     		.short	1
+ 543 0098 8321     		.short	8579
+ 544 009a D024     		.short	9424
+ 545 009c 1A05     		.short	1306
+ 546 009e 302C     		.short	11312
+ 547 00a0 2F04     		.short	1071
+ 548 00a2 602C     		.short	11360
+ 549 00a4 0201     		.short	258
+ 550 00a6 672C     		.short	11367
+ 551 00a8 0601     		.short	262
+ 552 00aa 752C     		.short	11381
+ 553 00ac 0201     		.short	258
+ 554 00ae 802C     		.short	11392
+ 555 00b0 6401     		.short	356
+ 556 00b2 002D     		.short	11520
+ 557 00b4 2608     		.short	2086
+ 558 00b6 41FF     		.short	-191
+ 559 00b8 1A03     		.short	794
+ 560 00ba 0000     		.short	0
+ 561              		.section	.rodata.uc850,"a"
+ 562              		.align	2
+ 563              		.set	.LANCHOR0,. + 0
+ 564              		.type	uc850, %object
+ 565              		.size	uc850, 256
+ 566              	uc850:
+ 567 0000 C700     		.short	199
+ 568 0002 FC00     		.short	252
+ 569 0004 E900     		.short	233
+ 570 0006 E200     		.short	226
+ARM GAS  /tmp/cc9nhykM.s 			page 11
+
+
+ 571 0008 E400     		.short	228
+ 572 000a E000     		.short	224
+ 573 000c E500     		.short	229
+ 574 000e E700     		.short	231
+ 575 0010 EA00     		.short	234
+ 576 0012 EB00     		.short	235
+ 577 0014 E800     		.short	232
+ 578 0016 EF00     		.short	239
+ 579 0018 EE00     		.short	238
+ 580 001a EC00     		.short	236
+ 581 001c C400     		.short	196
+ 582 001e C500     		.short	197
+ 583 0020 C900     		.short	201
+ 584 0022 E600     		.short	230
+ 585 0024 C600     		.short	198
+ 586 0026 F400     		.short	244
+ 587 0028 F600     		.short	246
+ 588 002a F200     		.short	242
+ 589 002c FB00     		.short	251
+ 590 002e F900     		.short	249
+ 591 0030 FF00     		.short	255
+ 592 0032 D600     		.short	214
+ 593 0034 DC00     		.short	220
+ 594 0036 F800     		.short	248
+ 595 0038 A300     		.short	163
+ 596 003a D800     		.short	216
+ 597 003c D700     		.short	215
+ 598 003e 9201     		.short	402
+ 599 0040 E100     		.short	225
+ 600 0042 ED00     		.short	237
+ 601 0044 F300     		.short	243
+ 602 0046 FA00     		.short	250
+ 603 0048 F100     		.short	241
+ 604 004a D100     		.short	209
+ 605 004c AA00     		.short	170
+ 606 004e BA00     		.short	186
+ 607 0050 BF00     		.short	191
+ 608 0052 AE00     		.short	174
+ 609 0054 AC00     		.short	172
+ 610 0056 BD00     		.short	189
+ 611 0058 BC00     		.short	188
+ 612 005a A100     		.short	161
+ 613 005c AB00     		.short	171
+ 614 005e BB00     		.short	187
+ 615 0060 9125     		.short	9617
+ 616 0062 9225     		.short	9618
+ 617 0064 9325     		.short	9619
+ 618 0066 0225     		.short	9474
+ 619 0068 2425     		.short	9508
+ 620 006a C100     		.short	193
+ 621 006c C200     		.short	194
+ 622 006e C000     		.short	192
+ 623 0070 A900     		.short	169
+ 624 0072 6325     		.short	9571
+ 625 0074 5125     		.short	9553
+ 626 0076 5725     		.short	9559
+ 627 0078 5D25     		.short	9565
+ARM GAS  /tmp/cc9nhykM.s 			page 12
+
+
+ 628 007a A200     		.short	162
+ 629 007c A500     		.short	165
+ 630 007e 1025     		.short	9488
+ 631 0080 1425     		.short	9492
+ 632 0082 3425     		.short	9524
+ 633 0084 2C25     		.short	9516
+ 634 0086 1C25     		.short	9500
+ 635 0088 0025     		.short	9472
+ 636 008a 3C25     		.short	9532
+ 637 008c E300     		.short	227
+ 638 008e C300     		.short	195
+ 639 0090 5A25     		.short	9562
+ 640 0092 5425     		.short	9556
+ 641 0094 6925     		.short	9577
+ 642 0096 6625     		.short	9574
+ 643 0098 6025     		.short	9568
+ 644 009a 5025     		.short	9552
+ 645 009c 6C25     		.short	9580
+ 646 009e A400     		.short	164
+ 647 00a0 F000     		.short	240
+ 648 00a2 D000     		.short	208
+ 649 00a4 CA00     		.short	202
+ 650 00a6 CB00     		.short	203
+ 651 00a8 C800     		.short	200
+ 652 00aa 3101     		.short	305
+ 653 00ac CD00     		.short	205
+ 654 00ae CE00     		.short	206
+ 655 00b0 CF00     		.short	207
+ 656 00b2 1825     		.short	9496
+ 657 00b4 0C25     		.short	9484
+ 658 00b6 8825     		.short	9608
+ 659 00b8 8425     		.short	9604
+ 660 00ba A600     		.short	166
+ 661 00bc CC00     		.short	204
+ 662 00be 8025     		.short	9600
+ 663 00c0 D300     		.short	211
+ 664 00c2 DF00     		.short	223
+ 665 00c4 D400     		.short	212
+ 666 00c6 D200     		.short	210
+ 667 00c8 F500     		.short	245
+ 668 00ca D500     		.short	213
+ 669 00cc B500     		.short	181
+ 670 00ce FE00     		.short	254
+ 671 00d0 DE00     		.short	222
+ 672 00d2 DA00     		.short	218
+ 673 00d4 DB00     		.short	219
+ 674 00d6 D900     		.short	217
+ 675 00d8 FD00     		.short	253
+ 676 00da DD00     		.short	221
+ 677 00dc AF00     		.short	175
+ 678 00de B400     		.short	180
+ 679 00e0 AD00     		.short	173
+ 680 00e2 B100     		.short	177
+ 681 00e4 1720     		.short	8215
+ 682 00e6 BE00     		.short	190
+ 683 00e8 B600     		.short	182
+ 684 00ea A700     		.short	167
+ARM GAS  /tmp/cc9nhykM.s 			page 13
+
+
+ 685 00ec F700     		.short	247
+ 686 00ee B800     		.short	184
+ 687 00f0 B000     		.short	176
+ 688 00f2 A800     		.short	168
+ 689 00f4 B700     		.short	183
+ 690 00f6 B900     		.short	185
+ 691 00f8 B300     		.short	179
+ 692 00fa B200     		.short	178
+ 693 00fc A025     		.short	9632
+ 694 00fe A000     		.short	160
+ 695              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cc9nhykM.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ffunicode.c
+     /tmp/cc9nhykM.s:15     .text.ff_uni2oem:0000000000000000 $t
+     /tmp/cc9nhykM.s:24     .text.ff_uni2oem:0000000000000000 ff_uni2oem
+     /tmp/cc9nhykM.s:59     .text.ff_uni2oem:000000000000003c $d
+     /tmp/cc9nhykM.s:62     .text.ff_oem2uni:0000000000000000 $t
+     /tmp/cc9nhykM.s:70     .text.ff_oem2uni:0000000000000000 ff_oem2uni
+     /tmp/cc9nhykM.s:94     .text.ff_oem2uni:0000000000000024 $d
+     /tmp/cc9nhykM.s:97     .text.ff_wtoupper:0000000000000000 $t
+     /tmp/cc9nhykM.s:105    .text.ff_wtoupper:0000000000000000 ff_wtoupper
+     /tmp/cc9nhykM.s:148    .text.ff_wtoupper:0000000000000054 $d
+     /tmp/cc9nhykM.s:203    .text.ff_wtoupper:00000000000000b4 $d
+     /tmp/cc9nhykM.s:207    .rodata.cvt1.1:0000000000000000 $d
+     /tmp/cc9nhykM.s:211    .rodata.cvt1.1:0000000000000000 cvt1.1
+     /tmp/cc9nhykM.s:462    .rodata.cvt2.0:0000000000000000 $d
+     /tmp/cc9nhykM.s:466    .rodata.cvt2.0:0000000000000000 cvt2.0
+     /tmp/cc9nhykM.s:562    .rodata.uc850:0000000000000000 $d
+     /tmp/cc9nhykM.s:566    .rodata.uc850:0000000000000000 uc850
+     /tmp/cc9nhykM.s:157    .text.ff_wtoupper:000000000000005d $d
+     /tmp/cc9nhykM.s:157    .text.ff_wtoupper:000000000000005e $t
+
+NO UNDEFINED SYMBOLS

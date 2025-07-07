@@ -1,0 +1,131 @@
+ARM GAS  /tmp/cc9ombGD.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"fatfs_syscall.c"
+  13              		.text
+  14              		.section	.text.ff_cre_syncobj,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	ff_cre_syncobj
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	ff_cre_syncobj, %function
+  24              	ff_cre_syncobj:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27 0000 08B5     		push	{r3, lr}
+  28 0002 054B     		ldr	r3, .L4
+  29 0004 00EB4000 		add	r0, r0, r0, lsl #1
+  30 0008 03EB8000 		add	r0, r3, r0, lsl #2
+  31 000c 0860     		str	r0, [r1]
+  32 000e 0121     		movs	r1, #1
+  33 0010 FFF7FEFF 		bl	chSemObjectInit
+  34 0014 0120     		movs	r0, #1
+  35 0016 08BD     		pop	{r3, pc}
+  36              	.L5:
+  37              		.align	2
+  38              	.L4:
+  39 0018 00000000 		.word	.LANCHOR0
+  40              		.size	ff_cre_syncobj, .-ff_cre_syncobj
+  41              		.section	.text.ff_del_syncobj,"ax",%progbits
+  42              		.align	1
+  43              		.p2align 4,,15
+  44              		.global	ff_del_syncobj
+  45              		.syntax unified
+  46              		.thumb
+  47              		.thumb_func
+  48              		.fpu fpv4-sp-d16
+  49              		.type	ff_del_syncobj, %function
+  50              	ff_del_syncobj:
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  53 0000 08B5     		push	{r3, lr}
+  54 0002 6FF00102 		mvn	r2, #1
+  55 0006 0021     		movs	r1, #0
+  56 0008 FFF7FEFF 		bl	chSemResetWithMessage
+  57 000c 0120     		movs	r0, #1
+ARM GAS  /tmp/cc9ombGD.s 			page 2
+
+
+  58 000e 08BD     		pop	{r3, pc}
+  59              		.size	ff_del_syncobj, .-ff_del_syncobj
+  60              		.section	.text.ff_req_grant,"ax",%progbits
+  61              		.align	1
+  62              		.p2align 4,,15
+  63              		.global	ff_req_grant
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  67              		.fpu fpv4-sp-d16
+  68              		.type	ff_req_grant, %function
+  69              	ff_req_grant:
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72 0000 08B5     		push	{r3, lr}
+  73 0002 42F21071 		movw	r1, #10000
+  74 0006 FFF7FEFF 		bl	chSemWaitTimeout
+  75 000a B0FA80F0 		clz	r0, r0
+  76 000e 4009     		lsrs	r0, r0, #5
+  77 0010 08BD     		pop	{r3, pc}
+  78              		.size	ff_req_grant, .-ff_req_grant
+  79 0012 00BF     		.section	.text.ff_rel_grant,"ax",%progbits
+  80              		.align	1
+  81              		.p2align 4,,15
+  82              		.global	ff_rel_grant
+  83              		.syntax unified
+  84              		.thumb
+  85              		.thumb_func
+  86              		.fpu fpv4-sp-d16
+  87              		.type	ff_rel_grant, %function
+  88              	ff_rel_grant:
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  91              		@ link register save eliminated.
+  92 0000 FFF7FEBF 		b	chSemSignal
+  93              		.size	ff_rel_grant, .-ff_rel_grant
+  94              		.section	.bss.ff_sem,"aw",%nobits
+  95              		.align	2
+  96              		.set	.LANCHOR0,. + 0
+  97              		.type	ff_sem, %object
+  98              		.size	ff_sem, 12
+  99              	ff_sem:
+ 100 0000 00000000 		.space	12
+ 100      00000000 
+ 100      00000000 
+ 101              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cc9ombGD.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 fatfs_syscall.c
+     /tmp/cc9ombGD.s:15     .text.ff_cre_syncobj:0000000000000000 $t
+     /tmp/cc9ombGD.s:24     .text.ff_cre_syncobj:0000000000000000 ff_cre_syncobj
+     /tmp/cc9ombGD.s:39     .text.ff_cre_syncobj:0000000000000018 $d
+     /tmp/cc9ombGD.s:42     .text.ff_del_syncobj:0000000000000000 $t
+     /tmp/cc9ombGD.s:50     .text.ff_del_syncobj:0000000000000000 ff_del_syncobj
+     /tmp/cc9ombGD.s:61     .text.ff_req_grant:0000000000000000 $t
+     /tmp/cc9ombGD.s:69     .text.ff_req_grant:0000000000000000 ff_req_grant
+     /tmp/cc9ombGD.s:80     .text.ff_rel_grant:0000000000000000 $t
+     /tmp/cc9ombGD.s:88     .text.ff_rel_grant:0000000000000000 ff_rel_grant
+     /tmp/cc9ombGD.s:95     .bss.ff_sem:0000000000000000 $d
+     /tmp/cc9ombGD.s:99     .bss.ff_sem:0000000000000000 ff_sem
+
+UNDEFINED SYMBOLS
+chSemObjectInit
+chSemResetWithMessage
+chSemWaitTimeout
+chSemSignal

@@ -1,0 +1,623 @@
+ARM GAS  /tmp/ccYak7T4.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"hal_serial_lld.c"
+  13              		.text
+  14              		.section	.text.notify1,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	notify1, %function
+  23              	notify1:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 024A     		ldr	r2, .L3
+  28 0002 D368     		ldr	r3, [r2, #12]
+  29 0004 43F0C003 		orr	r3, r3, #192
+  30 0008 D360     		str	r3, [r2, #12]
+  31 000a 7047     		bx	lr
+  32              	.L4:
+  33              		.align	2
+  34              	.L3:
+  35 000c 00100140 		.word	1073811456
+  36              		.size	notify1, .-notify1
+  37              		.section	.text.notify4,"ax",%progbits
+  38              		.align	1
+  39              		.p2align 4,,15
+  40              		.syntax unified
+  41              		.thumb
+  42              		.thumb_func
+  43              		.fpu fpv4-sp-d16
+  44              		.type	notify4, %function
+  45              	notify4:
+  46              		@ args = 0, pretend = 0, frame = 0
+  47              		@ frame_needed = 0, uses_anonymous_args = 0
+  48              		@ link register save eliminated.
+  49 0000 024A     		ldr	r2, .L6
+  50 0002 D368     		ldr	r3, [r2, #12]
+  51 0004 43F0C003 		orr	r3, r3, #192
+  52 0008 D360     		str	r3, [r2, #12]
+  53 000a 7047     		bx	lr
+  54              	.L7:
+  55              		.align	2
+  56              	.L6:
+  57 000c 004C0040 		.word	1073761280
+ARM GAS  /tmp/ccYak7T4.s 			page 2
+
+
+  58              		.size	notify4, .-notify4
+  59              		.section	.text.notify6,"ax",%progbits
+  60              		.align	1
+  61              		.p2align 4,,15
+  62              		.syntax unified
+  63              		.thumb
+  64              		.thumb_func
+  65              		.fpu fpv4-sp-d16
+  66              		.type	notify6, %function
+  67              	notify6:
+  68              		@ args = 0, pretend = 0, frame = 0
+  69              		@ frame_needed = 0, uses_anonymous_args = 0
+  70              		@ link register save eliminated.
+  71 0000 024A     		ldr	r2, .L9
+  72 0002 D368     		ldr	r3, [r2, #12]
+  73 0004 43F0C003 		orr	r3, r3, #192
+  74 0008 D360     		str	r3, [r2, #12]
+  75 000a 7047     		bx	lr
+  76              	.L10:
+  77              		.align	2
+  78              	.L9:
+  79 000c 00140140 		.word	1073812480
+  80              		.size	notify6, .-notify6
+  81              		.section	.text.sd_lld_init,"ax",%progbits
+  82              		.align	1
+  83              		.p2align 4,,15
+  84              		.global	sd_lld_init
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  88              		.fpu fpv4-sp-d16
+  89              		.type	sd_lld_init, %function
+  90              	sd_lld_init:
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93 0000 70B5     		push	{r4, r5, r6, lr}
+  94 0002 124C     		ldr	r4, .L13
+  95 0004 124D     		ldr	r5, .L13+4
+  96 0006 134A     		ldr	r2, .L13+8
+  97 0008 134E     		ldr	r6, .L13+12
+  98 000a 2046     		mov	r0, r4
+  99 000c 0021     		movs	r1, #0
+ 100 000e FFF7FEFF 		bl	sdObjectInit
+ 101 0012 124B     		ldr	r3, .L13+16
+ 102 0014 C4F85438 		str	r3, [r4, #2132]
+ 103 0018 114A     		ldr	r2, .L13+20
+ 104 001a C4F85868 		str	r6, [r4, #2136]
+ 105 001e 0021     		movs	r1, #0
+ 106 0020 104C     		ldr	r4, .L13+24
+ 107 0022 2846     		mov	r0, r5
+ 108 0024 FFF7FEFF 		bl	sdObjectInit
+ 109 0028 0F4A     		ldr	r2, .L13+28
+ 110 002a 104B     		ldr	r3, .L13+32
+ 111 002c C5F85428 		str	r2, [r5, #2132]
+ 112 0030 0021     		movs	r1, #0
+ 113 0032 0F4A     		ldr	r2, .L13+36
+ 114 0034 C5F85838 		str	r3, [r5, #2136]
+ARM GAS  /tmp/ccYak7T4.s 			page 3
+
+
+ 115 0038 2046     		mov	r0, r4
+ 116 003a FFF7FEFF 		bl	sdObjectInit
+ 117 003e 0D4B     		ldr	r3, .L13+40
+ 118 0040 C4F85438 		str	r3, [r4, #2132]
+ 119 0044 C4F85868 		str	r6, [r4, #2136]
+ 120 0048 70BD     		pop	{r4, r5, r6, pc}
+ 121              	.L14:
+ 122 004a 00BF     		.align	2
+ 123              	.L13:
+ 124 004c 00000000 		.word	.LANCHOR0
+ 125 0050 00000000 		.word	.LANCHOR1
+ 126 0054 00000000 		.word	notify1
+ 127 0058 00BD0105 		.word	84000000
+ 128 005c 00100140 		.word	1073811456
+ 129 0060 00000000 		.word	notify4
+ 130 0064 00000000 		.word	.LANCHOR2
+ 131 0068 004C0040 		.word	1073761280
+ 132 006c 80DE8002 		.word	42000000
+ 133 0070 00000000 		.word	notify6
+ 134 0074 00140140 		.word	1073812480
+ 135              		.size	sd_lld_init, .-sd_lld_init
+ 136              		.section	.text.sd_lld_start,"ax",%progbits
+ 137              		.align	1
+ 138              		.p2align 4,,15
+ 139              		.global	sd_lld_start
+ 140              		.syntax unified
+ 141              		.thumb
+ 142              		.thumb_func
+ 143              		.fpu fpv4-sp-d16
+ 144              		.type	sd_lld_start, %function
+ 145              	sd_lld_start:
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 149 0002 0029     		cmp	r1, #0
+ 150 0004 35D0     		beq	.L16
+ 151 0006 037A     		ldrb	r3, [r0, #8]	@ zero_extendqisi2
+ 152 0008 B1F804E0 		ldrh	lr, [r1, #4]
+ 153 000c 0A68     		ldr	r2, [r1]
+ 154 000e CE88     		ldrh	r6, [r1, #6]
+ 155 0010 0C89     		ldrh	r4, [r1, #8]
+ 156 0012 B1F904C0 		ldrsh	ip, [r1, #4]
+ 157 0016 012B     		cmp	r3, #1
+ 158 0018 4EF40455 		orr	r5, lr, #8448
+ 159 001c 4FEA5203 		lsr	r3, r2, #1
+ 160 0020 46F04006 		orr	r6, r6, #64
+ 161 0024 44F00104 		orr	r4, r4, #1
+ 162 0028 45F02C05 		orr	r5, r5, #44
+ 163 002c 0EF4A051 		and	r1, lr, #5120
+ 164 0030 2AD0     		beq	.L24
+ 165              	.L18:
+ 166 0032 D0F85878 		ldr	r7, [r0, #2136]
+ 167 0036 BCF1000F 		cmp	ip, #0
+ 168 003a 3B44     		add	r3, r3, r7
+ 169 003c B3FBF2F3 		udiv	r3, r3, r2
+ 170 0040 D0F85428 		ldr	r2, [r0, #2132]
+ 171 0044 05DA     		bge	.L22
+ARM GAS  /tmp/ccYak7T4.s 			page 4
+
+
+ 172 0046 23F0070C 		bic	ip, r3, #7
+ 173 004a 03F00703 		and	r3, r3, #7
+ 174 004e 43EA4C03 		orr	r3, r3, ip, lsl #1
+ 175              	.L22:
+ 176 0052 9360     		str	r3, [r2, #8]
+ 177 0054 0023     		movs	r3, #0
+ 178 0056 1661     		str	r6, [r2, #16]
+ 179 0058 B1F5806F 		cmp	r1, #1024
+ 180 005c 5461     		str	r4, [r2, #20]
+ 181 005e D560     		str	r5, [r2, #12]
+ 182 0060 1360     		str	r3, [r2]
+ 183 0062 1368     		ldr	r3, [r2]
+ 184 0064 5368     		ldr	r3, [r2, #4]
+ 185 0066 0CBF     		ite	eq
+ 186 0068 7F23     		moveq	r3, #127
+ 187 006a FF23     		movne	r3, #255
+ 188 006c 80F85C38 		strb	r3, [r0, #2140]
+ 189 0070 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 190              	.L16:
+ 191 0072 047A     		ldrb	r4, [r0, #8]	@ zero_extendqisi2
+ 192 0074 012C     		cmp	r4, #1
+ 193 0076 1FD1     		bne	.L29
+ 194 0078 42F22C15 		movw	r5, #8492
+ 195 007c 4026     		movs	r6, #64
+ 196 007e 8C46     		mov	ip, r1
+ 197 0080 4FF4E143 		mov	r3, #28800
+ 198 0084 4FF46142 		mov	r2, #57600
+ 199              	.L24:
+ 200 0088 274F     		ldr	r7, .L32
+ 201 008a B842     		cmp	r0, r7
+ 202 008c 3CD0     		beq	.L31
+ 203 008e 274F     		ldr	r7, .L32+4
+ 204 0090 B842     		cmp	r0, r7
+ 205 0092 2AD0     		beq	.L20
+ 206 0094 264F     		ldr	r7, .L32+8
+ 207 0096 B842     		cmp	r0, r7
+ 208 0098 CBD1     		bne	.L18
+ 209 009a 264F     		ldr	r7, .L32+12
+ 210 009c D7F844E0 		ldr	lr, [r7, #68]
+ 211 00a0 4EF0200E 		orr	lr, lr, #32
+ 212 00a4 C7F844E0 		str	lr, [r7, #68]
+ 213 00a8 D7F864E0 		ldr	lr, [r7, #100]
+ 214 00ac 4EF0200E 		orr	lr, lr, #32
+ 215 00b0 C7F864E0 		str	lr, [r7, #100]
+ 216 00b4 7F6E     		ldr	r7, [r7, #100]
+ 217 00b6 BCE7     		b	.L18
+ 218              	.L29:
+ 219 00b8 D0F85838 		ldr	r3, [r0, #2136]
+ 220 00bc 1E4C     		ldr	r4, .L32+16
+ 221 00be D0F85428 		ldr	r2, [r0, #2132]
+ 222 00c2 03F5E143 		add	r3, r3, #28800
+ 223 00c6 A4FB0343 		umull	r4, r3, r4, r3
+ 224 00ca DB0B     		lsrs	r3, r3, #15
+ 225 00cc 4024     		movs	r4, #64
+ 226 00ce 9360     		str	r3, [r2, #8]
+ 227 00d0 1461     		str	r4, [r2, #16]
+ 228 00d2 42F22C13 		movw	r3, #8492
+ARM GAS  /tmp/ccYak7T4.s 			page 5
+
+
+ 229 00d6 0124     		movs	r4, #1
+ 230 00d8 5461     		str	r4, [r2, #20]
+ 231 00da D360     		str	r3, [r2, #12]
+ 232 00dc 1160     		str	r1, [r2]
+ 233 00de 1368     		ldr	r3, [r2]
+ 234 00e0 5268     		ldr	r2, [r2, #4]
+ 235 00e2 FF23     		movs	r3, #255
+ 236 00e4 80F85C38 		strb	r3, [r0, #2140]
+ 237 00e8 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 238              	.L20:
+ 239 00ea 124F     		ldr	r7, .L32+12
+ 240 00ec D7F840E0 		ldr	lr, [r7, #64]
+ 241 00f0 4EF4002E 		orr	lr, lr, #524288
+ 242 00f4 C7F840E0 		str	lr, [r7, #64]
+ 243 00f8 D7F860E0 		ldr	lr, [r7, #96]
+ 244 00fc 4EF4002E 		orr	lr, lr, #524288
+ 245 0100 C7F860E0 		str	lr, [r7, #96]
+ 246 0104 3F6E     		ldr	r7, [r7, #96]
+ 247 0106 94E7     		b	.L18
+ 248              	.L31:
+ 249 0108 0A4F     		ldr	r7, .L32+12
+ 250 010a D7F844E0 		ldr	lr, [r7, #68]
+ 251 010e 4EF0100E 		orr	lr, lr, #16
+ 252 0112 C7F844E0 		str	lr, [r7, #68]
+ 253 0116 D7F864E0 		ldr	lr, [r7, #100]
+ 254 011a 4EF0100E 		orr	lr, lr, #16
+ 255 011e C7F864E0 		str	lr, [r7, #100]
+ 256 0122 7F6E     		ldr	r7, [r7, #100]
+ 257 0124 85E7     		b	.L18
+ 258              	.L33:
+ 259 0126 00BF     		.align	2
+ 260              	.L32:
+ 261 0128 00000000 		.word	.LANCHOR0
+ 262 012c 00000000 		.word	.LANCHOR1
+ 263 0130 00000000 		.word	.LANCHOR2
+ 264 0134 00380240 		.word	1073887232
+ 265 0138 C5B3A291 		.word	-1851608123
+ 266              		.size	sd_lld_start, .-sd_lld_start
+ 267              		.section	.text.sd_lld_stop,"ax",%progbits
+ 268              		.align	1
+ 269              		.p2align 4,,15
+ 270              		.global	sd_lld_stop
+ 271              		.syntax unified
+ 272              		.thumb
+ 273              		.thumb_func
+ 274              		.fpu fpv4-sp-d16
+ 275              		.type	sd_lld_stop, %function
+ 276              	sd_lld_stop:
+ 277              		@ args = 0, pretend = 0, frame = 0
+ 278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 279              		@ link register save eliminated.
+ 280 0000 037A     		ldrb	r3, [r0, #8]	@ zero_extendqisi2
+ 281 0002 022B     		cmp	r3, #2
+ 282 0004 00D0     		beq	.L40
+ 283              	.L34:
+ 284 0006 7047     		bx	lr
+ 285              	.L40:
+ARM GAS  /tmp/ccYak7T4.s 			page 6
+
+
+ 286 0008 1749     		ldr	r1, .L43
+ 287 000a D0F85438 		ldr	r3, [r0, #2132]
+ 288 000e 0022     		movs	r2, #0
+ 289 0010 8842     		cmp	r0, r1
+ 290 0012 DA60     		str	r2, [r3, #12]
+ 291 0014 1A61     		str	r2, [r3, #16]
+ 292 0016 5A61     		str	r2, [r3, #20]
+ 293 0018 10D0     		beq	.L41
+ 294 001a 144B     		ldr	r3, .L43+4
+ 295 001c 9842     		cmp	r0, r3
+ 296 001e 18D0     		beq	.L42
+ 297 0020 134B     		ldr	r3, .L43+8
+ 298 0022 9842     		cmp	r0, r3
+ 299 0024 EFD1     		bne	.L34
+ 300 0026 134B     		ldr	r3, .L43+12
+ 301 0028 5A6C     		ldr	r2, [r3, #68]
+ 302 002a 22F02002 		bic	r2, r2, #32
+ 303 002e 5A64     		str	r2, [r3, #68]
+ 304 0030 5A6E     		ldr	r2, [r3, #100]
+ 305 0032 22F02002 		bic	r2, r2, #32
+ 306 0036 5A66     		str	r2, [r3, #100]
+ 307 0038 5B6E     		ldr	r3, [r3, #100]
+ 308 003a E4E7     		b	.L34
+ 309              	.L41:
+ 310 003c 0D4B     		ldr	r3, .L43+12
+ 311 003e 5A6C     		ldr	r2, [r3, #68]
+ 312 0040 22F01002 		bic	r2, r2, #16
+ 313 0044 5A64     		str	r2, [r3, #68]
+ 314 0046 5A6E     		ldr	r2, [r3, #100]
+ 315 0048 22F01002 		bic	r2, r2, #16
+ 316 004c 5A66     		str	r2, [r3, #100]
+ 317 004e 5B6E     		ldr	r3, [r3, #100]
+ 318 0050 7047     		bx	lr
+ 319              	.L42:
+ 320 0052 084B     		ldr	r3, .L43+12
+ 321 0054 1A6C     		ldr	r2, [r3, #64]
+ 322 0056 22F40022 		bic	r2, r2, #524288
+ 323 005a 1A64     		str	r2, [r3, #64]
+ 324 005c 1A6E     		ldr	r2, [r3, #96]
+ 325 005e 22F40022 		bic	r2, r2, #524288
+ 326 0062 1A66     		str	r2, [r3, #96]
+ 327 0064 1B6E     		ldr	r3, [r3, #96]
+ 328 0066 7047     		bx	lr
+ 329              	.L44:
+ 330              		.align	2
+ 331              	.L43:
+ 332 0068 00000000 		.word	.LANCHOR0
+ 333 006c 00000000 		.word	.LANCHOR1
+ 334 0070 00000000 		.word	.LANCHOR2
+ 335 0074 00380240 		.word	1073887232
+ 336              		.size	sd_lld_stop, .-sd_lld_stop
+ 337              		.section	.text.sd_lld_serve_interrupt,"ax",%progbits
+ 338              		.align	1
+ 339              		.p2align 4,,15
+ 340              		.global	sd_lld_serve_interrupt
+ 341              		.syntax unified
+ 342              		.thumb
+ARM GAS  /tmp/ccYak7T4.s 			page 7
+
+
+ 343              		.thumb_func
+ 344              		.fpu fpv4-sp-d16
+ 345              		.type	sd_lld_serve_interrupt, %function
+ 346              	sd_lld_serve_interrupt:
+ 347              		@ args = 0, pretend = 0, frame = 0
+ 348              		@ frame_needed = 0, uses_anonymous_args = 0
+ 349 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 350 0004 D0F85458 		ldr	r5, [r0, #2132]
+ 351 0008 D5F80C80 		ldr	r8, [r5, #12]
+ 352 000c 2B68     		ldr	r3, [r5]
+ 353 000e DA05     		lsls	r2, r3, #23
+ 354 0010 0646     		mov	r6, r0
+ 355 0012 9CB2     		uxth	r4, r3
+ 356 0014 46D4     		bmi	.L97
+ 357              	.L46:
+ 358 0016 3023     		movs	r3, #48
+ 359              		.syntax unified
+ 360              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 361 0018 83F31188 		MSR basepri, r3
+ 362              	@ 0 "" 2
+ 363              		.thumb
+ 364              		.syntax unified
+ 365 001c FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 366 0020 14F02F0F 		tst	r4, #47
+ 367 0024 2DD0     		beq	.L47
+ 368 0026 371D     		adds	r7, r6, #4
+ 369 0028 07E0     		b	.L54
+ 370              	.L48:
+ 371 002a A006     		lsls	r0, r4, #26
+ 372 002c 6B68     		ldr	r3, [r5, #4]
+ 373 002e 1DD4     		bmi	.L98
+ 374              	.L53:
+ 375 0030 2B68     		ldr	r3, [r5]
+ 376 0032 13F02F0F 		tst	r3, #47
+ 377 0036 9CB2     		uxth	r4, r3
+ 378 0038 23D0     		beq	.L47
+ 379              	.L54:
+ 380 003a 2307     		lsls	r3, r4, #28
+ 381 003c F5D0     		beq	.L48
+ 382 003e 14F0080F 		tst	r4, #8
+ 383 0042 0CBF     		ite	eq
+ 384 0044 0021     		moveq	r1, #0
+ 385 0046 8021     		movne	r1, #128
+ 386 0048 E007     		lsls	r0, r4, #31
+ 387 004a 48BF     		it	mi
+ 388 004c 41F02001 		orrmi	r1, r1, #32
+ 389 0050 A207     		lsls	r2, r4, #30
+ 390 0052 48BF     		it	mi
+ 391 0054 41F04001 		orrmi	r1, r1, #64
+ 392 0058 6307     		lsls	r3, r4, #29
+ 393 005a 48BF     		it	mi
+ 394 005c 41F48071 		orrmi	r1, r1, #256
+ 395 0060 3846     		mov	r0, r7
+ 396 0062 FFF7FEFF 		bl	chEvtBroadcastFlagsI
+ 397 0066 A006     		lsls	r0, r4, #26
+ 398 0068 6B68     		ldr	r3, [r5, #4]
+ 399 006a E1D5     		bpl	.L53
+ARM GAS  /tmp/ccYak7T4.s 			page 8
+
+
+ 400              	.L98:
+ 401 006c 96F85C18 		ldrb	r1, [r6, #2140]	@ zero_extendqisi2
+ 402 0070 3046     		mov	r0, r6
+ 403 0072 1940     		ands	r1, r1, r3
+ 404 0074 FFF7FEFF 		bl	sdIncomingDataI
+ 405 0078 2B68     		ldr	r3, [r5]
+ 406 007a 13F02F0F 		tst	r3, #47
+ 407 007e 9CB2     		uxth	r4, r3
+ 408 0080 DBD1     		bne	.L54
+ 409              	.L47:
+ 410 0082 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 411 0086 0023     		movs	r3, #0
+ 412              		.syntax unified
+ 413              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 414 0088 83F31188 		MSR basepri, r3
+ 415              	@ 0 "" 2
+ 416              		.thumb
+ 417              		.syntax unified
+ 418 008c 18F0800F 		tst	r8, #128
+ 419 0090 01D0     		beq	.L55
+ 420 0092 2206     		lsls	r2, r4, #24
+ 421 0094 29D4     		bmi	.L99
+ 422              	.L55:
+ 423 0096 18F0400F 		tst	r8, #64
+ 424 009a 01D0     		beq	.L45
+ 425 009c 6306     		lsls	r3, r4, #25
+ 426 009e 14D4     		bmi	.L100
+ 427              	.L45:
+ 428 00a0 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 429              	.L97:
+ 430 00a4 3023     		movs	r3, #48
+ 431              		.syntax unified
+ 432              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 433 00a6 83F31188 		MSR basepri, r3
+ 434              	@ 0 "" 2
+ 435              		.thumb
+ 436              		.syntax unified
+ 437 00aa FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 438 00ae 4FF40071 		mov	r1, #512
+ 439 00b2 301D     		adds	r0, r6, #4
+ 440 00b4 FFF7FEFF 		bl	chEvtBroadcastFlagsI
+ 441 00b8 6FF48073 		mvn	r3, #256
+ 442 00bc 2B60     		str	r3, [r5]
+ 443 00be FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 444 00c2 0023     		movs	r3, #0
+ 445              		.syntax unified
+ 446              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 447 00c4 83F31188 		MSR basepri, r3
+ 448              	@ 0 "" 2
+ 449              		.thumb
+ 450              		.syntax unified
+ 451 00c8 A5E7     		b	.L46
+ 452              	.L100:
+ 453 00ca 3023     		movs	r3, #48
+ 454              		.syntax unified
+ 455              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 456 00cc 83F31188 		MSR basepri, r3
+ARM GAS  /tmp/ccYak7T4.s 			page 9
+
+
+ 457              	@ 0 "" 2
+ 458              		.thumb
+ 459              		.syntax unified
+ 460 00d0 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 461 00d4 D6E91123 		ldrd	r2, r3, [r6, #68]
+ 462 00d8 9A42     		cmp	r2, r3
+ 463 00da 18D0     		beq	.L101
+ 464              	.L59:
+ 465 00dc FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 466 00e0 0023     		movs	r3, #0
+ 467              		.syntax unified
+ 468              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 469 00e2 83F31188 		MSR basepri, r3
+ 470              	@ 0 "" 2
+ 471              		.thumb
+ 472              		.syntax unified
+ 473 00e6 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 474              	.L99:
+ 475 00ea 3023     		movs	r3, #48
+ 476              		.syntax unified
+ 477              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 478 00ec 83F31188 		MSR basepri, r3
+ 479              	@ 0 "" 2
+ 480              		.thumb
+ 481              		.syntax unified
+ 482 00f0 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 483 00f4 06F13000 		add	r0, r6, #48
+ 484 00f8 FFF7FEFF 		bl	oqGetI
+ 485 00fc 0028     		cmp	r0, #0
+ 486 00fe 13DB     		blt	.L102
+ 487 0100 6860     		str	r0, [r5, #4]
+ 488              	.L57:
+ 489 0102 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 490 0106 0023     		movs	r3, #0
+ 491              		.syntax unified
+ 492              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 493 0108 83F31188 		MSR basepri, r3
+ 494              	@ 0 "" 2
+ 495              		.thumb
+ 496              		.syntax unified
+ 497 010c C3E7     		b	.L55
+ 498              	.L101:
+ 499 010e B36B     		ldr	r3, [r6, #56]
+ 500 0110 002B     		cmp	r3, #0
+ 501 0112 E3D0     		beq	.L59
+ 502 0114 1021     		movs	r1, #16
+ 503 0116 301D     		adds	r0, r6, #4
+ 504 0118 FFF7FEFF 		bl	chEvtBroadcastFlagsI
+ 505 011c 4FF6BF73 		movw	r3, #65471
+ 506 0120 08EA0303 		and	r3, r8, r3
+ 507 0124 EB60     		str	r3, [r5, #12]
+ 508 0126 D9E7     		b	.L59
+ 509              	.L102:
+ 510 0128 0821     		movs	r1, #8
+ 511 012a 301D     		adds	r0, r6, #4
+ 512 012c FFF7FEFF 		bl	chEvtBroadcastFlagsI
+ 513 0130 4FF67F73 		movw	r3, #65407
+ARM GAS  /tmp/ccYak7T4.s 			page 10
+
+
+ 514 0134 08EA0303 		and	r3, r8, r3
+ 515 0138 EB60     		str	r3, [r5, #12]
+ 516 013a E2E7     		b	.L57
+ 517              		.size	sd_lld_serve_interrupt, .-sd_lld_serve_interrupt
+ 518              		.global	SD6
+ 519              		.global	SD4
+ 520              		.global	SD1
+ 521              		.section	.bss.SD1,"aw",%nobits
+ 522              		.align	2
+ 523              		.set	.LANCHOR0,. + 0
+ 524              		.type	SD1, %object
+ 525              		.size	SD1, 2144
+ 526              	SD1:
+ 527 0000 00000000 		.space	2144
+ 527      00000000 
+ 527      00000000 
+ 527      00000000 
+ 527      00000000 
+ 528              		.section	.bss.SD4,"aw",%nobits
+ 529              		.align	2
+ 530              		.set	.LANCHOR1,. + 0
+ 531              		.type	SD4, %object
+ 532              		.size	SD4, 2144
+ 533              	SD4:
+ 534 0000 00000000 		.space	2144
+ 534      00000000 
+ 534      00000000 
+ 534      00000000 
+ 534      00000000 
+ 535              		.section	.bss.SD6,"aw",%nobits
+ 536              		.align	2
+ 537              		.set	.LANCHOR2,. + 0
+ 538              		.type	SD6, %object
+ 539              		.size	SD6, 2144
+ 540              	SD6:
+ 541 0000 00000000 		.space	2144
+ 541      00000000 
+ 541      00000000 
+ 541      00000000 
+ 541      00000000 
+ 542              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccYak7T4.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_serial_lld.c
+     /tmp/ccYak7T4.s:15     .text.notify1:0000000000000000 $t
+     /tmp/ccYak7T4.s:23     .text.notify1:0000000000000000 notify1
+     /tmp/ccYak7T4.s:35     .text.notify1:000000000000000c $d
+     /tmp/ccYak7T4.s:38     .text.notify4:0000000000000000 $t
+     /tmp/ccYak7T4.s:45     .text.notify4:0000000000000000 notify4
+     /tmp/ccYak7T4.s:57     .text.notify4:000000000000000c $d
+     /tmp/ccYak7T4.s:60     .text.notify6:0000000000000000 $t
+     /tmp/ccYak7T4.s:67     .text.notify6:0000000000000000 notify6
+     /tmp/ccYak7T4.s:79     .text.notify6:000000000000000c $d
+     /tmp/ccYak7T4.s:82     .text.sd_lld_init:0000000000000000 $t
+     /tmp/ccYak7T4.s:90     .text.sd_lld_init:0000000000000000 sd_lld_init
+     /tmp/ccYak7T4.s:124    .text.sd_lld_init:000000000000004c $d
+     /tmp/ccYak7T4.s:137    .text.sd_lld_start:0000000000000000 $t
+     /tmp/ccYak7T4.s:145    .text.sd_lld_start:0000000000000000 sd_lld_start
+     /tmp/ccYak7T4.s:261    .text.sd_lld_start:0000000000000128 $d
+     /tmp/ccYak7T4.s:268    .text.sd_lld_stop:0000000000000000 $t
+     /tmp/ccYak7T4.s:276    .text.sd_lld_stop:0000000000000000 sd_lld_stop
+     /tmp/ccYak7T4.s:332    .text.sd_lld_stop:0000000000000068 $d
+     /tmp/ccYak7T4.s:338    .text.sd_lld_serve_interrupt:0000000000000000 $t
+     /tmp/ccYak7T4.s:346    .text.sd_lld_serve_interrupt:0000000000000000 sd_lld_serve_interrupt
+     /tmp/ccYak7T4.s:540    .bss.SD6:0000000000000000 SD6
+     /tmp/ccYak7T4.s:533    .bss.SD4:0000000000000000 SD4
+     /tmp/ccYak7T4.s:526    .bss.SD1:0000000000000000 SD1
+     /tmp/ccYak7T4.s:522    .bss.SD1:0000000000000000 $d
+     /tmp/ccYak7T4.s:529    .bss.SD4:0000000000000000 $d
+     /tmp/ccYak7T4.s:536    .bss.SD6:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+sdObjectInit
+__stats_start_measure_crit_isr
+chEvtBroadcastFlagsI
+sdIncomingDataI
+__stats_stop_measure_crit_isr
+oqGetI

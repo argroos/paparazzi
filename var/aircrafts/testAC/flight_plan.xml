@@ -1,0 +1,167 @@
+<dump>
+  <flight_plan security_height="50" name="Wolfshoehe_Glide_Test" max_dist_from_home="400" lon0="10.954677" lat0="49.408029" ground_alt="356" alt="436">
+    <header>#include "modules/datalink/datalink.h"</header>
+    <waypoints>
+      <waypoint name="HOME" lon="10.954677" lat="49.408029" x="0.00" y="0.00"/>
+      <waypoint name="Profile" lon="10.954706" lat="49.407774" x="2.84" y="-28.29"/>
+      <waypoint name="WP01" lon="10.954981" lat="49.406657" alt="446" x="26.00" y="-151.94"/>
+      <waypoint name="WP02" lon="10.954120" lat="49.406579" alt="446" x="-36.23" y="-162.23"/>
+      <waypoint name="WP03" lon="10.953796" lat="49.408416" alt="466" x="-65.02" y="41.36"/>
+      <waypoint name="WP04" lon="10.954154" lat="49.408449" alt="466" x="-39.15" y="45.71"/>
+      <waypoint name="WP05" lon="10.954540" lat="49.406608" alt="446" x="-5.84" y="-158.22"/>
+      <waypoint name="WP06" lon="10.955316" lat="49.406684" alt="446" x="50.23" y="-148.31"/>
+      <waypoint name="WP07" lon="10.954977" lat="49.408476" alt="476" x="20.47" y="50.25"/>
+      <waypoint name="WP08" lon="10.954589" lat="49.408460" alt="476" x="-7.62" y="47.75"/>
+      <waypoint name="WP09" lon="10.954835" lat="49.407321" alt="436" x="13.50" y="-78.41"/>
+    </waypoints>
+    <exceptions>
+      <exception deroute="Standby" cond="10.5 > PowerVoltage()"/>
+    </exceptions>
+    <blocks>
+      <block name="Wait GPS" no="0">
+        <set var="autopilot.kill_throttle" value="1" no="0"/>
+        <while cond="!GpsFixValid()" no="1"/>
+      </block>
+      <block name="Geo init" no="1">
+        <while cond="LessThan(NavBlockTime(), 10)" no="0"/>
+      </block>
+      <block name="Waiting for Remote Control" no="2">
+        <while cond="RCLost()" no="0"/>
+      </block>
+      <block name="Holding point" no="3">
+        <set var="autopilot.kill_throttle" value="1" no="0"/>
+        <attitude vmode="throttle" throttle="0" roll="0" no="1"/>
+      </block>
+      <block strip_icon="takeoff.png" strip_button="Takeoff (wp CLIMB)" name="Takeoff" key="t" group="home" no="4">
+        <set var="autopilot.kill_throttle" value="0" no="0"/>
+        <set var="autopilot.flight_time" value="0" no="1"/>
+        <set var="autopilot.kill_throttle" value="0" no="2"/>
+      </block>
+      <block name="Climb" no="5">
+        <circle wp="Profile" vmode="throttle" until="GetPosAlt() > ground_alt + 100" throttle="0.80" radius="60" pitch="30" no="0"/>
+        <deroute block="Circle" no="1"/>
+      </block>
+      <block name="Circle" no="6">
+        <circle wp="Profile" vmode="alt" until="stage_time > 10" throttle="0.60" radius="60" alt="GetAltRef() + 100" no="0"/>
+        <exception deroute="Down" cond="GetPosAlt() > GetAltRef() + 120"/>
+        <deroute block="Survey" no="1"/>
+      </block>
+      <block name="Survey" no="7">
+        <go wp="WP01" no="0"/>
+        <go from="WP01" hmode="route" wp="WP02" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="1"/>
+        <go from="WP02" hmode="route" wp="WP03" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="2"/>
+        <go from="WP03" hmode="route" wp="WP04" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="3"/>
+        <go from="WP04" hmode="route" wp="WP05" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="4"/>
+        <go from="WP05" hmode="route" wp="WP06" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="5"/>
+        <go from="WP06" hmode="route" wp="WP07" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="6"/>
+        <go from="WP07" hmode="route" wp="WP08" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="7"/>
+        <go from="WP08" hmode="route" wp="WP09" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="8"/>
+        <exception deroute="Up" cond="ground_alt+70 > GetPosAlt()"/>
+        <deroute block="Down" no="9"/>
+      </block>
+      <block name="Down" no="8">
+        <circle wp="Profile" vmode="throttle" until="ground_alt+50 > GetPosAlt()" throttle="0.40" radius="60" pitch="-5" no="0"/>
+        <deroute block="Standby" no="1"/>
+      </block>
+      <block name="Up" no="9">
+        <circle wp="Profile" vmode="throttle" until="GetPosAlt() > ground_alt + 100" throttle="0.80" radius="60" pitch="30" no="0"/>
+        <return no="1"/>
+      </block>
+      <block strip_icon="home.png" strip_button="Standby" name="Standby" key="Ctrl+a" group="Standby" no="10">
+        <circle wp="Profile" radius="60" no="0"/>
+      </block>
+      <block name="HOME" no="11">
+        <home no="0"/>
+      </block>
+    </blocks>
+  </flight_plan>
+  <stages>
+    <stage block="11" block_name="HOME" stage="0">
+      <home no="0"/>
+    </stage>
+    <stage block="10" block_name="Standby" stage="0">
+      <circle wp="Profile" radius="60" no="0"/>
+    </stage>
+    <stage block="9" block_name="Up" stage="1">
+      <return no="1"/>
+    </stage>
+    <stage block="9" block_name="Up" stage="0">
+      <circle wp="Profile" vmode="throttle" until="GetPosAlt() > ground_alt + 100" throttle="0.80" radius="60" pitch="30" no="0"/>
+    </stage>
+    <stage block="8" block_name="Down" stage="1">
+      <deroute block="Standby" no="1"/>
+    </stage>
+    <stage block="8" block_name="Down" stage="0">
+      <circle wp="Profile" vmode="throttle" until="ground_alt+50 > GetPosAlt()" throttle="0.40" radius="60" pitch="-5" no="0"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="9">
+      <deroute block="Down" no="9"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="8">
+      <go from="WP08" hmode="route" wp="WP09" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="8"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="7">
+      <go from="WP07" hmode="route" wp="WP08" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="7"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="6">
+      <go from="WP06" hmode="route" wp="WP07" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="6"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="5">
+      <go from="WP05" hmode="route" wp="WP06" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="5"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="4">
+      <go from="WP04" hmode="route" wp="WP05" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="4"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="3">
+      <go from="WP03" hmode="route" wp="WP04" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="3"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="2">
+      <go from="WP02" hmode="route" wp="WP03" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="2"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="1">
+      <go from="WP01" hmode="route" wp="WP02" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09" vmode="glide" throttle="0.60" pitch="auto" approaching_time="1" no="1"/>
+    </stage>
+    <stage block="7" block_name="Survey" stage="0">
+      <go wp="WP01" no="0"/>
+    </stage>
+    <stage block="6" block_name="Circle" stage="1">
+      <deroute block="Survey" no="1"/>
+    </stage>
+    <stage block="6" block_name="Circle" stage="0">
+      <circle wp="Profile" vmode="alt" until="stage_time > 10" throttle="0.60" radius="60" alt="GetAltRef() + 100" no="0"/>
+    </stage>
+    <stage block="5" block_name="Climb" stage="1">
+      <deroute block="Circle" no="1"/>
+    </stage>
+    <stage block="5" block_name="Climb" stage="0">
+      <circle wp="Profile" vmode="throttle" until="GetPosAlt() > ground_alt + 100" throttle="0.80" radius="60" pitch="30" no="0"/>
+    </stage>
+    <stage block="4" block_name="Takeoff" stage="2">
+      <set var="autopilot.kill_throttle" value="0" no="2"/>
+    </stage>
+    <stage block="4" block_name="Takeoff" stage="1">
+      <set var="autopilot.flight_time" value="0" no="1"/>
+    </stage>
+    <stage block="4" block_name="Takeoff" stage="0">
+      <set var="autopilot.kill_throttle" value="0" no="0"/>
+    </stage>
+    <stage block="3" block_name="Holding point" stage="1">
+      <attitude vmode="throttle" throttle="0" roll="0" no="1"/>
+    </stage>
+    <stage block="3" block_name="Holding point" stage="0">
+      <set var="autopilot.kill_throttle" value="1" no="0"/>
+    </stage>
+    <stage block="2" block_name="Waiting for Remote Control" stage="0">
+      <while cond="RCLost()" no="0"/>
+    </stage>
+    <stage block="1" block_name="Geo init" stage="0">
+      <while cond="LessThan(NavBlockTime(), 10)" no="0"/>
+    </stage>
+    <stage block="0" block_name="Wait GPS" stage="1">
+      <while cond="!GpsFixValid()" no="1"/>
+    </stage>
+    <stage block="0" block_name="Wait GPS" stage="0">
+      <set var="autopilot.kill_throttle" value="1" no="0"/>
+    </stage>
+  </stages>
+</dump>

@@ -1,0 +1,1231 @@
+ARM GAS  /tmp/cc7LGPet.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"hal_usb.c"
+  13              		.text
+  14              		.section	.text.usbInit,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	usbInit
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	usbInit, %function
+  24              	usbInit:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 FFF7FEBF 		b	usb_lld_init
+  29              		.size	usbInit, .-usbInit
+  30              		.section	.text.usbObjectInit,"ax",%progbits
+  31              		.align	1
+  32              		.p2align 4,,15
+  33              		.global	usbObjectInit
+  34              		.syntax unified
+  35              		.thumb
+  36              		.thumb_func
+  37              		.fpu fpv4-sp-d16
+  38              		.type	usbObjectInit, %function
+  39              	usbObjectInit:
+  40              		@ args = 0, pretend = 0, frame = 0
+  41              		@ frame_needed = 0, uses_anonymous_args = 0
+  42              		@ link register save eliminated.
+  43 0000 0023     		movs	r3, #0
+  44 0002 0122     		movs	r2, #1
+  45 0004 C0E90133 		strd	r3, r3, [r0, #4]
+  46 0008 0270     		strb	r2, [r0]
+  47 000a C361     		str	r3, [r0, #28]
+  48 000c 8362     		str	r3, [r0, #40]
+  49 000e 0362     		str	r3, [r0, #32]
+  50 0010 C362     		str	r3, [r0, #44]
+  51 0012 4362     		str	r3, [r0, #36]
+  52 0014 0363     		str	r3, [r0, #48]
+  53 0016 7047     		bx	lr
+  54              		.size	usbObjectInit, .-usbObjectInit
+  55              		.section	.text.usbStart,"ax",%progbits
+  56              		.align	1
+  57              		.p2align 4,,15
+ARM GAS  /tmp/cc7LGPet.s 			page 2
+
+
+  58              		.global	usbStart
+  59              		.syntax unified
+  60              		.thumb
+  61              		.thumb_func
+  62              		.fpu fpv4-sp-d16
+  63              		.type	usbStart, %function
+  64              	usbStart:
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67 0000 70B5     		push	{r4, r5, r6, lr}
+  68 0002 3023     		movs	r3, #48
+  69 0004 0446     		mov	r4, r0
+  70 0006 0E46     		mov	r6, r1
+  71              		.syntax unified
+  72              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  73 0008 83F31188 		MSR basepri, r3
+  74              	@ 0 "" 2
+  75              		.thumb
+  76              		.syntax unified
+  77 000c 0025     		movs	r5, #0
+  78 000e FFF7FEFF 		bl	__stats_start_measure_crit_thd
+  79 0012 2046     		mov	r0, r4
+  80 0014 C4E90355 		strd	r5, r5, [r4, #12]
+  81 0018 C4E90555 		strd	r5, r5, [r4, #20]
+  82 001c 6660     		str	r6, [r4, #4]
+  83 001e FFF7FEFF 		bl	usb_lld_start
+  84 0022 0223     		movs	r3, #2
+  85 0024 2370     		strb	r3, [r4]
+  86 0026 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+  87              		.syntax unified
+  88              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  89 002a 85F31188 		MSR basepri, r5
+  90              	@ 0 "" 2
+  91              		.thumb
+  92              		.syntax unified
+  93 002e 2846     		mov	r0, r5
+  94 0030 70BD     		pop	{r4, r5, r6, pc}
+  95              		.size	usbStart, .-usbStart
+  96 0032 00BF     		.section	.text.usbStop,"ax",%progbits
+  97              		.align	1
+  98              		.p2align 4,,15
+  99              		.global	usbStop
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 103              		.fpu fpv4-sp-d16
+ 104              		.type	usbStop, %function
+ 105              	usbStop:
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108 0000 38B5     		push	{r3, r4, r5, lr}
+ 109 0002 0446     		mov	r4, r0
+ 110 0004 3023     		movs	r3, #48
+ 111              		.syntax unified
+ 112              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 113 0006 83F31188 		MSR basepri, r3
+ 114              	@ 0 "" 2
+ARM GAS  /tmp/cc7LGPet.s 			page 3
+
+
+ 115              		.thumb
+ 116              		.syntax unified
+ 117 000a FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 118 000e 2046     		mov	r0, r4
+ 119 0010 FFF7FEFF 		bl	usb_lld_stop
+ 120 0014 0025     		movs	r5, #0
+ 121 0016 0123     		movs	r3, #1
+ 122 0018 2370     		strb	r3, [r4]
+ 123 001a C4E90355 		strd	r5, r5, [r4, #12]
+ 124 001e C4E90555 		strd	r5, r5, [r4, #20]
+ 125 0022 6560     		str	r5, [r4, #4]
+ 126 0024 FFF7FEFF 		bl	chSchRescheduleS
+ 127 0028 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 128              		.syntax unified
+ 129              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 130 002c 85F31188 		MSR basepri, r5
+ 131              	@ 0 "" 2
+ 132              		.thumb
+ 133              		.syntax unified
+ 134 0030 38BD     		pop	{r3, r4, r5, pc}
+ 135              		.size	usbStop, .-usbStop
+ 136 0032 00BF     		.section	.text.usbInitEndpointI,"ax",%progbits
+ 137              		.align	1
+ 138              		.p2align 4,,15
+ 139              		.global	usbInitEndpointI
+ 140              		.syntax unified
+ 141              		.thumb
+ 142              		.thumb_func
+ 143              		.fpu fpv4-sp-d16
+ 144              		.type	usbInitEndpointI, %function
+ 145              	usbInitEndpointI:
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		@ link register save eliminated.
+ 149 0000 5369     		ldr	r3, [r2, #20]
+ 150 0002 00EB810C 		add	ip, r0, r1, lsl #2
+ 151 0006 CCF80C20 		str	r2, [ip, #12]
+ 152 000a 4BB1     		cbz	r3, .L9
+ 153 000c 4FF0000C 		mov	ip, #0
+ 154 0010 C3F800C0 		str	ip, [r3]	@ unaligned
+ 155 0014 C3F804C0 		str	ip, [r3, #4]	@ unaligned
+ 156 0018 C3F808C0 		str	ip, [r3, #8]	@ unaligned
+ 157 001c C3F80CC0 		str	ip, [r3, #12]	@ unaligned
+ 158              	.L9:
+ 159 0020 9369     		ldr	r3, [r2, #24]
+ 160 0022 23B1     		cbz	r3, .L10
+ 161 0024 0022     		movs	r2, #0
+ 162 0026 1A60     		str	r2, [r3]	@ unaligned
+ 163 0028 5A60     		str	r2, [r3, #4]	@ unaligned
+ 164 002a 9A60     		str	r2, [r3, #8]	@ unaligned
+ 165 002c DA60     		str	r2, [r3, #12]	@ unaligned
+ 166              	.L10:
+ 167 002e FFF7FEBF 		b	usb_lld_init_endpoint
+ 168              		.size	usbInitEndpointI, .-usbInitEndpointI
+ 169 0032 00BF     		.section	.text.usbDisableEndpointsI,"ax",%progbits
+ 170              		.align	1
+ 171              		.p2align 4,,15
+ARM GAS  /tmp/cc7LGPet.s 			page 4
+
+
+ 172              		.global	usbDisableEndpointsI
+ 173              		.syntax unified
+ 174              		.thumb
+ 175              		.thumb_func
+ 176              		.fpu fpv4-sp-d16
+ 177              		.type	usbDisableEndpointsI, %function
+ 178              	usbDisableEndpointsI:
+ 179              		@ args = 0, pretend = 0, frame = 0
+ 180              		@ frame_needed = 0, uses_anonymous_args = 0
+ 181              		@ link register save eliminated.
+ 182 0000 8168     		ldr	r1, [r0, #8]
+ 183 0002 0022     		movs	r2, #0
+ 184 0004 01F00111 		and	r1, r1, #65537
+ 185 0008 C0E90522 		strd	r2, r2, [r0, #20]
+ 186 000c 0261     		str	r2, [r0, #16]
+ 187 000e 8160     		str	r1, [r0, #8]
+ 188 0010 FFF7FEBF 		b	usb_lld_disable_endpoints
+ 189              		.size	usbDisableEndpointsI, .-usbDisableEndpointsI
+ 190              		.section	.text.usbStartReceiveI,"ax",%progbits
+ 191              		.align	1
+ 192              		.p2align 4,,15
+ 193              		.global	usbStartReceiveI
+ 194              		.syntax unified
+ 195              		.thumb
+ 196              		.thumb_func
+ 197              		.fpu fpv4-sp-d16
+ 198              		.type	usbStartReceiveI, %function
+ 199              	usbStartReceiveI:
+ 200              		@ args = 0, pretend = 0, frame = 0
+ 201              		@ frame_needed = 0, uses_anonymous_args = 0
+ 202 0000 70B5     		push	{r4, r5, r6, lr}
+ 203 0002 00EB8104 		add	r4, r0, r1, lsl #2
+ 204 0006 4689     		ldrh	r6, [r0, #10]
+ 205 0008 E468     		ldr	r4, [r4, #12]
+ 206 000a A569     		ldr	r5, [r4, #24]
+ 207 000c 0124     		movs	r4, #1
+ 208 000e 04FA01FE 		lsl	lr, r4, r1
+ 209 0012 4EEA060E 		orr	lr, lr, r6
+ 210 0016 A0F80AE0 		strh	lr, [r0, #10]	@ movhi
+ 211 001a AA60     		str	r2, [r5, #8]
+ 212 001c 0022     		movs	r2, #0
+ 213 001e C5E90032 		strd	r3, r2, [r5]
+ 214 0022 BDE87040 		pop	{r4, r5, r6, lr}
+ 215 0026 FFF7FEBF 		b	usb_lld_start_out
+ 216              		.size	usbStartReceiveI, .-usbStartReceiveI
+ 217 002a 00BF     		.section	.text.usbStartTransmitI,"ax",%progbits
+ 218              		.align	1
+ 219              		.p2align 4,,15
+ 220              		.global	usbStartTransmitI
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 224              		.fpu fpv4-sp-d16
+ 225              		.type	usbStartTransmitI, %function
+ 226              	usbStartTransmitI:
+ 227              		@ args = 0, pretend = 0, frame = 0
+ 228              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/cc7LGPet.s 			page 5
+
+
+ 229 0000 70B5     		push	{r4, r5, r6, lr}
+ 230 0002 00EB8104 		add	r4, r0, r1, lsl #2
+ 231 0006 0689     		ldrh	r6, [r0, #8]
+ 232 0008 E468     		ldr	r4, [r4, #12]
+ 233 000a 6569     		ldr	r5, [r4, #20]
+ 234 000c 0124     		movs	r4, #1
+ 235 000e 04FA01FE 		lsl	lr, r4, r1
+ 236 0012 4EEA060E 		orr	lr, lr, r6
+ 237 0016 A0F808E0 		strh	lr, [r0, #8]	@ movhi
+ 238 001a AA60     		str	r2, [r5, #8]
+ 239 001c 0022     		movs	r2, #0
+ 240 001e C5E90032 		strd	r3, r2, [r5]
+ 241 0022 BDE87040 		pop	{r4, r5, r6, lr}
+ 242 0026 FFF7FEBF 		b	usb_lld_start_in
+ 243              		.size	usbStartTransmitI, .-usbStartTransmitI
+ 244 002a 00BF     		.section	.text.usbStallReceiveI,"ax",%progbits
+ 245              		.align	1
+ 246              		.p2align 4,,15
+ 247              		.global	usbStallReceiveI
+ 248              		.syntax unified
+ 249              		.thumb
+ 250              		.thumb_func
+ 251              		.fpu fpv4-sp-d16
+ 252              		.type	usbStallReceiveI, %function
+ 253              	usbStallReceiveI:
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256 0000 10B5     		push	{r4, lr}
+ 257 0002 0122     		movs	r2, #1
+ 258 0004 4489     		ldrh	r4, [r0, #10]
+ 259 0006 02FA01F3 		lsl	r3, r2, r1
+ 260 000a 1C40     		ands	r4, r3, r4
+ 261 000c 01D0     		beq	.L26
+ 262 000e 1046     		mov	r0, r2
+ 263 0010 10BD     		pop	{r4, pc}
+ 264              	.L26:
+ 265 0012 FFF7FEFF 		bl	usb_lld_stall_out
+ 266 0016 2046     		mov	r0, r4
+ 267 0018 10BD     		pop	{r4, pc}
+ 268              		.size	usbStallReceiveI, .-usbStallReceiveI
+ 269 001a 00BF     		.section	.text.usbStallTransmitI,"ax",%progbits
+ 270              		.align	1
+ 271              		.p2align 4,,15
+ 272              		.global	usbStallTransmitI
+ 273              		.syntax unified
+ 274              		.thumb
+ 275              		.thumb_func
+ 276              		.fpu fpv4-sp-d16
+ 277              		.type	usbStallTransmitI, %function
+ 278              	usbStallTransmitI:
+ 279              		@ args = 0, pretend = 0, frame = 0
+ 280              		@ frame_needed = 0, uses_anonymous_args = 0
+ 281 0000 10B5     		push	{r4, lr}
+ 282 0002 0122     		movs	r2, #1
+ 283 0004 0489     		ldrh	r4, [r0, #8]
+ 284 0006 02FA01F3 		lsl	r3, r2, r1
+ 285 000a 1C40     		ands	r4, r3, r4
+ARM GAS  /tmp/cc7LGPet.s 			page 6
+
+
+ 286 000c 01D0     		beq	.L31
+ 287 000e 1046     		mov	r0, r2
+ 288 0010 10BD     		pop	{r4, pc}
+ 289              	.L31:
+ 290 0012 FFF7FEFF 		bl	usb_lld_stall_in
+ 291 0016 2046     		mov	r0, r4
+ 292 0018 10BD     		pop	{r4, pc}
+ 293              		.size	usbStallTransmitI, .-usbStallTransmitI
+ 294 001a 00BF     		.section	.text.usbWakeupHost,"ax",%progbits
+ 295              		.align	1
+ 296              		.p2align 4,,15
+ 297              		.global	usbWakeupHost
+ 298              		.syntax unified
+ 299              		.thumb
+ 300              		.thumb_func
+ 301              		.fpu fpv4-sp-d16
+ 302              		.type	usbWakeupHost, %function
+ 303              	usbWakeupHost:
+ 304              		@ args = 0, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+ 306 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 307 0002 052B     		cmp	r3, #5
+ 308 0004 00D0     		beq	.L38
+ 309 0006 7047     		bx	lr
+ 310              	.L38:
+ 311 0008 426D     		ldr	r2, [r0, #84]
+ 312 000a D2F80438 		ldr	r3, [r2, #2052]
+ 313 000e 10B5     		push	{r4, lr}
+ 314 0010 43F00103 		orr	r3, r3, #1
+ 315 0014 0446     		mov	r4, r0
+ 316 0016 C2F80438 		str	r3, [r2, #2052]
+ 317 001a 1420     		movs	r0, #20
+ 318 001c FFF7FEFF 		bl	chThdSleep
+ 319 0020 626D     		ldr	r2, [r4, #84]
+ 320 0022 D2F80438 		ldr	r3, [r2, #2052]
+ 321 0026 23F00103 		bic	r3, r3, #1
+ 322 002a C2F80438 		str	r3, [r2, #2052]
+ 323 002e 10BD     		pop	{r4, pc}
+ 324              		.size	usbWakeupHost, .-usbWakeupHost
+ 325              		.section	.text._usb_reset,"ax",%progbits
+ 326              		.align	1
+ 327              		.p2align 4,,15
+ 328              		.global	_usb_reset
+ 329              		.syntax unified
+ 330              		.thumb
+ 331              		.thumb_func
+ 332              		.fpu fpv4-sp-d16
+ 333              		.type	_usb_reset, %function
+ 334              	_usb_reset:
+ 335              		@ args = 0, pretend = 0, frame = 0
+ 336              		@ frame_needed = 0, uses_anonymous_args = 0
+ 337 0000 70B5     		push	{r4, r5, r6, lr}
+ 338 0002 0223     		movs	r3, #2
+ 339 0004 0025     		movs	r5, #0
+ 340 0006 0446     		mov	r4, r0
+ 341 0008 0370     		strb	r3, [r0]
+ 342 000a C0E90255 		strd	r5, r5, [r0, #8]
+ARM GAS  /tmp/cc7LGPet.s 			page 7
+
+
+ 343 000e C0E90455 		strd	r5, r5, [r0, #16]
+ 344 0012 C564     		str	r5, [r0, #76]
+ 345 0014 8561     		str	r5, [r0, #24]
+ 346 0016 80F83450 		strb	r5, [r0, #52]
+ 347 001a FFF7FEFF 		bl	usb_lld_reset
+ 348 001e 6368     		ldr	r3, [r4, #4]
+ 349 0020 1B68     		ldr	r3, [r3]
+ 350 0022 23B1     		cbz	r3, .L39
+ 351 0024 2946     		mov	r1, r5
+ 352 0026 2046     		mov	r0, r4
+ 353 0028 BDE87040 		pop	{r4, r5, r6, lr}
+ 354 002c 1847     		bx	r3	@ indirect register sibling call
+ 355              	.L39:
+ 356 002e 70BD     		pop	{r4, r5, r6, pc}
+ 357              		.size	_usb_reset, .-_usb_reset
+ 358              		.section	.text._usb_suspend,"ax",%progbits
+ 359              		.align	1
+ 360              		.p2align 4,,15
+ 361              		.global	_usb_suspend
+ 362              		.syntax unified
+ 363              		.thumb
+ 364              		.thumb_func
+ 365              		.fpu fpv4-sp-d16
+ 366              		.type	_usb_suspend, %function
+ 367              	_usb_suspend:
+ 368              		@ args = 0, pretend = 0, frame = 0
+ 369              		@ frame_needed = 0, uses_anonymous_args = 0
+ 370 0000 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 371 0002 4368     		ldr	r3, [r0, #4]
+ 372 0004 80F85010 		strb	r1, [r0, #80]
+ 373 0008 0522     		movs	r2, #5
+ 374 000a 0270     		strb	r2, [r0]
+ 375 000c 1B68     		ldr	r3, [r3]
+ 376 000e 10B5     		push	{r4, lr}
+ 377 0010 0446     		mov	r4, r0
+ 378 0012 0BB1     		cbz	r3, .L43
+ 379 0014 0421     		movs	r1, #4
+ 380 0016 9847     		blx	r3
+ 381              	.L43:
+ 382 0018 0023     		movs	r3, #0
+ 383 001a A360     		str	r3, [r4, #8]
+ 384 001c 10BD     		pop	{r4, pc}
+ 385              		.size	_usb_suspend, .-_usb_suspend
+ 386 001e 00BF     		.section	.text._usb_wakeup,"ax",%progbits
+ 387              		.align	1
+ 388              		.p2align 4,,15
+ 389              		.global	_usb_wakeup
+ 390              		.syntax unified
+ 391              		.thumb
+ 392              		.thumb_func
+ 393              		.fpu fpv4-sp-d16
+ 394              		.type	_usb_wakeup, %function
+ 395              	_usb_wakeup:
+ 396              		@ args = 0, pretend = 0, frame = 0
+ 397              		@ frame_needed = 0, uses_anonymous_args = 0
+ 398              		@ link register save eliminated.
+ 399 0000 90F85010 		ldrb	r1, [r0, #80]	@ zero_extendqisi2
+ARM GAS  /tmp/cc7LGPet.s 			page 8
+
+
+ 400 0004 4268     		ldr	r2, [r0, #4]
+ 401 0006 0170     		strb	r1, [r0]
+ 402 0008 1368     		ldr	r3, [r2]
+ 403 000a 0BB1     		cbz	r3, .L48
+ 404 000c 0521     		movs	r1, #5
+ 405 000e 1847     		bx	r3	@ indirect register sibling call
+ 406              	.L48:
+ 407 0010 7047     		bx	lr
+ 408              		.size	_usb_wakeup, .-_usb_wakeup
+ 409 0012 00BF     		.section	.text._usb_ep0setup,"ax",%progbits
+ 410              		.align	1
+ 411              		.p2align 4,,15
+ 412              		.global	_usb_ep0setup
+ 413              		.syntax unified
+ 414              		.thumb
+ 415              		.thumb_func
+ 416              		.fpu fpv4-sp-d16
+ 417              		.type	_usb_ep0setup, %function
+ 418              	_usb_ep0setup:
+ 419              		@ args = 0, pretend = 0, frame = 0
+ 420              		@ frame_needed = 0, uses_anonymous_args = 0
+ 421 0000 70B5     		push	{r4, r5, r6, lr}
+ 422 0002 90F83430 		ldrb	r3, [r0, #52]	@ zero_extendqisi2
+ 423 0006 0446     		mov	r4, r0
+ 424 0008 13B1     		cbz	r3, .L51
+ 425 000a 0023     		movs	r3, #0
+ 426 000c 80F83430 		strb	r3, [r0, #52]
+ 427              	.L51:
+ 428 0010 04F14402 		add	r2, r4, #68
+ 429 0014 2046     		mov	r0, r4
+ 430 0016 FFF7FEFF 		bl	usb_lld_read_setup
+ 431 001a 6368     		ldr	r3, [r4, #4]
+ 432 001c 9B68     		ldr	r3, [r3, #8]
+ 433 001e 73B3     		cbz	r3, .L56
+ 434 0020 2046     		mov	r0, r4
+ 435 0022 9847     		blx	r3
+ 436 0024 58B3     		cbz	r0, .L56
+ 437 0026 E56B     		ldr	r5, [r4, #60]
+ 438 0028 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 439              	.L73:
+ 440 002c B4F84A30 		ldrh	r3, [r4, #74]	@ unaligned
+ 441 0030 AB42     		cmp	r3, r5
+ 442 0032 3CBF     		itt	cc
+ 443 0034 E363     		strcc	r3, [r4, #60]
+ 444 0036 1D46     		movcc	r5, r3
+ 445 0038 1206     		lsls	r2, r2, #24
+ 446 003a 00F1E180 		bmi	.L136
+ 447 003e 002D     		cmp	r5, #0
+ 448 0040 00F09080 		beq	.L97
+ 449 0044 1523     		movs	r3, #21
+ 450 0046 84F83430 		strb	r3, [r4, #52]
+ 451 004a 3023     		movs	r3, #48
+ 452              		.syntax unified
+ 453              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 454 004c 83F31188 		MSR basepri, r3
+ 455              	@ 0 "" 2
+ 456              		.thumb
+ARM GAS  /tmp/cc7LGPet.s 			page 9
+
+
+ 457              		.syntax unified
+ 458 0050 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 459 0054 6289     		ldrh	r2, [r4, #10]
+ 460 0056 E368     		ldr	r3, [r4, #12]
+ 461 0058 D4E90E15 		ldrd	r1, r5, [r4, #56]
+ 462 005c 9B69     		ldr	r3, [r3, #24]
+ 463 005e 42F00102 		orr	r2, r2, #1
+ 464 0062 6281     		strh	r2, [r4, #10]	@ movhi
+ 465 0064 2046     		mov	r0, r4
+ 466 0066 0024     		movs	r4, #0
+ 467 0068 9960     		str	r1, [r3, #8]
+ 468 006a C3E90054 		strd	r5, r4, [r3]
+ 469 006e 2146     		mov	r1, r4
+ 470 0070 FFF7FEFF 		bl	usb_lld_start_out
+ 471 0074 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 472              		.syntax unified
+ 473              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 474 0078 84F31188 		MSR basepri, r4
+ 475              	@ 0 "" 2
+ 476              		.thumb
+ 477              		.syntax unified
+ 478 007c 70BD     		pop	{r4, r5, r6, pc}
+ 479              	.L56:
+ 480 007e 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 481 0082 12F06006 		ands	r6, r2, #96
+ 482 0086 1CD1     		bne	.L72
+ 483 0088 94F84530 		ldrb	r3, [r4, #69]	@ zero_extendqisi2
+ 484 008c 02F07F05 		and	r5, r2, #127
+ 485 0090 45EA0325 		orr	r5, r5, r3, lsl #8
+ 486 0094 40F20233 		movw	r3, #770
+ 487 0098 9D42     		cmp	r5, r3
+ 488 009a 00F06281 		beq	.L57
+ 489 009e 40D8     		bhi	.L58
+ 490 00a0 B5F5807F 		cmp	r5, #256
+ 491 00a4 00F01A81 		beq	.L59
+ 492 00a8 1DD9     		bls	.L137
+ 493 00aa B5F5817F 		cmp	r5, #258
+ 494 00ae 00F02481 		beq	.L65
+ 495 00b2 B5F5407F 		cmp	r5, #768
+ 496 00b6 04D1     		bne	.L72
+ 497 00b8 94F84630 		ldrb	r3, [r4, #70]	@ zero_extendqisi2
+ 498 00bc 012B     		cmp	r3, #1
+ 499 00be 00F0E480 		beq	.L138
+ 500              	.L72:
+ 501 00c2 0021     		movs	r1, #0
+ 502 00c4 2046     		mov	r0, r4
+ 503 00c6 FFF7FEFF 		bl	usb_lld_stall_in
+ 504 00ca 0021     		movs	r1, #0
+ 505 00cc 2046     		mov	r0, r4
+ 506 00ce FFF7FEFF 		bl	usb_lld_stall_out
+ 507 00d2 6368     		ldr	r3, [r4, #4]
+ 508 00d4 1B68     		ldr	r3, [r3]
+ 509 00d6 13B1     		cbz	r3, .L92
+ 510 00d8 0621     		movs	r1, #6
+ 511 00da 2046     		mov	r0, r4
+ 512 00dc 9847     		blx	r3
+ 513              	.L92:
+ARM GAS  /tmp/cc7LGPet.s 			page 10
+
+
+ 514 00de 0623     		movs	r3, #6
+ 515 00e0 84F83430 		strb	r3, [r4, #52]
+ 516 00e4 70BD     		pop	{r4, r5, r6, pc}
+ 517              	.L137:
+ 518 00e6 012D     		cmp	r5, #1
+ 519 00e8 65D0     		beq	.L61
+ 520 00ea 022D     		cmp	r5, #2
+ 521 00ec 55D1     		bne	.L139
+ 522 00ee 94F94830 		ldrsb	r3, [r4, #72]
+ 523 00f2 94F84810 		ldrb	r1, [r4, #72]	@ zero_extendqisi2
+ 524 00f6 002B     		cmp	r3, #0
+ 525 00f8 01F00F01 		and	r1, r1, #15
+ 526 00fc 2046     		mov	r0, r4
+ 527 00fe C0F2B880 		blt	.L140
+ 528 0102 FFF7FEFF 		bl	usb_lld_get_status_out
+ 529 0106 0128     		cmp	r0, #1
+ 530 0108 00F0B880 		beq	.L86
+ 531              	.L135:
+ 532 010c 0228     		cmp	r0, #2
+ 533 010e D8D1     		bne	.L72
+ 534 0110 A249     		ldr	r1, .L146
+ 535 0112 0222     		movs	r2, #2
+ 536 0114 0023     		movs	r3, #0
+ 537 0116 C4E90E12 		strd	r1, r2, [r4, #56]
+ 538 011a 2364     		str	r3, [r4, #64]
+ 539 011c 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 540 0120 84E7     		b	.L73
+ 541              	.L58:
+ 542 0122 B5F5006F 		cmp	r5, #2048
+ 543 0126 00F01581 		beq	.L67
+ 544 012a 4BD9     		bls	.L141
+ 545 012c B5F5106F 		cmp	r5, #2304
+ 546 0130 3DD1     		bne	.L142
+ 547 0132 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 548 0134 042B     		cmp	r3, #4
+ 549 0136 00F0B280 		beq	.L143
+ 550              	.L78:
+ 551 013a 94F84630 		ldrb	r3, [r4, #70]	@ zero_extendqisi2
+ 552 013e 4BB1     		cbz	r3, .L81
+ 553 0140 6268     		ldr	r2, [r4, #4]
+ 554 0142 84F84F30 		strb	r3, [r4, #79]
+ 555 0146 0421     		movs	r1, #4
+ 556 0148 2170     		strb	r1, [r4]
+ 557 014a 1368     		ldr	r3, [r2]
+ 558 014c 13B1     		cbz	r3, .L81
+ 559 014e 0221     		movs	r1, #2
+ 560 0150 2046     		mov	r0, r4
+ 561 0152 9847     		blx	r3
+ 562              	.L81:
+ 563 0154 0023     		movs	r3, #0
+ 564 0156 C4E90E33 		strd	r3, r3, [r4, #56]
+ 565 015a 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 566 015e 2364     		str	r3, [r4, #64]
+ 567              	.L74:
+ 568 0160 1306     		lsls	r3, r2, #24
+ 569 0162 6BD4     		bmi	.L96
+ 570              	.L97:
+ARM GAS  /tmp/cc7LGPet.s 			page 11
+
+
+ 571 0164 0B23     		movs	r3, #11
+ 572 0166 84F83430 		strb	r3, [r4, #52]
+ 573 016a 3023     		movs	r3, #48
+ 574              		.syntax unified
+ 575              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 576 016c 83F31188 		MSR basepri, r3
+ 577              	@ 0 "" 2
+ 578              		.thumb
+ 579              		.syntax unified
+ 580 0170 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 581 0174 E368     		ldr	r3, [r4, #12]
+ 582 0176 2289     		ldrh	r2, [r4, #8]
+ 583 0178 5B69     		ldr	r3, [r3, #20]
+ 584 017a 0025     		movs	r5, #0
+ 585 017c 42F00102 		orr	r2, r2, #1
+ 586 0180 2281     		strh	r2, [r4, #8]	@ movhi
+ 587 0182 2946     		mov	r1, r5
+ 588 0184 C3E90055 		strd	r5, r5, [r3]
+ 589 0188 2046     		mov	r0, r4
+ 590 018a 9D60     		str	r5, [r3, #8]
+ 591 018c FFF7FEFF 		bl	usb_lld_start_in
+ 592 0190 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 593              		.syntax unified
+ 594              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 595 0194 85F31188 		MSR basepri, r5
+ 596              	@ 0 "" 2
+ 597              		.thumb
+ 598              		.syntax unified
+ 599 0198 70BD     		pop	{r4, r5, r6, pc}
+ 600              	.L139:
+ 601 019a 002D     		cmp	r5, #0
+ 602 019c 91D1     		bne	.L72
+ 603 019e 0223     		movs	r3, #2
+ 604 01a0 04F14C01 		add	r1, r4, #76
+ 605 01a4 2564     		str	r5, [r4, #64]
+ 606 01a6 C4E90E13 		strd	r1, r3, [r4, #56]
+ 607 01aa 1D46     		mov	r5, r3
+ 608 01ac 3EE7     		b	.L73
+ 609              	.L142:
+ 610 01ae 40F60243 		movw	r3, #3074
+ 611 01b2 9D42     		cmp	r5, r3
+ 612 01b4 85D1     		bne	.L72
+ 613              	.L61:
+ 614 01b6 7A49     		ldr	r1, .L146+4
+ 615 01b8 0225     		movs	r5, #2
+ 616 01ba 0023     		movs	r3, #0
+ 617 01bc C4E90E15 		strd	r1, r5, [r4, #56]
+ 618 01c0 2364     		str	r3, [r4, #64]
+ 619 01c2 33E7     		b	.L73
+ 620              	.L141:
+ 621 01c4 B5F5A06F 		cmp	r5, #1280
+ 622 01c8 00F0AD80 		beq	.L69
+ 623 01cc A5F5C065 		sub	r5, r5, #1536
+ 624 01d0 012D     		cmp	r5, #1
+ 625 01d2 3FF676AF 		bhi	.L72
+ 626 01d6 6268     		ldr	r2, [r4, #4]
+ 627 01d8 B4F84830 		ldrh	r3, [r4, #72]	@ unaligned
+ARM GAS  /tmp/cc7LGPet.s 			page 12
+
+
+ 628 01dc 5568     		ldr	r5, [r2, #4]
+ 629 01de 94F84710 		ldrb	r1, [r4, #71]	@ zero_extendqisi2
+ 630 01e2 94F84620 		ldrb	r2, [r4, #70]	@ zero_extendqisi2
+ 631 01e6 2046     		mov	r0, r4
+ 632 01e8 A847     		blx	r5
+ 633 01ea 0028     		cmp	r0, #0
+ 634 01ec 3FF469AF 		beq	.L72
+ 635 01f0 D0E90053 		ldrd	r5, r3, [r0]
+ 636 01f4 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 637 01f8 2664     		str	r6, [r4, #64]
+ 638 01fa C4E90E35 		strd	r3, r5, [r4, #56]
+ 639 01fe 15E7     		b	.L73
+ 640              	.L136:
+ 641 0200 E5B1     		cbz	r5, .L96
+ 642 0202 0923     		movs	r3, #9
+ 643 0204 84F83430 		strb	r3, [r4, #52]
+ 644 0208 3023     		movs	r3, #48
+ 645              		.syntax unified
+ 646              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 647 020a 83F31188 		MSR basepri, r3
+ 648              	@ 0 "" 2
+ 649              		.thumb
+ 650              		.syntax unified
+ 651 020e FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 652 0212 2289     		ldrh	r2, [r4, #8]
+ 653 0214 E368     		ldr	r3, [r4, #12]
+ 654 0216 D4E90E15 		ldrd	r1, r5, [r4, #56]
+ 655 021a 5B69     		ldr	r3, [r3, #20]
+ 656 021c 42F00102 		orr	r2, r2, #1
+ 657 0220 2281     		strh	r2, [r4, #8]	@ movhi
+ 658 0222 2046     		mov	r0, r4
+ 659 0224 0024     		movs	r4, #0
+ 660 0226 9960     		str	r1, [r3, #8]
+ 661 0228 C3E90054 		strd	r5, r4, [r3]
+ 662 022c 2146     		mov	r1, r4
+ 663 022e FFF7FEFF 		bl	usb_lld_start_in
+ 664 0232 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 665              		.syntax unified
+ 666              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 667 0236 84F31188 		MSR basepri, r4
+ 668              	@ 0 "" 2
+ 669              		.thumb
+ 670              		.syntax unified
+ 671 023a 70BD     		pop	{r4, r5, r6, pc}
+ 672              	.L96:
+ 673 023c 1423     		movs	r3, #20
+ 674 023e 84F83430 		strb	r3, [r4, #52]
+ 675 0242 3023     		movs	r3, #48
+ 676              		.syntax unified
+ 677              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 678 0244 83F31188 		MSR basepri, r3
+ 679              	@ 0 "" 2
+ 680              		.thumb
+ 681              		.syntax unified
+ 682 0248 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 683 024c E368     		ldr	r3, [r4, #12]
+ 684 024e 6289     		ldrh	r2, [r4, #10]
+ARM GAS  /tmp/cc7LGPet.s 			page 13
+
+
+ 685 0250 9B69     		ldr	r3, [r3, #24]
+ 686 0252 0025     		movs	r5, #0
+ 687 0254 42F00102 		orr	r2, r2, #1
+ 688 0258 6281     		strh	r2, [r4, #10]	@ movhi
+ 689 025a 2946     		mov	r1, r5
+ 690 025c C3E90055 		strd	r5, r5, [r3]
+ 691 0260 2046     		mov	r0, r4
+ 692 0262 9D60     		str	r5, [r3, #8]
+ 693 0264 FFF7FEFF 		bl	usb_lld_start_out
+ 694 0268 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 695              		.syntax unified
+ 696              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 697 026c 85F31188 		MSR basepri, r5
+ 698              	@ 0 "" 2
+ 699              		.thumb
+ 700              		.syntax unified
+ 701 0270 70BD     		pop	{r4, r5, r6, pc}
+ 702              	.L140:
+ 703 0272 FFF7FEFF 		bl	usb_lld_get_status_in
+ 704 0276 0128     		cmp	r0, #1
+ 705 0278 7FF448AF 		bne	.L135
+ 706              	.L86:
+ 707 027c 494B     		ldr	r3, .L146+8
+ 708 027e 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 709 0282 2664     		str	r6, [r4, #64]
+ 710 0284 C4E90E35 		strd	r3, r5, [r4, #56]
+ 711 0288 D0E6     		b	.L73
+ 712              	.L138:
+ 713 028a B4F84C30 		ldrh	r3, [r4, #76]
+ 714 028e A663     		str	r6, [r4, #56]
+ 715 0290 43F00203 		orr	r3, r3, #2
+ 716 0294 C4E90F66 		strd	r6, r6, [r4, #60]
+ 717 0298 A4F84C30 		strh	r3, [r4, #76]	@ movhi
+ 718 029c 60E7     		b	.L74
+ 719              	.L143:
+ 720 029e 3023     		movs	r3, #48
+ 721              		.syntax unified
+ 722              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 723 02a0 83F31188 		MSR basepri, r3
+ 724              	@ 0 "" 2
+ 725              		.thumb
+ 726              		.syntax unified
+ 727 02a4 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 728 02a8 A368     		ldr	r3, [r4, #8]
+ 729 02aa A661     		str	r6, [r4, #24]
+ 730 02ac 03F00113 		and	r3, r3, #65537
+ 731 02b0 2046     		mov	r0, r4
+ 732 02b2 A360     		str	r3, [r4, #8]
+ 733 02b4 C4E90466 		strd	r6, r6, [r4, #16]
+ 734 02b8 FFF7FEFF 		bl	usb_lld_disable_endpoints
+ 735 02bc FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 736              		.syntax unified
+ 737              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 738 02c0 86F31188 		MSR basepri, r6
+ 739              	@ 0 "" 2
+ 740              		.thumb
+ 741              		.syntax unified
+ARM GAS  /tmp/cc7LGPet.s 			page 14
+
+
+ 742 02c4 0321     		movs	r1, #3
+ 743 02c6 6368     		ldr	r3, [r4, #4]
+ 744 02c8 84F84F60 		strb	r6, [r4, #79]
+ 745 02cc 2170     		strb	r1, [r4]
+ 746 02ce 1B68     		ldr	r3, [r3]
+ 747 02d0 002B     		cmp	r3, #0
+ 748 02d2 3FF432AF 		beq	.L78
+ 749 02d6 2046     		mov	r0, r4
+ 750 02d8 9847     		blx	r3
+ 751 02da 2EE7     		b	.L78
+ 752              	.L59:
+ 753 02dc 94F84630 		ldrb	r3, [r4, #70]	@ zero_extendqisi2
+ 754 02e0 012B     		cmp	r3, #1
+ 755 02e2 7FF4EEAE 		bne	.L72
+ 756 02e6 B4F84C30 		ldrh	r3, [r4, #76]
+ 757 02ea A663     		str	r6, [r4, #56]
+ 758 02ec 23F00203 		bic	r3, r3, #2
+ 759 02f0 C4E90F66 		strd	r6, r6, [r4, #60]
+ 760 02f4 A4F84C30 		strh	r3, [r4, #76]	@ movhi
+ 761 02f8 32E7     		b	.L74
+ 762              	.L65:
+ 763 02fa 94F84630 		ldrb	r3, [r4, #70]	@ zero_extendqisi2
+ 764 02fe 002B     		cmp	r3, #0
+ 765 0300 7FF4DFAE 		bne	.L72
+ 766 0304 94F84830 		ldrb	r3, [r4, #72]	@ zero_extendqisi2
+ 767 0308 13F00F01 		ands	r1, r3, #15
+ 768 030c 06D0     		beq	.L90
+ 769 030e 1E06     		lsls	r6, r3, #24
+ 770 0310 2046     		mov	r0, r4
+ 771 0312 38D4     		bmi	.L144
+ 772 0314 FFF7FEFF 		bl	usb_lld_clear_out
+ 773 0318 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 774              	.L90:
+ 775 031c 0023     		movs	r3, #0
+ 776 031e C4E90E33 		strd	r3, r3, [r4, #56]
+ 777 0322 2364     		str	r3, [r4, #64]
+ 778 0324 1CE7     		b	.L74
+ 779              	.L69:
+ 780 0326 B4F84430 		ldrh	r3, [r4, #68]
+ 781 032a B3F5A06F 		cmp	r3, #1280
+ 782 032e F5D1     		bne	.L90
+ 783 0330 94F84630 		ldrb	r3, [r4, #70]	@ zero_extendqisi2
+ 784 0334 84F84E30 		strb	r3, [r4, #78]
+ 785 0338 2046     		mov	r0, r4
+ 786 033a FFF7FEFF 		bl	usb_lld_set_address
+ 787 033e 6368     		ldr	r3, [r4, #4]
+ 788 0340 1B68     		ldr	r3, [r3]
+ 789 0342 13B1     		cbz	r3, .L76
+ 790 0344 0121     		movs	r1, #1
+ 791 0346 2046     		mov	r0, r4
+ 792 0348 9847     		blx	r3
+ 793              	.L76:
+ 794 034a 0323     		movs	r3, #3
+ 795 034c 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 796 0350 2370     		strb	r3, [r4]
+ 797 0352 E3E7     		b	.L90
+ 798              	.L67:
+ARM GAS  /tmp/cc7LGPet.s 			page 15
+
+
+ 799 0354 0125     		movs	r5, #1
+ 800 0356 04F14F03 		add	r3, r4, #79
+ 801 035a C4E90E35 		strd	r3, r5, [r4, #56]
+ 802 035e 2664     		str	r6, [r4, #64]
+ 803 0360 64E6     		b	.L73
+ 804              	.L57:
+ 805 0362 94F84630 		ldrb	r3, [r4, #70]	@ zero_extendqisi2
+ 806 0366 002B     		cmp	r3, #0
+ 807 0368 7FF4ABAE 		bne	.L72
+ 808 036c 94F84830 		ldrb	r3, [r4, #72]	@ zero_extendqisi2
+ 809 0370 13F00F01 		ands	r1, r3, #15
+ 810 0374 D2D0     		beq	.L90
+ 811 0376 1D06     		lsls	r5, r3, #24
+ 812 0378 2046     		mov	r0, r4
+ 813 037a 09D4     		bmi	.L145
+ 814 037c FFF7FEFF 		bl	usb_lld_stall_out
+ 815 0380 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 816 0384 CAE7     		b	.L90
+ 817              	.L144:
+ 818 0386 FFF7FEFF 		bl	usb_lld_clear_in
+ 819 038a 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 820 038e C5E7     		b	.L90
+ 821              	.L145:
+ 822 0390 FFF7FEFF 		bl	usb_lld_stall_in
+ 823 0394 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 824 0398 C0E7     		b	.L90
+ 825              	.L147:
+ 826 039a 00BF     		.align	2
+ 827              	.L146:
+ 828 039c 00000000 		.word	.LANCHOR2
+ 829 03a0 00000000 		.word	.LANCHOR0
+ 830 03a4 00000000 		.word	.LANCHOR1
+ 831              		.size	_usb_ep0setup, .-_usb_ep0setup
+ 832              		.section	.text._usb_ep0in,"ax",%progbits
+ 833              		.align	1
+ 834              		.p2align 4,,15
+ 835              		.global	_usb_ep0in
+ 836              		.syntax unified
+ 837              		.thumb
+ 838              		.thumb_func
+ 839              		.fpu fpv4-sp-d16
+ 840              		.type	_usb_ep0in, %function
+ 841              	_usb_ep0in:
+ 842              		@ args = 0, pretend = 0, frame = 0
+ 843              		@ frame_needed = 0, uses_anonymous_args = 0
+ 844 0000 38B5     		push	{r3, r4, r5, lr}
+ 845 0002 90F83430 		ldrb	r3, [r0, #52]	@ zero_extendqisi2
+ 846 0006 0446     		mov	r4, r0
+ 847 0008 152B     		cmp	r3, #21
+ 848 000a 2BD8     		bhi	.L148
+ 849 000c DFE803F0 		tbb	[pc, r3]
+ 850              	.L151:
+ 851 0010 2B       		.byte	(.L150-.L151)/2
+ 852 0011 2A       		.byte	(.L148-.L151)/2
+ 853 0012 2A       		.byte	(.L148-.L151)/2
+ 854 0013 2A       		.byte	(.L148-.L151)/2
+ 855 0014 2A       		.byte	(.L148-.L151)/2
+ARM GAS  /tmp/cc7LGPet.s 			page 16
+
+
+ 856 0015 2A       		.byte	(.L148-.L151)/2
+ 857 0016 2B       		.byte	(.L150-.L151)/2
+ 858 0017 2A       		.byte	(.L148-.L151)/2
+ 859 0018 2A       		.byte	(.L148-.L151)/2
+ 860 0019 0B       		.byte	(.L154-.L151)/2
+ 861 001a 10       		.byte	(.L153-.L151)/2
+ 862 001b 3C       		.byte	(.L152-.L151)/2
+ 863 001c 2A       		.byte	(.L148-.L151)/2
+ 864 001d 2A       		.byte	(.L148-.L151)/2
+ 865 001e 2A       		.byte	(.L148-.L151)/2
+ 866 001f 2A       		.byte	(.L148-.L151)/2
+ 867 0020 2A       		.byte	(.L148-.L151)/2
+ 868 0021 2A       		.byte	(.L148-.L151)/2
+ 869 0022 2A       		.byte	(.L148-.L151)/2
+ 870 0023 2A       		.byte	(.L148-.L151)/2
+ 871 0024 2B       		.byte	(.L150-.L151)/2
+ 872 0025 2B       		.byte	(.L150-.L151)/2
+ 873              		.p2align 1
+ 874              	.L154:
+ 875 0026 C16B     		ldr	r1, [r0, #60]
+ 876 0028 B0F84A30 		ldrh	r3, [r0, #74]	@ unaligned
+ 877 002c 9942     		cmp	r1, r3
+ 878 002e 32D3     		bcc	.L164
+ 879              	.L153:
+ 880 0030 1423     		movs	r3, #20
+ 881 0032 84F83430 		strb	r3, [r4, #52]
+ 882 0036 3023     		movs	r3, #48
+ 883              		.syntax unified
+ 884              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 885 0038 83F31188 		MSR basepri, r3
+ 886              	@ 0 "" 2
+ 887              		.thumb
+ 888              		.syntax unified
+ 889 003c FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 890 0040 E368     		ldr	r3, [r4, #12]
+ 891 0042 6289     		ldrh	r2, [r4, #10]
+ 892 0044 9B69     		ldr	r3, [r3, #24]
+ 893 0046 0025     		movs	r5, #0
+ 894 0048 42F00102 		orr	r2, r2, #1
+ 895 004c 6281     		strh	r2, [r4, #10]	@ movhi
+ 896 004e 2946     		mov	r1, r5
+ 897 0050 C3E90055 		strd	r5, r5, [r3]
+ 898 0054 2046     		mov	r0, r4
+ 899 0056 9D60     		str	r5, [r3, #8]
+ 900 0058 FFF7FEFF 		bl	usb_lld_start_out
+ 901 005c FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 902              		.syntax unified
+ 903              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 904 0060 85F31188 		MSR basepri, r5
+ 905              	@ 0 "" 2
+ 906              		.thumb
+ 907              		.syntax unified
+ 908              	.L148:
+ 909 0064 38BD     		pop	{r3, r4, r5, pc}
+ 910              	.L150:
+ 911 0066 0021     		movs	r1, #0
+ 912 0068 FFF7FEFF 		bl	usb_lld_stall_in
+ARM GAS  /tmp/cc7LGPet.s 			page 17
+
+
+ 913 006c 0021     		movs	r1, #0
+ 914 006e 2046     		mov	r0, r4
+ 915 0070 FFF7FEFF 		bl	usb_lld_stall_out
+ 916 0074 6368     		ldr	r3, [r4, #4]
+ 917 0076 1B68     		ldr	r3, [r3]
+ 918 0078 13B1     		cbz	r3, .L156
+ 919 007a 0621     		movs	r1, #6
+ 920 007c 2046     		mov	r0, r4
+ 921 007e 9847     		blx	r3
+ 922              	.L156:
+ 923 0080 0623     		movs	r3, #6
+ 924 0082 84F83430 		strb	r3, [r4, #52]
+ 925 0086 38BD     		pop	{r3, r4, r5, pc}
+ 926              	.L152:
+ 927 0088 036C     		ldr	r3, [r0, #64]
+ 928 008a 03B1     		cbz	r3, .L155
+ 929 008c 9847     		blx	r3
+ 930              	.L155:
+ 931 008e 0023     		movs	r3, #0
+ 932 0090 84F83430 		strb	r3, [r4, #52]
+ 933 0094 38BD     		pop	{r3, r4, r5, pc}
+ 934              	.L164:
+ 935 0096 C368     		ldr	r3, [r0, #12]
+ 936 0098 1D8A     		ldrh	r5, [r3, #16]
+ 937 009a B1FBF5F3 		udiv	r3, r1, r5
+ 938 009e 05FB1315 		mls	r5, r5, r3, r1
+ 939 00a2 002D     		cmp	r5, #0
+ 940 00a4 C4D1     		bne	.L153
+ 941 00a6 3023     		movs	r3, #48
+ 942              		.syntax unified
+ 943              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 944 00a8 83F31188 		MSR basepri, r3
+ 945              	@ 0 "" 2
+ 946              		.thumb
+ 947              		.syntax unified
+ 948 00ac FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 949 00b0 E368     		ldr	r3, [r4, #12]
+ 950 00b2 2289     		ldrh	r2, [r4, #8]
+ 951 00b4 5B69     		ldr	r3, [r3, #20]
+ 952 00b6 42F00102 		orr	r2, r2, #1
+ 953 00ba 2281     		strh	r2, [r4, #8]	@ movhi
+ 954 00bc 2946     		mov	r1, r5
+ 955 00be C3E90055 		strd	r5, r5, [r3]
+ 956 00c2 2046     		mov	r0, r4
+ 957 00c4 9D60     		str	r5, [r3, #8]
+ 958 00c6 FFF7FEFF 		bl	usb_lld_start_in
+ 959 00ca FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 960              		.syntax unified
+ 961              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 962 00ce 85F31188 		MSR basepri, r5
+ 963              	@ 0 "" 2
+ 964              		.thumb
+ 965              		.syntax unified
+ 966 00d2 0A23     		movs	r3, #10
+ 967 00d4 84F83430 		strb	r3, [r4, #52]
+ 968 00d8 38BD     		pop	{r3, r4, r5, pc}
+ 969              		.size	_usb_ep0in, .-_usb_ep0in
+ARM GAS  /tmp/cc7LGPet.s 			page 18
+
+
+ 970 00da 00BF     		.section	.text._usb_ep0out,"ax",%progbits
+ 971              		.align	1
+ 972              		.p2align 4,,15
+ 973              		.global	_usb_ep0out
+ 974              		.syntax unified
+ 975              		.thumb
+ 976              		.thumb_func
+ 977              		.fpu fpv4-sp-d16
+ 978              		.type	_usb_ep0out, %function
+ 979              	_usb_ep0out:
+ 980              		@ args = 0, pretend = 0, frame = 0
+ 981              		@ frame_needed = 0, uses_anonymous_args = 0
+ 982 0000 38B5     		push	{r3, r4, r5, lr}
+ 983 0002 90F83430 		ldrb	r3, [r0, #52]	@ zero_extendqisi2
+ 984 0006 0446     		mov	r4, r0
+ 985 0008 152B     		cmp	r3, #21
+ 986 000a 1CD8     		bhi	.L165
+ 987 000c DFE803F0 		tbb	[pc, r3]
+ 988              	.L168:
+ 989 0010 0B       		.byte	(.L170-.L168)/2
+ 990 0011 1B       		.byte	(.L165-.L168)/2
+ 991 0012 1B       		.byte	(.L165-.L168)/2
+ 992 0013 1B       		.byte	(.L165-.L168)/2
+ 993 0014 1B       		.byte	(.L165-.L168)/2
+ 994 0015 1B       		.byte	(.L165-.L168)/2
+ 995 0016 0B       		.byte	(.L170-.L168)/2
+ 996 0017 1B       		.byte	(.L165-.L168)/2
+ 997 0018 1B       		.byte	(.L165-.L168)/2
+ 998 0019 0B       		.byte	(.L170-.L168)/2
+ 999 001a 0B       		.byte	(.L170-.L168)/2
+ 1000 001b 0B       		.byte	(.L170-.L168)/2
+ 1001 001c 1B       		.byte	(.L165-.L168)/2
+ 1002 001d 1B       		.byte	(.L165-.L168)/2
+ 1003 001e 1B       		.byte	(.L165-.L168)/2
+ 1004 001f 1B       		.byte	(.L165-.L168)/2
+ 1005 0020 1B       		.byte	(.L165-.L168)/2
+ 1006 0021 1B       		.byte	(.L165-.L168)/2
+ 1007 0022 1B       		.byte	(.L165-.L168)/2
+ 1008 0023 1B       		.byte	(.L165-.L168)/2
+ 1009 0024 37       		.byte	(.L169-.L168)/2
+ 1010 0025 1C       		.byte	(.L167-.L168)/2
+ 1011              		.p2align 1
+ 1012              	.L170:
+ 1013 0026 0021     		movs	r1, #0
+ 1014 0028 FFF7FEFF 		bl	usb_lld_stall_in
+ 1015 002c 0021     		movs	r1, #0
+ 1016 002e 2046     		mov	r0, r4
+ 1017 0030 FFF7FEFF 		bl	usb_lld_stall_out
+ 1018 0034 6368     		ldr	r3, [r4, #4]
+ 1019 0036 1B68     		ldr	r3, [r3]
+ 1020 0038 13B1     		cbz	r3, .L172
+ 1021 003a 0621     		movs	r1, #6
+ 1022 003c 2046     		mov	r0, r4
+ 1023 003e 9847     		blx	r3
+ 1024              	.L172:
+ 1025 0040 0623     		movs	r3, #6
+ 1026 0042 84F83430 		strb	r3, [r4, #52]
+ARM GAS  /tmp/cc7LGPet.s 			page 19
+
+
+ 1027              	.L165:
+ 1028 0046 38BD     		pop	{r3, r4, r5, pc}
+ 1029              	.L167:
+ 1030 0048 0B23     		movs	r3, #11
+ 1031 004a 80F83430 		strb	r3, [r0, #52]
+ 1032 004e 3023     		movs	r3, #48
+ 1033              		.syntax unified
+ 1034              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1035 0050 83F31188 		MSR basepri, r3
+ 1036              	@ 0 "" 2
+ 1037              		.thumb
+ 1038              		.syntax unified
+ 1039 0054 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 1040 0058 E368     		ldr	r3, [r4, #12]
+ 1041 005a 2289     		ldrh	r2, [r4, #8]
+ 1042 005c 5B69     		ldr	r3, [r3, #20]
+ 1043 005e 0025     		movs	r5, #0
+ 1044 0060 42F00102 		orr	r2, r2, #1
+ 1045 0064 2281     		strh	r2, [r4, #8]	@ movhi
+ 1046 0066 2946     		mov	r1, r5
+ 1047 0068 C3E90055 		strd	r5, r5, [r3]
+ 1048 006c 2046     		mov	r0, r4
+ 1049 006e 9D60     		str	r5, [r3, #8]
+ 1050 0070 FFF7FEFF 		bl	usb_lld_start_in
+ 1051 0074 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 1052              		.syntax unified
+ 1053              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1054 0078 85F31188 		MSR basepri, r5
+ 1055              	@ 0 "" 2
+ 1056              		.thumb
+ 1057              		.syntax unified
+ 1058 007c 38BD     		pop	{r3, r4, r5, pc}
+ 1059              	.L169:
+ 1060 007e C368     		ldr	r3, [r0, #12]
+ 1061 0080 9B69     		ldr	r3, [r3, #24]
+ 1062 0082 5B68     		ldr	r3, [r3, #4]
+ 1063 0084 002B     		cmp	r3, #0
+ 1064 0086 DED1     		bne	.L165
+ 1065 0088 036C     		ldr	r3, [r0, #64]
+ 1066 008a 03B1     		cbz	r3, .L171
+ 1067 008c 9847     		blx	r3
+ 1068              	.L171:
+ 1069 008e 0023     		movs	r3, #0
+ 1070 0090 84F83430 		strb	r3, [r4, #52]
+ 1071 0094 38BD     		pop	{r3, r4, r5, pc}
+ 1072              		.size	_usb_ep0out, .-_usb_ep0out
+ 1073 0096 00BF     		.section	.rodata.active_status,"a"
+ 1074              		.align	2
+ 1075              		.set	.LANCHOR2,. + 0
+ 1076              		.type	active_status, %object
+ 1077              		.size	active_status, 2
+ 1078              	active_status:
+ 1079 0000 0000     		.space	2
+ 1080              		.section	.rodata.halted_status,"a"
+ 1081              		.align	2
+ 1082              		.set	.LANCHOR1,. + 0
+ 1083              		.type	halted_status, %object
+ARM GAS  /tmp/cc7LGPet.s 			page 20
+
+
+ 1084              		.size	halted_status, 2
+ 1085              	halted_status:
+ 1086 0000 0100     		.ascii	"\001\000"
+ 1087              		.section	.rodata.zero_status,"a"
+ 1088              		.align	2
+ 1089              		.set	.LANCHOR0,. + 0
+ 1090              		.type	zero_status, %object
+ 1091              		.size	zero_status, 2
+ 1092              	zero_status:
+ 1093 0000 0000     		.space	2
+ 1094              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cc7LGPet.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_usb.c
+     /tmp/cc7LGPet.s:15     .text.usbInit:0000000000000000 $t
+     /tmp/cc7LGPet.s:24     .text.usbInit:0000000000000000 usbInit
+     /tmp/cc7LGPet.s:31     .text.usbObjectInit:0000000000000000 $t
+     /tmp/cc7LGPet.s:39     .text.usbObjectInit:0000000000000000 usbObjectInit
+     /tmp/cc7LGPet.s:56     .text.usbStart:0000000000000000 $t
+     /tmp/cc7LGPet.s:64     .text.usbStart:0000000000000000 usbStart
+     /tmp/cc7LGPet.s:97     .text.usbStop:0000000000000000 $t
+     /tmp/cc7LGPet.s:105    .text.usbStop:0000000000000000 usbStop
+     /tmp/cc7LGPet.s:137    .text.usbInitEndpointI:0000000000000000 $t
+     /tmp/cc7LGPet.s:145    .text.usbInitEndpointI:0000000000000000 usbInitEndpointI
+     /tmp/cc7LGPet.s:170    .text.usbDisableEndpointsI:0000000000000000 $t
+     /tmp/cc7LGPet.s:178    .text.usbDisableEndpointsI:0000000000000000 usbDisableEndpointsI
+     /tmp/cc7LGPet.s:191    .text.usbStartReceiveI:0000000000000000 $t
+     /tmp/cc7LGPet.s:199    .text.usbStartReceiveI:0000000000000000 usbStartReceiveI
+     /tmp/cc7LGPet.s:218    .text.usbStartTransmitI:0000000000000000 $t
+     /tmp/cc7LGPet.s:226    .text.usbStartTransmitI:0000000000000000 usbStartTransmitI
+     /tmp/cc7LGPet.s:245    .text.usbStallReceiveI:0000000000000000 $t
+     /tmp/cc7LGPet.s:253    .text.usbStallReceiveI:0000000000000000 usbStallReceiveI
+     /tmp/cc7LGPet.s:270    .text.usbStallTransmitI:0000000000000000 $t
+     /tmp/cc7LGPet.s:278    .text.usbStallTransmitI:0000000000000000 usbStallTransmitI
+     /tmp/cc7LGPet.s:295    .text.usbWakeupHost:0000000000000000 $t
+     /tmp/cc7LGPet.s:303    .text.usbWakeupHost:0000000000000000 usbWakeupHost
+     /tmp/cc7LGPet.s:326    .text._usb_reset:0000000000000000 $t
+     /tmp/cc7LGPet.s:334    .text._usb_reset:0000000000000000 _usb_reset
+     /tmp/cc7LGPet.s:359    .text._usb_suspend:0000000000000000 $t
+     /tmp/cc7LGPet.s:367    .text._usb_suspend:0000000000000000 _usb_suspend
+     /tmp/cc7LGPet.s:387    .text._usb_wakeup:0000000000000000 $t
+     /tmp/cc7LGPet.s:395    .text._usb_wakeup:0000000000000000 _usb_wakeup
+     /tmp/cc7LGPet.s:410    .text._usb_ep0setup:0000000000000000 $t
+     /tmp/cc7LGPet.s:418    .text._usb_ep0setup:0000000000000000 _usb_ep0setup
+     /tmp/cc7LGPet.s:828    .text._usb_ep0setup:000000000000039c $d
+     /tmp/cc7LGPet.s:833    .text._usb_ep0in:0000000000000000 $t
+     /tmp/cc7LGPet.s:841    .text._usb_ep0in:0000000000000000 _usb_ep0in
+     /tmp/cc7LGPet.s:851    .text._usb_ep0in:0000000000000010 $d
+     /tmp/cc7LGPet.s:873    .text._usb_ep0in:0000000000000026 $t
+     /tmp/cc7LGPet.s:971    .text._usb_ep0out:0000000000000000 $t
+     /tmp/cc7LGPet.s:979    .text._usb_ep0out:0000000000000000 _usb_ep0out
+     /tmp/cc7LGPet.s:989    .text._usb_ep0out:0000000000000010 $d
+     /tmp/cc7LGPet.s:1011   .text._usb_ep0out:0000000000000026 $t
+     /tmp/cc7LGPet.s:1074   .rodata.active_status:0000000000000000 $d
+     /tmp/cc7LGPet.s:1078   .rodata.active_status:0000000000000000 active_status
+     /tmp/cc7LGPet.s:1081   .rodata.halted_status:0000000000000000 $d
+     /tmp/cc7LGPet.s:1085   .rodata.halted_status:0000000000000000 halted_status
+     /tmp/cc7LGPet.s:1088   .rodata.zero_status:0000000000000000 $d
+     /tmp/cc7LGPet.s:1092   .rodata.zero_status:0000000000000000 zero_status
+
+UNDEFINED SYMBOLS
+usb_lld_init
+__stats_start_measure_crit_thd
+usb_lld_start
+__stats_stop_measure_crit_thd
+usb_lld_stop
+chSchRescheduleS
+usb_lld_init_endpoint
+usb_lld_disable_endpoints
+ARM GAS  /tmp/cc7LGPet.s 			page 22
+
+
+usb_lld_start_out
+usb_lld_start_in
+usb_lld_stall_out
+usb_lld_stall_in
+chThdSleep
+usb_lld_reset
+usb_lld_read_setup
+__stats_start_measure_crit_isr
+__stats_stop_measure_crit_isr
+usb_lld_get_status_out
+usb_lld_get_status_in
+usb_lld_clear_out
+usb_lld_set_address
+usb_lld_clear_in

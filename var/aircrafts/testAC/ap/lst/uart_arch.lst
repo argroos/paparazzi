@@ -1,0 +1,1233 @@
+ARM GAS  /tmp/ccMDnOls.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"uart_arch.c"
+  13              		.text
+  14              		.section	.text.handle_uart_tx,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	handle_uart_tx, %function
+  23              	handle_uart_tx:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26 0000 38B5     		push	{r3, r4, r5, lr}
+  27 0002 D0F81452 		ldr	r5, [r0, #532]
+  28 0006 0446     		mov	r4, r0
+  29 0008 A868     		ldr	r0, [r5, #8]
+  30 000a FFF7FEFF 		bl	chSemWait
+  31 000e B4F80632 		ldrh	r3, [r4, #518]
+  32 0012 B4F80422 		ldrh	r2, [r4, #516]
+  33 0016 0121     		movs	r1, #1
+  34 0018 9A42     		cmp	r2, r3
+  35 001a 84F80812 		strb	r1, [r4, #520]
+  36 001e 1BD0     		beq	.L2
+  37              	.L3:
+  38 0020 2344     		add	r3, r3, r4
+  39 0022 D4F80C02 		ldr	r0, [r4, #524]
+  40 0026 93F80411 		ldrb	r1, [r3, #260]	@ zero_extendqisi2
+  41 002a 4FF0FF32 		mov	r2, #-1
+  42 002e 3030     		adds	r0, r0, #48
+  43 0030 FFF7FEFF 		bl	oqPutTimeout
+  44 0034 2869     		ldr	r0, [r5, #16]
+  45 0036 FFF7FEFF 		bl	chMtxLock
+  46 003a B4F80632 		ldrh	r3, [r4, #518]
+  47 003e 2869     		ldr	r0, [r5, #16]
+  48 0040 0133     		adds	r3, r3, #1
+  49 0042 DBB2     		uxtb	r3, r3
+  50 0044 A4F80632 		strh	r3, [r4, #518]	@ movhi
+  51 0048 FFF7FEFF 		bl	chMtxUnlock
+  52 004c B4F80632 		ldrh	r3, [r4, #518]
+  53 0050 B4F80422 		ldrh	r2, [r4, #516]
+  54 0054 9A42     		cmp	r2, r3
+  55 0056 E3D1     		bne	.L3
+  56              	.L2:
+  57 0058 0023     		movs	r3, #0
+ARM GAS  /tmp/ccMDnOls.s 			page 2
+
+
+  58 005a 84F80832 		strb	r3, [r4, #520]
+  59 005e 38BD     		pop	{r3, r4, r5, pc}
+  60              		.size	handle_uart_tx, .-handle_uart_tx
+  61              		.section	.rodata.thd_uart1_tx.str1.4,"aMS",%progbits,1
+  62              		.align	2
+  63              	.LC0:
+  64 0000 75617274 		.ascii	"uart1_tx\000"
+  64      315F7478 
+  64      00
+  65              		.section	.text.thd_uart1_tx,"ax",%progbits
+  66              		.align	1
+  67              		.p2align 4,,15
+  68              		.syntax unified
+  69              		.thumb
+  70              		.thumb_func
+  71              		.fpu fpv4-sp-d16
+  72              		.type	thd_uart1_tx, %function
+  73              	thd_uart1_tx:
+  74              		@ Volatile: function does not return.
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77 0000 08B5     		push	{r3, lr}
+  78 0002 044B     		ldr	r3, .L10
+  79 0004 044A     		ldr	r2, .L10+4
+  80 0006 DB68     		ldr	r3, [r3, #12]
+  81 0008 044C     		ldr	r4, .L10+8
+  82 000a DA61     		str	r2, [r3, #28]
+  83              	.L8:
+  84 000c 2046     		mov	r0, r4
+  85 000e FFF7FEFF 		bl	handle_uart_tx
+  86 0012 FBE7     		b	.L8
+  87              	.L11:
+  88              		.align	2
+  89              	.L10:
+  90 0014 00000000 		.word	ch0
+  91 0018 00000000 		.word	.LC0
+  92 001c 00000000 		.word	uart1
+  93              		.size	thd_uart1_tx, .-thd_uart1_tx
+  94              		.section	.rodata.thd_uart4_tx.str1.4,"aMS",%progbits,1
+  95              		.align	2
+  96              	.LC1:
+  97 0000 75617274 		.ascii	"uart4_tx\000"
+  97      345F7478 
+  97      00
+  98              		.section	.text.thd_uart4_tx,"ax",%progbits
+  99              		.align	1
+ 100              		.p2align 4,,15
+ 101              		.syntax unified
+ 102              		.thumb
+ 103              		.thumb_func
+ 104              		.fpu fpv4-sp-d16
+ 105              		.type	thd_uart4_tx, %function
+ 106              	thd_uart4_tx:
+ 107              		@ Volatile: function does not return.
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110 0000 08B5     		push	{r3, lr}
+ARM GAS  /tmp/ccMDnOls.s 			page 3
+
+
+ 111 0002 044B     		ldr	r3, .L15
+ 112 0004 044A     		ldr	r2, .L15+4
+ 113 0006 DB68     		ldr	r3, [r3, #12]
+ 114 0008 044C     		ldr	r4, .L15+8
+ 115 000a DA61     		str	r2, [r3, #28]
+ 116              	.L13:
+ 117 000c 2046     		mov	r0, r4
+ 118 000e FFF7FEFF 		bl	handle_uart_tx
+ 119 0012 FBE7     		b	.L13
+ 120              	.L16:
+ 121              		.align	2
+ 122              	.L15:
+ 123 0014 00000000 		.word	ch0
+ 124 0018 00000000 		.word	.LC1
+ 125 001c 00000000 		.word	uart4
+ 126              		.size	thd_uart4_tx, .-thd_uart4_tx
+ 127              		.section	.rodata.thd_uart6_tx.str1.4,"aMS",%progbits,1
+ 128              		.align	2
+ 129              	.LC2:
+ 130 0000 75617274 		.ascii	"uart6_tx\000"
+ 130      365F7478 
+ 130      00
+ 131              		.section	.text.thd_uart6_tx,"ax",%progbits
+ 132              		.align	1
+ 133              		.p2align 4,,15
+ 134              		.syntax unified
+ 135              		.thumb
+ 136              		.thumb_func
+ 137              		.fpu fpv4-sp-d16
+ 138              		.type	thd_uart6_tx, %function
+ 139              	thd_uart6_tx:
+ 140              		@ Volatile: function does not return.
+ 141              		@ args = 0, pretend = 0, frame = 0
+ 142              		@ frame_needed = 0, uses_anonymous_args = 0
+ 143 0000 08B5     		push	{r3, lr}
+ 144 0002 044B     		ldr	r3, .L20
+ 145 0004 044A     		ldr	r2, .L20+4
+ 146 0006 DB68     		ldr	r3, [r3, #12]
+ 147 0008 044C     		ldr	r4, .L20+8
+ 148 000a DA61     		str	r2, [r3, #28]
+ 149              	.L18:
+ 150 000c 2046     		mov	r0, r4
+ 151 000e FFF7FEFF 		bl	handle_uart_tx
+ 152 0012 FBE7     		b	.L18
+ 153              	.L21:
+ 154              		.align	2
+ 155              	.L20:
+ 156 0014 00000000 		.word	ch0
+ 157 0018 00000000 		.word	.LC2
+ 158 001c 00000000 		.word	uart6
+ 159              		.size	thd_uart6_tx, .-thd_uart6_tx
+ 160              		.section	.text.handle_uart_rx,"ax",%progbits
+ 161              		.align	1
+ 162              		.p2align 4,,15
+ 163              		.syntax unified
+ 164              		.thumb
+ 165              		.thumb_func
+ARM GAS  /tmp/ccMDnOls.s 			page 4
+
+
+ 166              		.fpu fpv4-sp-d16
+ 167              		.type	handle_uart_rx, %function
+ 168              	handle_uart_rx:
+ 169              		@ args = 0, pretend = 0, frame = 0
+ 170              		@ frame_needed = 0, uses_anonymous_args = 0
+ 171 0000 70B5     		push	{r4, r5, r6, lr}
+ 172 0002 0446     		mov	r4, r0
+ 173 0004 D0F80C02 		ldr	r0, [r0, #524]
+ 174 0008 4FF0FF31 		mov	r1, #-1
+ 175 000c 0C30     		adds	r0, r0, #12
+ 176 000e FFF7FEFF 		bl	iqGetTimeout
+ 177 0012 D4F81452 		ldr	r5, [r4, #532]
+ 178 0016 0646     		mov	r6, r0
+ 179 0018 E868     		ldr	r0, [r5, #12]
+ 180 001a FFF7FEFF 		bl	chMtxLock
+ 181 001e B4F80031 		ldrh	r3, [r4, #256]
+ 182 0022 E654     		strb	r6, [r4, r3]
+ 183 0024 0133     		adds	r3, r3, #1
+ 184 0026 B4F80221 		ldrh	r2, [r4, #258]
+ 185 002a E868     		ldr	r0, [r5, #12]
+ 186 002c DBB2     		uxtb	r3, r3
+ 187 002e 9A42     		cmp	r2, r3
+ 188 0030 18BF     		it	ne
+ 189 0032 A4F80031 		strhne	r3, [r4, #256]	@ movhi
+ 190 0036 FFF7FEFF 		bl	chMtxUnlock
+ 191 003a 6868     		ldr	r0, [r5, #4]
+ 192 003c BDE87040 		pop	{r4, r5, r6, lr}
+ 193 0040 FFF7FEBF 		b	chSemSignal
+ 194              		.size	handle_uart_rx, .-handle_uart_rx
+ 195              		.section	.rodata.thd_uart1_rx.str1.4,"aMS",%progbits,1
+ 196              		.align	2
+ 197              	.LC3:
+ 198 0000 75617274 		.ascii	"uart1_rx\000"
+ 198      315F7278 
+ 198      00
+ 199              		.section	.text.thd_uart1_rx,"ax",%progbits
+ 200              		.align	1
+ 201              		.p2align 4,,15
+ 202              		.syntax unified
+ 203              		.thumb
+ 204              		.thumb_func
+ 205              		.fpu fpv4-sp-d16
+ 206              		.type	thd_uart1_rx, %function
+ 207              	thd_uart1_rx:
+ 208              		@ Volatile: function does not return.
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211 0000 08B5     		push	{r3, lr}
+ 212 0002 044B     		ldr	r3, .L28
+ 213 0004 044A     		ldr	r2, .L28+4
+ 214 0006 DB68     		ldr	r3, [r3, #12]
+ 215 0008 044C     		ldr	r4, .L28+8
+ 216 000a DA61     		str	r2, [r3, #28]
+ 217              	.L26:
+ 218 000c 2046     		mov	r0, r4
+ 219 000e FFF7FEFF 		bl	handle_uart_rx
+ 220 0012 FBE7     		b	.L26
+ARM GAS  /tmp/ccMDnOls.s 			page 5
+
+
+ 221              	.L29:
+ 222              		.align	2
+ 223              	.L28:
+ 224 0014 00000000 		.word	ch0
+ 225 0018 00000000 		.word	.LC3
+ 226 001c 00000000 		.word	uart1
+ 227              		.size	thd_uart1_rx, .-thd_uart1_rx
+ 228              		.section	.rodata.thd_uart4_rx.str1.4,"aMS",%progbits,1
+ 229              		.align	2
+ 230              	.LC4:
+ 231 0000 75617274 		.ascii	"uart4_rx\000"
+ 231      345F7278 
+ 231      00
+ 232              		.section	.text.thd_uart4_rx,"ax",%progbits
+ 233              		.align	1
+ 234              		.p2align 4,,15
+ 235              		.syntax unified
+ 236              		.thumb
+ 237              		.thumb_func
+ 238              		.fpu fpv4-sp-d16
+ 239              		.type	thd_uart4_rx, %function
+ 240              	thd_uart4_rx:
+ 241              		@ Volatile: function does not return.
+ 242              		@ args = 0, pretend = 0, frame = 0
+ 243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 244 0000 08B5     		push	{r3, lr}
+ 245 0002 044B     		ldr	r3, .L33
+ 246 0004 044A     		ldr	r2, .L33+4
+ 247 0006 DB68     		ldr	r3, [r3, #12]
+ 248 0008 044C     		ldr	r4, .L33+8
+ 249 000a DA61     		str	r2, [r3, #28]
+ 250              	.L31:
+ 251 000c 2046     		mov	r0, r4
+ 252 000e FFF7FEFF 		bl	handle_uart_rx
+ 253 0012 FBE7     		b	.L31
+ 254              	.L34:
+ 255              		.align	2
+ 256              	.L33:
+ 257 0014 00000000 		.word	ch0
+ 258 0018 00000000 		.word	.LC4
+ 259 001c 00000000 		.word	uart4
+ 260              		.size	thd_uart4_rx, .-thd_uart4_rx
+ 261              		.section	.rodata.thd_uart6_rx.str1.4,"aMS",%progbits,1
+ 262              		.align	2
+ 263              	.LC5:
+ 264 0000 75617274 		.ascii	"uart6_rx\000"
+ 264      365F7278 
+ 264      00
+ 265              		.section	.text.thd_uart6_rx,"ax",%progbits
+ 266              		.align	1
+ 267              		.p2align 4,,15
+ 268              		.syntax unified
+ 269              		.thumb
+ 270              		.thumb_func
+ 271              		.fpu fpv4-sp-d16
+ 272              		.type	thd_uart6_rx, %function
+ 273              	thd_uart6_rx:
+ARM GAS  /tmp/ccMDnOls.s 			page 6
+
+
+ 274              		@ Volatile: function does not return.
+ 275              		@ args = 0, pretend = 0, frame = 0
+ 276              		@ frame_needed = 0, uses_anonymous_args = 0
+ 277 0000 08B5     		push	{r3, lr}
+ 278 0002 044B     		ldr	r3, .L38
+ 279 0004 044A     		ldr	r2, .L38+4
+ 280 0006 DB68     		ldr	r3, [r3, #12]
+ 281 0008 044C     		ldr	r4, .L38+8
+ 282 000a DA61     		str	r2, [r3, #28]
+ 283              	.L36:
+ 284 000c 2046     		mov	r0, r4
+ 285 000e FFF7FEFF 		bl	handle_uart_rx
+ 286 0012 FBE7     		b	.L36
+ 287              	.L39:
+ 288              		.align	2
+ 289              	.L38:
+ 290 0014 00000000 		.word	ch0
+ 291 0018 00000000 		.word	.LC5
+ 292 001c 00000000 		.word	uart6
+ 293              		.size	thd_uart6_rx, .-thd_uart6_rx
+ 294              		.section	.text.uart1_init,"ax",%progbits
+ 295              		.align	1
+ 296              		.p2align 4,,15
+ 297              		.global	uart1_init
+ 298              		.syntax unified
+ 299              		.thumb
+ 300              		.thumb_func
+ 301              		.fpu fpv4-sp-d16
+ 302              		.type	uart1_init, %function
+ 303              	uart1_init:
+ 304              		@ args = 0, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+ 306 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 307 0004 184D     		ldr	r5, .L42
+ 308 0006 194F     		ldr	r7, .L42+4
+ 309 0008 DFF88880 		ldr	r8, .L42+44
+ 310 000c 184C     		ldr	r4, .L42+8
+ 311 000e 82B0     		sub	sp, sp, #8
+ 312 0010 2846     		mov	r0, r5
+ 313 0012 FFF7FEFF 		bl	uart_periph_init
+ 314 0016 3946     		mov	r1, r7
+ 315 0018 4046     		mov	r0, r8
+ 316 001a FFF7FEFF 		bl	sdStart
+ 317 001e 154B     		ldr	r3, .L42+12
+ 318 0020 1549     		ldr	r1, .L42+16
+ 319 0022 E360     		str	r3, [r4, #12]
+ 320 0024 0026     		movs	r6, #0
+ 321 0026 4FF46143 		mov	r3, #57600
+ 322 002a C4E90071 		strd	r7, r1, [r4]
+ 323 002e C5F81032 		str	r3, [r5, #528]
+ 324 0032 0096     		str	r6, [sp]
+ 325 0034 114B     		ldr	r3, .L42+20
+ 326 0036 1248     		ldr	r0, .L42+24
+ 327 0038 C5F80C82 		str	r8, [r5, #524]
+ 328 003c 8122     		movs	r2, #129
+ 329 003e 4FF47671 		mov	r1, #984
+ 330 0042 C5F81442 		str	r4, [r5, #532]
+ARM GAS  /tmp/ccMDnOls.s 			page 7
+
+
+ 331 0046 FFF7FEFF 		bl	chThdCreateStatic
+ 332 004a 0E49     		ldr	r1, .L42+28
+ 333 004c 0E4A     		ldr	r2, .L42+32
+ 334 004e 2161     		str	r1, [r4, #16]
+ 335 0050 A260     		str	r2, [r4, #8]
+ 336 0052 0E4B     		ldr	r3, .L42+36
+ 337 0054 0096     		str	r6, [sp]
+ 338 0056 8122     		movs	r2, #129
+ 339 0058 4FF47671 		mov	r1, #984
+ 340 005c 0C48     		ldr	r0, .L42+40
+ 341 005e FFF7FEFF 		bl	chThdCreateStatic
+ 342 0062 02B0     		add	sp, sp, #8
+ 343              		@ sp needed
+ 344 0064 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 345              	.L43:
+ 346              		.align	2
+ 347              	.L42:
+ 348 0068 00000000 		.word	uart1
+ 349 006c 00000000 		.word	.LANCHOR0
+ 350 0070 00000000 		.word	.LANCHOR1
+ 351 0074 00000000 		.word	.LANCHOR2
+ 352 0078 00000000 		.word	.LANCHOR3
+ 353 007c 00000000 		.word	thd_uart1_rx
+ 354 0080 00000000 		.word	.LANCHOR4
+ 355 0084 00000000 		.word	.LANCHOR5
+ 356 0088 00000000 		.word	.LANCHOR6
+ 357 008c 00000000 		.word	thd_uart1_tx
+ 358 0090 00000000 		.word	.LANCHOR7
+ 359 0094 00000000 		.word	SD1
+ 360              		.size	uart1_init, .-uart1_init
+ 361              		.section	.text.uart4_init,"ax",%progbits
+ 362              		.align	1
+ 363              		.p2align 4,,15
+ 364              		.global	uart4_init
+ 365              		.syntax unified
+ 366              		.thumb
+ 367              		.thumb_func
+ 368              		.fpu fpv4-sp-d16
+ 369              		.type	uart4_init, %function
+ 370              	uart4_init:
+ 371              		@ args = 0, pretend = 0, frame = 0
+ 372              		@ frame_needed = 0, uses_anonymous_args = 0
+ 373 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 374 0004 184D     		ldr	r5, .L46
+ 375 0006 194F     		ldr	r7, .L46+4
+ 376 0008 DFF88880 		ldr	r8, .L46+44
+ 377 000c 184C     		ldr	r4, .L46+8
+ 378 000e 82B0     		sub	sp, sp, #8
+ 379 0010 2846     		mov	r0, r5
+ 380 0012 FFF7FEFF 		bl	uart_periph_init
+ 381 0016 3946     		mov	r1, r7
+ 382 0018 4046     		mov	r0, r8
+ 383 001a FFF7FEFF 		bl	sdStart
+ 384 001e 154B     		ldr	r3, .L46+12
+ 385 0020 1549     		ldr	r1, .L46+16
+ 386 0022 E360     		str	r3, [r4, #12]
+ 387 0024 0026     		movs	r6, #0
+ARM GAS  /tmp/ccMDnOls.s 			page 8
+
+
+ 388 0026 4FF4E133 		mov	r3, #115200
+ 389 002a C4E90071 		strd	r7, r1, [r4]
+ 390 002e C5F81032 		str	r3, [r5, #528]
+ 391 0032 0096     		str	r6, [sp]
+ 392 0034 114B     		ldr	r3, .L46+20
+ 393 0036 1248     		ldr	r0, .L46+24
+ 394 0038 C5F80C82 		str	r8, [r5, #524]
+ 395 003c 8122     		movs	r2, #129
+ 396 003e 4FF47671 		mov	r1, #984
+ 397 0042 C5F81442 		str	r4, [r5, #532]
+ 398 0046 FFF7FEFF 		bl	chThdCreateStatic
+ 399 004a 0E49     		ldr	r1, .L46+28
+ 400 004c 0E4A     		ldr	r2, .L46+32
+ 401 004e 2161     		str	r1, [r4, #16]
+ 402 0050 A260     		str	r2, [r4, #8]
+ 403 0052 0E4B     		ldr	r3, .L46+36
+ 404 0054 0096     		str	r6, [sp]
+ 405 0056 8122     		movs	r2, #129
+ 406 0058 4FF47671 		mov	r1, #984
+ 407 005c 0C48     		ldr	r0, .L46+40
+ 408 005e FFF7FEFF 		bl	chThdCreateStatic
+ 409 0062 02B0     		add	sp, sp, #8
+ 410              		@ sp needed
+ 411 0064 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 412              	.L47:
+ 413              		.align	2
+ 414              	.L46:
+ 415 0068 00000000 		.word	uart4
+ 416 006c 00000000 		.word	.LANCHOR8
+ 417 0070 00000000 		.word	.LANCHOR9
+ 418 0074 00000000 		.word	.LANCHOR10
+ 419 0078 00000000 		.word	.LANCHOR11
+ 420 007c 00000000 		.word	thd_uart4_rx
+ 421 0080 00000000 		.word	.LANCHOR12
+ 422 0084 00000000 		.word	.LANCHOR13
+ 423 0088 00000000 		.word	.LANCHOR14
+ 424 008c 00000000 		.word	thd_uart4_tx
+ 425 0090 00000000 		.word	.LANCHOR15
+ 426 0094 00000000 		.word	SD4
+ 427              		.size	uart4_init, .-uart4_init
+ 428              		.section	.text.uart6_init,"ax",%progbits
+ 429              		.align	1
+ 430              		.p2align 4,,15
+ 431              		.global	uart6_init
+ 432              		.syntax unified
+ 433              		.thumb
+ 434              		.thumb_func
+ 435              		.fpu fpv4-sp-d16
+ 436              		.type	uart6_init, %function
+ 437              	uart6_init:
+ 438              		@ args = 0, pretend = 0, frame = 0
+ 439              		@ frame_needed = 0, uses_anonymous_args = 0
+ 440 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 441 0004 184D     		ldr	r5, .L50
+ 442 0006 194F     		ldr	r7, .L50+4
+ 443 0008 DFF88880 		ldr	r8, .L50+44
+ 444 000c 184C     		ldr	r4, .L50+8
+ARM GAS  /tmp/ccMDnOls.s 			page 9
+
+
+ 445 000e 82B0     		sub	sp, sp, #8
+ 446 0010 2846     		mov	r0, r5
+ 447 0012 FFF7FEFF 		bl	uart_periph_init
+ 448 0016 3946     		mov	r1, r7
+ 449 0018 4046     		mov	r0, r8
+ 450 001a FFF7FEFF 		bl	sdStart
+ 451 001e 154B     		ldr	r3, .L50+12
+ 452 0020 1549     		ldr	r1, .L50+16
+ 453 0022 E360     		str	r3, [r4, #12]
+ 454 0024 0026     		movs	r6, #0
+ 455 0026 4FF4E133 		mov	r3, #115200
+ 456 002a C4E90071 		strd	r7, r1, [r4]
+ 457 002e C5F81032 		str	r3, [r5, #528]
+ 458 0032 0096     		str	r6, [sp]
+ 459 0034 114B     		ldr	r3, .L50+20
+ 460 0036 1248     		ldr	r0, .L50+24
+ 461 0038 C5F80C82 		str	r8, [r5, #524]
+ 462 003c 8122     		movs	r2, #129
+ 463 003e 4FF47671 		mov	r1, #984
+ 464 0042 C5F81442 		str	r4, [r5, #532]
+ 465 0046 FFF7FEFF 		bl	chThdCreateStatic
+ 466 004a 0E49     		ldr	r1, .L50+28
+ 467 004c 0E4A     		ldr	r2, .L50+32
+ 468 004e 2161     		str	r1, [r4, #16]
+ 469 0050 A260     		str	r2, [r4, #8]
+ 470 0052 0E4B     		ldr	r3, .L50+36
+ 471 0054 0096     		str	r6, [sp]
+ 472 0056 8122     		movs	r2, #129
+ 473 0058 4FF47671 		mov	r1, #984
+ 474 005c 0C48     		ldr	r0, .L50+40
+ 475 005e FFF7FEFF 		bl	chThdCreateStatic
+ 476 0062 02B0     		add	sp, sp, #8
+ 477              		@ sp needed
+ 478 0064 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 479              	.L51:
+ 480              		.align	2
+ 481              	.L50:
+ 482 0068 00000000 		.word	uart6
+ 483 006c 00000000 		.word	.LANCHOR16
+ 484 0070 00000000 		.word	.LANCHOR17
+ 485 0074 00000000 		.word	.LANCHOR18
+ 486 0078 00000000 		.word	.LANCHOR19
+ 487 007c 00000000 		.word	thd_uart6_rx
+ 488 0080 00000000 		.word	.LANCHOR20
+ 489 0084 00000000 		.word	.LANCHOR21
+ 490 0088 00000000 		.word	.LANCHOR22
+ 491 008c 00000000 		.word	thd_uart6_tx
+ 492 0090 00000000 		.word	.LANCHOR23
+ 493 0094 00000000 		.word	SD6
+ 494              		.size	uart6_init, .-uart6_init
+ 495              		.section	.text.uart_getch,"ax",%progbits
+ 496              		.align	1
+ 497              		.p2align 4,,15
+ 498              		.global	uart_getch
+ 499              		.syntax unified
+ 500              		.thumb
+ 501              		.thumb_func
+ARM GAS  /tmp/ccMDnOls.s 			page 10
+
+
+ 502              		.fpu fpv4-sp-d16
+ 503              		.type	uart_getch, %function
+ 504              	uart_getch:
+ 505              		@ args = 0, pretend = 0, frame = 0
+ 506              		@ frame_needed = 0, uses_anonymous_args = 0
+ 507 0000 38B5     		push	{r3, r4, r5, lr}
+ 508 0002 D0F81452 		ldr	r5, [r0, #532]
+ 509 0006 0446     		mov	r4, r0
+ 510 0008 E868     		ldr	r0, [r5, #12]
+ 511 000a FFF7FEFF 		bl	chMtxLock
+ 512 000e B4F80221 		ldrh	r2, [r4, #258]
+ 513 0012 E868     		ldr	r0, [r5, #12]
+ 514 0014 A55C     		ldrb	r5, [r4, r2]	@ zero_extendqisi2
+ 515 0016 531C     		adds	r3, r2, #1
+ 516 0018 DBB2     		uxtb	r3, r3
+ 517 001a A4F80231 		strh	r3, [r4, #258]	@ movhi
+ 518 001e FFF7FEFF 		bl	chMtxUnlock
+ 519 0022 2846     		mov	r0, r5
+ 520 0024 38BD     		pop	{r3, r4, r5, pc}
+ 521              		.size	uart_getch, .-uart_getch
+ 522 0026 00BF     		.section	.text.uart_periph_set_baudrate,"ax",%progbits
+ 523              		.align	1
+ 524              		.p2align 4,,15
+ 525              		.global	uart_periph_set_baudrate
+ 526              		.syntax unified
+ 527              		.thumb
+ 528              		.thumb_func
+ 529              		.fpu fpv4-sp-d16
+ 530              		.type	uart_periph_set_baudrate, %function
+ 531              	uart_periph_set_baudrate:
+ 532              		@ args = 0, pretend = 0, frame = 0
+ 533              		@ frame_needed = 0, uses_anonymous_args = 0
+ 534 0000 38B5     		push	{r3, r4, r5, lr}
+ 535 0002 D0F81432 		ldr	r3, [r0, #532]
+ 536 0006 0446     		mov	r4, r0
+ 537 0008 1D68     		ldr	r5, [r3]
+ 538 000a D0F80C02 		ldr	r0, [r0, #524]
+ 539 000e 2960     		str	r1, [r5]
+ 540 0010 C4F81012 		str	r1, [r4, #528]
+ 541 0014 FFF7FEFF 		bl	sdStop
+ 542 0018 D4F80C02 		ldr	r0, [r4, #524]
+ 543 001c 2946     		mov	r1, r5
+ 544 001e BDE83840 		pop	{r3, r4, r5, lr}
+ 545 0022 FFF7FEBF 		b	sdStart
+ 546              		.size	uart_periph_set_baudrate, .-uart_periph_set_baudrate
+ 547 0026 00BF     		.section	.text.uart_periph_set_mode,"ax",%progbits
+ 548              		.align	1
+ 549              		.p2align 4,,15
+ 550              		.global	uart_periph_set_mode
+ 551              		.syntax unified
+ 552              		.thumb
+ 553              		.thumb_func
+ 554              		.fpu fpv4-sp-d16
+ 555              		.type	uart_periph_set_mode, %function
+ 556              	uart_periph_set_mode:
+ 557              		@ args = 0, pretend = 0, frame = 0
+ 558              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccMDnOls.s 			page 11
+
+
+ 559              		@ link register save eliminated.
+ 560 0000 7047     		bx	lr
+ 561              		.size	uart_periph_set_mode, .-uart_periph_set_mode
+ 562 0002 00BF     		.section	.text.uart_periph_set_bits_stop_parity,"ax",%progbits
+ 563              		.align	1
+ 564              		.p2align 4,,15
+ 565              		.global	uart_periph_set_bits_stop_parity
+ 566              		.syntax unified
+ 567              		.thumb
+ 568              		.thumb_func
+ 569              		.fpu fpv4-sp-d16
+ 570              		.type	uart_periph_set_bits_stop_parity, %function
+ 571              	uart_periph_set_bits_stop_parity:
+ 572              		@ args = 0, pretend = 0, frame = 0
+ 573              		@ frame_needed = 0, uses_anonymous_args = 0
+ 574 0000 38B5     		push	{r3, r4, r5, lr}
+ 575 0002 0446     		mov	r4, r0
+ 576 0004 D0F81402 		ldr	r0, [r0, #532]
+ 577 0008 022B     		cmp	r3, #2
+ 578 000a 0568     		ldr	r5, [r0]
+ 579 000c 23D0     		beq	.L67
+ 580 000e 012B     		cmp	r3, #1
+ 581 0010 AB88     		ldrh	r3, [r5, #4]
+ 582 0012 16D0     		beq	.L68
+ 583 0014 23F4A053 		bic	r3, r3, #5120
+ 584 0018 AB80     		strh	r3, [r5, #4]	@ movhi
+ 585              	.L60:
+ 586 001a EB88     		ldrh	r3, [r5, #6]
+ 587 001c D4F80C02 		ldr	r0, [r4, #524]
+ 588 0020 23F44053 		bic	r3, r3, #12288
+ 589 0024 9BB2     		uxth	r3, r3
+ 590 0026 022A     		cmp	r2, #2
+ 591 0028 08BF     		it	eq
+ 592 002a 43F40053 		orreq	r3, r3, #8192
+ 593 002e EB80     		strh	r3, [r5, #6]	@ movhi
+ 594 0030 FFF7FEFF 		bl	sdStop
+ 595 0034 D4F80C02 		ldr	r0, [r4, #524]
+ 596 0038 2946     		mov	r1, r5
+ 597 003a BDE83840 		pop	{r3, r4, r5, lr}
+ 598 003e FFF7FEBF 		b	sdStart
+ 599              	.L68:
+ 600 0042 0729     		cmp	r1, #7
+ 601 0044 06BF     		itte	eq
+ 602 0046 23F48053 		biceq	r3, r3, #4096
+ 603 004a 43F4C063 		orreq	r3, r3, #1536
+ 604 004e 43F4B053 		orrne	r3, r3, #5632
+ 605 0052 AB80     		strh	r3, [r5, #4]	@ movhi
+ 606 0054 E1E7     		b	.L60
+ 607              	.L67:
+ 608 0056 AB88     		ldrh	r3, [r5, #4]
+ 609 0058 0729     		cmp	r1, #7
+ 610 005a 0BBF     		itete	eq
+ 611 005c 23F49053 		biceq	r3, r3, #4608
+ 612 0060 23F40073 		bicne	r3, r3, #512
+ 613 0064 43F48063 		orreq	r3, r3, #1024
+ 614 0068 43F4A053 		orrne	r3, r3, #5120
+ 615 006c AB80     		strh	r3, [r5, #4]	@ movhi
+ARM GAS  /tmp/ccMDnOls.s 			page 12
+
+
+ 616 006e D4E7     		b	.L60
+ 617              		.size	uart_periph_set_bits_stop_parity, .-uart_periph_set_bits_stop_parity
+ 618              		.section	.text.uart_check_free_space,"ax",%progbits
+ 619              		.align	1
+ 620              		.p2align 4,,15
+ 621              		.global	uart_check_free_space
+ 622              		.syntax unified
+ 623              		.thumb
+ 624              		.thumb_func
+ 625              		.fpu fpv4-sp-d16
+ 626              		.type	uart_check_free_space, %function
+ 627              	uart_check_free_space:
+ 628              		@ args = 0, pretend = 0, frame = 0
+ 629              		@ frame_needed = 0, uses_anonymous_args = 0
+ 630 0000 10B5     		push	{r4, lr}
+ 631 0002 B0F80632 		ldrh	r3, [r0, #518]
+ 632 0006 B0F80442 		ldrh	r4, [r0, #516]
+ 633 000a 1B1B     		subs	r3, r3, r4
+ 634 000c 5C1E     		subs	r4, r3, #1
+ 635 000e 48BF     		it	mi
+ 636 0010 03F1FF04 		addmi	r4, r3, #255
+ 637 0014 A242     		cmp	r2, r4
+ 638 0016 02DD     		ble	.L74
+ 639 0018 0024     		movs	r4, #0
+ 640 001a 2046     		mov	r0, r4
+ 641 001c 10BD     		pop	{r4, pc}
+ 642              	.L74:
+ 643 001e D0F81422 		ldr	r2, [r0, #532]
+ 644 0022 0123     		movs	r3, #1
+ 645 0024 1069     		ldr	r0, [r2, #16]
+ 646 0026 0B60     		str	r3, [r1]
+ 647 0028 FFF7FEFF 		bl	chMtxLock
+ 648 002c 2046     		mov	r0, r4
+ 649 002e 10BD     		pop	{r4, pc}
+ 650              		.size	uart_check_free_space, .-uart_check_free_space
+ 651              		.section	.text.uart_put_byte,"ax",%progbits
+ 652              		.align	1
+ 653              		.p2align 4,,15
+ 654              		.global	uart_put_byte
+ 655              		.syntax unified
+ 656              		.thumb
+ 657              		.thumb_func
+ 658              		.fpu fpv4-sp-d16
+ 659              		.type	uart_put_byte, %function
+ 660              	uart_put_byte:
+ 661              		@ args = 0, pretend = 0, frame = 0
+ 662              		@ frame_needed = 0, uses_anonymous_args = 0
+ 663 0000 70B5     		push	{r4, r5, r6, lr}
+ 664 0002 0446     		mov	r4, r0
+ 665 0004 1546     		mov	r5, r2
+ 666 0006 49B1     		cbz	r1, .L79
+ 667 0008 B0F80432 		ldrh	r3, [r0, #516]
+ 668 000c C218     		adds	r2, r0, r3
+ 669 000e 0133     		adds	r3, r3, #1
+ 670 0010 DBB2     		uxtb	r3, r3
+ 671 0012 82F80451 		strb	r5, [r2, #260]
+ 672 0016 A0F80432 		strh	r3, [r0, #516]	@ movhi
+ARM GAS  /tmp/ccMDnOls.s 			page 13
+
+
+ 673 001a 70BD     		pop	{r4, r5, r6, pc}
+ 674              	.L79:
+ 675 001c D0F81462 		ldr	r6, [r0, #532]
+ 676 0020 3069     		ldr	r0, [r6, #16]
+ 677 0022 FFF7FEFF 		bl	chMtxLock
+ 678 0026 B4F80422 		ldrh	r2, [r4, #516]
+ 679 002a B4F80612 		ldrh	r1, [r4, #518]
+ 680 002e 531C     		adds	r3, r2, #1
+ 681 0030 DBB2     		uxtb	r3, r3
+ 682 0032 9942     		cmp	r1, r3
+ 683 0034 0CD0     		beq	.L80
+ 684 0036 2244     		add	r2, r2, r4
+ 685 0038 82F80451 		strb	r5, [r2, #260]
+ 686 003c 3069     		ldr	r0, [r6, #16]
+ 687 003e A4F80432 		strh	r3, [r4, #516]	@ movhi
+ 688 0042 FFF7FEFF 		bl	chMtxUnlock
+ 689 0046 B068     		ldr	r0, [r6, #8]
+ 690 0048 BDE87040 		pop	{r4, r5, r6, lr}
+ 691 004c FFF7FEBF 		b	chSemSignal
+ 692              	.L80:
+ 693 0050 3069     		ldr	r0, [r6, #16]
+ 694 0052 BDE87040 		pop	{r4, r5, r6, lr}
+ 695 0056 FFF7FEBF 		b	chMtxUnlock
+ 696              		.size	uart_put_byte, .-uart_put_byte
+ 697 005a 00BF     		.section	.text.uart_put_buffer,"ax",%progbits
+ 698              		.align	1
+ 699              		.p2align 4,,15
+ 700              		.global	uart_put_buffer
+ 701              		.syntax unified
+ 702              		.thumb
+ 703              		.thumb_func
+ 704              		.fpu fpv4-sp-d16
+ 705              		.type	uart_put_buffer, %function
+ 706              	uart_put_buffer:
+ 707              		@ args = 0, pretend = 0, frame = 0
+ 708              		@ frame_needed = 0, uses_anonymous_args = 0
+ 709 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 710 0004 D0F81472 		ldr	r7, [r0, #532]
+ 711 0008 0446     		mov	r4, r0
+ 712 000a 9046     		mov	r8, r2
+ 713 000c 1D46     		mov	r5, r3
+ 714 000e 0E46     		mov	r6, r1
+ 715 0010 99B1     		cbz	r1, .L98
+ 716 0012 83B1     		cbz	r3, .L81
+ 717              	.L90:
+ 718 0014 B4F80432 		ldrh	r3, [r4, #516]
+ 719 0018 4246     		mov	r2, r8
+ 720 001a 08EB050E 		add	lr, r8, r5
+ 721              	.L88:
+ 722 001e 12F801CB 		ldrb	ip, [r2], #1	@ zero_extendqisi2
+ 723 0022 E018     		adds	r0, r4, r3
+ 724 0024 0133     		adds	r3, r3, #1
+ 725 0026 DBB2     		uxtb	r3, r3
+ 726 0028 7245     		cmp	r2, lr
+ 727 002a 80F804C1 		strb	ip, [r0, #260]
+ 728 002e A4F80432 		strh	r3, [r4, #516]	@ movhi
+ 729 0032 F4D1     		bne	.L88
+ARM GAS  /tmp/ccMDnOls.s 			page 14
+
+
+ 730 0034 B6B1     		cbz	r6, .L86
+ 731              	.L81:
+ 732 0036 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 733              	.L98:
+ 734 003a 3869     		ldr	r0, [r7, #16]
+ 735 003c FFF7FEFF 		bl	chMtxLock
+ 736 0040 B4F80412 		ldrh	r1, [r4, #516]
+ 737 0044 B4F80632 		ldrh	r3, [r4, #518]
+ 738 0048 5B1A     		subs	r3, r3, r1
+ 739 004a 19B2     		sxth	r1, r3
+ 740 004c 0029     		cmp	r1, #0
+ 741 004e 9BB2     		uxth	r3, r3
+ 742 0050 DCBF     		itt	le
+ 743 0052 03F58073 		addle	r3, r3, #256
+ 744 0056 9BB2     		uxthle	r3, r3
+ 745 0058 013B     		subs	r3, r3, #1
+ 746 005a 9BB2     		uxth	r3, r3
+ 747 005c AB42     		cmp	r3, r5
+ 748 005e 09D3     		bcc	.L99
+ 749 0060 002D     		cmp	r5, #0
+ 750 0062 D7D1     		bne	.L90
+ 751              	.L86:
+ 752 0064 3869     		ldr	r0, [r7, #16]
+ 753 0066 FFF7FEFF 		bl	chMtxUnlock
+ 754 006a B868     		ldr	r0, [r7, #8]
+ 755 006c BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 756 0070 FFF7FEBF 		b	chSemSignal
+ 757              	.L99:
+ 758 0074 3869     		ldr	r0, [r7, #16]
+ 759 0076 BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 760 007a FFF7FEBF 		b	chMtxUnlock
+ 761              		.size	uart_put_buffer, .-uart_put_buffer
+ 762 007e 00BF     		.section	.text.uart_send_message,"ax",%progbits
+ 763              		.align	1
+ 764              		.p2align 4,,15
+ 765              		.global	uart_send_message
+ 766              		.syntax unified
+ 767              		.thumb
+ 768              		.thumb_func
+ 769              		.fpu fpv4-sp-d16
+ 770              		.type	uart_send_message, %function
+ 771              	uart_send_message:
+ 772              		@ args = 0, pretend = 0, frame = 0
+ 773              		@ frame_needed = 0, uses_anonymous_args = 0
+ 774 0000 10B5     		push	{r4, lr}
+ 775 0002 D0F81442 		ldr	r4, [r0, #532]
+ 776 0006 21B9     		cbnz	r1, .L106
+ 777 0008 A068     		ldr	r0, [r4, #8]
+ 778 000a BDE81040 		pop	{r4, lr}
+ 779 000e FFF7FEBF 		b	chSemSignal
+ 780              	.L106:
+ 781 0012 2069     		ldr	r0, [r4, #16]
+ 782 0014 FFF7FEFF 		bl	chMtxUnlock
+ 783 0018 A068     		ldr	r0, [r4, #8]
+ 784 001a BDE81040 		pop	{r4, lr}
+ 785 001e FFF7FEBF 		b	chSemSignal
+ 786              		.size	uart_send_message, .-uart_send_message
+ARM GAS  /tmp/ccMDnOls.s 			page 15
+
+
+ 787 0022 00BF     		.section	.bss.uart1_init_struct,"aw",%nobits
+ 788              		.align	2
+ 789              		.set	.LANCHOR1,. + 0
+ 790              		.type	uart1_init_struct, %object
+ 791              		.size	uart1_init_struct, 28
+ 792              	uart1_init_struct:
+ 793 0000 00000000 		.space	28
+ 793      00000000 
+ 793      00000000 
+ 793      00000000 
+ 793      00000000 
+ 794              		.section	.bss.uart4_init_struct,"aw",%nobits
+ 795              		.align	2
+ 796              		.set	.LANCHOR9,. + 0
+ 797              		.type	uart4_init_struct, %object
+ 798              		.size	uart4_init_struct, 28
+ 799              	uart4_init_struct:
+ 800 0000 00000000 		.space	28
+ 800      00000000 
+ 800      00000000 
+ 800      00000000 
+ 800      00000000 
+ 801              		.section	.bss.uart6_init_struct,"aw",%nobits
+ 802              		.align	2
+ 803              		.set	.LANCHOR17,. + 0
+ 804              		.type	uart6_init_struct, %object
+ 805              		.size	uart6_init_struct, 28
+ 806              	uart6_init_struct:
+ 807 0000 00000000 		.space	28
+ 807      00000000 
+ 807      00000000 
+ 807      00000000 
+ 807      00000000 
+ 808              		.section	.bss.wa_thd_uart1_rx,"aw",%nobits
+ 809              		.align	3
+ 810              		.set	.LANCHOR4,. + 0
+ 811              		.type	wa_thd_uart1_rx, %object
+ 812              		.size	wa_thd_uart1_rx, 984
+ 813              	wa_thd_uart1_rx:
+ 814 0000 00000000 		.space	984
+ 814      00000000 
+ 814      00000000 
+ 814      00000000 
+ 814      00000000 
+ 815              		.section	.bss.wa_thd_uart1_tx,"aw",%nobits
+ 816              		.align	3
+ 817              		.set	.LANCHOR7,. + 0
+ 818              		.type	wa_thd_uart1_tx, %object
+ 819              		.size	wa_thd_uart1_tx, 984
+ 820              	wa_thd_uart1_tx:
+ 821 0000 00000000 		.space	984
+ 821      00000000 
+ 821      00000000 
+ 821      00000000 
+ 821      00000000 
+ 822              		.section	.bss.wa_thd_uart4_rx,"aw",%nobits
+ 823              		.align	3
+ARM GAS  /tmp/ccMDnOls.s 			page 16
+
+
+ 824              		.set	.LANCHOR12,. + 0
+ 825              		.type	wa_thd_uart4_rx, %object
+ 826              		.size	wa_thd_uart4_rx, 984
+ 827              	wa_thd_uart4_rx:
+ 828 0000 00000000 		.space	984
+ 828      00000000 
+ 828      00000000 
+ 828      00000000 
+ 828      00000000 
+ 829              		.section	.bss.wa_thd_uart4_tx,"aw",%nobits
+ 830              		.align	3
+ 831              		.set	.LANCHOR15,. + 0
+ 832              		.type	wa_thd_uart4_tx, %object
+ 833              		.size	wa_thd_uart4_tx, 984
+ 834              	wa_thd_uart4_tx:
+ 835 0000 00000000 		.space	984
+ 835      00000000 
+ 835      00000000 
+ 835      00000000 
+ 835      00000000 
+ 836              		.section	.bss.wa_thd_uart6_rx,"aw",%nobits
+ 837              		.align	3
+ 838              		.set	.LANCHOR20,. + 0
+ 839              		.type	wa_thd_uart6_rx, %object
+ 840              		.size	wa_thd_uart6_rx, 984
+ 841              	wa_thd_uart6_rx:
+ 842 0000 00000000 		.space	984
+ 842      00000000 
+ 842      00000000 
+ 842      00000000 
+ 842      00000000 
+ 843              		.section	.bss.wa_thd_uart6_tx,"aw",%nobits
+ 844              		.align	3
+ 845              		.set	.LANCHOR23,. + 0
+ 846              		.type	wa_thd_uart6_tx, %object
+ 847              		.size	wa_thd_uart6_tx, 984
+ 848              	wa_thd_uart6_tx:
+ 849 0000 00000000 		.space	984
+ 849      00000000 
+ 849      00000000 
+ 849      00000000 
+ 849      00000000 
+ 850              		.section	.data.uart1_rx_mtx,"aw"
+ 851              		.align	2
+ 852              		.set	.LANCHOR2,. + 0
+ 853              		.type	uart1_rx_mtx, %object
+ 854              		.size	uart1_rx_mtx, 16
+ 855              	uart1_rx_mtx:
+ 856 0000 00000000 		.word	uart1_rx_mtx
+ 857 0004 00000000 		.word	uart1_rx_mtx
+ 858 0008 00000000 		.word	0
+ 859 000c 00000000 		.word	0
+ 860              		.section	.data.uart1_rx_sem,"aw"
+ 861              		.align	2
+ 862              		.set	.LANCHOR3,. + 0
+ 863              		.type	uart1_rx_sem, %object
+ 864              		.size	uart1_rx_sem, 12
+ARM GAS  /tmp/ccMDnOls.s 			page 17
+
+
+ 865              	uart1_rx_sem:
+ 866 0000 00000000 		.word	uart1_rx_sem
+ 867 0004 00000000 		.word	uart1_rx_sem
+ 868 0008 00000000 		.word	0
+ 869              		.section	.data.uart1_tx_mtx,"aw"
+ 870              		.align	2
+ 871              		.set	.LANCHOR5,. + 0
+ 872              		.type	uart1_tx_mtx, %object
+ 873              		.size	uart1_tx_mtx, 16
+ 874              	uart1_tx_mtx:
+ 875 0000 00000000 		.word	uart1_tx_mtx
+ 876 0004 00000000 		.word	uart1_tx_mtx
+ 877 0008 00000000 		.word	0
+ 878 000c 00000000 		.word	0
+ 879              		.section	.data.uart1_tx_sem,"aw"
+ 880              		.align	2
+ 881              		.set	.LANCHOR6,. + 0
+ 882              		.type	uart1_tx_sem, %object
+ 883              		.size	uart1_tx_sem, 12
+ 884              	uart1_tx_sem:
+ 885 0000 00000000 		.word	uart1_tx_sem
+ 886 0004 00000000 		.word	uart1_tx_sem
+ 887 0008 00000000 		.word	0
+ 888              		.section	.data.uart4_rx_mtx,"aw"
+ 889              		.align	2
+ 890              		.set	.LANCHOR10,. + 0
+ 891              		.type	uart4_rx_mtx, %object
+ 892              		.size	uart4_rx_mtx, 16
+ 893              	uart4_rx_mtx:
+ 894 0000 00000000 		.word	uart4_rx_mtx
+ 895 0004 00000000 		.word	uart4_rx_mtx
+ 896 0008 00000000 		.word	0
+ 897 000c 00000000 		.word	0
+ 898              		.section	.data.uart4_rx_sem,"aw"
+ 899              		.align	2
+ 900              		.set	.LANCHOR11,. + 0
+ 901              		.type	uart4_rx_sem, %object
+ 902              		.size	uart4_rx_sem, 12
+ 903              	uart4_rx_sem:
+ 904 0000 00000000 		.word	uart4_rx_sem
+ 905 0004 00000000 		.word	uart4_rx_sem
+ 906 0008 00000000 		.word	0
+ 907              		.section	.data.uart4_tx_mtx,"aw"
+ 908              		.align	2
+ 909              		.set	.LANCHOR13,. + 0
+ 910              		.type	uart4_tx_mtx, %object
+ 911              		.size	uart4_tx_mtx, 16
+ 912              	uart4_tx_mtx:
+ 913 0000 00000000 		.word	uart4_tx_mtx
+ 914 0004 00000000 		.word	uart4_tx_mtx
+ 915 0008 00000000 		.word	0
+ 916 000c 00000000 		.word	0
+ 917              		.section	.data.uart4_tx_sem,"aw"
+ 918              		.align	2
+ 919              		.set	.LANCHOR14,. + 0
+ 920              		.type	uart4_tx_sem, %object
+ 921              		.size	uart4_tx_sem, 12
+ARM GAS  /tmp/ccMDnOls.s 			page 18
+
+
+ 922              	uart4_tx_sem:
+ 923 0000 00000000 		.word	uart4_tx_sem
+ 924 0004 00000000 		.word	uart4_tx_sem
+ 925 0008 00000000 		.word	0
+ 926              		.section	.data.uart6_rx_mtx,"aw"
+ 927              		.align	2
+ 928              		.set	.LANCHOR18,. + 0
+ 929              		.type	uart6_rx_mtx, %object
+ 930              		.size	uart6_rx_mtx, 16
+ 931              	uart6_rx_mtx:
+ 932 0000 00000000 		.word	uart6_rx_mtx
+ 933 0004 00000000 		.word	uart6_rx_mtx
+ 934 0008 00000000 		.word	0
+ 935 000c 00000000 		.word	0
+ 936              		.section	.data.uart6_rx_sem,"aw"
+ 937              		.align	2
+ 938              		.set	.LANCHOR19,. + 0
+ 939              		.type	uart6_rx_sem, %object
+ 940              		.size	uart6_rx_sem, 12
+ 941              	uart6_rx_sem:
+ 942 0000 00000000 		.word	uart6_rx_sem
+ 943 0004 00000000 		.word	uart6_rx_sem
+ 944 0008 00000000 		.word	0
+ 945              		.section	.data.uart6_tx_mtx,"aw"
+ 946              		.align	2
+ 947              		.set	.LANCHOR21,. + 0
+ 948              		.type	uart6_tx_mtx, %object
+ 949              		.size	uart6_tx_mtx, 16
+ 950              	uart6_tx_mtx:
+ 951 0000 00000000 		.word	uart6_tx_mtx
+ 952 0004 00000000 		.word	uart6_tx_mtx
+ 953 0008 00000000 		.word	0
+ 954 000c 00000000 		.word	0
+ 955              		.section	.data.uart6_tx_sem,"aw"
+ 956              		.align	2
+ 957              		.set	.LANCHOR22,. + 0
+ 958              		.type	uart6_tx_sem, %object
+ 959              		.size	uart6_tx_sem, 12
+ 960              	uart6_tx_sem:
+ 961 0000 00000000 		.word	uart6_tx_sem
+ 962 0004 00000000 		.word	uart6_tx_sem
+ 963 0008 00000000 		.word	0
+ 964              		.section	.data.usart1_config,"aw"
+ 965              		.align	2
+ 966              		.set	.LANCHOR0,. + 0
+ 967              		.type	usart1_config, %object
+ 968              		.size	usart1_config, 12
+ 969              	usart1_config:
+ 970 0000 00E10000 		.word	57600
+ 971 0004 0000     		.short	0
+ 972 0006 0000     		.short	0
+ 973 0008 0000     		.short	0
+ 974 000a 0000     		.space	2
+ 975              		.section	.data.usart4_config,"aw"
+ 976              		.align	2
+ 977              		.set	.LANCHOR8,. + 0
+ 978              		.type	usart4_config, %object
+ARM GAS  /tmp/ccMDnOls.s 			page 19
+
+
+ 979              		.size	usart4_config, 12
+ 980              	usart4_config:
+ 981 0000 00C20100 		.word	115200
+ 982 0004 0000     		.short	0
+ 983 0006 0000     		.short	0
+ 984 0008 0000     		.short	0
+ 985 000a 0000     		.space	2
+ 986              		.section	.data.usart6_config,"aw"
+ 987              		.align	2
+ 988              		.set	.LANCHOR16,. + 0
+ 989              		.type	usart6_config, %object
+ 990              		.size	usart6_config, 12
+ 991              	usart6_config:
+ 992 0000 00C20100 		.word	115200
+ 993 0004 0000     		.short	0
+ 994 0006 0000     		.short	0
+ 995 0008 0000     		.short	0
+ 996 000a 0000     		.space	2
+ 997              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccMDnOls.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 uart_arch.c
+     /tmp/ccMDnOls.s:15     .text.handle_uart_tx:0000000000000000 $t
+     /tmp/ccMDnOls.s:23     .text.handle_uart_tx:0000000000000000 handle_uart_tx
+     /tmp/ccMDnOls.s:62     .rodata.thd_uart1_tx.str1.4:0000000000000000 $d
+     /tmp/ccMDnOls.s:66     .text.thd_uart1_tx:0000000000000000 $t
+     /tmp/ccMDnOls.s:73     .text.thd_uart1_tx:0000000000000000 thd_uart1_tx
+     /tmp/ccMDnOls.s:90     .text.thd_uart1_tx:0000000000000014 $d
+     /tmp/ccMDnOls.s:95     .rodata.thd_uart4_tx.str1.4:0000000000000000 $d
+     /tmp/ccMDnOls.s:99     .text.thd_uart4_tx:0000000000000000 $t
+     /tmp/ccMDnOls.s:106    .text.thd_uart4_tx:0000000000000000 thd_uart4_tx
+     /tmp/ccMDnOls.s:123    .text.thd_uart4_tx:0000000000000014 $d
+     /tmp/ccMDnOls.s:128    .rodata.thd_uart6_tx.str1.4:0000000000000000 $d
+     /tmp/ccMDnOls.s:132    .text.thd_uart6_tx:0000000000000000 $t
+     /tmp/ccMDnOls.s:139    .text.thd_uart6_tx:0000000000000000 thd_uart6_tx
+     /tmp/ccMDnOls.s:156    .text.thd_uart6_tx:0000000000000014 $d
+     /tmp/ccMDnOls.s:161    .text.handle_uart_rx:0000000000000000 $t
+     /tmp/ccMDnOls.s:168    .text.handle_uart_rx:0000000000000000 handle_uart_rx
+     /tmp/ccMDnOls.s:196    .rodata.thd_uart1_rx.str1.4:0000000000000000 $d
+     /tmp/ccMDnOls.s:200    .text.thd_uart1_rx:0000000000000000 $t
+     /tmp/ccMDnOls.s:207    .text.thd_uart1_rx:0000000000000000 thd_uart1_rx
+     /tmp/ccMDnOls.s:224    .text.thd_uart1_rx:0000000000000014 $d
+     /tmp/ccMDnOls.s:229    .rodata.thd_uart4_rx.str1.4:0000000000000000 $d
+     /tmp/ccMDnOls.s:233    .text.thd_uart4_rx:0000000000000000 $t
+     /tmp/ccMDnOls.s:240    .text.thd_uart4_rx:0000000000000000 thd_uart4_rx
+     /tmp/ccMDnOls.s:257    .text.thd_uart4_rx:0000000000000014 $d
+     /tmp/ccMDnOls.s:262    .rodata.thd_uart6_rx.str1.4:0000000000000000 $d
+     /tmp/ccMDnOls.s:266    .text.thd_uart6_rx:0000000000000000 $t
+     /tmp/ccMDnOls.s:273    .text.thd_uart6_rx:0000000000000000 thd_uart6_rx
+     /tmp/ccMDnOls.s:290    .text.thd_uart6_rx:0000000000000014 $d
+     /tmp/ccMDnOls.s:295    .text.uart1_init:0000000000000000 $t
+     /tmp/ccMDnOls.s:303    .text.uart1_init:0000000000000000 uart1_init
+     /tmp/ccMDnOls.s:348    .text.uart1_init:0000000000000068 $d
+     /tmp/ccMDnOls.s:362    .text.uart4_init:0000000000000000 $t
+     /tmp/ccMDnOls.s:370    .text.uart4_init:0000000000000000 uart4_init
+     /tmp/ccMDnOls.s:415    .text.uart4_init:0000000000000068 $d
+     /tmp/ccMDnOls.s:429    .text.uart6_init:0000000000000000 $t
+     /tmp/ccMDnOls.s:437    .text.uart6_init:0000000000000000 uart6_init
+     /tmp/ccMDnOls.s:482    .text.uart6_init:0000000000000068 $d
+     /tmp/ccMDnOls.s:496    .text.uart_getch:0000000000000000 $t
+     /tmp/ccMDnOls.s:504    .text.uart_getch:0000000000000000 uart_getch
+     /tmp/ccMDnOls.s:523    .text.uart_periph_set_baudrate:0000000000000000 $t
+     /tmp/ccMDnOls.s:531    .text.uart_periph_set_baudrate:0000000000000000 uart_periph_set_baudrate
+     /tmp/ccMDnOls.s:548    .text.uart_periph_set_mode:0000000000000000 $t
+     /tmp/ccMDnOls.s:556    .text.uart_periph_set_mode:0000000000000000 uart_periph_set_mode
+     /tmp/ccMDnOls.s:563    .text.uart_periph_set_bits_stop_parity:0000000000000000 $t
+     /tmp/ccMDnOls.s:571    .text.uart_periph_set_bits_stop_parity:0000000000000000 uart_periph_set_bits_stop_parity
+     /tmp/ccMDnOls.s:619    .text.uart_check_free_space:0000000000000000 $t
+     /tmp/ccMDnOls.s:627    .text.uart_check_free_space:0000000000000000 uart_check_free_space
+     /tmp/ccMDnOls.s:652    .text.uart_put_byte:0000000000000000 $t
+     /tmp/ccMDnOls.s:660    .text.uart_put_byte:0000000000000000 uart_put_byte
+     /tmp/ccMDnOls.s:698    .text.uart_put_buffer:0000000000000000 $t
+     /tmp/ccMDnOls.s:706    .text.uart_put_buffer:0000000000000000 uart_put_buffer
+     /tmp/ccMDnOls.s:763    .text.uart_send_message:0000000000000000 $t
+     /tmp/ccMDnOls.s:771    .text.uart_send_message:0000000000000000 uart_send_message
+     /tmp/ccMDnOls.s:788    .bss.uart1_init_struct:0000000000000000 $d
+     /tmp/ccMDnOls.s:792    .bss.uart1_init_struct:0000000000000000 uart1_init_struct
+ARM GAS  /tmp/ccMDnOls.s 			page 21
+
+
+     /tmp/ccMDnOls.s:795    .bss.uart4_init_struct:0000000000000000 $d
+     /tmp/ccMDnOls.s:799    .bss.uart4_init_struct:0000000000000000 uart4_init_struct
+     /tmp/ccMDnOls.s:802    .bss.uart6_init_struct:0000000000000000 $d
+     /tmp/ccMDnOls.s:806    .bss.uart6_init_struct:0000000000000000 uart6_init_struct
+     /tmp/ccMDnOls.s:809    .bss.wa_thd_uart1_rx:0000000000000000 $d
+     /tmp/ccMDnOls.s:813    .bss.wa_thd_uart1_rx:0000000000000000 wa_thd_uart1_rx
+     /tmp/ccMDnOls.s:816    .bss.wa_thd_uart1_tx:0000000000000000 $d
+     /tmp/ccMDnOls.s:820    .bss.wa_thd_uart1_tx:0000000000000000 wa_thd_uart1_tx
+     /tmp/ccMDnOls.s:823    .bss.wa_thd_uart4_rx:0000000000000000 $d
+     /tmp/ccMDnOls.s:827    .bss.wa_thd_uart4_rx:0000000000000000 wa_thd_uart4_rx
+     /tmp/ccMDnOls.s:830    .bss.wa_thd_uart4_tx:0000000000000000 $d
+     /tmp/ccMDnOls.s:834    .bss.wa_thd_uart4_tx:0000000000000000 wa_thd_uart4_tx
+     /tmp/ccMDnOls.s:837    .bss.wa_thd_uart6_rx:0000000000000000 $d
+     /tmp/ccMDnOls.s:841    .bss.wa_thd_uart6_rx:0000000000000000 wa_thd_uart6_rx
+     /tmp/ccMDnOls.s:844    .bss.wa_thd_uart6_tx:0000000000000000 $d
+     /tmp/ccMDnOls.s:848    .bss.wa_thd_uart6_tx:0000000000000000 wa_thd_uart6_tx
+     /tmp/ccMDnOls.s:851    .data.uart1_rx_mtx:0000000000000000 $d
+     /tmp/ccMDnOls.s:855    .data.uart1_rx_mtx:0000000000000000 uart1_rx_mtx
+     /tmp/ccMDnOls.s:861    .data.uart1_rx_sem:0000000000000000 $d
+     /tmp/ccMDnOls.s:865    .data.uart1_rx_sem:0000000000000000 uart1_rx_sem
+     /tmp/ccMDnOls.s:870    .data.uart1_tx_mtx:0000000000000000 $d
+     /tmp/ccMDnOls.s:874    .data.uart1_tx_mtx:0000000000000000 uart1_tx_mtx
+     /tmp/ccMDnOls.s:880    .data.uart1_tx_sem:0000000000000000 $d
+     /tmp/ccMDnOls.s:884    .data.uart1_tx_sem:0000000000000000 uart1_tx_sem
+     /tmp/ccMDnOls.s:889    .data.uart4_rx_mtx:0000000000000000 $d
+     /tmp/ccMDnOls.s:893    .data.uart4_rx_mtx:0000000000000000 uart4_rx_mtx
+     /tmp/ccMDnOls.s:899    .data.uart4_rx_sem:0000000000000000 $d
+     /tmp/ccMDnOls.s:903    .data.uart4_rx_sem:0000000000000000 uart4_rx_sem
+     /tmp/ccMDnOls.s:908    .data.uart4_tx_mtx:0000000000000000 $d
+     /tmp/ccMDnOls.s:912    .data.uart4_tx_mtx:0000000000000000 uart4_tx_mtx
+     /tmp/ccMDnOls.s:918    .data.uart4_tx_sem:0000000000000000 $d
+     /tmp/ccMDnOls.s:922    .data.uart4_tx_sem:0000000000000000 uart4_tx_sem
+     /tmp/ccMDnOls.s:927    .data.uart6_rx_mtx:0000000000000000 $d
+     /tmp/ccMDnOls.s:931    .data.uart6_rx_mtx:0000000000000000 uart6_rx_mtx
+     /tmp/ccMDnOls.s:937    .data.uart6_rx_sem:0000000000000000 $d
+     /tmp/ccMDnOls.s:941    .data.uart6_rx_sem:0000000000000000 uart6_rx_sem
+     /tmp/ccMDnOls.s:946    .data.uart6_tx_mtx:0000000000000000 $d
+     /tmp/ccMDnOls.s:950    .data.uart6_tx_mtx:0000000000000000 uart6_tx_mtx
+     /tmp/ccMDnOls.s:956    .data.uart6_tx_sem:0000000000000000 $d
+     /tmp/ccMDnOls.s:960    .data.uart6_tx_sem:0000000000000000 uart6_tx_sem
+     /tmp/ccMDnOls.s:965    .data.usart1_config:0000000000000000 $d
+     /tmp/ccMDnOls.s:969    .data.usart1_config:0000000000000000 usart1_config
+     /tmp/ccMDnOls.s:976    .data.usart4_config:0000000000000000 $d
+     /tmp/ccMDnOls.s:980    .data.usart4_config:0000000000000000 usart4_config
+     /tmp/ccMDnOls.s:987    .data.usart6_config:0000000000000000 $d
+     /tmp/ccMDnOls.s:991    .data.usart6_config:0000000000000000 usart6_config
+
+UNDEFINED SYMBOLS
+chSemWait
+oqPutTimeout
+chMtxLock
+chMtxUnlock
+ch0
+uart1
+uart4
+uart6
+iqGetTimeout
+ARM GAS  /tmp/ccMDnOls.s 			page 22
+
+
+chSemSignal
+uart_periph_init
+sdStart
+chThdCreateStatic
+SD1
+SD4
+SD6
+sdStop

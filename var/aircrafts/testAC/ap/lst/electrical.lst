@@ -1,0 +1,279 @@
+ARM GAS  /tmp/ccueGTa8.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"electrical.c"
+  13              		.text
+  14              		.section	.text.electrical_init,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	electrical_init
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	electrical_init, %function
+  24              	electrical_init:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 0A4B     		ldr	r3, .L3
+  29 0002 0B49     		ldr	r1, .L3+4
+  30 0004 0020     		movs	r0, #0
+  31 0006 4FF0000C 		mov	ip, #0
+  32 000a 2022     		movs	r2, #32
+  33 000c 9882     		strh	r0, [r3, #20]	@ movhi
+  34 000e C3E90600 		strd	r0, r0, [r3, #24]
+  35 0012 C3F800C0 		str	ip, [r3]	@ float
+  36 0016 C3F804C0 		str	ip, [r3, #4]	@ float
+  37 001a C3F808C0 		str	ip, [r3, #8]	@ float
+  38 001e C3F80CC0 		str	ip, [r3, #12]	@ float
+  39 0022 C3F810C0 		str	ip, [r3, #16]	@ float
+  40 0026 FFF7FEBF 		b	adc_buf_channel
+  41              	.L4:
+  42 002a 00BF     		.align	2
+  43              	.L3:
+  44 002c 00000000 		.word	.LANCHOR0
+  45 0030 00000000 		.word	.LANCHOR1
+  46              		.size	electrical_init, .-electrical_init
+  47              		.global	__aeabi_ui2d
+  48              		.global	__aeabi_dmul
+  49              		.global	__aeabi_d2f
+  50              		.global	__aeabi_f2d
+  51              		.global	__aeabi_dcmplt
+  52              		.section	.text.electrical_periodic,"ax",%progbits
+  53              		.align	1
+  54              		.p2align 4,,15
+  55              		.global	electrical_periodic
+  56              		.syntax unified
+  57              		.thumb
+ARM GAS  /tmp/ccueGTa8.s 			page 2
+
+
+  58              		.thumb_func
+  59              		.fpu fpv4-sp-d16
+  60              		.type	electrical_periodic, %function
+  61              	electrical_periodic:
+  62              		@ args = 0, pretend = 0, frame = 0
+  63              		@ frame_needed = 0, uses_anonymous_args = 0
+  64 0000 10B5     		push	{r4, lr}
+  65 0002 2DED028B 		vpush.64	{d8}
+  66 0006 3C4B     		ldr	r3, .L34+16
+  67 0008 3C4C     		ldr	r4, .L34+20
+  68 000a 93F84520 		ldrb	r2, [r3, #69]	@ zero_extendqisi2
+  69 000e 1868     		ldr	r0, [r3]
+  70 0010 B0FBF2F0 		udiv	r0, r0, r2
+  71 0014 FFF7FEFF 		bl	__aeabi_ui2d
+  72 0018 33A3     		adr	r3, .L34
+  73 001a D3E90023 		ldrd	r2, [r3]
+  74 001e FFF7FEFF 		bl	__aeabi_dmul
+  75 0022 FFF7FEFF 		bl	__aeabi_d2f
+  76 0026 D4ED028A 		vldr.32	s17, [r4, #8]
+  77 002a DFED357A 		vldr.32	s15, .L34+24
+  78 002e 94ED047A 		vldr.32	s14, [r4, #16]
+  79 0032 D4ED036A 		vldr.32	s13, [r4, #12]
+  80 0036 334B     		ldr	r3, .L34+28
+  81 0038 2060     		str	r0, [r4]	@ float
+  82 003a 08EE100A 		vmov	s16, r0
+  83 003e 68EEA77A 		vmul.f32	s15, s17, s15
+  84 0042 A8EE277A 		vfma.f32	s14, s16, s15
+  85 0046 76EEA77A 		vadd.f32	s15, s13, s15
+  86 004a F0EE086A 		vmov.f32	s13, #3.0e+0
+  87 004e B4EEE68A 		vcmpe.f32	s16, s13
+  88 0052 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  89 0056 C4ED037A 		vstr.32	s15, [r4, #12]
+  90 005a 84ED047A 		vstr.32	s14, [r4, #16]
+  91 005e 20DB     		blt	.L29
+  92 0060 0122     		movs	r2, #1
+  93 0062 1A70     		strb	r2, [r3]
+  94              	.L8:
+  95 0064 F2EE057A 		vmov.f32	s15, #1.05e+1
+  96 0068 B4EEE78A 		vcmpe.f32	s16, s15
+  97 006c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  98 0070 254A     		ldr	r2, .L34+32
+  99 0072 29D4     		bmi	.L33
+ 100 0074 3221     		movs	r1, #50
+ 101 0076 0023     		movs	r3, #0
+ 102 0078 1160     		str	r1, [r2]
+ 103 007a 2375     		strb	r3, [r4, #20]
+ 104              	.L13:
+ 105 007c 18EE100A 		vmov	r0, s16
+ 106 0080 FFF7FEFF 		bl	__aeabi_f2d
+ 107 0084 1AA3     		adr	r3, .L34+8
+ 108 0086 D3E90023 		ldrd	r2, [r3]
+ 109 008a FFF7FEFF 		bl	__aeabi_dcmplt
+ 110 008e 20B3     		cbz	r0, .L31
+ 111 0090 1E4A     		ldr	r2, .L34+36
+ 112 0092 1368     		ldr	r3, [r2]
+ 113 0094 13B1     		cbz	r3, .L18
+ 114 0096 013B     		subs	r3, r3, #1
+ARM GAS  /tmp/ccueGTa8.s 			page 3
+
+
+ 115 0098 1360     		str	r3, [r2]
+ 116 009a 2BB9     		cbnz	r3, .L9
+ 117              	.L18:
+ 118 009c 0123     		movs	r3, #1
+ 119 009e 6375     		strb	r3, [r4, #21]
+ 120 00a0 02E0     		b	.L9
+ 121              	.L29:
+ 122 00a2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 123 00a4 002B     		cmp	r3, #0
+ 124 00a6 DDD1     		bne	.L8
+ 125              	.L9:
+ 126 00a8 D4ED067A 		vldr.32	s15, [r4, #24]	@ int
+ 127 00ac E369     		ldr	r3, [r4, #28]
+ 128 00ae F8EE677A 		vcvt.f32.u32	s15, s15
+ 129 00b2 0133     		adds	r3, r3, #1
+ 130 00b4 E8EE287A 		vfma.f32	s15, s16, s17
+ 131 00b8 BDEC028B 		vldm	sp!, {d8}
+ 132 00bc FCEEE77A 		vcvt.u32.f32	s15, s15
+ 133 00c0 E361     		str	r3, [r4, #28]
+ 134 00c2 C4ED067A 		vstr.32	s15, [r4, #24]	@ int
+ 135 00c6 10BD     		pop	{r4, pc}
+ 136              	.L33:
+ 137 00c8 1368     		ldr	r3, [r2]
+ 138 00ca 1BB1     		cbz	r3, .L14
+ 139 00cc 013B     		subs	r3, r3, #1
+ 140 00ce 1360     		str	r3, [r2]
+ 141 00d0 002B     		cmp	r3, #0
+ 142 00d2 D3D1     		bne	.L13
+ 143              	.L14:
+ 144 00d4 0123     		movs	r3, #1
+ 145 00d6 2375     		strb	r3, [r4, #20]
+ 146 00d8 D0E7     		b	.L13
+ 147              	.L31:
+ 148 00da 0C4B     		ldr	r3, .L34+36
+ 149 00dc 6075     		strb	r0, [r4, #21]
+ 150 00de 3222     		movs	r2, #50
+ 151 00e0 1A60     		str	r2, [r3]
+ 152 00e2 E1E7     		b	.L9
+ 153              	.L35:
+ 154 00e4 AFF30080 		.align	3
+ 155              	.L34:
+ 156 00e8 85B69C4B 		.word	1268561541
+ 157 00ec 7155793F 		.word	1064916337
+ 158 00f0 9A999999 		.word	-1717986918
+ 159 00f4 99992340 		.word	1076074905
+ 160 00f8 00000000 		.word	.LANCHOR1
+ 161 00fc 00000000 		.word	.LANCHOR0
+ 162 0100 5304E937 		.word	938017875
+ 163 0104 00000000 		.word	.LANCHOR2
+ 164 0108 00000000 		.word	.LANCHOR3
+ 165 010c 00000000 		.word	.LANCHOR4
+ 166              		.size	electrical_periodic, .-electrical_periodic
+ 167              		.section	.text.electrical_avg_reset,"ax",%progbits
+ 168              		.align	1
+ 169              		.p2align 4,,15
+ 170              		.global	electrical_avg_reset
+ 171              		.syntax unified
+ARM GAS  /tmp/ccueGTa8.s 			page 4
+
+
+ 172              		.thumb
+ 173              		.thumb_func
+ 174              		.fpu fpv4-sp-d16
+ 175              		.type	electrical_avg_reset, %function
+ 176              	electrical_avg_reset:
+ 177              		@ args = 0, pretend = 0, frame = 0
+ 178              		@ frame_needed = 0, uses_anonymous_args = 0
+ 179              		@ link register save eliminated.
+ 180 0000 024B     		ldr	r3, .L37
+ 181 0002 0022     		movs	r2, #0
+ 182 0004 C3E90622 		strd	r2, r2, [r3, #24]
+ 183 0008 7047     		bx	lr
+ 184              	.L38:
+ 185 000a 00BF     		.align	2
+ 186              	.L37:
+ 187 000c 00000000 		.word	.LANCHOR0
+ 188              		.size	electrical_avg_reset, .-electrical_avg_reset
+ 189              		.global	electrical
+ 190              		.section	.bss.bat_critical_counter.0,"aw",%nobits
+ 191              		.align	2
+ 192              		.set	.LANCHOR4,. + 0
+ 193              		.type	bat_critical_counter.0, %object
+ 194              		.size	bat_critical_counter.0, 4
+ 195              	bat_critical_counter.0:
+ 196 0000 00000000 		.space	4
+ 197              		.section	.bss.bat_low_counter.1,"aw",%nobits
+ 198              		.align	2
+ 199              		.set	.LANCHOR3,. + 0
+ 200              		.type	bat_low_counter.1, %object
+ 201              		.size	bat_low_counter.1, 4
+ 202              	bat_low_counter.1:
+ 203 0000 00000000 		.space	4
+ 204              		.section	.bss.electrical,"aw",%nobits
+ 205              		.align	2
+ 206              		.set	.LANCHOR0,. + 0
+ 207              		.type	electrical, %object
+ 208              		.size	electrical, 32
+ 209              	electrical:
+ 210 0000 00000000 		.space	32
+ 210      00000000 
+ 210      00000000 
+ 210      00000000 
+ 210      00000000 
+ 211              		.section	.bss.electrical_priv,"aw",%nobits
+ 212              		.align	2
+ 213              		.set	.LANCHOR1,. + 0
+ 214              		.type	electrical_priv, %object
+ 215              		.size	electrical_priv, 72
+ 216              	electrical_priv:
+ 217 0000 00000000 		.space	72
+ 217      00000000 
+ 217      00000000 
+ 217      00000000 
+ 217      00000000 
+ 218              		.section	.bss.vsupply_check_started.2,"aw",%nobits
+ 219              		.set	.LANCHOR2,. + 0
+ 220              		.type	vsupply_check_started.2, %object
+ARM GAS  /tmp/ccueGTa8.s 			page 5
+
+
+ 221              		.size	vsupply_check_started.2, 1
+ 222              	vsupply_check_started.2:
+ 223 0000 00       		.space	1
+ 224              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccueGTa8.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 electrical.c
+     /tmp/ccueGTa8.s:15     .text.electrical_init:0000000000000000 $t
+     /tmp/ccueGTa8.s:24     .text.electrical_init:0000000000000000 electrical_init
+     /tmp/ccueGTa8.s:44     .text.electrical_init:000000000000002c $d
+     /tmp/ccueGTa8.s:53     .text.electrical_periodic:0000000000000000 $t
+     /tmp/ccueGTa8.s:61     .text.electrical_periodic:0000000000000000 electrical_periodic
+     /tmp/ccueGTa8.s:156    .text.electrical_periodic:00000000000000e8 $d
+     /tmp/ccueGTa8.s:168    .text.electrical_avg_reset:0000000000000000 $t
+     /tmp/ccueGTa8.s:176    .text.electrical_avg_reset:0000000000000000 electrical_avg_reset
+     /tmp/ccueGTa8.s:187    .text.electrical_avg_reset:000000000000000c $d
+     /tmp/ccueGTa8.s:209    .bss.electrical:0000000000000000 electrical
+     /tmp/ccueGTa8.s:191    .bss.bat_critical_counter.0:0000000000000000 $d
+     /tmp/ccueGTa8.s:195    .bss.bat_critical_counter.0:0000000000000000 bat_critical_counter.0
+     /tmp/ccueGTa8.s:198    .bss.bat_low_counter.1:0000000000000000 $d
+     /tmp/ccueGTa8.s:202    .bss.bat_low_counter.1:0000000000000000 bat_low_counter.1
+     /tmp/ccueGTa8.s:205    .bss.electrical:0000000000000000 $d
+     /tmp/ccueGTa8.s:212    .bss.electrical_priv:0000000000000000 $d
+     /tmp/ccueGTa8.s:216    .bss.electrical_priv:0000000000000000 electrical_priv
+     /tmp/ccueGTa8.s:222    .bss.vsupply_check_started.2:0000000000000000 vsupply_check_started.2
+     /tmp/ccueGTa8.s:223    .bss.vsupply_check_started.2:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+adc_buf_channel
+__aeabi_ui2d
+__aeabi_dmul
+__aeabi_d2f
+__aeabi_f2d
+__aeabi_dcmplt

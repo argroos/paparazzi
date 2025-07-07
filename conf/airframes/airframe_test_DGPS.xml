@@ -1,0 +1,4 @@
+<module name="gps" type="ublox">
+  <configure name="GPS_BAUD" value="B115200"/>
+  <define name="USE_GPS_UBX_RTCM" value="TRUE"/> 
+</module>

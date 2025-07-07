@@ -1,0 +1,8 @@
+gaia.cmo : \
+    /home/argroos/paparazzi/sw/lib/ocaml/latlong.cmi \
+    /home/argroos/paparazzi/sw/lib/ocaml/env.cmi \
+    /home/argroos/paparazzi/sw/lib/ocaml/defivybus.cmi
+gaia.cmx : \
+    /home/argroos/paparazzi/sw/lib/ocaml/latlong.cmx \
+    /home/argroos/paparazzi/sw/lib/ocaml/env.cmx \
+    /home/argroos/paparazzi/sw/lib/ocaml/defivybus.cmx

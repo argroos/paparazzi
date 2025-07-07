@@ -1,0 +1,155 @@
+ARM GAS  /tmp/ccjlLXqz.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"ppm_arch.c"
+  13              		.text
+  14              		.section	.text.icuoverflowcb,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	icuoverflowcb, %function
+  23              	icuoverflowcb:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 7047     		bx	lr
+  28              		.size	icuoverflowcb, .-icuoverflowcb
+  29 0002 00BF     		.section	.text.icuperiodcb,"ax",%progbits
+  30              		.align	1
+  31              		.p2align 4,,15
+  32              		.syntax unified
+  33              		.thumb
+  34              		.thumb_func
+  35              		.fpu fpv4-sp-d16
+  36              		.type	icuperiodcb, %function
+  37              	icuperiodcb:
+  38              		@ args = 0, pretend = 0, frame = 0
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  40              		@ link register save eliminated.
+  41 0000 4369     		ldr	r3, [r0, #20]
+  42 0002 1868     		ldr	r0, [r3]
+  43 0004 0130     		adds	r0, r0, #1
+  44 0006 FFF7FEBF 		b	ppm_decode_frame_width
+  45              		.size	icuperiodcb, .-icuperiodcb
+  46 000a 00BF     		.section	.text.ppm_arch_init,"ax",%progbits
+  47              		.align	1
+  48              		.p2align 4,,15
+  49              		.global	ppm_arch_init
+  50              		.syntax unified
+  51              		.thumb
+  52              		.thumb_func
+  53              		.fpu fpv4-sp-d16
+  54              		.type	ppm_arch_init, %function
+  55              	ppm_arch_init:
+  56              		@ args = 0, pretend = 0, frame = 0
+  57              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccjlLXqz.s 			page 2
+
+
+  58 0000 10B5     		push	{r4, lr}
+  59 0002 094A     		ldr	r2, .L6
+  60 0004 094C     		ldr	r4, .L6+4
+  61 0006 0A4B     		ldr	r3, .L6+8
+  62 0008 0A49     		ldr	r1, .L6+12
+  63 000a 0020     		movs	r0, #0
+  64 000c 1060     		str	r0, [r2]
+  65 000e 2022     		movs	r2, #32
+  66 0010 2046     		mov	r0, r4
+  67 0012 1A70     		strb	r2, [r3]
+  68 0014 FFF7FEFF 		bl	icuStart
+  69 0018 2046     		mov	r0, r4
+  70 001a FFF7FEFF 		bl	icuStartCapture
+  71 001e 2046     		mov	r0, r4
+  72 0020 BDE81040 		pop	{r4, lr}
+  73 0024 FFF7FEBF 		b	icuEnableNotifications
+  74              	.L7:
+  75              		.align	2
+  76              	.L6:
+  77 0028 00000000 		.word	.LANCHOR0
+  78 002c 00000000 		.word	ICUD1
+  79 0030 00000000 		.word	.LANCHOR1
+  80 0034 00000000 		.word	.LANCHOR2
+  81              		.size	ppm_arch_init, .-ppm_arch_init
+  82              		.global	ppm_data_valid
+  83              		.global	ppm_last_pulse_time
+  84              		.global	ppm_cur_pulse
+  85              		.section	.bss.ppm_cur_pulse,"aw",%nobits
+  86              		.set	.LANCHOR1,. + 0
+  87              		.type	ppm_cur_pulse, %object
+  88              		.size	ppm_cur_pulse, 1
+  89              	ppm_cur_pulse:
+  90 0000 00       		.space	1
+  91              		.section	.bss.ppm_data_valid,"aw",%nobits
+  92              		.type	ppm_data_valid, %object
+  93              		.size	ppm_data_valid, 1
+  94              	ppm_data_valid:
+  95 0000 00       		.space	1
+  96              		.section	.bss.ppm_last_pulse_time,"aw",%nobits
+  97              		.align	2
+  98              		.set	.LANCHOR0,. + 0
+  99              		.type	ppm_last_pulse_time, %object
+ 100              		.size	ppm_last_pulse_time, 4
+ 101              	ppm_last_pulse_time:
+ 102 0000 00000000 		.space	4
+ 103              		.section	.data.ppm_icucfg,"aw"
+ 104              		.align	2
+ 105              		.set	.LANCHOR2,. + 0
+ 106              		.type	ppm_icucfg, %object
+ 107              		.size	ppm_icucfg, 32
+ 108              	ppm_icucfg:
+ 109 0000 01       		.byte	1
+ 110 0001 000000   		.space	3
+ 111 0004 80841E00 		.word	2000000
+ 112 0008 00000000 		.word	0
+ 113 000c 00000000 		.word	icuperiodcb
+ 114 0010 00000000 		.word	icuoverflowcb
+ARM GAS  /tmp/ccjlLXqz.s 			page 3
+
+
+ 115 0014 00       		.byte	0
+ 116 0015 000000   		.space	3
+ 117 0018 00000000 		.word	0
+ 118 001c FFFFFFFF 		.word	-1
+ 119              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccjlLXqz.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ppm_arch.c
+     /tmp/ccjlLXqz.s:15     .text.icuoverflowcb:0000000000000000 $t
+     /tmp/ccjlLXqz.s:23     .text.icuoverflowcb:0000000000000000 icuoverflowcb
+     /tmp/ccjlLXqz.s:30     .text.icuperiodcb:0000000000000000 $t
+     /tmp/ccjlLXqz.s:37     .text.icuperiodcb:0000000000000000 icuperiodcb
+     /tmp/ccjlLXqz.s:47     .text.ppm_arch_init:0000000000000000 $t
+     /tmp/ccjlLXqz.s:55     .text.ppm_arch_init:0000000000000000 ppm_arch_init
+     /tmp/ccjlLXqz.s:77     .text.ppm_arch_init:0000000000000028 $d
+     /tmp/ccjlLXqz.s:94     .bss.ppm_data_valid:0000000000000000 ppm_data_valid
+     /tmp/ccjlLXqz.s:101    .bss.ppm_last_pulse_time:0000000000000000 ppm_last_pulse_time
+     /tmp/ccjlLXqz.s:89     .bss.ppm_cur_pulse:0000000000000000 ppm_cur_pulse
+     /tmp/ccjlLXqz.s:90     .bss.ppm_cur_pulse:0000000000000000 $d
+     /tmp/ccjlLXqz.s:95     .bss.ppm_data_valid:0000000000000000 $d
+     /tmp/ccjlLXqz.s:97     .bss.ppm_last_pulse_time:0000000000000000 $d
+     /tmp/ccjlLXqz.s:104    .data.ppm_icucfg:0000000000000000 $d
+     /tmp/ccjlLXqz.s:108    .data.ppm_icucfg:0000000000000000 ppm_icucfg
+
+UNDEFINED SYMBOLS
+ppm_decode_frame_width
+icuStart
+icuStartCapture
+icuEnableNotifications
+ICUD1

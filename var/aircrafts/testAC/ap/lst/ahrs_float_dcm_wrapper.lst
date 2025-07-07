@@ -1,0 +1,772 @@
+ARM GAS  /tmp/ccIjixrO.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"ahrs_float_dcm_wrapper.c"
+  13              		.text
+  14              		.section	.text.ahrs_dcm_enable_output,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	ahrs_dcm_enable_output, %function
+  23              	ahrs_dcm_enable_output:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 014B     		ldr	r3, .L3
+  28 0002 1870     		strb	r0, [r3]
+  29 0004 7047     		bx	lr
+  30              	.L4:
+  31 0006 00BF     		.align	2
+  32              	.L3:
+  33 0008 00000000 		.word	.LANCHOR0
+  34              		.size	ahrs_dcm_enable_output, .-ahrs_dcm_enable_output
+  35              		.section	.text.gps_cb,"ax",%progbits
+  36              		.align	1
+  37              		.p2align 4,,15
+  38              		.syntax unified
+  39              		.thumb
+  40              		.thumb_func
+  41              		.fpu fpv4-sp-d16
+  42              		.type	gps_cb, %function
+  43              	gps_cb:
+  44              		@ args = 0, pretend = 0, frame = 0
+  45              		@ frame_needed = 0, uses_anonymous_args = 0
+  46              		@ link register save eliminated.
+  47 0000 1046     		mov	r0, r2
+  48 0002 FFF7FEBF 		b	ahrs_dcm_update_gps
+  49              		.size	gps_cb, .-gps_cb
+  50 0006 00BF     		.section	.text.set_body_orientation_and_rates.part.0,"ax",%progbits
+  51              		.align	1
+  52              		.p2align 4,,15
+  53              		.syntax unified
+  54              		.thumb
+  55              		.thumb_func
+  56              		.fpu fpv4-sp-d16
+  57              		.type	set_body_orientation_and_rates.part.0, %function
+ARM GAS  /tmp/ccIjixrO.s 			page 2
+
+
+  58              	set_body_orientation_and_rates.part.0:
+  59              		@ args = 0, pretend = 0, frame = 40
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61 0000 10B5     		push	{r4, lr}
+  62 0002 1449     		ldr	r1, .L8
+  63 0004 144C     		ldr	r4, .L8+4
+  64 0006 486A     		ldr	r0, [r1, #36]	@ float
+  65 0008 8A6A     		ldr	r2, [r1, #40]	@ float
+  66 000a CB6A     		ldr	r3, [r1, #44]	@ float
+  67 000c C4F84402 		str	r0, [r4, #580]	@ float
+  68 0010 8AB0     		sub	sp, sp, #40
+  69 0012 C4F84822 		str	r2, [r4, #584]	@ float
+  70 0016 01A8     		add	r0, sp, #4
+  71 0018 0222     		movs	r2, #2
+  72 001a 1831     		adds	r1, r1, #24
+  73 001c 84F83422 		strb	r2, [r4, #564]
+  74 0020 C4F84C32 		str	r3, [r4, #588]	@ float
+  75 0024 FFF7FEFF 		bl	float_rmat_of_eulers_321
+  76 0028 0DF1040C 		add	ip, sp, #4
+  77 002c 2023     		movs	r3, #32
+  78 002e 84F8B031 		strb	r3, [r4, #432]
+  79 0032 BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
+  80 0036 04F5047E 		add	lr, r4, #528
+  81 003a AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+  82 003e BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
+  83 0042 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+  84 0046 DCF80030 		ldr	r3, [ip]
+  85 004a CEF80030 		str	r3, [lr]
+  86 004e 0AB0     		add	sp, sp, #40
+  87              		@ sp needed
+  88 0050 10BD     		pop	{r4, pc}
+  89              	.L9:
+  90 0052 00BF     		.align	2
+  91              	.L8:
+  92 0054 00000000 		.word	ahrs_dcm
+  93 0058 00000000 		.word	state
+  94              		.size	set_body_orientation_and_rates.part.0, .-set_body_orientation_and_rates.part.0
+  95              		.global	__aeabi_f2d
+  96              		.global	__aeabi_dmul
+  97              		.global	__aeabi_d2f
+  98              		.section	.text.gyro_cb,"ax",%progbits
+  99              		.align	1
+ 100              		.p2align 4,,15
+ 101              		.syntax unified
+ 102              		.thumb
+ 103              		.thumb_func
+ 104              		.fpu fpv4-sp-d16
+ 105              		.type	gyro_cb, %function
+ 106              	gyro_cb:
+ 107              		@ args = 0, pretend = 0, frame = 16
+ 108              		@ frame_needed = 0, uses_anonymous_args = 0
+ 109 0000 30B5     		push	{r4, r5, lr}
+ 110 0002 D2ED006A 		vldr.32	s13, [r2]	@ int
+ 111 0006 92ED017A 		vldr.32	s14, [r2, #4]	@ int
+ 112 000a D2ED027A 		vldr.32	s15, [r2, #8]	@ int
+ 113 000e 9FED206A 		vldr.32	s12, .L22+8
+ 114 0012 204D     		ldr	r5, .L22+12
+ARM GAS  /tmp/ccIjixrO.s 			page 3
+
+
+ 115 0014 204B     		ldr	r3, .L22+16
+ 116 0016 2868     		ldr	r0, [r5]
+ 117 0018 1960     		str	r1, [r3]
+ 118 001a F8EEE66A 		vcvt.f32.s32	s13, s13
+ 119 001e B8EEC77A 		vcvt.f32.s32	s14, s14
+ 120 0022 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 121 0026 66EE866A 		vmul.f32	s13, s13, s12
+ 122 002a 27EE067A 		vmul.f32	s14, s14, s12
+ 123 002e 67EE867A 		vmul.f32	s15, s15, s12
+ 124 0032 85B0     		sub	sp, sp, #20
+ 125 0034 0C46     		mov	r4, r1
+ 126 0036 CDED016A 		vstr.32	s13, [sp, #4]
+ 127 003a 8DED027A 		vstr.32	s14, [sp, #8]
+ 128 003e CDED037A 		vstr.32	s15, [sp, #12]
+ 129 0042 18B1     		cbz	r0, .L12
+ 130 0044 154B     		ldr	r3, .L22+20
+ 131 0046 93F83F30 		ldrb	r3, [r3, #63]	@ zero_extendqisi2
+ 132 004a 13B9     		cbnz	r3, .L21
+ 133              	.L12:
+ 134 004c 2C60     		str	r4, [r5]
+ 135 004e 05B0     		add	sp, sp, #20
+ 136              		@ sp needed
+ 137 0050 30BD     		pop	{r4, r5, pc}
+ 138              	.L21:
+ 139 0052 081A     		subs	r0, r1, r0
+ 140 0054 07EE900A 		vmov	s15, r0	@ int
+ 141 0058 F8EE677A 		vcvt.f32.u32	s15, s15
+ 142 005c 17EE900A 		vmov	r0, s15
+ 143 0060 FFF7FEFF 		bl	__aeabi_f2d
+ 144 0064 08A3     		adr	r3, .L22
+ 145 0066 D3E90023 		ldrd	r2, [r3]
+ 146 006a FFF7FEFF 		bl	__aeabi_dmul
+ 147 006e FFF7FEFF 		bl	__aeabi_d2f
+ 148 0072 0146     		mov	r1, r0	@ float
+ 149 0074 01A8     		add	r0, sp, #4
+ 150 0076 FFF7FEFF 		bl	ahrs_dcm_propagate
+ 151 007a 094B     		ldr	r3, .L22+24
+ 152 007c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 153 007e 002B     		cmp	r3, #0
+ 154 0080 E4D0     		beq	.L12
+ 155 0082 FFF7FEFF 		bl	set_body_orientation_and_rates.part.0
+ 156 0086 E1E7     		b	.L12
+ 157              	.L23:
+ 158              		.align	3
+ 159              	.L22:
+ 160 0088 8DEDB5A0 		.word	-1598689907
+ 161 008c F7C6B03E 		.word	1051772663
+ 162 0090 00008039 		.word	964689920
+ 163 0094 00000000 		.word	.LANCHOR2
+ 164 0098 00000000 		.word	.LANCHOR1
+ 165 009c 00000000 		.word	ahrs_dcm
+ 166 00a0 00000000 		.word	.LANCHOR0
+ 167              		.size	gyro_cb, .-gyro_cb
+ 168              		.section	.text.aligner_cb,"ax",%progbits
+ 169              		.align	1
+ 170              		.p2align 4,,15
+ 171              		.syntax unified
+ARM GAS  /tmp/ccIjixrO.s 			page 4
+
+
+ 172              		.thumb
+ 173              		.thumb_func
+ 174              		.fpu fpv4-sp-d16
+ 175              		.type	aligner_cb, %function
+ 176              	aligner_cb:
+ 177              		@ args = 4, pretend = 0, frame = 40
+ 178              		@ frame_needed = 0, uses_anonymous_args = 0
+ 179 0000 3149     		ldr	r1, .L38
+ 180 0002 91F83F10 		ldrb	r1, [r1, #63]	@ zero_extendqisi2
+ 181 0006 01B1     		cbz	r1, .L37
+ 182 0008 7047     		bx	lr
+ 183              	.L37:
+ 184 000a 00B5     		push	{lr}
+ 185 000c 8BB0     		sub	sp, sp, #44
+ 186 000e 93ED005A 		vldr.32	s10, [r3]	@ int
+ 187 0012 D3ED015A 		vldr.32	s11, [r3, #4]	@ int
+ 188 0016 93ED026A 		vldr.32	s12, [r3, #8]	@ int
+ 189 001a 0C9B     		ldr	r3, [sp, #48]
+ 190 001c D2ED003A 		vldr.32	s7, [r2]	@ int
+ 191 0020 92ED014A 		vldr.32	s8, [r2, #4]	@ int
+ 192 0024 D2ED024A 		vldr.32	s9, [r2, #8]	@ int
+ 193 0028 D3ED006A 		vldr.32	s13, [r3]	@ int
+ 194 002c 93ED017A 		vldr.32	s14, [r3, #4]	@ int
+ 195 0030 D3ED027A 		vldr.32	s15, [r3, #8]	@ int
+ 196 0034 9FED252A 		vldr.32	s4, .L38+4
+ 197 0038 DFED252A 		vldr.32	s5, .L38+8
+ 198 003c 9FED253A 		vldr.32	s6, .L38+12
+ 199 0040 F8EEE33A 		vcvt.f32.s32	s7, s7
+ 200 0044 B8EEC44A 		vcvt.f32.s32	s8, s8
+ 201 0048 F8EEE44A 		vcvt.f32.s32	s9, s9
+ 202 004c B8EEC55A 		vcvt.f32.s32	s10, s10
+ 203 0050 F8EEE55A 		vcvt.f32.s32	s11, s11
+ 204 0054 B8EEC66A 		vcvt.f32.s32	s12, s12
+ 205 0058 F8EEE66A 		vcvt.f32.s32	s13, s13
+ 206 005c B8EEC77A 		vcvt.f32.s32	s14, s14
+ 207 0060 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 208 0064 63EE823A 		vmul.f32	s7, s7, s4
+ 209 0068 24EE024A 		vmul.f32	s8, s8, s4
+ 210 006c 64EE824A 		vmul.f32	s9, s9, s4
+ 211 0070 25EE225A 		vmul.f32	s10, s10, s5
+ 212 0074 65EEA25A 		vmul.f32	s11, s11, s5
+ 213 0078 26EE226A 		vmul.f32	s12, s12, s5
+ 214 007c 66EE836A 		vmul.f32	s13, s13, s6
+ 215 0080 27EE037A 		vmul.f32	s14, s14, s6
+ 216 0084 67EE837A 		vmul.f32	s15, s15, s6
+ 217 0088 07AA     		add	r2, sp, #28
+ 218 008a 04A9     		add	r1, sp, #16
+ 219 008c 01A8     		add	r0, sp, #4
+ 220 008e CDED013A 		vstr.32	s7, [sp, #4]
+ 221 0092 8DED024A 		vstr.32	s8, [sp, #8]
+ 222 0096 CDED034A 		vstr.32	s9, [sp, #12]
+ 223 009a 8DED045A 		vstr.32	s10, [sp, #16]
+ 224 009e CDED055A 		vstr.32	s11, [sp, #20]
+ 225 00a2 8DED066A 		vstr.32	s12, [sp, #24]
+ 226 00a6 CDED076A 		vstr.32	s13, [sp, #28]
+ 227 00aa 8DED087A 		vstr.32	s14, [sp, #32]
+ 228 00ae CDED097A 		vstr.32	s15, [sp, #36]
+ARM GAS  /tmp/ccIjixrO.s 			page 5
+
+
+ 229 00b2 FFF7FEFF 		bl	ahrs_dcm_align
+ 230 00b6 20B1     		cbz	r0, .L24
+ 231 00b8 074B     		ldr	r3, .L38+16
+ 232 00ba 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 233 00bc 0BB1     		cbz	r3, .L24
+ 234 00be FFF7FEFF 		bl	set_body_orientation_and_rates.part.0
+ 235              	.L24:
+ 236 00c2 0BB0     		add	sp, sp, #44
+ 237              		@ sp needed
+ 238 00c4 5DF804FB 		ldr	pc, [sp], #4
+ 239              	.L39:
+ 240              		.align	2
+ 241              	.L38:
+ 242 00c8 00000000 		.word	ahrs_dcm
+ 243 00cc 00008039 		.word	964689920
+ 244 00d0 0000803A 		.word	981467136
+ 245 00d4 0000003A 		.word	973078528
+ 246 00d8 00000000 		.word	.LANCHOR0
+ 247              		.size	aligner_cb, .-aligner_cb
+ 248              		.section	.text.mag_cb,"ax",%progbits
+ 249              		.align	1
+ 250              		.p2align 4,,15
+ 251              		.syntax unified
+ 252              		.thumb
+ 253              		.thumb_func
+ 254              		.fpu fpv4-sp-d16
+ 255              		.type	mag_cb, %function
+ 256              	mag_cb:
+ 257              		@ args = 0, pretend = 0, frame = 16
+ 258              		@ frame_needed = 0, uses_anonymous_args = 0
+ 259 0000 134B     		ldr	r3, .L50
+ 260 0002 93F83F30 		ldrb	r3, [r3, #63]	@ zero_extendqisi2
+ 261 0006 03B9     		cbnz	r3, .L49
+ 262 0008 7047     		bx	lr
+ 263              	.L49:
+ 264 000a 00B5     		push	{lr}
+ 265 000c D2ED006A 		vldr.32	s13, [r2]	@ int
+ 266 0010 92ED017A 		vldr.32	s14, [r2, #4]	@ int
+ 267 0014 D2ED027A 		vldr.32	s15, [r2, #8]	@ int
+ 268 0018 9FED0E6A 		vldr.32	s12, .L50+4
+ 269 001c F8EEE66A 		vcvt.f32.s32	s13, s13
+ 270 0020 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 271 0024 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 272 0028 85B0     		sub	sp, sp, #20
+ 273 002a 66EE866A 		vmul.f32	s13, s13, s12
+ 274 002e 27EE067A 		vmul.f32	s14, s14, s12
+ 275 0032 67EE867A 		vmul.f32	s15, s15, s12
+ 276 0036 01A8     		add	r0, sp, #4
+ 277 0038 CDED016A 		vstr.32	s13, [sp, #4]
+ 278 003c 8DED027A 		vstr.32	s14, [sp, #8]
+ 279 0040 CDED037A 		vstr.32	s15, [sp, #12]
+ 280 0044 FFF7FEFF 		bl	ahrs_dcm_update_mag
+ 281 0048 05B0     		add	sp, sp, #20
+ 282              		@ sp needed
+ 283 004a 5DF804FB 		ldr	pc, [sp], #4
+ 284              	.L51:
+ 285 004e 00BF     		.align	2
+ARM GAS  /tmp/ccIjixrO.s 			page 6
+
+
+ 286              	.L50:
+ 287 0050 00000000 		.word	ahrs_dcm
+ 288 0054 0000003A 		.word	973078528
+ 289              		.size	mag_cb, .-mag_cb
+ 290              		.section	.text.accel_cb,"ax",%progbits
+ 291              		.align	1
+ 292              		.p2align 4,,15
+ 293              		.syntax unified
+ 294              		.thumb
+ 295              		.thumb_func
+ 296              		.fpu fpv4-sp-d16
+ 297              		.type	accel_cb, %function
+ 298              	accel_cb:
+ 299              		@ args = 0, pretend = 0, frame = 16
+ 300              		@ frame_needed = 0, uses_anonymous_args = 0
+ 301 0000 134B     		ldr	r3, .L62
+ 302 0002 93F83F30 		ldrb	r3, [r3, #63]	@ zero_extendqisi2
+ 303 0006 03B9     		cbnz	r3, .L61
+ 304 0008 7047     		bx	lr
+ 305              	.L61:
+ 306 000a 00B5     		push	{lr}
+ 307 000c D2ED006A 		vldr.32	s13, [r2]	@ int
+ 308 0010 92ED017A 		vldr.32	s14, [r2, #4]	@ int
+ 309 0014 D2ED027A 		vldr.32	s15, [r2, #8]	@ int
+ 310 0018 9FED0E6A 		vldr.32	s12, .L62+4
+ 311 001c F8EEE66A 		vcvt.f32.s32	s13, s13
+ 312 0020 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 313 0024 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 314 0028 85B0     		sub	sp, sp, #20
+ 315 002a 66EE866A 		vmul.f32	s13, s13, s12
+ 316 002e 27EE067A 		vmul.f32	s14, s14, s12
+ 317 0032 67EE867A 		vmul.f32	s15, s15, s12
+ 318 0036 01A8     		add	r0, sp, #4
+ 319 0038 CDED016A 		vstr.32	s13, [sp, #4]
+ 320 003c 8DED027A 		vstr.32	s14, [sp, #8]
+ 321 0040 CDED037A 		vstr.32	s15, [sp, #12]
+ 322 0044 FFF7FEFF 		bl	ahrs_dcm_update_accel
+ 323 0048 05B0     		add	sp, sp, #20
+ 324              		@ sp needed
+ 325 004a 5DF804FB 		ldr	pc, [sp], #4
+ 326              	.L63:
+ 327 004e 00BF     		.align	2
+ 328              	.L62:
+ 329 0050 00000000 		.word	ahrs_dcm
+ 330 0054 0000803A 		.word	981467136
+ 331              		.size	accel_cb, .-accel_cb
+ 332              		.section	.rodata.send_filter_status.str1.4,"aMS",%progbits,1
+ 333              		.align	2
+ 334              	.LC0:
+ 335 0000 53544154 		.ascii	"STATE_FILTER_STATUS\000"
+ 335      455F4649 
+ 335      4C544552 
+ 335      5F535441 
+ 335      54555300 
+ 336              		.section	.text.send_filter_status,"ax",%progbits
+ 337              		.align	1
+ 338              		.p2align 4,,15
+ARM GAS  /tmp/ccIjixrO.s 			page 7
+
+
+ 339              		.syntax unified
+ 340              		.thumb
+ 341              		.thumb_func
+ 342              		.fpu fpv4-sp-d16
+ 343              		.type	send_filter_status, %function
+ 344              	send_filter_status:
+ 345              		@ args = 0, pretend = 0, frame = 24
+ 346              		@ frame_needed = 0, uses_anonymous_args = 0
+ 347 0000 70B5     		push	{r4, r5, r6, lr}
+ 348 0002 4E4B     		ldr	r3, .L70
+ 349 0004 88B0     		sub	sp, sp, #32
+ 350 0006 93F83F30 		ldrb	r3, [r3, #63]	@ zero_extendqisi2
+ 351 000a 0324     		movs	r4, #3
+ 352 000c 0022     		movs	r2, #0
+ 353 000e 0546     		mov	r5, r0
+ 354 0010 0E46     		mov	r6, r1
+ 355 0012 8DF80D40 		strb	r4, [sp, #13]
+ 356 0016 ADF80E20 		strh	r2, [sp, #14]	@ movhi
+ 357 001a 13B9     		cbnz	r3, .L65
+ 358 001c 0223     		movs	r3, #2
+ 359 001e 8DF80D30 		strb	r3, [sp, #13]
+ 360              	.L65:
+ 361 0022 FFF7FEFF 		bl	get_sys_time_usec
+ 362 0026 464A     		ldr	r2, .L70+4
+ 363 0028 0695     		str	r5, [sp, #24]
+ 364 002a 1268     		ldr	r2, [r2]
+ 365 002c 0796     		str	r6, [sp, #28]
+ 366 002e 4CF25033 		movw	r3, #50000
+ 367 0032 801A     		subs	r0, r0, r2
+ 368 0034 9842     		cmp	r0, r3
+ 369 0036 88BF     		it	hi
+ 370 0038 0523     		movhi	r3, #5
+ 371 003a 4FF00302 		mov	r2, #3
+ 372 003e 4FF00004 		mov	r4, #0
+ 373 0042 88BF     		it	hi
+ 374 0044 8DF80D30 		strbhi	r3, [sp, #13]
+ 375 0048 0821     		movs	r1, #8
+ 376 004a 2B68     		ldr	r3, [r5]
+ 377 004c ADF81420 		strh	r2, [sp, #20]	@ movhi
+ 378 0050 8DF81640 		strb	r4, [sp, #22]
+ 379 0054 0494     		str	r4, [sp, #16]
+ 380 0056 05A8     		add	r0, sp, #20
+ 381 0058 9847     		blx	r3
+ 382 005a 069B     		ldr	r3, [sp, #24]
+ 383 005c 82B2     		uxth	r2, r0
+ 384 005e 5B68     		ldr	r3, [r3, #4]
+ 385 0060 0546     		mov	r5, r0
+ 386 0062 04A9     		add	r1, sp, #16
+ 387 0064 05A8     		add	r0, sp, #20
+ 388 0066 9847     		blx	r3
+ 389 0068 069B     		ldr	r3, [sp, #24]
+ 390 006a 0028     		cmp	r0, #0
+ 391 006c 60D0     		beq	.L67
+ 392 006e 2946     		mov	r1, r5
+ 393 0070 05A8     		add	r0, sp, #20
+ 394 0072 DB69     		ldr	r3, [r3, #28]
+ 395 0074 9847     		blx	r3
+ARM GAS  /tmp/ccIjixrO.s 			page 8
+
+
+ 396 0076 069B     		ldr	r3, [sp, #24]
+ 397 0078 0499     		ldr	r1, [sp, #16]
+ 398 007a 1B69     		ldr	r3, [r3, #16]
+ 399 007c 05A8     		add	r0, sp, #20
+ 400 007e 0822     		movs	r2, #8
+ 401 0080 9847     		blx	r3
+ 402 0082 0125     		movs	r5, #1
+ 403 0084 069A     		ldr	r2, [sp, #24]
+ 404 0086 0195     		str	r5, [sp, #4]
+ 405 0088 05AB     		add	r3, sp, #20
+ 406 008a 0093     		str	r3, [sp]
+ 407 008c 9668     		ldr	r6, [r2, #8]
+ 408 008e 0499     		ldr	r1, [sp, #16]
+ 409 0090 2346     		mov	r3, r4
+ 410 0092 05A8     		add	r0, sp, #20
+ 411 0094 0222     		movs	r2, #2
+ 412 0096 B047     		blx	r6
+ 413 0098 9DF81530 		ldrb	r3, [sp, #21]	@ zero_extendqisi2
+ 414 009c 069A     		ldr	r2, [sp, #24]
+ 415 009e 0499     		ldr	r1, [sp, #16]
+ 416 00a0 CDE90034 		strd	r3, r4, [sp]
+ 417 00a4 05A8     		add	r0, sp, #20
+ 418 00a6 D668     		ldr	r6, [r2, #12]
+ 419 00a8 2346     		mov	r3, r4
+ 420 00aa 0222     		movs	r2, #2
+ 421 00ac B047     		blx	r6
+ 422 00ae 9DF81630 		ldrb	r3, [sp, #22]	@ zero_extendqisi2
+ 423 00b2 069A     		ldr	r2, [sp, #24]
+ 424 00b4 0499     		ldr	r1, [sp, #16]
+ 425 00b6 1B01     		lsls	r3, r3, #4
+ 426 00b8 2B43     		orrs	r3, r3, r5
+ 427 00ba DBB2     		uxtb	r3, r3
+ 428 00bc CDE90034 		strd	r3, r4, [sp]
+ 429 00c0 05A8     		add	r0, sp, #20
+ 430 00c2 D668     		ldr	r6, [r2, #12]
+ 431 00c4 2346     		mov	r3, r4
+ 432 00c6 0222     		movs	r2, #2
+ 433 00c8 B047     		blx	r6
+ 434 00ca 1E4B     		ldr	r3, .L70+8
+ 435 00cc 069A     		ldr	r2, [sp, #24]
+ 436 00ce 0193     		str	r3, [sp, #4]
+ 437 00d0 E823     		movs	r3, #232
+ 438 00d2 0093     		str	r3, [sp]
+ 439 00d4 D668     		ldr	r6, [r2, #12]
+ 440 00d6 0499     		ldr	r1, [sp, #16]
+ 441 00d8 2346     		mov	r3, r4
+ 442 00da 05A8     		add	r0, sp, #20
+ 443 00dc 0222     		movs	r2, #2
+ 444 00de B047     		blx	r6
+ 445 00e0 194B     		ldr	r3, .L70+12
+ 446 00e2 069A     		ldr	r2, [sp, #24]
+ 447 00e4 0499     		ldr	r1, [sp, #16]
+ 448 00e6 CDE90035 		strd	r3, r5, [sp]
+ 449 00ea 05A8     		add	r0, sp, #20
+ 450 00ec 9668     		ldr	r6, [r2, #8]
+ 451 00ee 2346     		mov	r3, r4
+ 452 00f0 0222     		movs	r2, #2
+ARM GAS  /tmp/ccIjixrO.s 			page 9
+
+
+ 453 00f2 B047     		blx	r6
+ 454 00f4 0DF10D03 		add	r3, sp, #13
+ 455 00f8 CDE90035 		strd	r3, r5, [sp]
+ 456 00fc 069A     		ldr	r2, [sp, #24]
+ 457 00fe 0499     		ldr	r1, [sp, #16]
+ 458 0100 9568     		ldr	r5, [r2, #8]
+ 459 0102 2346     		mov	r3, r4
+ 460 0104 05A8     		add	r0, sp, #20
+ 461 0106 0222     		movs	r2, #2
+ 462 0108 A847     		blx	r5
+ 463 010a 0DF10E02 		add	r2, sp, #14
+ 464 010e 0221     		movs	r1, #2
+ 465 0110 CDE90021 		strd	r2, r1, [sp]
+ 466 0114 069B     		ldr	r3, [sp, #24]
+ 467 0116 0499     		ldr	r1, [sp, #16]
+ 468 0118 9D68     		ldr	r5, [r3, #8]
+ 469 011a 05A8     		add	r0, sp, #20
+ 470 011c 2346     		mov	r3, r4
+ 471 011e 0422     		movs	r2, #4
+ 472 0120 A847     		blx	r5
+ 473 0122 069B     		ldr	r3, [sp, #24]
+ 474 0124 0499     		ldr	r1, [sp, #16]
+ 475 0126 5B69     		ldr	r3, [r3, #20]
+ 476 0128 05A8     		add	r0, sp, #20
+ 477 012a 9847     		blx	r3
+ 478 012c 08B0     		add	sp, sp, #32
+ 479              		@ sp needed
+ 480 012e 70BD     		pop	{r4, r5, r6, pc}
+ 481              	.L67:
+ 482 0130 9B69     		ldr	r3, [r3, #24]
+ 483 0132 05A8     		add	r0, sp, #20
+ 484 0134 9847     		blx	r3
+ 485 0136 08B0     		add	sp, sp, #32
+ 486              		@ sp needed
+ 487 0138 70BD     		pop	{r4, r5, r6, pc}
+ 488              	.L71:
+ 489 013a 00BF     		.align	2
+ 490              	.L70:
+ 491 013c 00000000 		.word	ahrs_dcm
+ 492 0140 00000000 		.word	.LANCHOR1
+ 493 0144 00000000 		.word	.LC0
+ 494 0148 00000000 		.word	.LANCHOR3
+ 495              		.size	send_filter_status, .-send_filter_status
+ 496              		.section	.text.ahrs_dcm_register,"ax",%progbits
+ 497              		.align	1
+ 498              		.p2align 4,,15
+ 499              		.global	ahrs_dcm_register
+ 500              		.syntax unified
+ 501              		.thumb
+ 502              		.thumb_func
+ 503              		.fpu fpv4-sp-d16
+ 504              		.type	ahrs_dcm_register, %function
+ 505              	ahrs_dcm_register:
+ 506              		@ args = 0, pretend = 0, frame = 0
+ 507              		@ frame_needed = 0, uses_anonymous_args = 0
+ 508 0000 08B5     		push	{r3, lr}
+ 509 0002 264B     		ldr	r3, .L79
+ARM GAS  /tmp/ccIjixrO.s 			page 10
+
+
+ 510 0004 0122     		movs	r2, #1
+ 511 0006 1A70     		strb	r2, [r3]
+ 512 0008 FFF7FEFF 		bl	ahrs_dcm_init
+ 513 000c 2448     		ldr	r0, .L79+4
+ 514 000e FFF7FEFF 		bl	ahrs_register_impl
+ 515 0012 244B     		ldr	r3, .L79+8
+ 516 0014 244A     		ldr	r2, .L79+12
+ 517 0016 1969     		ldr	r1, [r3, #16]
+ 518 0018 9142     		cmp	r1, r2
+ 519 001a 07D0     		beq	.L73
+ 520 001c 2348     		ldr	r0, .L79+16
+ 521 001e 1A61     		str	r2, [r3, #16]
+ 522 0020 C2E90101 		strd	r0, r1, [r2, #4]
+ 523 0024 4FF0FF0C 		mov	ip, #255
+ 524 0028 82F800C0 		strb	ip, [r2]
+ 525              	.L73:
+ 526 002c 5969     		ldr	r1, [r3, #20]
+ 527 002e 204A     		ldr	r2, .L79+20
+ 528 0030 9142     		cmp	r1, r2
+ 529 0032 07D0     		beq	.L74
+ 530 0034 1F48     		ldr	r0, .L79+24
+ 531 0036 5A61     		str	r2, [r3, #20]
+ 532 0038 C2E90101 		strd	r0, r1, [r2, #4]
+ 533 003c 4FF0FF0C 		mov	ip, #255
+ 534 0040 82F800C0 		strb	ip, [r2]
+ 535              	.L74:
+ 536 0044 9969     		ldr	r1, [r3, #24]
+ 537 0046 1C4A     		ldr	r2, .L79+28
+ 538 0048 9142     		cmp	r1, r2
+ 539 004a 07D0     		beq	.L75
+ 540 004c 1B48     		ldr	r0, .L79+32
+ 541 004e 9A61     		str	r2, [r3, #24]
+ 542 0050 C2E90101 		strd	r0, r1, [r2, #4]
+ 543 0054 4FF0FF0C 		mov	ip, #255
+ 544 0058 82F800C0 		strb	ip, [r2]
+ 545              	.L75:
+ 546 005c D969     		ldr	r1, [r3, #28]
+ 547 005e 184A     		ldr	r2, .L79+36
+ 548 0060 9142     		cmp	r1, r2
+ 549 0062 07D0     		beq	.L76
+ 550 0064 1748     		ldr	r0, .L79+40
+ 551 0066 DA61     		str	r2, [r3, #28]
+ 552 0068 C2E90101 		strd	r0, r1, [r2, #4]
+ 553 006c 4FF0FF0C 		mov	ip, #255
+ 554 0070 82F800C0 		strb	ip, [r2]
+ 555              	.L76:
+ 556 0074 996A     		ldr	r1, [r3, #40]
+ 557 0076 144A     		ldr	r2, .L79+44
+ 558 0078 9142     		cmp	r1, r2
+ 559 007a 07D0     		beq	.L77
+ 560 007c 1348     		ldr	r0, .L79+48
+ 561 007e 9A62     		str	r2, [r3, #40]
+ 562 0080 C2E90101 		strd	r0, r1, [r2, #4]
+ 563 0084 4FF00C0C 		mov	ip, #12
+ 564 0088 82F800C0 		strb	ip, [r2]
+ 565              	.L77:
+ 566 008c BDE80840 		pop	{r3, lr}
+ARM GAS  /tmp/ccIjixrO.s 			page 11
+
+
+ 567 0090 0F4A     		ldr	r2, .L79+52
+ 568 0092 1048     		ldr	r0, .L79+56
+ 569 0094 E821     		movs	r1, #232
+ 570 0096 FFF7FEBF 		b	register_periodic_telemetry
+ 571              	.L80:
+ 572 009a 00BF     		.align	2
+ 573              	.L79:
+ 574 009c 00000000 		.word	.LANCHOR0
+ 575 00a0 00000000 		.word	ahrs_dcm_enable_output
+ 576 00a4 00000000 		.word	abi_queues
+ 577 00a8 00000000 		.word	.LANCHOR4
+ 578 00ac 00000000 		.word	gyro_cb
+ 579 00b0 00000000 		.word	.LANCHOR5
+ 580 00b4 00000000 		.word	accel_cb
+ 581 00b8 00000000 		.word	.LANCHOR6
+ 582 00bc 00000000 		.word	mag_cb
+ 583 00c0 00000000 		.word	.LANCHOR7
+ 584 00c4 00000000 		.word	aligner_cb
+ 585 00c8 00000000 		.word	.LANCHOR8
+ 586 00cc 00000000 		.word	gps_cb
+ 587 00d0 00000000 		.word	send_filter_status
+ 588 00d4 00000000 		.word	pprz_telemetry
+ 589              		.size	ahrs_dcm_register, .-ahrs_dcm_register
+ 590              		.section	.bss.accel_ev,"aw",%nobits
+ 591              		.align	2
+ 592              		.set	.LANCHOR5,. + 0
+ 593              		.type	accel_ev, %object
+ 594              		.size	accel_ev, 12
+ 595              	accel_ev:
+ 596 0000 00000000 		.space	12
+ 596      00000000 
+ 596      00000000 
+ 597              		.section	.bss.ahrs_dcm_last_stamp,"aw",%nobits
+ 598              		.align	2
+ 599              		.set	.LANCHOR1,. + 0
+ 600              		.type	ahrs_dcm_last_stamp, %object
+ 601              		.size	ahrs_dcm_last_stamp, 4
+ 602              	ahrs_dcm_last_stamp:
+ 603 0000 00000000 		.space	4
+ 604              		.section	.bss.ahrs_dcm_output_enabled,"aw",%nobits
+ 605              		.set	.LANCHOR0,. + 0
+ 606              		.type	ahrs_dcm_output_enabled, %object
+ 607              		.size	ahrs_dcm_output_enabled, 1
+ 608              	ahrs_dcm_output_enabled:
+ 609 0000 00       		.space	1
+ 610              		.section	.bss.aligner_ev,"aw",%nobits
+ 611              		.align	2
+ 612              		.set	.LANCHOR7,. + 0
+ 613              		.type	aligner_ev, %object
+ 614              		.size	aligner_ev, 12
+ 615              	aligner_ev:
+ 616 0000 00000000 		.space	12
+ 616      00000000 
+ 616      00000000 
+ 617              		.section	.bss.gps_ev,"aw",%nobits
+ 618              		.align	2
+ 619              		.set	.LANCHOR8,. + 0
+ARM GAS  /tmp/ccIjixrO.s 			page 12
+
+
+ 620              		.type	gps_ev, %object
+ 621              		.size	gps_ev, 12
+ 622              	gps_ev:
+ 623 0000 00000000 		.space	12
+ 623      00000000 
+ 623      00000000 
+ 624              		.section	.bss.gyro_ev,"aw",%nobits
+ 625              		.align	2
+ 626              		.set	.LANCHOR4,. + 0
+ 627              		.type	gyro_ev, %object
+ 628              		.size	gyro_ev, 12
+ 629              	gyro_ev:
+ 630 0000 00000000 		.space	12
+ 630      00000000 
+ 630      00000000 
+ 631              		.section	.bss.last_stamp.0,"aw",%nobits
+ 632              		.align	2
+ 633              		.set	.LANCHOR2,. + 0
+ 634              		.type	last_stamp.0, %object
+ 635              		.size	last_stamp.0, 4
+ 636              	last_stamp.0:
+ 637 0000 00000000 		.space	4
+ 638              		.section	.bss.mag_ev,"aw",%nobits
+ 639              		.align	2
+ 640              		.set	.LANCHOR6,. + 0
+ 641              		.type	mag_ev, %object
+ 642              		.size	mag_ev, 12
+ 643              	mag_ev:
+ 644 0000 00000000 		.space	12
+ 644      00000000 
+ 644      00000000 
+ 645              		.section	.data.ahrs_dcm_id,"aw"
+ 646              		.set	.LANCHOR3,. + 0
+ 647              		.type	ahrs_dcm_id, %object
+ 648              		.size	ahrs_dcm_id, 1
+ 649              	ahrs_dcm_id:
+ 650 0000 06       		.byte	6
+ 651              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccIjixrO.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ahrs_float_dcm_wrapper.c
+     /tmp/ccIjixrO.s:15     .text.ahrs_dcm_enable_output:0000000000000000 $t
+     /tmp/ccIjixrO.s:23     .text.ahrs_dcm_enable_output:0000000000000000 ahrs_dcm_enable_output
+     /tmp/ccIjixrO.s:33     .text.ahrs_dcm_enable_output:0000000000000008 $d
+     /tmp/ccIjixrO.s:36     .text.gps_cb:0000000000000000 $t
+     /tmp/ccIjixrO.s:43     .text.gps_cb:0000000000000000 gps_cb
+     /tmp/ccIjixrO.s:51     .text.set_body_orientation_and_rates.part.0:0000000000000000 $t
+     /tmp/ccIjixrO.s:58     .text.set_body_orientation_and_rates.part.0:0000000000000000 set_body_orientation_and_rates.part.0
+     /tmp/ccIjixrO.s:92     .text.set_body_orientation_and_rates.part.0:0000000000000054 $d
+     /tmp/ccIjixrO.s:99     .text.gyro_cb:0000000000000000 $t
+     /tmp/ccIjixrO.s:106    .text.gyro_cb:0000000000000000 gyro_cb
+     /tmp/ccIjixrO.s:160    .text.gyro_cb:0000000000000088 $d
+     /tmp/ccIjixrO.s:169    .text.aligner_cb:0000000000000000 $t
+     /tmp/ccIjixrO.s:176    .text.aligner_cb:0000000000000000 aligner_cb
+     /tmp/ccIjixrO.s:242    .text.aligner_cb:00000000000000c8 $d
+     /tmp/ccIjixrO.s:249    .text.mag_cb:0000000000000000 $t
+     /tmp/ccIjixrO.s:256    .text.mag_cb:0000000000000000 mag_cb
+     /tmp/ccIjixrO.s:287    .text.mag_cb:0000000000000050 $d
+     /tmp/ccIjixrO.s:291    .text.accel_cb:0000000000000000 $t
+     /tmp/ccIjixrO.s:298    .text.accel_cb:0000000000000000 accel_cb
+     /tmp/ccIjixrO.s:329    .text.accel_cb:0000000000000050 $d
+     /tmp/ccIjixrO.s:333    .rodata.send_filter_status.str1.4:0000000000000000 $d
+     /tmp/ccIjixrO.s:337    .text.send_filter_status:0000000000000000 $t
+     /tmp/ccIjixrO.s:344    .text.send_filter_status:0000000000000000 send_filter_status
+     /tmp/ccIjixrO.s:491    .text.send_filter_status:000000000000013c $d
+     /tmp/ccIjixrO.s:497    .text.ahrs_dcm_register:0000000000000000 $t
+     /tmp/ccIjixrO.s:505    .text.ahrs_dcm_register:0000000000000000 ahrs_dcm_register
+     /tmp/ccIjixrO.s:574    .text.ahrs_dcm_register:000000000000009c $d
+     /tmp/ccIjixrO.s:591    .bss.accel_ev:0000000000000000 $d
+     /tmp/ccIjixrO.s:595    .bss.accel_ev:0000000000000000 accel_ev
+     /tmp/ccIjixrO.s:598    .bss.ahrs_dcm_last_stamp:0000000000000000 $d
+     /tmp/ccIjixrO.s:602    .bss.ahrs_dcm_last_stamp:0000000000000000 ahrs_dcm_last_stamp
+     /tmp/ccIjixrO.s:608    .bss.ahrs_dcm_output_enabled:0000000000000000 ahrs_dcm_output_enabled
+     /tmp/ccIjixrO.s:609    .bss.ahrs_dcm_output_enabled:0000000000000000 $d
+     /tmp/ccIjixrO.s:611    .bss.aligner_ev:0000000000000000 $d
+     /tmp/ccIjixrO.s:615    .bss.aligner_ev:0000000000000000 aligner_ev
+     /tmp/ccIjixrO.s:618    .bss.gps_ev:0000000000000000 $d
+     /tmp/ccIjixrO.s:622    .bss.gps_ev:0000000000000000 gps_ev
+     /tmp/ccIjixrO.s:625    .bss.gyro_ev:0000000000000000 $d
+     /tmp/ccIjixrO.s:629    .bss.gyro_ev:0000000000000000 gyro_ev
+     /tmp/ccIjixrO.s:632    .bss.last_stamp.0:0000000000000000 $d
+     /tmp/ccIjixrO.s:636    .bss.last_stamp.0:0000000000000000 last_stamp.0
+     /tmp/ccIjixrO.s:639    .bss.mag_ev:0000000000000000 $d
+     /tmp/ccIjixrO.s:643    .bss.mag_ev:0000000000000000 mag_ev
+     /tmp/ccIjixrO.s:649    .data.ahrs_dcm_id:0000000000000000 ahrs_dcm_id
+
+UNDEFINED SYMBOLS
+ahrs_dcm_update_gps
+float_rmat_of_eulers_321
+ahrs_dcm
+state
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_d2f
+ahrs_dcm_propagate
+ahrs_dcm_align
+ARM GAS  /tmp/ccIjixrO.s 			page 14
+
+
+ahrs_dcm_update_mag
+ahrs_dcm_update_accel
+get_sys_time_usec
+ahrs_dcm_init
+ahrs_register_impl
+register_periodic_telemetry
+abi_queues
+pprz_telemetry

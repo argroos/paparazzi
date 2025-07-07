@@ -1,0 +1,1194 @@
+ARM GAS  /tmp/ccRt6WWT.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"humid_sht.c"
+  13              		.text
+  14              		.section	.text.s_write_byte,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	s_write_byte
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	s_write_byte, %function
+  24              	s_write_byte:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  28 0004 DFF85480 		ldr	r8, .L10+4
+  29 0008 134D     		ldr	r5, .L10
+  30 000a 8146     		mov	r9, r0
+  31 000c 0827     		movs	r7, #8
+  32 000e 8026     		movs	r6, #128
+  33 0010 0BE0     		b	.L4
+  34              	.L9:
+  35 0012 FFF7FEFF 		bl	gpio_setup_input
+  36              	.L3:
+  37 0016 2024     		movs	r4, #32
+  38 0018 013F     		subs	r7, r7, #1
+  39 001a 2C83     		strh	r4, [r5, #24]	@ movhi
+  40 001c 4FEA5606 		lsr	r6, r6, #1
+  41 0020 2C83     		strh	r4, [r5, #24]	@ movhi
+  42 0022 2C83     		strh	r4, [r5, #24]	@ movhi
+  43 0024 2C83     		strh	r4, [r5, #24]	@ movhi
+  44 0026 6C83     		strh	r4, [r5, #26]	@ movhi
+  45 0028 09D0     		beq	.L8
+  46              	.L4:
+  47 002a 19EA060F 		tst	r9, r6
+  48 002e 4FF00101 		mov	r1, #1
+  49 0032 4046     		mov	r0, r8
+  50 0034 EDD1     		bne	.L9
+  51 0036 0121     		movs	r1, #1
+  52 0038 FFF7FEFF 		bl	gpio_setup_output
+  53 003c EBE7     		b	.L3
+  54              	.L8:
+  55 003e 074E     		ldr	r6, .L10+4
+  56 0040 0121     		movs	r1, #1
+  57 0042 3046     		mov	r0, r6
+ARM GAS  /tmp/ccRt6WWT.s 			page 2
+
+
+  58 0044 FFF7FEFF 		bl	gpio_setup_input
+  59 0048 2C83     		strh	r4, [r5, #24]	@ movhi
+  60 004a 3069     		ldr	r0, [r6, #16]
+  61 004c 6C83     		strh	r4, [r5, #26]	@ movhi
+  62 004e C0F34000 		ubfx	r0, r0, #1, #1
+  63 0052 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+  64              	.L11:
+  65 0056 00BF     		.align	2
+  66              	.L10:
+  67 0058 00080240 		.word	1073874944
+  68 005c 00040240 		.word	1073873920
+  69              		.size	s_write_byte, .-s_write_byte
+  70              		.section	.text.s_read_byte,"ax",%progbits
+  71              		.align	1
+  72              		.p2align 4,,15
+  73              		.global	s_read_byte
+  74              		.syntax unified
+  75              		.thumb
+  76              		.thumb_func
+  77              		.fpu fpv4-sp-d16
+  78              		.type	s_read_byte, %function
+  79              	s_read_byte:
+  80              		@ args = 0, pretend = 0, frame = 0
+  81              		@ frame_needed = 0, uses_anonymous_args = 0
+  82 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  83 0004 0121     		movs	r1, #1
+  84 0006 8046     		mov	r8, r0
+  85 0008 144C     		ldr	r4, .L25
+  86 000a 1548     		ldr	r0, .L25+4
+  87 000c 144F     		ldr	r7, .L25+4
+  88 000e FFF7FEFF 		bl	gpio_setup_input
+  89 0012 0026     		movs	r6, #0
+  90 0014 0823     		movs	r3, #8
+  91 0016 8022     		movs	r2, #128
+  92 0018 4FF02001 		mov	r1, #32	@ movhi
+  93              	.L14:
+  94 001c 2183     		strh	r1, [r4, #24]	@ movhi
+  95 001e 3D69     		ldr	r5, [r7, #16]
+  96 0020 6183     		strh	r1, [r4, #26]	@ movhi
+  97 0022 A807     		lsls	r0, r5, #30
+  98 0024 48BF     		it	mi
+  99 0026 1643     		orrmi	r6, r6, r2
+ 100 0028 013B     		subs	r3, r3, #1
+ 101 002a 4FEA5202 		lsr	r2, r2, #1
+ 102 002e F5D1     		bne	.L14
+ 103 0030 B8F1000F 		cmp	r8, #0
+ 104 0034 0DD1     		bne	.L24
+ 105              	.L15:
+ 106 0036 094B     		ldr	r3, .L25
+ 107 0038 0948     		ldr	r0, .L25+4
+ 108 003a 2022     		movs	r2, #32
+ 109 003c 1A83     		strh	r2, [r3, #24]	@ movhi
+ 110 003e 0121     		movs	r1, #1
+ 111 0040 1A83     		strh	r2, [r3, #24]	@ movhi
+ 112 0042 1A83     		strh	r2, [r3, #24]	@ movhi
+ 113 0044 1A83     		strh	r2, [r3, #24]	@ movhi
+ 114 0046 5A83     		strh	r2, [r3, #26]	@ movhi
+ARM GAS  /tmp/ccRt6WWT.s 			page 3
+
+
+ 115 0048 FFF7FEFF 		bl	gpio_setup_input
+ 116 004c 3046     		mov	r0, r6
+ 117 004e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 118              	.L24:
+ 119 0052 0348     		ldr	r0, .L25+4
+ 120 0054 0121     		movs	r1, #1
+ 121 0056 FFF7FEFF 		bl	gpio_setup_output
+ 122 005a ECE7     		b	.L15
+ 123              	.L26:
+ 124              		.align	2
+ 125              	.L25:
+ 126 005c 00080240 		.word	1073874944
+ 127 0060 00040240 		.word	1073873920
+ 128              		.size	s_read_byte, .-s_read_byte
+ 129              		.section	.text.s_transstart,"ax",%progbits
+ 130              		.align	1
+ 131              		.p2align 4,,15
+ 132              		.global	s_transstart
+ 133              		.syntax unified
+ 134              		.thumb
+ 135              		.thumb_func
+ 136              		.fpu fpv4-sp-d16
+ 137              		.type	s_transstart, %function
+ 138              	s_transstart:
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141 0000 38B5     		push	{r3, r4, r5, lr}
+ 142 0002 114C     		ldr	r4, .L29
+ 143 0004 1148     		ldr	r0, .L29+4
+ 144 0006 2025     		movs	r5, #32
+ 145 0008 0121     		movs	r1, #1
+ 146 000a FFF7FEFF 		bl	gpio_setup_input
+ 147 000e 6583     		strh	r5, [r4, #26]	@ movhi
+ 148 0010 0E48     		ldr	r0, .L29+4
+ 149 0012 6583     		strh	r5, [r4, #26]	@ movhi
+ 150 0014 0121     		movs	r1, #1
+ 151 0016 2583     		strh	r5, [r4, #24]	@ movhi
+ 152 0018 2583     		strh	r5, [r4, #24]	@ movhi
+ 153 001a FFF7FEFF 		bl	gpio_setup_output
+ 154 001e 0B48     		ldr	r0, .L29+4
+ 155 0020 0121     		movs	r1, #1
+ 156 0022 FFF7FEFF 		bl	gpio_setup_output
+ 157 0026 6583     		strh	r5, [r4, #26]	@ movhi
+ 158 0028 0848     		ldr	r0, .L29+4
+ 159 002a 6583     		strh	r5, [r4, #26]	@ movhi
+ 160 002c 0121     		movs	r1, #1
+ 161 002e 6583     		strh	r5, [r4, #26]	@ movhi
+ 162 0030 6583     		strh	r5, [r4, #26]	@ movhi
+ 163 0032 2583     		strh	r5, [r4, #24]	@ movhi
+ 164 0034 2583     		strh	r5, [r4, #24]	@ movhi
+ 165 0036 FFF7FEFF 		bl	gpio_setup_input
+ 166 003a 0448     		ldr	r0, .L29+4
+ 167 003c 0121     		movs	r1, #1
+ 168 003e FFF7FEFF 		bl	gpio_setup_input
+ 169 0042 6583     		strh	r5, [r4, #26]	@ movhi
+ 170 0044 38BD     		pop	{r3, r4, r5, pc}
+ 171              	.L30:
+ARM GAS  /tmp/ccRt6WWT.s 			page 4
+
+
+ 172 0046 00BF     		.align	2
+ 173              	.L29:
+ 174 0048 00080240 		.word	1073874944
+ 175 004c 00040240 		.word	1073873920
+ 176              		.size	s_transstart, .-s_transstart
+ 177              		.section	.text.s_connectionreset,"ax",%progbits
+ 178              		.align	1
+ 179              		.p2align 4,,15
+ 180              		.global	s_connectionreset
+ 181              		.syntax unified
+ 182              		.thumb
+ 183              		.thumb_func
+ 184              		.fpu fpv4-sp-d16
+ 185              		.type	s_connectionreset, %function
+ 186              	s_connectionreset:
+ 187              		@ args = 0, pretend = 0, frame = 0
+ 188              		@ frame_needed = 0, uses_anonymous_args = 0
+ 189 0000 08B5     		push	{r3, lr}
+ 190 0002 0121     		movs	r1, #1
+ 191 0004 0848     		ldr	r0, .L35
+ 192 0006 FFF7FEFF 		bl	gpio_setup_input
+ 193 000a 0849     		ldr	r1, .L35+4
+ 194 000c 2022     		movs	r2, #32
+ 195 000e 4A83     		strh	r2, [r1, #26]	@ movhi
+ 196 0010 0923     		movs	r3, #9
+ 197              	.L32:
+ 198 0012 013B     		subs	r3, r3, #1
+ 199 0014 13F0FF03 		ands	r3, r3, #255
+ 200 0018 0A83     		strh	r2, [r1, #24]	@ movhi
+ 201 001a 4A83     		strh	r2, [r1, #26]	@ movhi
+ 202 001c F9D1     		bne	.L32
+ 203 001e BDE80840 		pop	{r3, lr}
+ 204 0022 FFF7FEBF 		b	s_transstart
+ 205              	.L36:
+ 206 0026 00BF     		.align	2
+ 207              	.L35:
+ 208 0028 00040240 		.word	1073873920
+ 209 002c 00080240 		.word	1073874944
+ 210              		.size	s_connectionreset, .-s_connectionreset
+ 211              		.section	.text.s_read_statusreg,"ax",%progbits
+ 212              		.align	1
+ 213              		.p2align 4,,15
+ 214              		.global	s_read_statusreg
+ 215              		.syntax unified
+ 216              		.thumb
+ 217              		.thumb_func
+ 218              		.fpu fpv4-sp-d16
+ 219              		.type	s_read_statusreg, %function
+ 220              	s_read_statusreg:
+ 221              		@ args = 0, pretend = 0, frame = 0
+ 222              		@ frame_needed = 0, uses_anonymous_args = 0
+ 223 0000 70B5     		push	{r4, r5, r6, lr}
+ 224 0002 0D46     		mov	r5, r1
+ 225 0004 0646     		mov	r6, r0
+ 226 0006 FFF7FEFF 		bl	s_transstart
+ 227 000a 0720     		movs	r0, #7
+ 228 000c FFF7FEFF 		bl	s_write_byte
+ARM GAS  /tmp/ccRt6WWT.s 			page 5
+
+
+ 229 0010 0446     		mov	r4, r0
+ 230 0012 0120     		movs	r0, #1
+ 231 0014 FFF7FEFF 		bl	s_read_byte
+ 232 0018 3070     		strb	r0, [r6]
+ 233 001a 0020     		movs	r0, #0
+ 234 001c FFF7FEFF 		bl	s_read_byte
+ 235 0020 2870     		strb	r0, [r5]
+ 236 0022 2046     		mov	r0, r4
+ 237 0024 70BD     		pop	{r4, r5, r6, pc}
+ 238              		.size	s_read_statusreg, .-s_read_statusreg
+ 239 0026 00BF     		.section	.text.s_write_statusreg,"ax",%progbits
+ 240              		.align	1
+ 241              		.p2align 4,,15
+ 242              		.global	s_write_statusreg
+ 243              		.syntax unified
+ 244              		.thumb
+ 245              		.thumb_func
+ 246              		.fpu fpv4-sp-d16
+ 247              		.type	s_write_statusreg, %function
+ 248              	s_write_statusreg:
+ 249              		@ args = 0, pretend = 0, frame = 0
+ 250              		@ frame_needed = 0, uses_anonymous_args = 0
+ 251 0000 38B5     		push	{r3, r4, r5, lr}
+ 252 0002 0546     		mov	r5, r0
+ 253 0004 FFF7FEFF 		bl	s_transstart
+ 254 0008 0620     		movs	r0, #6
+ 255 000a FFF7FEFF 		bl	s_write_byte
+ 256 000e 0446     		mov	r4, r0
+ 257 0010 2878     		ldrb	r0, [r5]	@ zero_extendqisi2
+ 258 0012 FFF7FEFF 		bl	s_write_byte
+ 259 0016 2044     		add	r0, r0, r4
+ 260 0018 C0B2     		uxtb	r0, r0
+ 261 001a 38BD     		pop	{r3, r4, r5, pc}
+ 262              		.size	s_write_statusreg, .-s_write_statusreg
+ 263              		.section	.text.s_measure,"ax",%progbits
+ 264              		.align	1
+ 265              		.p2align 4,,15
+ 266              		.global	s_measure
+ 267              		.syntax unified
+ 268              		.thumb
+ 269              		.thumb_func
+ 270              		.fpu fpv4-sp-d16
+ 271              		.type	s_measure, %function
+ 272              	s_measure:
+ 273              		@ args = 0, pretend = 0, frame = 0
+ 274              		@ frame_needed = 0, uses_anonymous_args = 0
+ 275 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 276 0002 1446     		mov	r4, r2
+ 277 0004 0546     		mov	r5, r0
+ 278 0006 0F46     		mov	r7, r1
+ 279 0008 FFF7FEFF 		bl	s_transstart
+ 280 000c 44B3     		cbz	r4, .L42
+ 281 000e 012C     		cmp	r4, #1
+ 282 0010 24D1     		bne	.L56
+ 283 0012 0520     		movs	r0, #5
+ 284 0014 FFF7FEFF 		bl	s_write_byte
+ 285 0018 0646     		mov	r6, r0
+ARM GAS  /tmp/ccRt6WWT.s 			page 6
+
+
+ 286              	.L44:
+ 287 001a 144B     		ldr	r3, .L58
+ 288 001c 144C     		ldr	r4, .L58+4
+ 289 001e 01E0     		b	.L46
+ 290              	.L57:
+ 291 0020 013B     		subs	r3, r3, #1
+ 292 0022 02D0     		beq	.L45
+ 293              	.L46:
+ 294 0024 2269     		ldr	r2, [r4, #16]
+ 295 0026 9207     		lsls	r2, r2, #30
+ 296 0028 FAD4     		bmi	.L57
+ 297              	.L45:
+ 298 002a 114B     		ldr	r3, .L58+4
+ 299 002c 1B69     		ldr	r3, [r3, #16]
+ 300 002e 9B07     		lsls	r3, r3, #30
+ 301 0030 48BF     		it	mi
+ 302 0032 0136     		addmi	r6, r6, #1
+ 303 0034 4FF00100 		mov	r0, #1
+ 304 0038 48BF     		it	mi
+ 305 003a F6B2     		uxtbmi	r6, r6
+ 306 003c FFF7FEFF 		bl	s_read_byte
+ 307 0040 0002     		lsls	r0, r0, #8
+ 308 0042 2880     		strh	r0, [r5]	@ movhi
+ 309 0044 0120     		movs	r0, #1
+ 310 0046 FFF7FEFF 		bl	s_read_byte
+ 311 004a 2B88     		ldrh	r3, [r5]
+ 312 004c 1843     		orrs	r0, r0, r3
+ 313 004e 2880     		strh	r0, [r5]	@ movhi
+ 314 0050 0020     		movs	r0, #0
+ 315 0052 FFF7FEFF 		bl	s_read_byte
+ 316 0056 3870     		strb	r0, [r7]
+ 317 0058 3046     		mov	r0, r6
+ 318 005a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 319              	.L56:
+ 320 005c 0026     		movs	r6, #0
+ 321 005e DCE7     		b	.L44
+ 322              	.L42:
+ 323 0060 0320     		movs	r0, #3
+ 324 0062 FFF7FEFF 		bl	s_write_byte
+ 325 0066 0646     		mov	r6, r0
+ 326 0068 D7E7     		b	.L44
+ 327              	.L59:
+ 328 006a 00BF     		.align	2
+ 329              	.L58:
+ 330 006c 3FB56500 		.word	6665535
+ 331 0070 00040240 		.word	1073873920
+ 332              		.size	s_measure, .-s_measure
+ 333              		.section	.text.s_start_measure,"ax",%progbits
+ 334              		.align	1
+ 335              		.p2align 4,,15
+ 336              		.global	s_start_measure
+ 337              		.syntax unified
+ 338              		.thumb
+ 339              		.thumb_func
+ 340              		.fpu fpv4-sp-d16
+ 341              		.type	s_start_measure, %function
+ 342              	s_start_measure:
+ARM GAS  /tmp/ccRt6WWT.s 			page 7
+
+
+ 343              		@ args = 0, pretend = 0, frame = 0
+ 344              		@ frame_needed = 0, uses_anonymous_args = 0
+ 345 0000 10B5     		push	{r4, lr}
+ 346 0002 0446     		mov	r4, r0
+ 347 0004 FFF7FEFF 		bl	s_transstart
+ 348 0008 1CB1     		cbz	r4, .L61
+ 349 000a 012C     		cmp	r4, #1
+ 350 000c 06D0     		beq	.L62
+ 351 000e 0020     		movs	r0, #0
+ 352 0010 10BD     		pop	{r4, pc}
+ 353              	.L61:
+ 354 0012 BDE81040 		pop	{r4, lr}
+ 355 0016 0320     		movs	r0, #3
+ 356 0018 FFF7FEBF 		b	s_write_byte
+ 357              	.L62:
+ 358 001c BDE81040 		pop	{r4, lr}
+ 359 0020 0520     		movs	r0, #5
+ 360 0022 FFF7FEBF 		b	s_write_byte
+ 361              		.size	s_start_measure, .-s_start_measure
+ 362 0026 00BF     		.section	.text.s_read_measure,"ax",%progbits
+ 363              		.align	1
+ 364              		.p2align 4,,15
+ 365              		.global	s_read_measure
+ 366              		.syntax unified
+ 367              		.thumb
+ 368              		.thumb_func
+ 369              		.fpu fpv4-sp-d16
+ 370              		.type	s_read_measure, %function
+ 371              	s_read_measure:
+ 372              		@ args = 0, pretend = 0, frame = 0
+ 373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 374 0000 0B4B     		ldr	r3, .L68
+ 375 0002 70B5     		push	{r4, r5, r6, lr}
+ 376 0004 0446     		mov	r4, r0
+ 377 0006 0120     		movs	r0, #1
+ 378 0008 1E69     		ldr	r6, [r3, #16]
+ 379 000a 0D46     		mov	r5, r1
+ 380 000c FFF7FEFF 		bl	s_read_byte
+ 381 0010 0002     		lsls	r0, r0, #8
+ 382 0012 2080     		strh	r0, [r4]	@ movhi
+ 383 0014 0120     		movs	r0, #1
+ 384 0016 FFF7FEFF 		bl	s_read_byte
+ 385 001a 2388     		ldrh	r3, [r4]
+ 386 001c 1843     		orrs	r0, r0, r3
+ 387 001e 2080     		strh	r0, [r4]	@ movhi
+ 388 0020 0020     		movs	r0, #0
+ 389 0022 FFF7FEFF 		bl	s_read_byte
+ 390 0026 2870     		strb	r0, [r5]
+ 391 0028 C6F34000 		ubfx	r0, r6, #1, #1
+ 392 002c 70BD     		pop	{r4, r5, r6, pc}
+ 393              	.L69:
+ 394 002e 00BF     		.align	2
+ 395              	.L68:
+ 396 0030 00040240 		.word	1073873920
+ 397              		.size	s_read_measure, .-s_read_measure
+ 398              		.global	__aeabi_f2d
+ 399              		.global	__aeabi_dmul
+ARM GAS  /tmp/ccRt6WWT.s 			page 8
+
+
+ 400              		.global	__aeabi_dsub
+ 401              		.global	__aeabi_d2f
+ 402              		.global	__aeabi_dcmplt
+ 403              		.section	.text.calc_sht,"ax",%progbits
+ 404              		.align	1
+ 405              		.p2align 4,,15
+ 406              		.global	calc_sht
+ 407              		.syntax unified
+ 408              		.thumb
+ 409              		.thumb_func
+ 410              		.fpu fpv4-sp-d16
+ 411              		.type	calc_sht, %function
+ 412              	calc_sht:
+ 413              		@ args = 0, pretend = 0, frame = 0
+ 414              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415 0000 38B5     		push	{r3, r4, r5, lr}
+ 416 0002 07EE901A 		vmov	s15, r1	@ int
+ 417 0006 F8EE677A 		vcvt.f32.u32	s15, s15
+ 418 000a 2DED048B 		vpush.64	{d8, d9}
+ 419 000e 08EE900A 		vmov	s17, r0	@ int
+ 420 0012 17EE900A 		vmov	r0, s15
+ 421 0016 1446     		mov	r4, r2
+ 422 0018 1D46     		mov	r5, r3
+ 423 001a FFF7FEFF 		bl	__aeabi_f2d
+ 424 001e 30A3     		adr	r3, .L76+32
+ 425 0020 D3E90023 		ldrd	r2, [r3]
+ 426 0024 FFF7FEFF 		bl	__aeabi_dmul
+ 427 0028 2FA3     		adr	r3, .L76+40
+ 428 002a D3E90023 		ldrd	r2, [r3]
+ 429 002e FFF7FEFF 		bl	__aeabi_dsub
+ 430 0032 FFF7FEFF 		bl	__aeabi_d2f
+ 431 0036 F8EE688A 		vcvt.f32.u32	s17, s17
+ 432 003a DFED237A 		vldr.32	s15, .L76+8
+ 433 003e 9FED238A 		vldr.32	s16, .L76+12
+ 434 0042 9FED237A 		vldr.32	s14, .L76+16
+ 435 0046 68EEA77A 		vmul.f32	s15, s17, s15
+ 436 004a 28EE888A 		vmul.f32	s16, s17, s16
+ 437 004e 09EE100A 		vmov	s18, r0
+ 438 0052 A7EEA88A 		vfma.f32	s16, s15, s17
+ 439 0056 DFED1F7A 		vldr.32	s15, .L76+20
+ 440 005a E8EE877A 		vfma.f32	s15, s17, s14
+ 441 005e F1EE006A 		vmov.f32	s13, #4.0e+0
+ 442 0062 B3EE097A 		vmov.f32	s14, #2.5e+1
+ 443 0066 38EE668A 		vsub.f32	s16, s16, s13
+ 444 006a 39EE477A 		vsub.f32	s14, s18, s14
+ 445 006e DFED1A6A 		vldr.32	s13, .L76+24
+ 446 0072 A7EE278A 		vfma.f32	s16, s14, s15
+ 447 0076 B4EEE68A 		vcmpe.f32	s16, s13
+ 448 007a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 449 007e 15DC     		bgt	.L73
+ 450 0080 18EE100A 		vmov	r0, s16
+ 451 0084 FFF7FEFF 		bl	__aeabi_f2d
+ 452 0088 0DA3     		adr	r3, .L76
+ 453 008a D3E90023 		ldrd	r2, [r3]
+ 454 008e FFF7FEFF 		bl	__aeabi_dcmplt
+ 455 0092 DFED127A 		vldr.32	s15, .L76+28
+ 456 0096 85ED009A 		vstr.32	s18, [r5]
+ARM GAS  /tmp/ccRt6WWT.s 			page 9
+
+
+ 457 009a 0028     		cmp	r0, #0
+ 458 009c 18BF     		it	ne
+ 459 009e B0EE678A 		vmovne.f32	s16, s15
+ 460 00a2 84ED008A 		vstr.32	s16, [r4]
+ 461 00a6 BDEC048B 		vldm	sp!, {d8-d9}
+ 462 00aa 38BD     		pop	{r3, r4, r5, pc}
+ 463              	.L73:
+ 464 00ac B0EE668A 		vmov.f32	s16, s13
+ 465 00b0 85ED009A 		vstr.32	s18, [r5]
+ 466 00b4 84ED008A 		vstr.32	s16, [r4]
+ 467 00b8 BDEC048B 		vldm	sp!, {d8-d9}
+ 468 00bc 38BD     		pop	{r3, r4, r5, pc}
+ 469              	.L77:
+ 470 00be 00BF     		.align	3
+ 471              	.L76:
+ 472 00c0 9A999999 		.word	-1717986918
+ 473 00c4 9999B93F 		.word	1069128089
+ 474 00c8 A2E73BB6 		.word	-1237588062
+ 475 00cc 54E3253D 		.word	1025893204
+ 476 00d0 ACC5A738 		.word	950519212
+ 477 00d4 0AD7233C 		.word	1008981770
+ 478 00d8 0000C842 		.word	1120403456
+ 479 00dc CDCCCC3D 		.word	1036831949
+ 480 00e0 7B14AE47 		.word	1202590843
+ 481 00e4 E17A843F 		.word	1065646817
+ 482 00e8 14AE47E1 		.word	-515396076
+ 483 00ec 7AD44340 		.word	1078187130
+ 484              		.size	calc_sht, .-calc_sht
+ 485              		.section	.text.humid_sht_reset,"ax",%progbits
+ 486              		.align	1
+ 487              		.p2align 4,,15
+ 488              		.global	humid_sht_reset
+ 489              		.syntax unified
+ 490              		.thumb
+ 491              		.thumb_func
+ 492              		.fpu fpv4-sp-d16
+ 493              		.type	humid_sht_reset, %function
+ 494              	humid_sht_reset:
+ 495              		@ args = 0, pretend = 0, frame = 0
+ 496              		@ frame_needed = 0, uses_anonymous_args = 0
+ 497 0000 08B5     		push	{r3, lr}
+ 498 0002 0121     		movs	r1, #1
+ 499 0004 0948     		ldr	r0, .L82
+ 500 0006 FFF7FEFF 		bl	gpio_setup_input
+ 501 000a 0949     		ldr	r1, .L82+4
+ 502 000c 2022     		movs	r2, #32
+ 503 000e 4A83     		strh	r2, [r1, #26]	@ movhi
+ 504 0010 0923     		movs	r3, #9
+ 505              	.L79:
+ 506 0012 013B     		subs	r3, r3, #1
+ 507 0014 13F0FF03 		ands	r3, r3, #255
+ 508 0018 0A83     		strh	r2, [r1, #24]	@ movhi
+ 509 001a 4A83     		strh	r2, [r1, #26]	@ movhi
+ 510 001c F9D1     		bne	.L79
+ 511 001e FFF7FEFF 		bl	s_transstart
+ 512 0022 BDE80840 		pop	{r3, lr}
+ 513 0026 1E20     		movs	r0, #30
+ARM GAS  /tmp/ccRt6WWT.s 			page 10
+
+
+ 514 0028 FFF7FEBF 		b	s_write_byte
+ 515              	.L83:
+ 516              		.align	2
+ 517              	.L82:
+ 518 002c 00040240 		.word	1073873920
+ 519 0030 00080240 		.word	1073874944
+ 520              		.size	humid_sht_reset, .-humid_sht_reset
+ 521              		.section	.text.humid_sht_init,"ax",%progbits
+ 522              		.align	1
+ 523              		.p2align 4,,15
+ 524              		.global	humid_sht_init
+ 525              		.syntax unified
+ 526              		.thumb
+ 527              		.thumb_func
+ 528              		.fpu fpv4-sp-d16
+ 529              		.type	humid_sht_init, %function
+ 530              	humid_sht_init:
+ 531              		@ args = 0, pretend = 0, frame = 0
+ 532              		@ frame_needed = 0, uses_anonymous_args = 0
+ 533 0000 10B5     		push	{r4, lr}
+ 534 0002 0A4C     		ldr	r4, .L86
+ 535 0004 0A48     		ldr	r0, .L86+4
+ 536 0006 0121     		movs	r1, #1
+ 537 0008 FFF7FEFF 		bl	gpio_setup_input
+ 538 000c 0521     		movs	r1, #5
+ 539 000e 2046     		mov	r0, r4
+ 540 0010 FFF7FEFF 		bl	gpio_setup_output
+ 541 0014 0749     		ldr	r1, .L86+8
+ 542 0016 0848     		ldr	r0, .L86+12
+ 543 0018 084A     		ldr	r2, .L86+16
+ 544 001a 0023     		movs	r3, #0
+ 545 001c 4FF0200C 		mov	ip, #32
+ 546 0020 A4F81AC0 		strh	ip, [r4, #26]	@ movhi
+ 547 0024 0B70     		strb	r3, [r1]
+ 548 0026 0370     		strb	r3, [r0]
+ 549 0028 1370     		strb	r3, [r2]
+ 550 002a 10BD     		pop	{r4, pc}
+ 551              	.L87:
+ 552              		.align	2
+ 553              	.L86:
+ 554 002c 00080240 		.word	1073874944
+ 555 0030 00040240 		.word	1073873920
+ 556 0034 00000000 		.word	.LANCHOR1
+ 557 0038 00000000 		.word	.LANCHOR0
+ 558 003c 00000000 		.word	.LANCHOR2
+ 559              		.size	humid_sht_init, .-humid_sht_init
+ 560              		.section	.rodata.humid_sht_periodic.str1.4,"aMS",%progbits,1
+ 561              		.align	2
+ 562              	.LC0:
+ 563 0000 5348545F 		.ascii	"SHT_STATUS\000"
+ 563      53544154 
+ 563      555300
+ 564 000b 00       		.align	2
+ 565              	.LC1:
+ 566 000c 53485437 		.ascii	"SHT75: Humid(pct) Temp(degC) GPS_fix TOW(ms) Week L"
+ 566      353A2048 
+ 566      756D6964 
+ARM GAS  /tmp/ccRt6WWT.s 			page 11
+
+
+ 566      28706374 
+ 566      29205465 
+ 567 003f 61742831 		.ascii	"at(1e7deg) Lon(1e7deg) HMSL(mm) gspeed(cm/s) course"
+ 567      65376465 
+ 567      6729204C 
+ 567      6F6E2831 
+ 567      65376465 
+ 568 0072 28316537 		.ascii	"(1e7deg) climb(cm/s)\012\000"
+ 568      64656729 
+ 568      20636C69 
+ 568      6D622863 
+ 568      6D2F7329 
+ 569              		.align	2
+ 570              	.LC2:
+ 571 0088 73687437 		.ascii	"sht75: %9.4f %9.4f    %d %d %d   %d %d %d   %d %d %"
+ 571      353A2025 
+ 571      392E3466 
+ 571      2025392E 
+ 571      34662020 
+ 572 00bb 640A00   		.ascii	"d\012\000"
+ 573              		.section	.text.humid_sht_periodic,"ax",%progbits
+ 574              		.align	1
+ 575              		.p2align 4,,15
+ 576              		.global	humid_sht_periodic
+ 577              		.syntax unified
+ 578              		.thumb
+ 579              		.thumb_func
+ 580              		.fpu fpv4-sp-d16
+ 581              		.type	humid_sht_periodic, %function
+ 582              	humid_sht_periodic:
+ 583              		@ args = 0, pretend = 0, frame = 16
+ 584              		@ frame_needed = 0, uses_anonymous_args = 0
+ 585 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 586 0004 2DED048B 		vpush.64	{d8, d9}
+ 587 0008 434D     		ldr	r5, .L120
+ 588 000a 2C78     		ldrb	r4, [r5]	@ zero_extendqisi2
+ 589 000c 91B0     		sub	sp, sp, #68
+ 590 000e 44B1     		cbz	r4, .L116
+ 591 0010 012C     		cmp	r4, #1
+ 592 0012 4FD0     		beq	.L117
+ 593 0014 022C     		cmp	r4, #2
+ 594 0016 20D0     		beq	.L118
+ 595              	.L88:
+ 596 0018 11B0     		add	sp, sp, #68
+ 597              		@ sp needed
+ 598 001a BDEC048B 		vldm	sp!, {d8-d9}
+ 599 001e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 600              	.L116:
+ 601 0022 0121     		movs	r1, #1
+ 602 0024 3D48     		ldr	r0, .L120+4
+ 603 0026 FFF7FEFF 		bl	gpio_setup_input
+ 604 002a 3D49     		ldr	r1, .L120+8
+ 605 002c 2022     		movs	r2, #32
+ 606 002e 4A83     		strh	r2, [r1, #26]	@ movhi
+ 607 0030 0923     		movs	r3, #9
+ 608              	.L90:
+ 609 0032 013B     		subs	r3, r3, #1
+ARM GAS  /tmp/ccRt6WWT.s 			page 12
+
+
+ 610 0034 13F0FF03 		ands	r3, r3, #255
+ 611 0038 0A83     		strh	r2, [r1, #24]	@ movhi
+ 612 003a 4A83     		strh	r2, [r1, #26]	@ movhi
+ 613 003c F9D1     		bne	.L90
+ 614 003e FFF7FEFF 		bl	s_transstart
+ 615 0042 FFF7FEFF 		bl	s_transstart
+ 616 0046 0520     		movs	r0, #5
+ 617 0048 FFF7FEFF 		bl	s_write_byte
+ 618 004c 0123     		movs	r3, #1
+ 619 004e 2B70     		strb	r3, [r5]
+ 620 0050 11B0     		add	sp, sp, #68
+ 621              		@ sp needed
+ 622 0052 BDEC048B 		vldm	sp!, {d8-d9}
+ 623 0056 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 624              	.L118:
+ 625 005a 304C     		ldr	r4, .L120+4
+ 626 005c 314E     		ldr	r6, .L120+12
+ 627 005e 2769     		ldr	r7, [r4, #16]
+ 628 0060 0120     		movs	r0, #1
+ 629 0062 FFF7FEFF 		bl	s_read_byte
+ 630 0066 0002     		lsls	r0, r0, #8
+ 631 0068 3080     		strh	r0, [r6]	@ movhi
+ 632 006a 0120     		movs	r0, #1
+ 633 006c FFF7FEFF 		bl	s_read_byte
+ 634 0070 3388     		ldrh	r3, [r6]
+ 635 0072 1843     		orrs	r0, r0, r3
+ 636 0074 3080     		strh	r0, [r6]	@ movhi
+ 637 0076 0020     		movs	r0, #0
+ 638 0078 FFF7FEFF 		bl	s_read_byte
+ 639 007c BA07     		lsls	r2, r7, #30
+ 640 007e 55D5     		bpl	.L96
+ 641 0080 0121     		movs	r1, #1
+ 642 0082 2046     		mov	r0, r4
+ 643 0084 FFF7FEFF 		bl	gpio_setup_input
+ 644 0088 2549     		ldr	r1, .L120+8
+ 645 008a 2022     		movs	r2, #32
+ 646 008c 4A83     		strh	r2, [r1, #26]	@ movhi
+ 647 008e 0923     		movs	r3, #9
+ 648              	.L97:
+ 649 0090 013B     		subs	r3, r3, #1
+ 650 0092 13F0FF03 		ands	r3, r3, #255
+ 651 0096 0A83     		strh	r2, [r1, #24]	@ movhi
+ 652 0098 4A83     		strh	r2, [r1, #26]	@ movhi
+ 653 009a F9D1     		bne	.L97
+ 654 009c FFF7FEFF 		bl	s_transstart
+ 655 00a0 FFF7FEFF 		bl	s_transstart
+ 656 00a4 0320     		movs	r0, #3
+ 657              	.L115:
+ 658 00a6 11B0     		add	sp, sp, #68
+ 659              		@ sp needed
+ 660 00a8 BDEC048B 		vldm	sp!, {d8-d9}
+ 661 00ac BDE8F04F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 662 00b0 FFF7FEBF 		b	s_write_byte
+ 663              	.L117:
+ 664 00b4 194F     		ldr	r7, .L120+4
+ 665 00b6 1C4E     		ldr	r6, .L120+16
+ 666 00b8 D7F81080 		ldr	r8, [r7, #16]
+ARM GAS  /tmp/ccRt6WWT.s 			page 13
+
+
+ 667 00bc 2046     		mov	r0, r4
+ 668 00be FFF7FEFF 		bl	s_read_byte
+ 669 00c2 0002     		lsls	r0, r0, #8
+ 670 00c4 3080     		strh	r0, [r6]	@ movhi
+ 671 00c6 2046     		mov	r0, r4
+ 672 00c8 FFF7FEFF 		bl	s_read_byte
+ 673 00cc 3388     		ldrh	r3, [r6]
+ 674 00ce 1843     		orrs	r0, r0, r3
+ 675 00d0 3080     		strh	r0, [r6]	@ movhi
+ 676 00d2 0020     		movs	r0, #0
+ 677 00d4 FFF7FEFF 		bl	s_read_byte
+ 678 00d8 18F0020F 		tst	r8, #2
+ 679 00dc 13D0     		beq	.L93
+ 680 00de 2146     		mov	r1, r4
+ 681 00e0 3846     		mov	r0, r7
+ 682 00e2 FFF7FEFF 		bl	gpio_setup_input
+ 683 00e6 0E49     		ldr	r1, .L120+8
+ 684 00e8 2022     		movs	r2, #32
+ 685 00ea 4A83     		strh	r2, [r1, #26]	@ movhi
+ 686 00ec 0923     		movs	r3, #9
+ 687              	.L94:
+ 688 00ee 013B     		subs	r3, r3, #1
+ 689 00f0 13F0FF03 		ands	r3, r3, #255
+ 690 00f4 0A83     		strh	r2, [r1, #24]	@ movhi
+ 691 00f6 4A83     		strh	r2, [r1, #26]	@ movhi
+ 692 00f8 F9D1     		bne	.L94
+ 693 00fa FFF7FEFF 		bl	s_transstart
+ 694 00fe FFF7FEFF 		bl	s_transstart
+ 695 0102 0520     		movs	r0, #5
+ 696 0104 CFE7     		b	.L115
+ 697              	.L93:
+ 698 0106 FFF7FEFF 		bl	s_transstart
+ 699 010a 0320     		movs	r0, #3
+ 700 010c FFF7FEFF 		bl	s_write_byte
+ 701 0110 0223     		movs	r3, #2
+ 702 0112 2B70     		strb	r3, [r5]
+ 703 0114 80E7     		b	.L88
+ 704              	.L121:
+ 705 0116 00BF     		.align	2
+ 706              	.L120:
+ 707 0118 00000000 		.word	.LANCHOR1
+ 708 011c 00040240 		.word	1073873920
+ 709 0120 00080240 		.word	1073874944
+ 710 0124 00000000 		.word	.LANCHOR4
+ 711 0128 00000000 		.word	.LANCHOR3
+ 712              	.L96:
+ 713 012c 3088     		ldrh	r0, [r6]
+ 714 012e DFF8D4A2 		ldr	r10, .L122+92
+ 715 0132 9FEDA38A 		vldr.32	s16, .L122+24
+ 716 0136 BAF80030 		ldrh	r3, [r10]
+ 717 013a 07EE900A 		vmov	s15, r0	@ int
+ 718 013e F8EE677A 		vcvt.f32.u32	s15, s15
+ 719 0142 08EE903A 		vmov	s17, r3	@ int
+ 720 0146 17EE900A 		vmov	r0, s15
+ 721 014a FFF7FEFF 		bl	__aeabi_f2d
+ 722 014e 96A3     		adr	r3, .L122
+ 723 0150 D3E90023 		ldrd	r2, [r3]
+ARM GAS  /tmp/ccRt6WWT.s 			page 14
+
+
+ 724 0154 FFF7FEFF 		bl	__aeabi_dmul
+ 725 0158 95A3     		adr	r3, .L122+8
+ 726 015a D3E90023 		ldrd	r2, [r3]
+ 727 015e FFF7FEFF 		bl	__aeabi_dsub
+ 728 0162 FFF7FEFF 		bl	__aeabi_d2f
+ 729 0166 F8EE688A 		vcvt.f32.u32	s17, s17
+ 730 016a DFED967A 		vldr.32	s15, .L122+28
+ 731 016e 9FED967A 		vldr.32	s14, .L122+32
+ 732 0172 68EEA77A 		vmul.f32	s15, s17, s15
+ 733 0176 28EE888A 		vmul.f32	s16, s17, s16
+ 734 017a 09EE100A 		vmov	s18, r0
+ 735 017e A8EEA78A 		vfma.f32	s16, s17, s15
+ 736 0182 DFED927A 		vldr.32	s15, .L122+36
+ 737 0186 E8EE877A 		vfma.f32	s15, s17, s14
+ 738 018a F1EE006A 		vmov.f32	s13, #4.0e+0
+ 739 018e B3EE097A 		vmov.f32	s14, #2.5e+1
+ 740 0192 38EE668A 		vsub.f32	s16, s16, s13
+ 741 0196 39EE477A 		vsub.f32	s14, s18, s14
+ 742 019a DFED8D6A 		vldr.32	s13, .L122+40
+ 743 019e A7EE278A 		vfma.f32	s16, s14, s15
+ 744 01a2 B4EEE68A 		vcmpe.f32	s16, s13
+ 745 01a6 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 746 01aa 00F3EA80 		bgt	.L105
+ 747 01ae 18EE100A 		vmov	r0, s16
+ 748 01b2 FFF7FEFF 		bl	__aeabi_f2d
+ 749 01b6 80A3     		adr	r3, .L122+16
+ 750 01b8 D3E90023 		ldrd	r2, [r3]
+ 751 01bc FFF7FEFF 		bl	__aeabi_dcmplt
+ 752 01c0 DFED847A 		vldr.32	s15, .L122+44
+ 753 01c4 0028     		cmp	r0, #0
+ 754 01c6 18BF     		it	ne
+ 755 01c8 B0EE678A 		vmovne.f32	s16, s15
+ 756              	.L98:
+ 757 01cc 824F     		ldr	r7, .L122+48
+ 758 01ce DFF83882 		ldr	r8, .L122+96
+ 759 01d2 DFF83892 		ldr	r9, .L122+100
+ 760 01d6 8148     		ldr	r0, .L122+52
+ 761 01d8 87ED009A 		vstr.32	s18, [r7]
+ 762 01dc 0121     		movs	r1, #1
+ 763 01de 89F80010 		strb	r1, [r9]
+ 764 01e2 88ED008A 		vstr.32	s16, [r8]
+ 765 01e6 FFF7FEFF 		bl	gpio_setup_input
+ 766 01ea 7D49     		ldr	r1, .L122+56
+ 767 01ec 2022     		movs	r2, #32
+ 768 01ee 4A83     		strh	r2, [r1, #26]	@ movhi
+ 769 01f0 0924     		movs	r4, #9
+ 770              	.L100:
+ 771 01f2 631E     		subs	r3, r4, #1
+ 772 01f4 13F0FF04 		ands	r4, r3, #255
+ 773 01f8 0A83     		strh	r2, [r1, #24]	@ movhi
+ 774 01fa 4A83     		strh	r2, [r1, #26]	@ movhi
+ 775 01fc F9D1     		bne	.L100
+ 776 01fe FFF7FEFF 		bl	s_transstart
+ 777 0202 FFF7FEFF 		bl	s_transstart
+ 778 0206 0520     		movs	r0, #5
+ 779 0208 FFF7FEFF 		bl	s_write_byte
+ 780 020c 754B     		ldr	r3, .L122+60
+ARM GAS  /tmp/ccRt6WWT.s 			page 15
+
+
+ 781 020e 764A     		ldr	r2, .L122+64
+ 782 0210 0F92     		str	r2, [sp, #60]
+ 783 0212 4FF0010B 		mov	fp, #1
+ 784 0216 0322     		movs	r2, #3
+ 785 0218 0E93     		str	r3, [sp, #56]
+ 786 021a 85F800B0 		strb	fp, [r5]
+ 787 021e 1B68     		ldr	r3, [r3]
+ 788 0220 ADF83420 		strh	r2, [sp, #52]	@ movhi
+ 789 0224 1021     		movs	r1, #16
+ 790 0226 8DF83640 		strb	r4, [sp, #54]
+ 791 022a 0C94     		str	r4, [sp, #48]
+ 792 022c 0DA8     		add	r0, sp, #52
+ 793 022e 9847     		blx	r3
+ 794 0230 0E9B     		ldr	r3, [sp, #56]
+ 795 0232 0546     		mov	r5, r0
+ 796 0234 82B2     		uxth	r2, r0
+ 797 0236 5B68     		ldr	r3, [r3, #4]
+ 798 0238 0CA9     		add	r1, sp, #48
+ 799 023a 0DA8     		add	r0, sp, #52
+ 800 023c 9847     		blx	r3
+ 801 023e 0028     		cmp	r0, #0
+ 802 0240 00F0A280 		beq	.L101
+ 803 0244 0E9B     		ldr	r3, [sp, #56]
+ 804 0246 2946     		mov	r1, r5
+ 805 0248 DB69     		ldr	r3, [r3, #28]
+ 806 024a 0DA8     		add	r0, sp, #52
+ 807 024c 9847     		blx	r3
+ 808 024e 0E9B     		ldr	r3, [sp, #56]
+ 809 0250 0C99     		ldr	r1, [sp, #48]
+ 810 0252 1B69     		ldr	r3, [r3, #16]
+ 811 0254 0DA8     		add	r0, sp, #52
+ 812 0256 1022     		movs	r2, #16
+ 813 0258 9847     		blx	r3
+ 814 025a 0DAB     		add	r3, sp, #52
+ 815 025c 0093     		str	r3, [sp]
+ 816 025e 0E9B     		ldr	r3, [sp, #56]
+ 817 0260 CDF804B0 		str	fp, [sp, #4]
+ 818 0264 9D68     		ldr	r5, [r3, #8]
+ 819 0266 0C99     		ldr	r1, [sp, #48]
+ 820 0268 2346     		mov	r3, r4
+ 821 026a 0DA8     		add	r0, sp, #52
+ 822 026c 0222     		movs	r2, #2
+ 823 026e A847     		blx	r5
+ 824 0270 0E9B     		ldr	r3, [sp, #56]
+ 825 0272 9DF83520 		ldrb	r2, [sp, #53]	@ zero_extendqisi2
+ 826 0276 0194     		str	r4, [sp, #4]
+ 827 0278 0092     		str	r2, [sp]
+ 828 027a DD68     		ldr	r5, [r3, #12]
+ 829 027c 0C99     		ldr	r1, [sp, #48]
+ 830 027e 2346     		mov	r3, r4
+ 831 0280 0DA8     		add	r0, sp, #52
+ 832 0282 0222     		movs	r2, #2
+ 833 0284 A847     		blx	r5
+ 834 0286 9DF83630 		ldrb	r3, [sp, #54]	@ zero_extendqisi2
+ 835 028a 0194     		str	r4, [sp, #4]
+ 836 028c 1B01     		lsls	r3, r3, #4
+ 837 028e 43EA0B03 		orr	r3, r3, fp
+ARM GAS  /tmp/ccRt6WWT.s 			page 16
+
+
+ 838 0292 DBB2     		uxtb	r3, r3
+ 839 0294 0093     		str	r3, [sp]
+ 840 0296 0E9B     		ldr	r3, [sp, #56]
+ 841 0298 0C99     		ldr	r1, [sp, #48]
+ 842 029a DD68     		ldr	r5, [r3, #12]
+ 843 029c 0DA8     		add	r0, sp, #52
+ 844 029e 2346     		mov	r3, r4
+ 845 02a0 0222     		movs	r2, #2
+ 846 02a2 A847     		blx	r5
+ 847 02a4 514A     		ldr	r2, .L122+68
+ 848 02a6 0E9B     		ldr	r3, [sp, #56]
+ 849 02a8 0192     		str	r2, [sp, #4]
+ 850 02aa 5922     		movs	r2, #89
+ 851 02ac 0092     		str	r2, [sp]
+ 852 02ae DD68     		ldr	r5, [r3, #12]
+ 853 02b0 0C99     		ldr	r1, [sp, #48]
+ 854 02b2 2346     		mov	r3, r4
+ 855 02b4 0DA8     		add	r0, sp, #52
+ 856 02b6 0222     		movs	r2, #2
+ 857 02b8 A847     		blx	r5
+ 858 02ba 0E9B     		ldr	r3, [sp, #56]
+ 859 02bc CDF800A0 		str	r10, [sp]
+ 860 02c0 0225     		movs	r5, #2
+ 861 02c2 0195     		str	r5, [sp, #4]
+ 862 02c4 D3F808A0 		ldr	r10, [r3, #8]
+ 863 02c8 0C99     		ldr	r1, [sp, #48]
+ 864 02ca 2346     		mov	r3, r4
+ 865 02cc 0DA8     		add	r0, sp, #52
+ 866 02ce 0422     		movs	r2, #4
+ 867 02d0 D047     		blx	r10
+ 868 02d2 CDE90065 		strd	r6, r5, [sp]
+ 869 02d6 0E9B     		ldr	r3, [sp, #56]
+ 870 02d8 0C99     		ldr	r1, [sp, #48]
+ 871 02da 9D68     		ldr	r5, [r3, #8]
+ 872 02dc 0DA8     		add	r0, sp, #52
+ 873 02de 2346     		mov	r3, r4
+ 874 02e0 0422     		movs	r2, #4
+ 875 02e2 A847     		blx	r5
+ 876 02e4 0E9B     		ldr	r3, [sp, #56]
+ 877 02e6 CDF80080 		str	r8, [sp]
+ 878 02ea 0425     		movs	r5, #4
+ 879 02ec 0195     		str	r5, [sp, #4]
+ 880 02ee 9E68     		ldr	r6, [r3, #8]
+ 881 02f0 0C99     		ldr	r1, [sp, #48]
+ 882 02f2 2346     		mov	r3, r4
+ 883 02f4 0DA8     		add	r0, sp, #52
+ 884 02f6 0A22     		movs	r2, #10
+ 885 02f8 B047     		blx	r6
+ 886 02fa CDE90075 		strd	r7, r5, [sp]
+ 887 02fe 0E9A     		ldr	r2, [sp, #56]
+ 888 0300 0C99     		ldr	r1, [sp, #48]
+ 889 0302 2346     		mov	r3, r4
+ 890 0304 0DA8     		add	r0, sp, #52
+ 891 0306 9468     		ldr	r4, [r2, #8]
+ 892 0308 0A22     		movs	r2, #10
+ 893 030a A047     		blx	r4
+ 894 030c 0E9B     		ldr	r3, [sp, #56]
+ARM GAS  /tmp/ccRt6WWT.s 			page 17
+
+
+ 895 030e 0C99     		ldr	r1, [sp, #48]
+ 896 0310 5B69     		ldr	r3, [r3, #20]
+ 897 0312 0DA8     		add	r0, sp, #52
+ 898 0314 9847     		blx	r3
+ 899              	.L102:
+ 900 0316 364D     		ldr	r5, .L122+72
+ 901 0318 95F90040 		ldrsb	r4, [r5]
+ 902 031c 0023     		movs	r3, #0
+ 903 031e 89F80030 		strb	r3, [r9]
+ 904 0322 631C     		adds	r3, r4, #1
+ 905 0324 3FF478AE 		beq	.L88
+ 906 0328 324E     		ldr	r6, .L122+76
+ 907 032a 3378     		ldrb	r3, [r6]	@ zero_extendqisi2
+ 908 032c 002B     		cmp	r3, #0
+ 909 032e 30D0     		beq	.L119
+ 910              	.L104:
+ 911 0330 D8F80000 		ldr	r0, [r8]	@ float
+ 912 0334 FFF7FEFF 		bl	__aeabi_f2d
+ 913 0338 2F4B     		ldr	r3, .L122+80
+ 914 033a 5A6C     		ldr	r2, [r3, #68]
+ 915 033c 5242     		rsbs	r2, r2, #0
+ 916 033e 8046     		mov	r8, r0
+ 917 0340 3868     		ldr	r0, [r7]	@ float
+ 918 0342 0A92     		str	r2, [sp, #40]
+ 919 0344 DA6C     		ldr	r2, [r3, #76]
+ 920 0346 0992     		str	r2, [sp, #36]
+ 921 0348 B3F84820 		ldrh	r2, [r3, #72]
+ 922 034c 0892     		str	r2, [sp, #32]
+ 923 034e DA6A     		ldr	r2, [r3, #44]
+ 924 0350 0792     		str	r2, [sp, #28]
+ 925 0352 5A69     		ldr	r2, [r3, #20]
+ 926 0354 0692     		str	r2, [sp, #24]
+ 927 0356 1A69     		ldr	r2, [r3, #16]
+ 928 0358 0592     		str	r2, [sp, #20]
+ 929 035a B3F86820 		ldrh	r2, [r3, #104]
+ 930 035e 0492     		str	r2, [sp, #16]
+ 931 0360 DA6E     		ldr	r2, [r3, #108]
+ 932 0362 0392     		str	r2, [sp, #12]
+ 933 0364 93F86730 		ldrb	r3, [r3, #103]	@ zero_extendqisi2
+ 934 0368 0293     		str	r3, [sp, #8]
+ 935 036a 8946     		mov	r9, r1
+ 936 036c FFF7FEFF 		bl	__aeabi_f2d
+ 937 0370 4246     		mov	r2, r8
+ 938 0372 CDE90001 		strd	r0, [sp]
+ 939 0376 4B46     		mov	r3, r9
+ 940 0378 2049     		ldr	r1, .L122+84
+ 941 037a 2046     		mov	r0, r4
+ 942 037c FFF7FEFF 		bl	sdLogWriteLog
+ 943 0380 4AE6     		b	.L88
+ 944              	.L105:
+ 945 0382 B0EE668A 		vmov.f32	s16, s13
+ 946 0386 21E7     		b	.L98
+ 947              	.L101:
+ 948 0388 0E9B     		ldr	r3, [sp, #56]
+ 949 038a 0DA8     		add	r0, sp, #52
+ 950 038c 9B69     		ldr	r3, [r3, #24]
+ 951 038e 9847     		blx	r3
+ARM GAS  /tmp/ccRt6WWT.s 			page 18
+
+
+ 952 0390 C1E7     		b	.L102
+ 953              	.L119:
+ 954 0392 2046     		mov	r0, r4
+ 955 0394 1A49     		ldr	r1, .L122+88
+ 956 0396 FFF7FEFF 		bl	sdLogWriteLog
+ 957 039a 0123     		movs	r3, #1
+ 958 039c 95F90040 		ldrsb	r4, [r5]
+ 959 03a0 3370     		strb	r3, [r6]
+ 960 03a2 C5E7     		b	.L104
+ 961              	.L123:
+ 962 03a4 AFF30080 		.align	3
+ 963              	.L122:
+ 964 03a8 7B14AE47 		.word	1202590843
+ 965 03ac E17A843F 		.word	1065646817
+ 966 03b0 14AE47E1 		.word	-515396076
+ 967 03b4 7AD44340 		.word	1078187130
+ 968 03b8 9A999999 		.word	-1717986918
+ 969 03bc 9999B93F 		.word	1069128089
+ 970 03c0 54E3253D 		.word	1025893204
+ 971 03c4 A2E73BB6 		.word	-1237588062
+ 972 03c8 ACC5A738 		.word	950519212
+ 973 03cc 0AD7233C 		.word	1008981770
+ 974 03d0 0000C842 		.word	1120403456
+ 975 03d4 CDCCCC3D 		.word	1036831949
+ 976 03d8 00000000 		.word	.LANCHOR5
+ 977 03dc 00040240 		.word	1073873920
+ 978 03e0 00080240 		.word	1073874944
+ 979 03e4 08010000 		.word	pprz_tp+264
+ 980 03e8 30020000 		.word	uart1+560
+ 981 03ec 00000000 		.word	.LC0
+ 982 03f0 00000000 		.word	pprzLogFile
+ 983 03f4 00000000 		.word	.LANCHOR2
+ 984 03f8 00000000 		.word	gps
+ 985 03fc 88000000 		.word	.LC2
+ 986 0400 0C000000 		.word	.LC1
+ 987 0404 00000000 		.word	.LANCHOR3
+ 988 0408 00000000 		.word	.LANCHOR6
+ 989 040c 00000000 		.word	.LANCHOR0
+ 990              		.size	humid_sht_periodic, .-humid_sht_periodic
+ 991              		.global	humid_sht_status
+ 992              		.global	humid_sht_available
+ 993              		.global	ftempsht
+ 994              		.global	fhumidsht
+ 995              		.global	tempsht
+ 996              		.global	humidsht
+ 997              		.global	log_sht_started
+ 998              		.section	.bss.fhumidsht,"aw",%nobits
+ 999              		.align	2
+ 1000              		.set	.LANCHOR6,. + 0
+ 1001              		.type	fhumidsht, %object
+ 1002              		.size	fhumidsht, 4
+ 1003              	fhumidsht:
+ 1004 0000 00000000 		.space	4
+ 1005              		.section	.bss.ftempsht,"aw",%nobits
+ 1006              		.align	2
+ 1007              		.set	.LANCHOR5,. + 0
+ 1008              		.type	ftempsht, %object
+ARM GAS  /tmp/ccRt6WWT.s 			page 19
+
+
+ 1009              		.size	ftempsht, 4
+ 1010              	ftempsht:
+ 1011 0000 00000000 		.space	4
+ 1012              		.section	.bss.humid_sht_available,"aw",%nobits
+ 1013              		.set	.LANCHOR0,. + 0
+ 1014              		.type	humid_sht_available, %object
+ 1015              		.size	humid_sht_available, 1
+ 1016              	humid_sht_available:
+ 1017 0000 00       		.space	1
+ 1018              		.section	.bss.humid_sht_status,"aw",%nobits
+ 1019              		.set	.LANCHOR1,. + 0
+ 1020              		.type	humid_sht_status, %object
+ 1021              		.size	humid_sht_status, 1
+ 1022              	humid_sht_status:
+ 1023 0000 00       		.space	1
+ 1024              		.section	.bss.humidsht,"aw",%nobits
+ 1025              		.align	1
+ 1026              		.set	.LANCHOR3,. + 0
+ 1027              		.type	humidsht, %object
+ 1028              		.size	humidsht, 2
+ 1029              	humidsht:
+ 1030 0000 0000     		.space	2
+ 1031              		.section	.bss.log_sht_started,"aw",%nobits
+ 1032              		.set	.LANCHOR2,. + 0
+ 1033              		.type	log_sht_started, %object
+ 1034              		.size	log_sht_started, 1
+ 1035              	log_sht_started:
+ 1036 0000 00       		.space	1
+ 1037              		.section	.bss.tempsht,"aw",%nobits
+ 1038              		.align	1
+ 1039              		.set	.LANCHOR4,. + 0
+ 1040              		.type	tempsht, %object
+ 1041              		.size	tempsht, 2
+ 1042              	tempsht:
+ 1043 0000 0000     		.space	2
+ 1044              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccRt6WWT.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 humid_sht.c
+     /tmp/ccRt6WWT.s:15     .text.s_write_byte:0000000000000000 $t
+     /tmp/ccRt6WWT.s:24     .text.s_write_byte:0000000000000000 s_write_byte
+     /tmp/ccRt6WWT.s:67     .text.s_write_byte:0000000000000058 $d
+     /tmp/ccRt6WWT.s:71     .text.s_read_byte:0000000000000000 $t
+     /tmp/ccRt6WWT.s:79     .text.s_read_byte:0000000000000000 s_read_byte
+     /tmp/ccRt6WWT.s:126    .text.s_read_byte:000000000000005c $d
+     /tmp/ccRt6WWT.s:130    .text.s_transstart:0000000000000000 $t
+     /tmp/ccRt6WWT.s:138    .text.s_transstart:0000000000000000 s_transstart
+     /tmp/ccRt6WWT.s:174    .text.s_transstart:0000000000000048 $d
+     /tmp/ccRt6WWT.s:178    .text.s_connectionreset:0000000000000000 $t
+     /tmp/ccRt6WWT.s:186    .text.s_connectionreset:0000000000000000 s_connectionreset
+     /tmp/ccRt6WWT.s:208    .text.s_connectionreset:0000000000000028 $d
+     /tmp/ccRt6WWT.s:212    .text.s_read_statusreg:0000000000000000 $t
+     /tmp/ccRt6WWT.s:220    .text.s_read_statusreg:0000000000000000 s_read_statusreg
+     /tmp/ccRt6WWT.s:240    .text.s_write_statusreg:0000000000000000 $t
+     /tmp/ccRt6WWT.s:248    .text.s_write_statusreg:0000000000000000 s_write_statusreg
+     /tmp/ccRt6WWT.s:264    .text.s_measure:0000000000000000 $t
+     /tmp/ccRt6WWT.s:272    .text.s_measure:0000000000000000 s_measure
+     /tmp/ccRt6WWT.s:330    .text.s_measure:000000000000006c $d
+     /tmp/ccRt6WWT.s:334    .text.s_start_measure:0000000000000000 $t
+     /tmp/ccRt6WWT.s:342    .text.s_start_measure:0000000000000000 s_start_measure
+     /tmp/ccRt6WWT.s:363    .text.s_read_measure:0000000000000000 $t
+     /tmp/ccRt6WWT.s:371    .text.s_read_measure:0000000000000000 s_read_measure
+     /tmp/ccRt6WWT.s:396    .text.s_read_measure:0000000000000030 $d
+     /tmp/ccRt6WWT.s:404    .text.calc_sht:0000000000000000 $t
+     /tmp/ccRt6WWT.s:412    .text.calc_sht:0000000000000000 calc_sht
+     /tmp/ccRt6WWT.s:472    .text.calc_sht:00000000000000c0 $d
+     /tmp/ccRt6WWT.s:486    .text.humid_sht_reset:0000000000000000 $t
+     /tmp/ccRt6WWT.s:494    .text.humid_sht_reset:0000000000000000 humid_sht_reset
+     /tmp/ccRt6WWT.s:518    .text.humid_sht_reset:000000000000002c $d
+     /tmp/ccRt6WWT.s:522    .text.humid_sht_init:0000000000000000 $t
+     /tmp/ccRt6WWT.s:530    .text.humid_sht_init:0000000000000000 humid_sht_init
+     /tmp/ccRt6WWT.s:554    .text.humid_sht_init:000000000000002c $d
+     /tmp/ccRt6WWT.s:561    .rodata.humid_sht_periodic.str1.4:0000000000000000 $d
+     /tmp/ccRt6WWT.s:574    .text.humid_sht_periodic:0000000000000000 $t
+     /tmp/ccRt6WWT.s:582    .text.humid_sht_periodic:0000000000000000 humid_sht_periodic
+     /tmp/ccRt6WWT.s:707    .text.humid_sht_periodic:0000000000000118 $d
+     /tmp/ccRt6WWT.s:713    .text.humid_sht_periodic:000000000000012c $t
+     /tmp/ccRt6WWT.s:964    .text.humid_sht_periodic:00000000000003a8 $d
+     /tmp/ccRt6WWT.s:1022   .bss.humid_sht_status:0000000000000000 humid_sht_status
+     /tmp/ccRt6WWT.s:1016   .bss.humid_sht_available:0000000000000000 humid_sht_available
+     /tmp/ccRt6WWT.s:1010   .bss.ftempsht:0000000000000000 ftempsht
+     /tmp/ccRt6WWT.s:1003   .bss.fhumidsht:0000000000000000 fhumidsht
+     /tmp/ccRt6WWT.s:1042   .bss.tempsht:0000000000000000 tempsht
+     /tmp/ccRt6WWT.s:1029   .bss.humidsht:0000000000000000 humidsht
+     /tmp/ccRt6WWT.s:1035   .bss.log_sht_started:0000000000000000 log_sht_started
+     /tmp/ccRt6WWT.s:999    .bss.fhumidsht:0000000000000000 $d
+     /tmp/ccRt6WWT.s:1006   .bss.ftempsht:0000000000000000 $d
+     /tmp/ccRt6WWT.s:1017   .bss.humid_sht_available:0000000000000000 $d
+     /tmp/ccRt6WWT.s:1023   .bss.humid_sht_status:0000000000000000 $d
+     /tmp/ccRt6WWT.s:1025   .bss.humidsht:0000000000000000 $d
+     /tmp/ccRt6WWT.s:1036   .bss.log_sht_started:0000000000000000 $d
+     /tmp/ccRt6WWT.s:1038   .bss.tempsht:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+ARM GAS  /tmp/ccRt6WWT.s 			page 21
+
+
+gpio_setup_input
+gpio_setup_output
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_dsub
+__aeabi_d2f
+__aeabi_dcmplt
+sdLogWriteLog
+pprz_tp
+uart1
+pprzLogFile
+gps

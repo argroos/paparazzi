@@ -1,0 +1,477 @@
+ARM GAS  /tmp/cc8bWSO1.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"usbStorage.c"
+  13              		.text
+  14              		.section	.text.usbActivity,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	usbActivity, %function
+  23              	usbActivity:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 034B     		ldr	r3, .L5
+  28 0002 0822     		movs	r2, #8
+  29 0004 08B1     		cbz	r0, .L2
+  30 0006 5A83     		strh	r2, [r3, #26]	@ movhi
+  31 0008 7047     		bx	lr
+  32              	.L2:
+  33 000a 1A83     		strh	r2, [r3, #24]	@ movhi
+  34 000c 7047     		bx	lr
+  35              	.L6:
+  36 000e 00BF     		.align	2
+  37              	.L5:
+  38 0010 00080240 		.word	1073874944
+  39              		.size	usbActivity, .-usbActivity
+  40              		.section	.rodata.thdUsbStorage.str1.4,"aMS",%progbits,1
+  41              		.align	2
+  42              	.LC0:
+  43 0000 55736253 		.ascii	"UsbStorage:polling\000"
+  43      746F7261 
+  43      67653A70 
+  43      6F6C6C69 
+  43      6E6700
+  44 0013 00       		.align	2
+  45              	.LC1:
+  46 0014 55736253 		.ascii	"UsbStorage:connected\000"
+  46      746F7261 
+  46      67653A63 
+  46      6F6E6E65 
+  46      63746564 
+  47              		.section	.text.thdUsbStorage,"ax",%progbits
+  48              		.align	1
+  49              		.p2align 4,,15
+ARM GAS  /tmp/cc8bWSO1.s 			page 2
+
+
+  50              		.syntax unified
+  51              		.thumb
+  52              		.thumb_func
+  53              		.fpu fpv4-sp-d16
+  54              		.type	thdUsbStorage, %function
+  55              	thdUsbStorage:
+  56              		@ args = 0, pretend = 0, frame = 24
+  57              		@ frame_needed = 0, uses_anonymous_args = 0
+  58 0000 30B5     		push	{r4, r5, lr}
+  59 0002 304C     		ldr	r4, .L19
+  60 0004 3049     		ldr	r1, .L19+4
+  61 0006 E268     		ldr	r2, [r4, #12]
+  62 0008 87B0     		sub	sp, sp, #28
+  63 000a 3023     		movs	r3, #48
+  64 000c D161     		str	r1, [r2, #28]
+  65              		.syntax unified
+  66              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  67 000e 83F31188 		MSR basepri, r3
+  68              	@ 0 "" 2
+  69              		.thumb
+  70              		.syntax unified
+  71 0012 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+  72 0016 2D48     		ldr	r0, .L19+8
+  73 0018 0322     		movs	r2, #3
+  74 001a 0921     		movs	r1, #9
+  75 001c FFF7FEFF 		bl	_pal_lld_enablepadevent
+  76 0020 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+  77 0024 0023     		movs	r3, #0
+  78              		.syntax unified
+  79              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  80 0026 83F31188 		MSR basepri, r3
+  81              	@ 0 "" 2
+  82              		.thumb
+  83              		.syntax unified
+  84 002a 284D     		ldr	r5, .L19+8
+  85              	.L8:
+  86 002c 2748     		ldr	r0, .L19+8
+  87 002e 4FF0FF32 		mov	r2, #-1
+  88 0032 0921     		movs	r1, #9
+  89 0034 FFF7FEFF 		bl	palWaitPadTimeout
+  90 0038 6420     		movs	r0, #100
+  91 003a FFF7FEFF 		bl	chThdSleep
+  92 003e 2B69     		ldr	r3, [r5, #16]
+  93 0040 9805     		lsls	r0, r3, #22
+  94 0042 F3D5     		bpl	.L8
+  95 0044 2249     		ldr	r1, .L19+12
+  96 0046 E268     		ldr	r2, [r4, #12]
+  97 0048 224B     		ldr	r3, .L19+16
+  98 004a 0120     		movs	r0, #1
+  99 004c 0870     		strb	r0, [r1]
+ 100 004e 2249     		ldr	r1, .L19+20
+ 101 0050 D161     		str	r1, [r2, #28]
+ 102 0052 4FF07E52 		mov	r2, #1065353216
+ 103 0056 1A60     		str	r2, [r3]	@ float
+ 104 0058 FFF7FEFF 		bl	sdlog_chibios_finish
+ 105 005c FFF7FEFF 		bl	sdio_connect
+ 106 0060 50B3     		cbz	r0, .L18
+ARM GAS  /tmp/cc8bWSO1.s 			page 3
+
+
+ 107              	.L9:
+ 108 0062 1E49     		ldr	r1, .L19+24
+ 109 0064 0020     		movs	r0, #0
+ 110 0066 FFF7FEFF 		bl	init_msd_driver
+ 111 006a 0221     		movs	r1, #2
+ 112 006c 01A8     		add	r0, sp, #4
+ 113 006e FFF7FEFF 		bl	msd_register_evt_connected
+ 114 0072 0220     		movs	r0, #2
+ 115 0074 FFF7FEFF 		bl	chEvtWaitOne
+ 116 0078 FFF7FEFF 		bl	pprz_terminate_autopilot_threads
+ 117 007c E368     		ldr	r3, [r4, #12]
+ 118 007e 93F82530 		ldrb	r3, [r3, #37]	@ zero_extendqisi2
+ 119 0082 5907     		lsls	r1, r3, #29
+ 120 0084 0DD4     		bmi	.L11
+ 121 0086 114D     		ldr	r5, .L19+8
+ 122 0088 06E0     		b	.L10
+ 123              	.L12:
+ 124 008a FFF7FEFF 		bl	chThdSleep
+ 125 008e E368     		ldr	r3, [r4, #12]
+ 126 0090 93F82530 		ldrb	r3, [r3, #37]	@ zero_extendqisi2
+ 127 0094 5A07     		lsls	r2, r3, #29
+ 128 0096 04D4     		bmi	.L11
+ 129              	.L10:
+ 130 0098 2B69     		ldr	r3, [r5, #16]
+ 131 009a 9B05     		lsls	r3, r3, #22
+ 132 009c 4FF06400 		mov	r0, #100
+ 133 00a0 F3D4     		bmi	.L12
+ 134              	.L11:
+ 135 00a2 FFF7FEFF 		bl	deinit_msd_driver
+ 136 00a6 41F28830 		movw	r0, #5000
+ 137 00aa FFF7FEFF 		bl	chThdSleep
+ 138 00ae 0220     		movs	r0, #2
+ 139 00b0 FFF7FEFF 		bl	mcu_reboot
+ 140 00b4 07B0     		add	sp, sp, #28
+ 141              		@ sp needed
+ 142 00b6 30BD     		pop	{r4, r5, pc}
+ 143              	.L18:
+ 144 00b8 4FF0FF30 		mov	r0, #-1
+ 145 00bc FFF7FEFF 		bl	chThdExit
+ 146 00c0 CFE7     		b	.L9
+ 147              	.L20:
+ 148 00c2 00BF     		.align	2
+ 149              	.L19:
+ 150 00c4 00000000 		.word	ch0
+ 151 00c8 00000000 		.word	.LC0
+ 152 00cc 00000240 		.word	1073872896
+ 153 00d0 00000000 		.word	.LANCHOR0
+ 154 00d4 00000000 		.word	.LANCHOR1
+ 155 00d8 14000000 		.word	.LC1
+ 156 00dc 00000000 		.word	.LANCHOR2
+ 157              		.size	thdUsbStorage, .-thdUsbStorage
+ 158              		.section	.text.usbStorageStartPolling,"ax",%progbits
+ 159              		.align	1
+ 160              		.p2align 4,,15
+ 161              		.global	usbStorageStartPolling
+ 162              		.syntax unified
+ 163              		.thumb
+ARM GAS  /tmp/cc8bWSO1.s 			page 4
+
+
+ 164              		.thumb_func
+ 165              		.fpu fpv4-sp-d16
+ 166              		.type	usbStorageStartPolling, %function
+ 167              	usbStorageStartPolling:
+ 168              		@ args = 0, pretend = 0, frame = 0
+ 169              		@ frame_needed = 0, uses_anonymous_args = 0
+ 170 0000 00B5     		push	{lr}
+ 171 0002 83B0     		sub	sp, sp, #12
+ 172 0004 0022     		movs	r2, #0
+ 173 0006 0092     		str	r2, [sp]
+ 174 0008 054B     		ldr	r3, .L23
+ 175 000a 0648     		ldr	r0, .L23+4
+ 176 000c 8222     		movs	r2, #130
+ 177 000e 41F2D811 		movw	r1, #4568
+ 178 0012 FFF7FEFF 		bl	chThdCreateStatic
+ 179 0016 044B     		ldr	r3, .L23+8
+ 180 0018 1860     		str	r0, [r3]
+ 181 001a 03B0     		add	sp, sp, #12
+ 182              		@ sp needed
+ 183 001c 5DF804FB 		ldr	pc, [sp], #4
+ 184              	.L24:
+ 185              		.align	2
+ 186              	.L23:
+ 187 0020 00000000 		.word	thdUsbStorage
+ 188 0024 00000000 		.word	waThdUsbStorage
+ 189 0028 00000000 		.word	.LANCHOR3
+ 190              		.size	usbStorageStartPolling, .-usbStorageStartPolling
+ 191              		.section	.text.usbStorageWaitForDeconnexion,"ax",%progbits
+ 192              		.align	1
+ 193              		.p2align 4,,15
+ 194              		.global	usbStorageWaitForDeconnexion
+ 195              		.syntax unified
+ 196              		.thumb
+ 197              		.thumb_func
+ 198              		.fpu fpv4-sp-d16
+ 199              		.type	usbStorageWaitForDeconnexion, %function
+ 200              	usbStorageWaitForDeconnexion:
+ 201              		@ args = 0, pretend = 0, frame = 0
+ 202              		@ frame_needed = 0, uses_anonymous_args = 0
+ 203 0000 10B5     		push	{r4, lr}
+ 204 0002 044C     		ldr	r4, .L31
+ 205 0004 2068     		ldr	r0, [r4]
+ 206 0006 08B1     		cbz	r0, .L26
+ 207 0008 FFF7FEFF 		bl	chThdWait
+ 208              	.L26:
+ 209 000c 0023     		movs	r3, #0
+ 210 000e 2360     		str	r3, [r4]
+ 211 0010 10BD     		pop	{r4, pc}
+ 212              	.L32:
+ 213 0012 00BF     		.align	2
+ 214              	.L31:
+ 215 0014 00000000 		.word	.LANCHOR3
+ 216              		.size	usbStorageWaitForDeconnexion, .-usbStorageWaitForDeconnexion
+ 217              		.section	.text.usbStorageStop,"ax",%progbits
+ 218              		.align	1
+ 219              		.p2align 4,,15
+ 220              		.global	usbStorageStop
+ARM GAS  /tmp/cc8bWSO1.s 			page 5
+
+
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 224              		.fpu fpv4-sp-d16
+ 225              		.type	usbStorageStop, %function
+ 226              	usbStorageStop:
+ 227              		@ args = 0, pretend = 0, frame = 0
+ 228              		@ frame_needed = 0, uses_anonymous_args = 0
+ 229              		@ link register save eliminated.
+ 230 0000 024B     		ldr	r3, .L35
+ 231 0002 1868     		ldr	r0, [r3]
+ 232 0004 08B1     		cbz	r0, .L33
+ 233 0006 FFF7FEBF 		b	chThdTerminate
+ 234              	.L33:
+ 235 000a 7047     		bx	lr
+ 236              	.L36:
+ 237              		.align	2
+ 238              	.L35:
+ 239 000c 00000000 		.word	.LANCHOR3
+ 240              		.size	usbStorageStop, .-usbStorageStop
+ 241              		.section	.text.usbStorageIsItRunning,"ax",%progbits
+ 242              		.align	1
+ 243              		.p2align 4,,15
+ 244              		.global	usbStorageIsItRunning
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.fpu fpv4-sp-d16
+ 249              		.type	usbStorageIsItRunning, %function
+ 250              	usbStorageIsItRunning:
+ 251              		@ args = 0, pretend = 0, frame = 0
+ 252              		@ frame_needed = 0, uses_anonymous_args = 0
+ 253              		@ link register save eliminated.
+ 254 0000 014B     		ldr	r3, .L38
+ 255 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 256 0004 7047     		bx	lr
+ 257              	.L39:
+ 258 0006 00BF     		.align	2
+ 259              	.L38:
+ 260 0008 00000000 		.word	.LANCHOR0
+ 261              		.size	usbStorageIsItRunning, .-usbStorageIsItRunning
+ 262              		.section	.text.usbStorage_enable_usb_storage,"ax",%progbits
+ 263              		.align	1
+ 264              		.p2align 4,,15
+ 265              		.global	usbStorage_enable_usb_storage
+ 266              		.syntax unified
+ 267              		.thumb
+ 268              		.thumb_func
+ 269              		.fpu fpv4-sp-d16
+ 270              		.type	usbStorage_enable_usb_storage, %function
+ 271              	usbStorage_enable_usb_storage:
+ 272              		@ args = 0, pretend = 0, frame = 0
+ 273              		@ frame_needed = 0, uses_anonymous_args = 0
+ 274 0000 07EE100A 		vmov	s14, r0
+ 275 0004 F6EE007A 		vmov.f32	s15, #5.0e-1
+ 276 0008 B4EEE77A 		vcmpe.f32	s14, s15
+ 277 000c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ARM GAS  /tmp/cc8bWSO1.s 			page 6
+
+
+ 278 0010 08B5     		push	{r3, lr}
+ 279 0012 03DD     		ble	.L41
+ 280 0014 0D4B     		ldr	r3, .L52
+ 281 0016 1B69     		ldr	r3, [r3, #16]
+ 282 0018 9B05     		lsls	r3, r3, #22
+ 283 001a 03D4     		bmi	.L50
+ 284              	.L41:
+ 285 001c 0C4B     		ldr	r3, .L52+4
+ 286 001e 0022     		movs	r2, #0
+ 287 0020 1A60     		str	r2, [r3]	@ float
+ 288 0022 08BD     		pop	{r3, pc}
+ 289              	.L50:
+ 290 0024 3023     		movs	r3, #48
+ 291              		.syntax unified
+ 292              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 293 0026 83F31188 		MSR basepri, r3
+ 294              	@ 0 "" 2
+ 295              		.thumb
+ 296              		.syntax unified
+ 297 002a FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 298 002e 0948     		ldr	r0, .L52+8
+ 299 0030 8368     		ldr	r3, [r0, #8]
+ 300 0032 002B     		cmp	r3, #0
+ 301 0034 07DD     		ble	.L51
+ 302              	.L43:
+ 303 0036 FFF7FEFF 		bl	chSchRescheduleS
+ 304 003a FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 305 003e 0023     		movs	r3, #0
+ 306              		.syntax unified
+ 307              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 308 0040 83F31188 		MSR basepri, r3
+ 309              	@ 0 "" 2
+ 310              		.thumb
+ 311              		.syntax unified
+ 312 0044 08BD     		pop	{r3, pc}
+ 313              	.L51:
+ 314 0046 FFF7FEFF 		bl	chSemSignalI
+ 315 004a F4E7     		b	.L43
+ 316              	.L53:
+ 317              		.align	2
+ 318              	.L52:
+ 319 004c 00000240 		.word	1073872896
+ 320 0050 00000000 		.word	.LANCHOR1
+ 321 0054 00000000 		.word	.LANCHOR4
+ 322              		.size	usbStorage_enable_usb_storage, .-usbStorage_enable_usb_storage
+ 323              		.global	usb_storage_status
+ 324              		.section	.bss.isRunning,"aw",%nobits
+ 325              		.set	.LANCHOR0,. + 0
+ 326              		.type	isRunning, %object
+ 327              		.size	isRunning, 1
+ 328              	isRunning:
+ 329 0000 00       		.space	1
+ 330              		.section	.bss.usbStorageThreadPtr,"aw",%nobits
+ 331              		.align	2
+ 332              		.set	.LANCHOR3,. + 0
+ 333              		.type	usbStorageThreadPtr, %object
+ 334              		.size	usbStorageThreadPtr, 4
+ARM GAS  /tmp/cc8bWSO1.s 			page 7
+
+
+ 335              	usbStorageThreadPtr:
+ 336 0000 00000000 		.space	4
+ 337              		.section	.bss.usb_storage_status,"aw",%nobits
+ 338              		.align	2
+ 339              		.set	.LANCHOR1,. + 0
+ 340              		.type	usb_storage_status, %object
+ 341              		.size	usb_storage_status, 4
+ 342              	usb_storage_status:
+ 343 0000 00000000 		.space	4
+ 344              		.section	.bss.waThdUsbStorage,"aw",%nobits
+ 345              		.align	3
+ 346              		.type	waThdUsbStorage, %object
+ 347              		.size	waThdUsbStorage, 4568
+ 348              	waThdUsbStorage:
+ 349 0000 00000000 		.space	4568
+ 349      00000000 
+ 349      00000000 
+ 349      00000000 
+ 349      00000000 
+ 350              		.section	.data.bs_start_msd,"aw"
+ 351              		.align	2
+ 352              		.set	.LANCHOR4,. + 0
+ 353              		.type	bs_start_msd, %object
+ 354              		.size	bs_start_msd, 12
+ 355              	bs_start_msd:
+ 356 0000 00000000 		.word	bs_start_msd
+ 357 0004 00000000 		.word	bs_start_msd
+ 358 0008 00000000 		.word	0
+ 359              		.section	.data.msdConfig,"aw"
+ 360              		.align	2
+ 361              		.set	.LANCHOR2,. + 0
+ 362              		.type	msdConfig, %object
+ 363              		.size	msdConfig, 44
+ 364              	msdConfig:
+ 365 0000 00000000 		.word	USBD1
+ 366 0004 00000000 		.word	SDCD1
+ 367 0008 01       		.byte	1
+ 368 0009 000000   		.space	3
+ 369 000c 00000000 		.word	usbActivity
+ 370 0010 5070727A 		.ascii	"Pprz_sd\000"
+ 370      5F736400 
+ 371 0018 4175746F 		.ascii	"AutoPilot\000"
+ 371      50696C6F 
+ 371      7400
+ 372 0022 00000000 		.space	6
+ 372      0000
+ 373 0028 302E3200 		.ascii	"0.2\000"
+ 374              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cc8bWSO1.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 usbStorage.c
+     /tmp/cc8bWSO1.s:15     .text.usbActivity:0000000000000000 $t
+     /tmp/cc8bWSO1.s:23     .text.usbActivity:0000000000000000 usbActivity
+     /tmp/cc8bWSO1.s:38     .text.usbActivity:0000000000000010 $d
+     /tmp/cc8bWSO1.s:41     .rodata.thdUsbStorage.str1.4:0000000000000000 $d
+     /tmp/cc8bWSO1.s:48     .text.thdUsbStorage:0000000000000000 $t
+     /tmp/cc8bWSO1.s:55     .text.thdUsbStorage:0000000000000000 thdUsbStorage
+     /tmp/cc8bWSO1.s:150    .text.thdUsbStorage:00000000000000c4 $d
+     /tmp/cc8bWSO1.s:159    .text.usbStorageStartPolling:0000000000000000 $t
+     /tmp/cc8bWSO1.s:167    .text.usbStorageStartPolling:0000000000000000 usbStorageStartPolling
+     /tmp/cc8bWSO1.s:187    .text.usbStorageStartPolling:0000000000000020 $d
+     /tmp/cc8bWSO1.s:348    .bss.waThdUsbStorage:0000000000000000 waThdUsbStorage
+     /tmp/cc8bWSO1.s:192    .text.usbStorageWaitForDeconnexion:0000000000000000 $t
+     /tmp/cc8bWSO1.s:200    .text.usbStorageWaitForDeconnexion:0000000000000000 usbStorageWaitForDeconnexion
+     /tmp/cc8bWSO1.s:215    .text.usbStorageWaitForDeconnexion:0000000000000014 $d
+     /tmp/cc8bWSO1.s:218    .text.usbStorageStop:0000000000000000 $t
+     /tmp/cc8bWSO1.s:226    .text.usbStorageStop:0000000000000000 usbStorageStop
+     /tmp/cc8bWSO1.s:239    .text.usbStorageStop:000000000000000c $d
+     /tmp/cc8bWSO1.s:242    .text.usbStorageIsItRunning:0000000000000000 $t
+     /tmp/cc8bWSO1.s:250    .text.usbStorageIsItRunning:0000000000000000 usbStorageIsItRunning
+     /tmp/cc8bWSO1.s:260    .text.usbStorageIsItRunning:0000000000000008 $d
+     /tmp/cc8bWSO1.s:263    .text.usbStorage_enable_usb_storage:0000000000000000 $t
+     /tmp/cc8bWSO1.s:271    .text.usbStorage_enable_usb_storage:0000000000000000 usbStorage_enable_usb_storage
+     /tmp/cc8bWSO1.s:319    .text.usbStorage_enable_usb_storage:000000000000004c $d
+     /tmp/cc8bWSO1.s:342    .bss.usb_storage_status:0000000000000000 usb_storage_status
+     /tmp/cc8bWSO1.s:328    .bss.isRunning:0000000000000000 isRunning
+     /tmp/cc8bWSO1.s:329    .bss.isRunning:0000000000000000 $d
+     /tmp/cc8bWSO1.s:331    .bss.usbStorageThreadPtr:0000000000000000 $d
+     /tmp/cc8bWSO1.s:335    .bss.usbStorageThreadPtr:0000000000000000 usbStorageThreadPtr
+     /tmp/cc8bWSO1.s:338    .bss.usb_storage_status:0000000000000000 $d
+     /tmp/cc8bWSO1.s:345    .bss.waThdUsbStorage:0000000000000000 $d
+     /tmp/cc8bWSO1.s:351    .data.bs_start_msd:0000000000000000 $d
+     /tmp/cc8bWSO1.s:355    .data.bs_start_msd:0000000000000000 bs_start_msd
+     /tmp/cc8bWSO1.s:360    .data.msdConfig:0000000000000000 $d
+     /tmp/cc8bWSO1.s:364    .data.msdConfig:0000000000000000 msdConfig
+
+UNDEFINED SYMBOLS
+__stats_start_measure_crit_thd
+_pal_lld_enablepadevent
+__stats_stop_measure_crit_thd
+palWaitPadTimeout
+chThdSleep
+sdlog_chibios_finish
+sdio_connect
+init_msd_driver
+msd_register_evt_connected
+chEvtWaitOne
+pprz_terminate_autopilot_threads
+deinit_msd_driver
+mcu_reboot
+chThdExit
+ch0
+chThdCreateStatic
+chThdWait
+chThdTerminate
+chSchRescheduleS
+ARM GAS  /tmp/cc8bWSO1.s 			page 9
+
+
+chSemSignalI
+USBD1
+SDCD1

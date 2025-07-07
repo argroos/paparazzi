@@ -1,0 +1,784 @@
+ARM GAS  /tmp/cchA7UgS.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"ins_alt_float.c"
+  13              		.text
+  14              		.global	__aeabi_f2d
+  15              		.global	__aeabi_dcmpgt
+  16              		.section	.text.alt_kalman,"ax",%progbits
+  17              		.align	1
+  18              		.p2align 4,,15
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  24              		.type	alt_kalman, %function
+  25              	alt_kalman:
+  26              		@ args = 0, pretend = 0, frame = 0
+  27              		@ frame_needed = 0, uses_anonymous_args = 0
+  28 0000 38B5     		push	{r3, r4, r5, lr}
+  29 0002 394C     		ldr	r4, .L7+8
+  30 0004 394D     		ldr	r5, .L7+12
+  31 0006 2DED088B 		vpush.64	{d8, d9, d10, d11}
+  32 000a D4ED039A 		vldr.32	s19, [r4, #12]
+  33 000e 94ED029A 		vldr.32	s18, [r4, #8]
+  34 0012 94ED008A 		vldr.32	s16, [r4]
+  35 0016 D4ED018A 		vldr.32	s17, [r4, #4]
+  36 001a 95ED00AA 		vldr.32	s20, [r5]
+  37 001e D5ED01BA 		vldr.32	s23, [r5, #4]
+  38 0022 E9EEA08A 		vfma.f32	s17, s19, s1
+  39 0026 A9EE208A 		vfma.f32	s16, s18, s1
+  40 002a 60EEA07A 		vmul.f32	s15, s1, s1
+  41 002e A8EEA08A 		vfma.f32	s16, s17, s1
+  42 0032 27EEA07A 		vmul.f32	s14, s15, s1
+  43 0036 F5EE006A 		vmov.f32	s13, #2.5e-1
+  44 003a 27EE206A 		vmul.f32	s12, s14, s1
+  45 003e A9EEA09A 		vfma.f32	s18, s19, s1
+  46 0042 A6EE268A 		vfma.f32	s16, s12, s13
+  47 0046 B0EE00BA 		vmov.f32	s22, #2.0e+0
+  48 004a F6EE006A 		vmov.f32	s13, #5.0e-1
+  49 004e ABEEA0AA 		vfma.f32	s20, s23, s1
+  50 0052 E7EE268A 		vfma.f32	s17, s14, s13
+  51 0056 A7EE269A 		vfma.f32	s18, s14, s13
+  52 005a 38EE0BBA 		vadd.f32	s22, s16, s22
+  53 005e 77EEA99A 		vadd.f32	s19, s15, s19
+  54 0062 F0EECB7A 		vabs.f32	s15, s22
+  55 0066 17EE900A 		vmov	r0, s15
+  56 006a F0EE40AA 		vmov.f32	s21, s0
+  57 006e 85ED00AA 		vstr.32	s20, [r5]
+ARM GAS  /tmp/cchA7UgS.s 			page 2
+
+
+  58 0072 84ED008A 		vstr.32	s16, [r4]
+  59 0076 C4ED018A 		vstr.32	s17, [r4, #4]
+  60 007a 84ED029A 		vstr.32	s18, [r4, #8]
+  61 007e C4ED039A 		vstr.32	s19, [r4, #12]
+  62 0082 FFF7FEFF 		bl	__aeabi_f2d
+  63 0086 16A3     		adr	r3, .L7
+  64 0088 D3E90023 		ldrd	r2, [r3]
+  65 008c FFF7FEFF 		bl	__aeabi_dcmpgt
+  66 0090 18B3     		cbz	r0, .L1
+  67 0092 C8EE0B7A 		vdiv.f32	s15, s16, s22
+  68 0096 C9EE0B6A 		vdiv.f32	s13, s18, s22
+  69 009a 3AEECA0A 		vsub.f32	s0, s21, s20
+  70 009e B7EE007A 		vmov.f32	s14, #1.0e+0
+  71 00a2 37EE677A 		vsub.f32	s14, s14, s15
+  72 00a6 A7EE80AA 		vfma.f32	s20, s15, s0
+  73 00aa F0EE697A 		vmov.f32	s15, s19
+  74 00ae A8EE669A 		vfms.f32	s18, s16, s13
+  75 00b2 E8EEE67A 		vfms.f32	s15, s17, s13
+  76 00b6 E6EE80BA 		vfma.f32	s23, s13, s0
+  77 00ba 28EE078A 		vmul.f32	s16, s16, s14
+  78 00be 68EE878A 		vmul.f32	s17, s17, s14
+  79 00c2 85ED00AA 		vstr.32	s20, [r5]
+  80 00c6 C5ED01BA 		vstr.32	s23, [r5, #4]
+  81 00ca 84ED029A 		vstr.32	s18, [r4, #8]
+  82 00ce C4ED037A 		vstr.32	s15, [r4, #12]
+  83 00d2 84ED008A 		vstr.32	s16, [r4]
+  84 00d6 C4ED018A 		vstr.32	s17, [r4, #4]
+  85              	.L1:
+  86 00da BDEC088B 		vldm	sp!, {d8-d11}
+  87 00de 38BD     		pop	{r3, r4, r5, pc}
+  88              	.L8:
+  89              		.align	3
+  90              	.L7:
+  91 00e0 F168E388 		.word	-1998362383
+  92 00e4 B5F8E43E 		.word	1055193269
+  93 00e8 00000000 		.word	.LANCHOR1
+  94 00ec 00000000 		.word	.LANCHOR0
+  95              		.size	alt_kalman, .-alt_kalman
+  96              		.global	__aeabi_i2d
+  97              		.global	__aeabi_dadd
+  98              		.global	__aeabi_d2iz
+  99              		.section	.text.accel_cb,"ax",%progbits
+ 100              		.align	1
+ 101              		.p2align 4,,15
+ 102              		.syntax unified
+ 103              		.thumb
+ 104              		.thumb_func
+ 105              		.fpu fpv4-sp-d16
+ 106              		.type	accel_cb, %function
+ 107              	accel_cb:
+ 108              		@ args = 0, pretend = 0, frame = 16
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110 0000 30B5     		push	{r4, r5, lr}
+ 111 0002 194C     		ldr	r4, .L13+8
+ 112 0004 D2E90001 		ldrd	r0, r1, [r2]
+ 113 0008 94F8B031 		ldrb	r3, [r4, #432]	@ zero_extendqisi2
+ 114 000c C4E95D01 		strd	r0, r1, [r4, #372]
+ARM GAS  /tmp/cchA7UgS.s 			page 3
+
+
+ 115 0010 5B07     		lsls	r3, r3, #29
+ 116 0012 9168     		ldr	r1, [r2, #8]
+ 117 0014 C4F87C11 		str	r1, [r4, #380]
+ 118 0018 85B0     		sub	sp, sp, #20
+ 119 001a 1546     		mov	r5, r2
+ 120 001c 19D5     		bpl	.L12
+ 121              	.L10:
+ 122 001e 2A46     		mov	r2, r5
+ 123 0020 01A8     		add	r0, sp, #4
+ 124 0022 1249     		ldr	r1, .L13+12
+ 125 0024 FFF7FEFF 		bl	int32_rmat_transp_vmult
+ 126 0028 0398     		ldr	r0, [sp, #12]
+ 127 002a FFF7FEFF 		bl	__aeabi_i2d
+ 128 002e 0CA3     		adr	r3, .L13
+ 129 0030 D3E90023 		ldrd	r2, [r3]
+ 130 0034 FFF7FEFF 		bl	__aeabi_dadd
+ 131 0038 FFF7FEFF 		bl	__aeabi_d2iz
+ 132 003c DDE90112 		ldrd	r1, r2, [sp, #4]
+ 133 0040 0223     		movs	r3, #2
+ 134 0042 C4E96012 		strd	r1, r2, [r4, #384]
+ 135 0046 C4F88801 		str	r0, [r4, #392]
+ 136 004a 84F87031 		strb	r3, [r4, #368]
+ 137 004e 05B0     		add	sp, sp, #20
+ 138              		@ sp needed
+ 139 0050 30BD     		pop	{r4, r5, pc}
+ 140              	.L12:
+ 141 0052 04F5D870 		add	r0, r4, #432
+ 142 0056 FFF7FEFF 		bl	orientationCalcRMat_i
+ 143 005a E0E7     		b	.L10
+ 144              	.L14:
+ 145 005c AFF30080 		.align	3
+ 146              	.L13:
+ 147 0060 1F85EB51 		.word	1374389535
+ 148 0064 B89EC340 		.word	1086561976
+ 149 0068 00000000 		.word	state
+ 150 006c D0010000 		.word	state+464
+ 151              		.size	accel_cb, .-accel_cb
+ 152              		.section	.text.ins_alt_float_init,"ax",%progbits
+ 153              		.align	1
+ 154              		.p2align 4,,15
+ 155              		.global	ins_alt_float_init
+ 156              		.syntax unified
+ 157              		.thumb
+ 158              		.thumb_func
+ 159              		.fpu fpv4-sp-d16
+ 160              		.type	ins_alt_float_init, %function
+ 161              	ins_alt_float_init:
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164 0000 10B5     		push	{r4, lr}
+ 165 0002 354B     		ldr	r3, .L20
+ 166 0004 3549     		ldr	r1, .L20+4
+ 167 0006 364A     		ldr	r2, .L20+8
+ 168 0008 91ED007A 		vldr.32	s14, [r1]	@ int
+ 169 000c D2ED007A 		vldr.32	s15, [r2]	@ int
+ 170 0010 B3F81411 		ldrh	r1, [r3, #276]
+ 171 0014 93F87021 		ldrb	r2, [r3, #368]	@ zero_extendqisi2
+ARM GAS  /tmp/cchA7UgS.s 			page 4
+
+
+ 172 0018 324C     		ldr	r4, .L20+12
+ 173 001a 3348     		ldr	r0, .L20+16
+ 174 001c 9FED330A 		vldr.32	s0, .L20+20
+ 175 0020 D4F800C0 		ldr	ip, [r4]	@ float
+ 176 0024 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 177 0026 83F8F400 		strb	r0, [r3, #244]
+ 178 002a B8EEC77A 		vcvt.f32.s32	s14, s14
+ 179 002e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 180 0032 21F0C601 		bic	r1, r1, #198
+ 181 0036 22F00A02 		bic	r2, r2, #10
+ 182 003a A3F81411 		strh	r1, [r3, #276]	@ movhi
+ 183 003e 83F87021 		strb	r2, [r3, #368]
+ 184 0042 4FF40071 		mov	r1, #512
+ 185 0046 2A4A     		ldr	r2, .L20+24
+ 186 0048 83F88400 		strb	r0, [r3, #132]
+ 187 004c 0124     		movs	r4, #1
+ 188 004e 1980     		strh	r1, [r3]	@ movhi
+ 189 0050 83ED3A7A 		vstr.32	s14, [r3, #232]
+ 190 0054 4FF07E51 		mov	r1, #1065353216
+ 191 0058 C3ED3B7A 		vstr.32	s15, [r3, #236]
+ 192 005c C3F8F0C0 		str	ip, [r3, #240]	@ float
+ 193 0060 83F8F840 		strb	r4, [r3, #248]
+ 194 0064 83ED1E7A 		vstr.32	s14, [r3, #120]
+ 195 0068 C3ED1F7A 		vstr.32	s15, [r3, #124]
+ 196 006c C3F880C0 		str	ip, [r3, #128]	@ float
+ 197 0070 204B     		ldr	r3, .L20+28
+ 198 0072 1160     		str	r1, [r2]	@ float
+ 199 0074 D160     		str	r1, [r2, #12]	@ float
+ 200 0076 82ED010A 		vstr.32	s0, [r2, #4]
+ 201 007a 82ED020A 		vstr.32	s0, [r2, #8]
+ 202 007e 4FF48072 		mov	r2, #256
+ 203 0082 1A81     		strh	r2, [r3, #8]	@ movhi
+ 204 0084 0020     		movs	r0, #0
+ 205 0086 DFED1C0A 		vldr.32	s1, .L20+32
+ 206 008a 83ED030A 		vstr.32	s0, [r3, #12]
+ 207 008e 1875     		strb	r0, [r3, #20]
+ 208 0090 83ED040A 		vstr.32	s0, [r3, #16]
+ 209 0094 FFF7FEFF 		bl	alt_kalman
+ 210 0098 184B     		ldr	r3, .L20+36
+ 211 009a 194A     		ldr	r2, .L20+40
+ 212 009c 1968     		ldr	r1, [r3]
+ 213 009e 9142     		cmp	r1, r2
+ 214 00a0 04D0     		beq	.L16
+ 215 00a2 1848     		ldr	r0, .L20+44
+ 216 00a4 1470     		strb	r4, [r2]
+ 217 00a6 C2E90101 		strd	r0, r1, [r2, #4]
+ 218 00aa 1A60     		str	r2, [r3]
+ 219              	.L16:
+ 220 00ac 996A     		ldr	r1, [r3, #40]
+ 221 00ae 164A     		ldr	r2, .L20+48
+ 222 00b0 9142     		cmp	r1, r2
+ 223 00b2 05D0     		beq	.L17
+ 224 00b4 1548     		ldr	r0, .L20+52
+ 225 00b6 9A62     		str	r2, [r3, #40]
+ 226 00b8 C2E90101 		strd	r0, r1, [r2, #4]
+ 227 00bc 0C24     		movs	r4, #12
+ 228 00be 1470     		strb	r4, [r2]
+ARM GAS  /tmp/cchA7UgS.s 			page 5
+
+
+ 229              	.L17:
+ 230 00c0 5969     		ldr	r1, [r3, #20]
+ 231 00c2 134A     		ldr	r2, .L20+56
+ 232 00c4 9142     		cmp	r1, r2
+ 233 00c6 05D0     		beq	.L15
+ 234 00c8 1248     		ldr	r0, .L20+60
+ 235 00ca 5A61     		str	r2, [r3, #20]
+ 236 00cc C2E90101 		strd	r0, r1, [r2, #4]
+ 237 00d0 FF24     		movs	r4, #255
+ 238 00d2 1470     		strb	r4, [r2]
+ 239              	.L15:
+ 240 00d4 10BD     		pop	{r4, pc}
+ 241              	.L21:
+ 242 00d6 00BF     		.align	2
+ 243              	.L20:
+ 244 00d8 00000000 		.word	state
+ 245 00dc 00000000 		.word	nav_utm_north0
+ 246 00e0 00000000 		.word	nav_utm_east0
+ 247 00e4 00000000 		.word	ground_alt
+ 248 00e8 00000000 		.word	nav_utm_zone0
+ 249 00ec 00000000 		.word	0
+ 250 00f0 00000000 		.word	.LANCHOR1
+ 251 00f4 00000000 		.word	.LANCHOR0
+ 252 00f8 CDCCCC3D 		.word	1036831949
+ 253 00fc 00000000 		.word	abi_queues
+ 254 0100 00000000 		.word	.LANCHOR2
+ 255 0104 00000000 		.word	baro_cb
+ 256 0108 00000000 		.word	.LANCHOR3
+ 257 010c 00000000 		.word	gps_cb
+ 258 0110 00000000 		.word	.LANCHOR4
+ 259 0114 00000000 		.word	accel_cb
+ 260              		.size	ins_alt_float_init, .-ins_alt_float_init
+ 261              		.section	.text.ins_reset_local_origin,"ax",%progbits
+ 262              		.align	1
+ 263              		.p2align 4,,15
+ 264              		.global	ins_reset_local_origin
+ 265              		.syntax unified
+ 266              		.thumb
+ 267              		.thumb_func
+ 268              		.fpu fpv4-sp-d16
+ 269              		.type	ins_reset_local_origin, %function
+ 270              	ins_reset_local_origin:
+ 271              		@ args = 0, pretend = 0, frame = 16
+ 272              		@ frame_needed = 0, uses_anonymous_args = 0
+ 273 0000 30B5     		push	{r4, r5, lr}
+ 274 0002 85B0     		sub	sp, sp, #20
+ 275 0004 6D46     		mov	r5, sp
+ 276 0006 2846     		mov	r0, r5
+ 277 0008 1149     		ldr	r1, .L24
+ 278 000a 124C     		ldr	r4, .L24+4
+ 279 000c 0022     		movs	r2, #0
+ 280 000e FFF7FEFF 		bl	utm_float_from_gps
+ 281 0012 95E80F00 		ldm	r5, {r0, r1, r2, r3}
+ 282 0016 04F1E80C 		add	ip, r4, #232
+ 283 001a 8CE80F00 		stm	ip, {r0, r1, r2, r3}
+ 284 001e B4F81421 		ldrh	r2, [r4, #276]
+ 285 0022 2188     		ldrh	r1, [r4]
+ARM GAS  /tmp/cchA7UgS.s 			page 6
+
+
+ 286 0024 94F87031 		ldrb	r3, [r4, #368]	@ zero_extendqisi2
+ 287 0028 0B48     		ldr	r0, .L24+8
+ 288 002a 22F0C602 		bic	r2, r2, #198
+ 289 002e 0125     		movs	r5, #1
+ 290 0030 21F0C601 		bic	r1, r1, #198
+ 291 0034 23F00A03 		bic	r3, r3, #10
+ 292 0038 A4F81421 		strh	r2, [r4, #276]	@ movhi
+ 293 003c 40F20112 		movw	r2, #257
+ 294 0040 84F8F850 		strb	r5, [r4, #248]
+ 295 0044 2180     		strh	r1, [r4]	@ movhi
+ 296 0046 84F87031 		strb	r3, [r4, #368]
+ 297 004a 0281     		strh	r2, [r0, #8]	@ movhi
+ 298 004c 05B0     		add	sp, sp, #20
+ 299              		@ sp needed
+ 300 004e 30BD     		pop	{r4, r5, pc}
+ 301              	.L25:
+ 302              		.align	2
+ 303              	.L24:
+ 304 0050 00000000 		.word	gps
+ 305 0054 00000000 		.word	state
+ 306 0058 00000000 		.word	.LANCHOR0
+ 307              		.size	ins_reset_local_origin, .-ins_reset_local_origin
+ 308              		.section	.text.ins_alt_float_update_gps.part.0,"ax",%progbits
+ 309              		.align	1
+ 310              		.p2align 4,,15
+ 311              		.syntax unified
+ 312              		.thumb
+ 313              		.thumb_func
+ 314              		.fpu fpv4-sp-d16
+ 315              		.type	ins_alt_float_update_gps.part.0, %function
+ 316              	ins_alt_float_update_gps.part.0:
+ 317              		@ args = 0, pretend = 0, frame = 40
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 319 0000 30B5     		push	{r4, r5, lr}
+ 320 0002 194C     		ldr	r4, .L30
+ 321 0004 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
+ 322 0006 8BB0     		sub	sp, sp, #44
+ 323 0008 0146     		mov	r1, r0
+ 324 000a 3BB3     		cbz	r3, .L29
+ 325              	.L27:
+ 326 000c 174B     		ldr	r3, .L30+4
+ 327 000e 0191     		str	r1, [sp, #4]
+ 328 0010 06AD     		add	r5, sp, #24
+ 329 0012 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 330 0014 2846     		mov	r0, r5
+ 331 0016 FFF7FEFF 		bl	utm_float_from_gps
+ 332 001a 0199     		ldr	r1, [sp, #4]
+ 333 001c 03A8     		add	r0, sp, #12
+ 334 001e FFF7FEFF 		bl	ned_vel_float_from_gps
+ 335 0022 2368     		ldr	r3, [r4]	@ float
+ 336 0024 D4ED017A 		vldr.32	s15, [r4, #4]
+ 337 0028 114C     		ldr	r4, .L30+8
+ 338 002a 0893     		str	r3, [sp, #32]	@ float
+ 339 002c 4023     		movs	r3, #64
+ 340 002e A4F81431 		strh	r3, [r4, #276]	@ movhi
+ 341 0032 95E80F00 		ldm	r5, {r0, r1, r2, r3}
+ 342 0036 04F1780C 		add	ip, r4, #120
+ARM GAS  /tmp/cchA7UgS.s 			page 7
+
+
+ 343 003a 8CE80F00 		stm	ip, {r0, r1, r2, r3}
+ 344 003e 039A     		ldr	r2, [sp, #12]	@ float
+ 345 0040 049B     		ldr	r3, [sp, #16]	@ float
+ 346 0042 C4F85021 		str	r2, [r4, #336]	@ float
+ 347 0046 F1EE677A 		vneg.f32	s15, s15
+ 348 004a 4FF40071 		mov	r1, #512
+ 349 004e C4ED567A 		vstr.32	s15, [r4, #344]
+ 350 0052 2180     		strh	r1, [r4]	@ movhi
+ 351 0054 C4F85431 		str	r3, [r4, #340]	@ float
+ 352 0058 0BB0     		add	sp, sp, #44
+ 353              		@ sp needed
+ 354 005a 30BD     		pop	{r4, r5, pc}
+ 355              	.L29:
+ 356 005c 0190     		str	r0, [sp, #4]
+ 357 005e FFF7FEFF 		bl	ins_reset_local_origin
+ 358 0062 0199     		ldr	r1, [sp, #4]
+ 359 0064 D2E7     		b	.L27
+ 360              	.L31:
+ 361 0066 00BF     		.align	2
+ 362              	.L30:
+ 363 0068 00000000 		.word	.LANCHOR0
+ 364 006c 00000000 		.word	nav_utm_zone0
+ 365 0070 00000000 		.word	state
+ 366              		.size	ins_alt_float_update_gps.part.0, .-ins_alt_float_update_gps.part.0
+ 367              		.section	.text.gps_cb,"ax",%progbits
+ 368              		.align	1
+ 369              		.p2align 4,,15
+ 370              		.syntax unified
+ 371              		.thumb
+ 372              		.thumb_func
+ 373              		.fpu fpv4-sp-d16
+ 374              		.type	gps_cb, %function
+ 375              	gps_cb:
+ 376              		@ args = 0, pretend = 0, frame = 0
+ 377              		@ frame_needed = 0, uses_anonymous_args = 0
+ 378              		@ link register save eliminated.
+ 379 0000 92F86730 		ldrb	r3, [r2, #103]	@ zero_extendqisi2
+ 380 0004 022B     		cmp	r3, #2
+ 381 0006 1046     		mov	r0, r2
+ 382 0008 01D9     		bls	.L32
+ 383 000a FFF7FEBF 		b	ins_alt_float_update_gps.part.0
+ 384              	.L32:
+ 385 000e 7047     		bx	lr
+ 386              		.size	gps_cb, .-gps_cb
+ 387              		.section	.text.ins_reset_altitude_ref,"ax",%progbits
+ 388              		.align	1
+ 389              		.p2align 4,,15
+ 390              		.global	ins_reset_altitude_ref
+ 391              		.syntax unified
+ 392              		.thumb
+ 393              		.thumb_func
+ 394              		.fpu fpv4-sp-d16
+ 395              		.type	ins_reset_altitude_ref, %function
+ 396              	ins_reset_altitude_ref:
+ 397              		@ args = 0, pretend = 0, frame = 16
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 399 0000 184A     		ldr	r2, .L36
+ARM GAS  /tmp/cchA7UgS.s 			page 8
+
+
+ 400 0002 194B     		ldr	r3, .L36+4
+ 401 0004 D2ED0B7A 		vldr.32	s15, [r2, #44]	@ int
+ 402 0008 DFED186A 		vldr.32	s13, .L36+8
+ 403 000c B3F81421 		ldrh	r2, [r3, #276]
+ 404 0010 1988     		ldrh	r1, [r3]
+ 405 0012 00B5     		push	{lr}
+ 406 0014 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 407 0018 22F0C602 		bic	r2, r2, #198
+ 408 001c 87EEA67A 		vdiv.f32	s14, s15, s13
+ 409 0020 A3F81421 		strh	r2, [r3, #276]	@ movhi
+ 410 0024 93F87021 		ldrb	r2, [r3, #368]	@ zero_extendqisi2
+ 411 0028 21F0C601 		bic	r1, r1, #198
+ 412 002c 1980     		strh	r1, [r3]	@ movhi
+ 413 002e 22F00A02 		bic	r2, r2, #10
+ 414 0032 0F49     		ldr	r1, .L36+12
+ 415 0034 83F87021 		strb	r2, [r3, #368]
+ 416 0038 03F1E80C 		add	ip, r3, #232
+ 417 003c 0122     		movs	r2, #1
+ 418 003e 83F8F820 		strb	r2, [r3, #248]
+ 419 0042 0A72     		strb	r2, [r1, #8]
+ 420 0044 9CE80F00 		ldm	ip, {r0, r1, r2, r3}
+ 421 0048 85B0     		sub	sp, sp, #20
+ 422 004a EE46     		mov	lr, sp
+ 423 004c 8EE80F00 		stm	lr, {r0, r1, r2, r3}
+ 424 0050 8DED027A 		vstr.32	s14, [sp, #8]
+ 425 0054 9EE80F00 		ldm	lr, {r0, r1, r2, r3}
+ 426 0058 8CE80F00 		stm	ip, {r0, r1, r2, r3}
+ 427 005c 05B0     		add	sp, sp, #20
+ 428              		@ sp needed
+ 429 005e 5DF804FB 		ldr	pc, [sp], #4
+ 430              	.L37:
+ 431 0062 00BF     		.align	2
+ 432              	.L36:
+ 433 0064 00000000 		.word	gps
+ 434 0068 00000000 		.word	state
+ 435 006c 00007A44 		.word	1148846080
+ 436 0070 00000000 		.word	.LANCHOR0
+ 437              		.size	ins_reset_altitude_ref, .-ins_reset_altitude_ref
+ 438              		.section	.text.ins_alt_float_update_baro,"ax",%progbits
+ 439              		.align	1
+ 440              		.p2align 4,,15
+ 441              		.global	ins_alt_float_update_baro
+ 442              		.syntax unified
+ 443              		.thumb
+ 444              		.thumb_func
+ 445              		.fpu fpv4-sp-d16
+ 446              		.type	ins_alt_float_update_baro, %function
+ 447              	ins_alt_float_update_baro:
+ 448              		@ args = 0, pretend = 0, frame = 0
+ 449              		@ frame_needed = 0, uses_anonymous_args = 0
+ 450 0000 38B5     		push	{r3, r4, r5, lr}
+ 451 0002 2DED028B 		vpush.64	{d8}
+ 452 0006 08EE100A 		vmov	s16, r0
+ 453 000a FFF7FEFF 		bl	get_sys_time_usec
+ 454 000e 524A     		ldr	r2, .L65+8
+ 455 0010 9FED527A 		vldr.32	s14, .L65+12
+ 456 0014 1368     		ldr	r3, [r2]
+ARM GAS  /tmp/cchA7UgS.s 			page 9
+
+
+ 457 0016 1060     		str	r0, [r2]
+ 458 0018 C31A     		subs	r3, r0, r3
+ 459 001a 07EE903A 		vmov	s15, r3	@ int
+ 460 001e F8EE677A 		vcvt.f32.u32	s15, s15
+ 461 0022 C7EE878A 		vdiv.f32	s17, s15, s14
+ 462 0026 18EE900A 		vmov	r0, s17
+ 463 002a FFF7FEFF 		bl	__aeabi_f2d
+ 464 002e 48A3     		adr	r3, .L65
+ 465 0030 D3E90023 		ldrd	r2, [r3]
+ 466 0034 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 467 0038 20B3     		cbz	r0, .L58
+ 468 003a F7EE007A 		vmov.f32	s15, #1.0e+0
+ 469 003e F4EEE78A 		vcmpe.f32	s17, s15
+ 470 0042 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 471 0046 58BF     		it	pl
+ 472 0048 F0EE678A 		vmovpl.f32	s17, s15
+ 473              	.L39:
+ 474 004c 444C     		ldr	r4, .L65+16
+ 475 004e 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
+ 476 0050 1BB9     		cbnz	r3, .L41
+ 477 0052 0123     		movs	r3, #1
+ 478 0054 84ED038A 		vstr.32	s16, [r4, #12]
+ 479 0058 2375     		strb	r3, [r4, #20]
+ 480              	.L41:
+ 481 005a 237A     		ldrb	r3, [r4, #8]	@ zero_extendqisi2
+ 482 005c ABB1     		cbz	r3, .L42
+ 483 005e 84ED038A 		vstr.32	s16, [r4, #12]
+ 484 0062 BDEC028B 		vldm	sp!, {d8}
+ 485 0066 3F49     		ldr	r1, .L65+20
+ 486 0068 3F4B     		ldr	r3, .L65+24
+ 487 006a 0868     		ldr	r0, [r1]	@ float
+ 488 006c 2060     		str	r0, [r4]	@ float
+ 489 006e 0022     		movs	r2, #0
+ 490 0070 4FF07E51 		mov	r1, #1065353216
+ 491 0074 0025     		movs	r5, #0
+ 492 0076 2572     		strb	r5, [r4, #8]
+ 493 0078 6260     		str	r2, [r4, #4]	@ float
+ 494 007a 1960     		str	r1, [r3]	@ float
+ 495 007c 5A60     		str	r2, [r3, #4]	@ float
+ 496 007e 9A60     		str	r2, [r3, #8]	@ float
+ 497 0080 D960     		str	r1, [r3, #12]	@ float
+ 498 0082 38BD     		pop	{r3, r4, r5, pc}
+ 499              	.L58:
+ 500 0084 DFED398A 		vldr.32	s17, .L65+28
+ 501 0088 E0E7     		b	.L39
+ 502              	.L42:
+ 503 008a B5EEC08A 		vcmpe.f32	s16, #0
+ 504 008e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 505 0092 06DD     		ble	.L60
+ 506 0094 D4ED037A 		vldr.32	s15, [r4, #12]
+ 507 0098 F5EEC07A 		vcmpe.f32	s15, #0
+ 508 009c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 509 00a0 2EDC     		bgt	.L62
+ 510              	.L60:
+ 511 00a2 9FED330A 		vldr.32	s0, .L65+32
+ 512              	.L44:
+ 513 00a6 2F4B     		ldr	r3, .L65+20
+ARM GAS  /tmp/cchA7UgS.s 			page 10
+
+
+ 514 00a8 324D     		ldr	r5, .L65+36
+ 515 00aa D3ED007A 		vldr.32	s15, [r3]
+ 516 00ae 30EE270A 		vadd.f32	s0, s0, s15
+ 517 00b2 F0EE680A 		vmov.f32	s1, s17
+ 518 00b6 84ED040A 		vstr.32	s0, [r4, #16]
+ 519 00ba FFF7FEFF 		bl	alt_kalman
+ 520 00be 2B88     		ldrh	r3, [r5]
+ 521 00c0 9B05     		lsls	r3, r3, #22
+ 522 00c2 2DD5     		bpl	.L63
+ 523 00c4 95ED1E8A 		vldr.32	s16, [r5, #120]
+ 524              	.L48:
+ 525 00c8 D5ED1F8A 		vldr.32	s17, [r5, #124]
+ 526              	.L50:
+ 527 00cc B5F81431 		ldrh	r3, [r5, #276]
+ 528 00d0 2268     		ldr	r2, [r4]	@ float
+ 529 00d2 85ED1E8A 		vstr.32	s16, [r5, #120]
+ 530 00d6 4FF40071 		mov	r1, #512
+ 531 00da 5B06     		lsls	r3, r3, #25
+ 532 00dc 2980     		strh	r1, [r5]	@ movhi
+ 533 00de C5ED1F8A 		vstr.32	s17, [r5, #124]
+ 534 00e2 C5F88020 		str	r2, [r5, #128]	@ float
+ 535 00e6 18D5     		bpl	.L64
+ 536              	.L51:
+ 537 00e8 BDEC028B 		vldm	sp!, {d8}
+ 538 00ec D4ED017A 		vldr.32	s15, [r4, #4]
+ 539 00f0 4023     		movs	r3, #64
+ 540 00f2 F1EE677A 		vneg.f32	s15, s15
+ 541 00f6 C5ED567A 		vstr.32	s15, [r5, #344]
+ 542 00fa A5F81431 		strh	r3, [r5, #276]	@ movhi
+ 543 00fe 38BD     		pop	{r3, r4, r5, pc}
+ 544              	.L62:
+ 545 0100 C7EE887A 		vdiv.f32	s15, s15, s16
+ 546 0104 17EE900A 		vmov	r0, s15
+ 547 0108 FFF7FEFF 		bl	logf
+ 548 010c 9FED1A0A 		vldr.32	s0, .L65+40
+ 549 0110 07EE900A 		vmov	s15, r0
+ 550 0114 27EE800A 		vmul.f32	s0, s15, s0
+ 551 0118 C5E7     		b	.L44
+ 552              	.L64:
+ 553 011a FFF7FEFF 		bl	stateCalcSpeedNed_f
+ 554 011e E3E7     		b	.L51
+ 555              	.L63:
+ 556 0120 FFF7FEFF 		bl	stateCalcPositionUtm_f
+ 557 0124 2B88     		ldrh	r3, [r5]
+ 558 0126 95ED1E8A 		vldr.32	s16, [r5, #120]
+ 559 012a 9805     		lsls	r0, r3, #22
+ 560 012c CCD4     		bmi	.L48
+ 561 012e FFF7FEFF 		bl	stateCalcPositionUtm_f
+ 562 0132 2B88     		ldrh	r3, [r5]
+ 563 0134 D5ED1F8A 		vldr.32	s17, [r5, #124]
+ 564 0138 9905     		lsls	r1, r3, #22
+ 565 013a C7D4     		bmi	.L50
+ 566 013c FFF7FEFF 		bl	stateCalcPositionUtm_f
+ 567 0140 2B88     		ldrh	r3, [r5]
+ 568 0142 9A05     		lsls	r2, r3, #22
+ 569 0144 C2D4     		bmi	.L50
+ 570 0146 FFF7FEFF 		bl	stateCalcPositionUtm_f
+ARM GAS  /tmp/cchA7UgS.s 			page 11
+
+
+ 571 014a BFE7     		b	.L50
+ 572              	.L66:
+ 573 014c AFF30080 		.align	3
+ 574              	.L65:
+ 575 0150 FCA9F1D2 		.word	-755914244
+ 576 0154 4D62603F 		.word	1063281229
+ 577 0158 00000000 		.word	.LANCHOR5
+ 578 015c 00247449 		.word	1232348160
+ 579 0160 00000000 		.word	.LANCHOR0
+ 580 0164 00000000 		.word	ground_alt
+ 581 0168 00000000 		.word	.LANCHOR1
+ 582 016c 6F12033B 		.word	990057071
+ 583 0170 00000000 		.word	0
+ 584 0174 00000000 		.word	state
+ 585 0178 ACCA0346 		.word	1174653612
+ 586              		.size	ins_alt_float_update_baro, .-ins_alt_float_update_baro
+ 587              		.section	.text.baro_cb,"ax",%progbits
+ 588              		.align	1
+ 589              		.p2align 4,,15
+ 590              		.syntax unified
+ 591              		.thumb
+ 592              		.thumb_func
+ 593              		.fpu fpv4-sp-d16
+ 594              		.type	baro_cb, %function
+ 595              	baro_cb:
+ 596              		@ args = 0, pretend = 0, frame = 0
+ 597              		@ frame_needed = 0, uses_anonymous_args = 0
+ 598              		@ link register save eliminated.
+ 599 0000 1046     		mov	r0, r2	@ float
+ 600 0002 FFF7FEBF 		b	ins_alt_float_update_baro
+ 601              		.size	baro_cb, .-baro_cb
+ 602 0006 00BF     		.section	.text.ins_alt_float_update_gps,"ax",%progbits
+ 603              		.align	1
+ 604              		.p2align 4,,15
+ 605              		.global	ins_alt_float_update_gps
+ 606              		.syntax unified
+ 607              		.thumb
+ 608              		.thumb_func
+ 609              		.fpu fpv4-sp-d16
+ 610              		.type	ins_alt_float_update_gps, %function
+ 611              	ins_alt_float_update_gps:
+ 612              		@ args = 0, pretend = 0, frame = 0
+ 613              		@ frame_needed = 0, uses_anonymous_args = 0
+ 614              		@ link register save eliminated.
+ 615 0000 90F86730 		ldrb	r3, [r0, #103]	@ zero_extendqisi2
+ 616 0004 022B     		cmp	r3, #2
+ 617 0006 01D9     		bls	.L68
+ 618 0008 FFF7FEBF 		b	ins_alt_float_update_gps.part.0
+ 619              	.L68:
+ 620 000c 7047     		bx	lr
+ 621              		.size	ins_alt_float_update_gps, .-ins_alt_float_update_gps
+ 622              		.global	baro_ev
+ 623              		.global	ins_altf
+ 624 000e 00BF     		.section	.bss.accel_ev,"aw",%nobits
+ 625              		.align	2
+ 626              		.set	.LANCHOR4,. + 0
+ 627              		.type	accel_ev, %object
+ARM GAS  /tmp/cchA7UgS.s 			page 12
+
+
+ 628              		.size	accel_ev, 12
+ 629              	accel_ev:
+ 630 0000 00000000 		.space	12
+ 630      00000000 
+ 630      00000000 
+ 631              		.section	.bss.baro_ev,"aw",%nobits
+ 632              		.align	2
+ 633              		.set	.LANCHOR2,. + 0
+ 634              		.type	baro_ev, %object
+ 635              		.size	baro_ev, 12
+ 636              	baro_ev:
+ 637 0000 00000000 		.space	12
+ 637      00000000 
+ 637      00000000 
+ 638              		.section	.bss.gps_ev,"aw",%nobits
+ 639              		.align	2
+ 640              		.set	.LANCHOR3,. + 0
+ 641              		.type	gps_ev, %object
+ 642              		.size	gps_ev, 12
+ 643              	gps_ev:
+ 644 0000 00000000 		.space	12
+ 644      00000000 
+ 644      00000000 
+ 645              		.section	.bss.ins_altf,"aw",%nobits
+ 646              		.align	2
+ 647              		.set	.LANCHOR0,. + 0
+ 648              		.type	ins_altf, %object
+ 649              		.size	ins_altf, 24
+ 650              	ins_altf:
+ 651 0000 00000000 		.space	24
+ 651      00000000 
+ 651      00000000 
+ 651      00000000 
+ 651      00000000 
+ 652              		.section	.bss.last_ts.0,"aw",%nobits
+ 653              		.align	2
+ 654              		.set	.LANCHOR5,. + 0
+ 655              		.type	last_ts.0, %object
+ 656              		.size	last_ts.0, 4
+ 657              	last_ts.0:
+ 658 0000 00000000 		.space	4
+ 659              		.section	.bss.p,"aw",%nobits
+ 660              		.align	2
+ 661              		.set	.LANCHOR1,. + 0
+ 662              		.type	p, %object
+ 663              		.size	p, 16
+ 664              	p:
+ 665 0000 00000000 		.space	16
+ 665      00000000 
+ 665      00000000 
+ 665      00000000 
+ 666              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cchA7UgS.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ins_alt_float.c
+     /tmp/cchA7UgS.s:17     .text.alt_kalman:0000000000000000 $t
+     /tmp/cchA7UgS.s:25     .text.alt_kalman:0000000000000000 alt_kalman
+     /tmp/cchA7UgS.s:91     .text.alt_kalman:00000000000000e0 $d
+     /tmp/cchA7UgS.s:100    .text.accel_cb:0000000000000000 $t
+     /tmp/cchA7UgS.s:107    .text.accel_cb:0000000000000000 accel_cb
+     /tmp/cchA7UgS.s:147    .text.accel_cb:0000000000000060 $d
+     /tmp/cchA7UgS.s:153    .text.ins_alt_float_init:0000000000000000 $t
+     /tmp/cchA7UgS.s:161    .text.ins_alt_float_init:0000000000000000 ins_alt_float_init
+     /tmp/cchA7UgS.s:244    .text.ins_alt_float_init:00000000000000d8 $d
+     /tmp/cchA7UgS.s:595    .text.baro_cb:0000000000000000 baro_cb
+     /tmp/cchA7UgS.s:375    .text.gps_cb:0000000000000000 gps_cb
+     /tmp/cchA7UgS.s:262    .text.ins_reset_local_origin:0000000000000000 $t
+     /tmp/cchA7UgS.s:270    .text.ins_reset_local_origin:0000000000000000 ins_reset_local_origin
+     /tmp/cchA7UgS.s:304    .text.ins_reset_local_origin:0000000000000050 $d
+     /tmp/cchA7UgS.s:309    .text.ins_alt_float_update_gps.part.0:0000000000000000 $t
+     /tmp/cchA7UgS.s:316    .text.ins_alt_float_update_gps.part.0:0000000000000000 ins_alt_float_update_gps.part.0
+     /tmp/cchA7UgS.s:363    .text.ins_alt_float_update_gps.part.0:0000000000000068 $d
+     /tmp/cchA7UgS.s:368    .text.gps_cb:0000000000000000 $t
+     /tmp/cchA7UgS.s:388    .text.ins_reset_altitude_ref:0000000000000000 $t
+     /tmp/cchA7UgS.s:396    .text.ins_reset_altitude_ref:0000000000000000 ins_reset_altitude_ref
+     /tmp/cchA7UgS.s:433    .text.ins_reset_altitude_ref:0000000000000064 $d
+     /tmp/cchA7UgS.s:439    .text.ins_alt_float_update_baro:0000000000000000 $t
+     /tmp/cchA7UgS.s:447    .text.ins_alt_float_update_baro:0000000000000000 ins_alt_float_update_baro
+     /tmp/cchA7UgS.s:575    .text.ins_alt_float_update_baro:0000000000000150 $d
+     /tmp/cchA7UgS.s:588    .text.baro_cb:0000000000000000 $t
+     /tmp/cchA7UgS.s:603    .text.ins_alt_float_update_gps:0000000000000000 $t
+     /tmp/cchA7UgS.s:611    .text.ins_alt_float_update_gps:0000000000000000 ins_alt_float_update_gps
+     /tmp/cchA7UgS.s:636    .bss.baro_ev:0000000000000000 baro_ev
+     /tmp/cchA7UgS.s:650    .bss.ins_altf:0000000000000000 ins_altf
+     /tmp/cchA7UgS.s:625    .bss.accel_ev:0000000000000000 $d
+     /tmp/cchA7UgS.s:629    .bss.accel_ev:0000000000000000 accel_ev
+     /tmp/cchA7UgS.s:632    .bss.baro_ev:0000000000000000 $d
+     /tmp/cchA7UgS.s:639    .bss.gps_ev:0000000000000000 $d
+     /tmp/cchA7UgS.s:643    .bss.gps_ev:0000000000000000 gps_ev
+     /tmp/cchA7UgS.s:646    .bss.ins_altf:0000000000000000 $d
+     /tmp/cchA7UgS.s:653    .bss.last_ts.0:0000000000000000 $d
+     /tmp/cchA7UgS.s:657    .bss.last_ts.0:0000000000000000 last_ts.0
+     /tmp/cchA7UgS.s:660    .bss.p:0000000000000000 $d
+     /tmp/cchA7UgS.s:664    .bss.p:0000000000000000 p
+
+UNDEFINED SYMBOLS
+__aeabi_f2d
+__aeabi_dcmpgt
+__aeabi_i2d
+__aeabi_dadd
+__aeabi_d2iz
+int32_rmat_transp_vmult
+orientationCalcRMat_i
+state
+nav_utm_north0
+nav_utm_east0
+ground_alt
+nav_utm_zone0
+abi_queues
+utm_float_from_gps
+ARM GAS  /tmp/cchA7UgS.s 			page 14
+
+
+gps
+ned_vel_float_from_gps
+get_sys_time_usec
+logf
+stateCalcSpeedNed_f
+stateCalcPositionUtm_f

@@ -1,0 +1,74 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+
+<flight_plan alt="423" ground_alt="343" lat0="49.410250" lon0="10.960738" max_dist_from_home="500" name="Wolfshoehe_Test" security_height="50">
+  <header>
+#include "subsystems/datalink/datalink.h"
+</header>
+  <waypoints>
+    <waypoint lat="49.410250" lon="10.960738" name="HOME"/>
+    <waypoint lat="49.410365" lon="10.961593" name="Profil"/>
+    <waypoint alt="460.0" lat="49.410629" lon="10.960478" name="WP01"/>
+    <waypoint alt="460.0" lat="49.410017" lon="10.960413" name="WP02"/>
+    <waypoint alt="460.0" lat="49.409289" lon="10.960312" name="WP03"/>
+    <waypoint alt="460.0" lat="49.409201" lon="10.961251" name="WP04"/>
+    <waypoint alt="460.0" lat="49.409436" lon="10.961322" name="WP05"/>
+    <waypoint alt="460.0" lat="49.410460" lon="10.961581" name="WP06"/>
+    <waypoint alt="460.0" lat="49.410378" lon="10.962762" name="WP07"/>
+    <waypoint alt="460.0" lat="49.410113" lon="10.962722" name="WP07b"/>
+    <waypoint alt="460.0" lat="49.409828" lon="10.962684" name="WP08"/>
+    <waypoint alt="460.0" lat="49.409505" lon="10.962684" name="WP08b"/>
+    <waypoint alt="460.0" lat="49.409130" lon="10.962623" name="WP09"/>
+    <waypoint alt="460.0" lat="49.408960" lon="10.962298" name="WP09b"/>
+    <waypoint alt="460.0" lat="49.409166" lon="10.961942" name="WP10"/>
+    <waypoint alt="460.0" lat="49.409846" lon="10.962145" name="WP11"/>
+    <waypoint alt="460.0" lat="49.410408" lon="10.962175" name="WP12"/>
+    <waypoint alt="460.0" lat="49.410553" lon="10.961057" name="WP13"/>
+    <waypoint alt="460.0" lat="49.409960" lon="10.960980" name="WP14"/>
+    <waypoint alt="460.0" lat="49.409242" lon="10.960808" name="WP15"/>
+  </waypoints>
+  <exceptions>
+    <exception cond="13.5 > PowerVoltage()" deroute="Standby"/>
+  </exceptions>
+  <blocks>
+    <block name="Wait GPS">
+      <set value="1" var="autopilot.kill_throttle"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+    <block name="Geo init">
+      <while cond="LessThan(NavBlockTime(), 10)"/>
+    </block>
+    <block name="Waiting for Remote Control">
+      <while cond="RCLost()"/>
+    </block>
+    <block name="Holding point">
+      <set value="1" var="autopilot.kill_throttle"/>
+      <attitude roll="0" throttle="0" vmode="throttle"/>
+    </block>
+    <block group="home" key="t" name="Takeoff" strip_button="Takeoff (wp CLIMB)" strip_icon="takeoff.png">
+      <set value="0" var="autopilot.kill_throttle"/>
+      <set value="0" var="autopilot.flight_time"/>
+      <set value="0" var="autopilot.kill_throttle"/>
+    </block>
+    <block name="Climb">
+      <circle pitch="30" radius="-70" throttle="0.85" until="GetPosAlt() > ground_alt + 100" vmode="throttle" wp="Profil"/>
+      <deroute block="Survey"/>
+    </block>
+    <block name="Survey">
+      <go wp="WP01"/>
+      <path approaching_time="3" vmode="glide" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP07b, WP08, WP08b, WP09, WP09b, WP10, WP11, WP12, WP13, WP14, WP15"/>
+      <exception cond="ground_alt+75 > GetPosAlt()" deroute="Up"/>
+      <deroute block="Down"/>
+    </block>
+    <block name="Down">
+      <circle pitch="-5" radius="-70" throttle="0.40" until="ground_alt+50 > GetPosAlt()" vmode="throttle" wp="HOME"/>
+      <deroute block="Standby"/>
+    </block>
+    <block name="Up">
+      <circle pitch="30" radius="-70" throttle="0.85" until="GetPosAlt() > ground_alt + 100" vmode="throttle" wp="HOME"/>
+      <deroute block="Survey"/>
+    </block>
+    <block group="Standby" key="Ctrl+a" name="Standby" strip_button="Standby" strip_icon="home.png">
+      <circle radius="-70" wp="HOME"/>
+    </block>
+  </blocks>
+</flight_plan>

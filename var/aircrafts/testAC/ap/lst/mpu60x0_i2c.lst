@@ -1,0 +1,411 @@
+ARM GAS  /tmp/ccvENi5v.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"mpu60x0_i2c.c"
+  13              		.text
+  14              		.section	.text.mpu60x0_i2c_write_to_reg,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	mpu60x0_i2c_write_to_reg, %function
+  23              	mpu60x0_i2c_write_to_reg:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 8446     		mov	ip, r0
+  28 0002 4172     		strb	r1, [r0, #9]
+  29 0004 8272     		strb	r2, [r0, #10]
+  30 0006 0346     		mov	r3, r0
+  31 0008 5CF8040B 		ldr	r0, [ip], #4
+  32 000c 5A79     		ldrb	r2, [r3, #5]	@ zero_extendqisi2
+  33 000e 6146     		mov	r1, ip
+  34 0010 0223     		movs	r3, #2
+  35 0012 FFF7FEBF 		b	i2c_transmit
+  36              		.size	mpu60x0_i2c_write_to_reg, .-mpu60x0_i2c_write_to_reg
+  37 0016 00BF     		.section	.text.mpu60x0_i2c_init,"ax",%progbits
+  38              		.align	1
+  39              		.p2align 4,,15
+  40              		.global	mpu60x0_i2c_init
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  44              		.fpu fpv4-sp-d16
+  45              		.type	mpu60x0_i2c_init, %function
+  46              	mpu60x0_i2c_init:
+  47              		@ args = 0, pretend = 0, frame = 0
+  48              		@ frame_needed = 0, uses_anonymous_args = 0
+  49 0000 10B5     		push	{r4, lr}
+  50 0002 0423     		movs	r3, #4
+  51 0004 0446     		mov	r4, r0
+  52 0006 80F82930 		strb	r3, [r0, #41]
+  53 000a 0160     		str	r1, [r0]
+  54 000c 4271     		strb	r2, [r0, #5]
+  55 000e 4C30     		adds	r0, r0, #76
+  56 0010 FFF7FEFF 		bl	mpu60x0_set_default_config
+  57 0014 0023     		movs	r3, #0
+ARM GAS  /tmp/ccvENi5v.s 			page 2
+
+
+  58 0016 84F85530 		strb	r3, [r4, #85]
+  59 001a 84F87430 		strb	r3, [r4, #116]
+  60 001e 84F82A30 		strb	r3, [r4, #42]
+  61 0022 84F85630 		strb	r3, [r4, #86]
+  62 0026 10BD     		pop	{r4, pc}
+  63              		.size	mpu60x0_i2c_init, .-mpu60x0_i2c_init
+  64              		.section	.text.mpu60x0_i2c_start_configure,"ax",%progbits
+  65              		.align	1
+  66              		.p2align 4,,15
+  67              		.global	mpu60x0_i2c_start_configure
+  68              		.syntax unified
+  69              		.thumb
+  70              		.thumb_func
+  71              		.fpu fpv4-sp-d16
+  72              		.type	mpu60x0_i2c_start_configure, %function
+  73              	mpu60x0_i2c_start_configure:
+  74              		@ args = 0, pretend = 0, frame = 0
+  75              		@ frame_needed = 0, uses_anonymous_args = 0
+  76              		@ link register save eliminated.
+  77 0000 90F85530 		ldrb	r3, [r0, #85]	@ zero_extendqisi2
+  78 0004 0146     		mov	r1, r0
+  79 0006 53B9     		cbnz	r3, .L5
+  80 0008 90F82930 		ldrb	r3, [r0, #41]	@ zero_extendqisi2
+  81 000c 0122     		movs	r2, #1
+  82 000e 022B     		cmp	r3, #2
+  83 0010 80F85520 		strb	r2, [r0, #85]
+  84 0014 04D0     		beq	.L8
+  85 0016 90F82930 		ldrb	r3, [r0, #41]	@ zero_extendqisi2
+  86 001a 042B     		cmp	r3, #4
+  87 001c 00D0     		beq	.L8
+  88              	.L5:
+  89 001e 7047     		bx	lr
+  90              	.L8:
+  91 0020 0248     		ldr	r0, .L13
+  92 0022 01F14C02 		add	r2, r1, #76
+  93 0026 FFF7FEBF 		b	mpu60x0_send_config
+  94              	.L14:
+  95 002a 00BF     		.align	2
+  96              	.L13:
+  97 002c 00000000 		.word	mpu60x0_i2c_write_to_reg
+  98              		.size	mpu60x0_i2c_start_configure, .-mpu60x0_i2c_start_configure
+  99              		.section	.text.mpu60x0_i2c_read,"ax",%progbits
+ 100              		.align	1
+ 101              		.p2align 4,,15
+ 102              		.global	mpu60x0_i2c_read
+ 103              		.syntax unified
+ 104              		.thumb
+ 105              		.thumb_func
+ 106              		.fpu fpv4-sp-d16
+ 107              		.type	mpu60x0_i2c_read, %function
+ 108              	mpu60x0_i2c_read:
+ 109              		@ args = 0, pretend = 0, frame = 0
+ 110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111 0000 90F85630 		ldrb	r3, [r0, #86]	@ zero_extendqisi2
+ 112 0004 1BB1     		cbz	r3, .L21
+ 113 0006 90F82930 		ldrb	r3, [r0, #41]	@ zero_extendqisi2
+ 114 000a 042B     		cmp	r3, #4
+ARM GAS  /tmp/ccvENi5v.s 			page 3
+
+
+ 115 000c 00D0     		beq	.L24
+ 116              	.L21:
+ 117 000e 7047     		bx	lr
+ 118              	.L24:
+ 119 0010 10B5     		push	{r4, lr}
+ 120 0012 0146     		mov	r1, r0
+ 121 0014 3A23     		movs	r3, #58
+ 122 0016 4372     		strb	r3, [r0, #9]
+ 123 0018 82B0     		sub	sp, sp, #8
+ 124 001a 51F8044B 		ldr	r4, [r1], #4
+ 125 001e 90F85430 		ldrb	r3, [r0, #84]	@ zero_extendqisi2
+ 126 0022 4279     		ldrb	r2, [r0, #5]	@ zero_extendqisi2
+ 127 0024 0093     		str	r3, [sp]
+ 128 0026 2046     		mov	r0, r4
+ 129 0028 0123     		movs	r3, #1
+ 130 002a FFF7FEFF 		bl	i2c_transceive
+ 131 002e 02B0     		add	sp, sp, #8
+ 132              		@ sp needed
+ 133 0030 10BD     		pop	{r4, pc}
+ 134              		.size	mpu60x0_i2c_read, .-mpu60x0_i2c_read
+ 135 0032 00BF     		.section	.text.mpu60x0_i2c_event,"ax",%progbits
+ 136              		.align	1
+ 137              		.p2align 4,,15
+ 138              		.global	mpu60x0_i2c_event
+ 139              		.syntax unified
+ 140              		.thumb
+ 141              		.thumb_func
+ 142              		.fpu fpv4-sp-d16
+ 143              		.type	mpu60x0_i2c_event, %function
+ 144              	mpu60x0_i2c_event:
+ 145              		@ args = 0, pretend = 0, frame = 0
+ 146              		@ frame_needed = 0, uses_anonymous_args = 0
+ 147 0000 90F85630 		ldrb	r3, [r0, #86]	@ zero_extendqisi2
+ 148 0004 10B5     		push	{r4, lr}
+ 149 0006 0446     		mov	r4, r0
+ 150 0008 43B1     		cbz	r3, .L26
+ 151 000a 90F82930 		ldrb	r3, [r0, #41]	@ zero_extendqisi2
+ 152 000e 032B     		cmp	r3, #3
+ 153 0010 1AD0     		beq	.L54
+ 154 0012 90F82930 		ldrb	r3, [r0, #41]	@ zero_extendqisi2
+ 155 0016 022B     		cmp	r3, #2
+ 156 0018 1FD0     		beq	.L56
+ 157              	.L25:
+ 158 001a 10BD     		pop	{r4, pc}
+ 159              	.L26:
+ 160 001c 90F85530 		ldrb	r3, [r0, #85]	@ zero_extendqisi2
+ 161 0020 002B     		cmp	r3, #0
+ 162 0022 FAD0     		beq	.L25
+ 163 0024 90F82910 		ldrb	r1, [r0, #41]	@ zero_extendqisi2
+ 164 0028 0329     		cmp	r1, #3
+ 165 002a CAB2     		uxtb	r2, r1
+ 166 002c 10D1     		bne	.L57
+ 167 002e 013B     		subs	r3, r3, #1
+ 168 0030 80F85530 		strb	r3, [r0, #85]
+ 169              	.L34:
+ 170 0034 2C48     		ldr	r0, .L58
+ 171 0036 04F14C02 		add	r2, r4, #76
+ARM GAS  /tmp/ccvENi5v.s 			page 4
+
+
+ 172 003a 2146     		mov	r1, r4
+ 173 003c FFF7FEFF 		bl	mpu60x0_send_config
+ 174 0040 94F85630 		ldrb	r3, [r4, #86]	@ zero_extendqisi2
+ 175 0044 002B     		cmp	r3, #0
+ 176 0046 E8D0     		beq	.L25
+ 177              	.L54:
+ 178 0048 0423     		movs	r3, #4
+ 179 004a 84F82930 		strb	r3, [r4, #41]
+ 180 004e 10BD     		pop	{r4, pc}
+ 181              	.L57:
+ 182 0050 042A     		cmp	r2, #4
+ 183 0052 EFD0     		beq	.L34
+ 184 0054 022A     		cmp	r2, #2
+ 185 0056 EDD0     		beq	.L34
+ 186 0058 10BD     		pop	{r4, pc}
+ 187              	.L56:
+ 188 005a 437A     		ldrb	r3, [r0, #9]	@ zero_extendqisi2
+ 189 005c DB07     		lsls	r3, r3, #31
+ 190 005e F3D5     		bpl	.L54
+ 191 0060 807A     		ldrb	r0, [r0, #10]	@ zero_extendqisi2
+ 192 0062 E17A     		ldrb	r1, [r4, #11]	@ zero_extendqisi2
+ 193 0064 227B     		ldrb	r2, [r4, #12]	@ zero_extendqisi2
+ 194 0066 637B     		ldrb	r3, [r4, #13]	@ zero_extendqisi2
+ 195 0068 9FED206A 		vldr.32	s12, .L58+4
+ 196 006c DFED206A 		vldr.32	s13, .L58+8
+ 197 0070 41EA0021 		orr	r1, r1, r0, lsl #8
+ 198 0074 43EA0223 		orr	r3, r3, r2, lsl #8
+ 199 0078 A07B     		ldrb	r0, [r4, #14]	@ zero_extendqisi2
+ 200 007a A185     		strh	r1, [r4, #44]	@ movhi
+ 201 007c E27B     		ldrb	r2, [r4, #15]	@ zero_extendqisi2
+ 202 007e E385     		strh	r3, [r4, #46]	@ movhi
+ 203 0080 A37C     		ldrb	r3, [r4, #18]	@ zero_extendqisi2
+ 204 0082 E17C     		ldrb	r1, [r4, #19]	@ zero_extendqisi2
+ 205 0084 42EA0022 		orr	r2, r2, r0, lsl #8
+ 206 0088 41EA0321 		orr	r1, r1, r3, lsl #8
+ 207 008c 207D     		ldrb	r0, [r4, #20]	@ zero_extendqisi2
+ 208 008e 637D     		ldrb	r3, [r4, #21]	@ zero_extendqisi2
+ 209 0090 2286     		strh	r2, [r4, #48]	@ movhi
+ 210 0092 43EA0023 		orr	r3, r3, r0, lsl #8
+ 211 0096 A07D     		ldrb	r0, [r4, #22]	@ zero_extendqisi2
+ 212 0098 E27D     		ldrb	r2, [r4, #23]	@ zero_extendqisi2
+ 213 009a A386     		strh	r3, [r4, #52]	@ movhi
+ 214 009c 42EA0022 		orr	r2, r2, r0, lsl #8
+ 215 00a0 207C     		ldrb	r0, [r4, #16]	@ zero_extendqisi2
+ 216 00a2 637C     		ldrb	r3, [r4, #17]	@ zero_extendqisi2
+ 217 00a4 6186     		strh	r1, [r4, #50]	@ movhi
+ 218 00a6 43EA0023 		orr	r3, r3, r0, lsl #8
+ 219 00aa 1BB2     		sxth	r3, r3
+ 220 00ac 07EE903A 		vmov	s15, r3	@ int
+ 221 00b0 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 222 00b4 94F85710 		ldrb	r1, [r4, #87]	@ zero_extendqisi2
+ 223 00b8 E286     		strh	r2, [r4, #54]	@ movhi
+ 224 00ba 87EE867A 		vdiv.f32	s14, s15, s12
+ 225 00be 77EE267A 		vadd.f32	s15, s14, s13
+ 226 00c2 C4ED0E7A 		vstr.32	s15, [r4, #56]
+ 227 00c6 59B9     		cbnz	r1, .L31
+ 228 00c8 94F85830 		ldrb	r3, [r4, #88]	@ zero_extendqisi2
+ARM GAS  /tmp/ccvENi5v.s 			page 5
+
+
+ 229 00cc 43B1     		cbz	r3, .L31
+ 230 00ce 94F85420 		ldrb	r2, [r4, #84]	@ zero_extendqisi2
+ 231 00d2 04F11801 		add	r1, r4, #24
+ 232 00d6 0F3A     		subs	r2, r2, #15
+ 233 00d8 04F13C00 		add	r0, r4, #60
+ 234 00dc FFF7FEFF 		bl	memcpy
+ 235              	.L31:
+ 236 00e0 0123     		movs	r3, #1
+ 237 00e2 84F82A30 		strb	r3, [r4, #42]
+ 238 00e6 AFE7     		b	.L54
+ 239              	.L59:
+ 240              		.align	2
+ 241              	.L58:
+ 242 00e8 00000000 		.word	mpu60x0_i2c_write_to_reg
+ 243 00ec 0000AA43 		.word	1135214592
+ 244 00f0 B81E1242 		.word	1108483768
+ 245              		.size	mpu60x0_i2c_event, .-mpu60x0_i2c_event
+ 246              		.section	.text.mpu60x0_configure_i2c_slaves,"ax",%progbits
+ 247              		.align	1
+ 248              		.p2align 4,,15
+ 249              		.global	mpu60x0_configure_i2c_slaves
+ 250              		.syntax unified
+ 251              		.thumb
+ 252              		.thumb_func
+ 253              		.fpu fpv4-sp-d16
+ 254              		.type	mpu60x0_configure_i2c_slaves, %function
+ 255              	mpu60x0_configure_i2c_slaves:
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258 0000 70B5     		push	{r4, r5, r6, lr}
+ 259 0002 91F87430 		ldrb	r3, [r1, #116]	@ zero_extendqisi2
+ 260 0006 0C46     		mov	r4, r1
+ 261 0008 0546     		mov	r5, r0
+ 262 000a 73B9     		cbnz	r3, .L61
+ 263 000c 0123     		movs	r3, #1
+ 264 000e 81F87430 		strb	r3, [r1, #116]
+ 265              	.L62:
+ 266 0012 0022     		movs	r2, #0
+ 267 0014 6A21     		movs	r1, #106
+ 268              	.L80:
+ 269 0016 2046     		mov	r0, r4
+ 270 0018 A847     		blx	r5
+ 271 001a 94F87430 		ldrb	r3, [r4, #116]	@ zero_extendqisi2
+ 272 001e 0133     		adds	r3, r3, #1
+ 273 0020 0026     		movs	r6, #0
+ 274 0022 84F87430 		strb	r3, [r4, #116]
+ 275              	.L64:
+ 276 0026 3046     		mov	r0, r6
+ 277 0028 70BD     		pop	{r4, r5, r6, pc}
+ 278              	.L61:
+ 279 002a 013B     		subs	r3, r3, #1
+ 280 002c 082B     		cmp	r3, #8
+ 281 002e 34D8     		bhi	.L81
+ 282 0030 01A2     		adr	r2, .L65
+ 283 0032 52F823F0 		ldr	pc, [r2, r3, lsl #2]
+ 284 0036 00BF     		.p2align 2
+ 285              	.L65:
+ARM GAS  /tmp/ccvENi5v.s 			page 6
+
+
+ 286 0038 13000000 		.word	.L62+1
+ 287 003c 5D000000 		.word	.L72+1
+ 288 0040 63000000 		.word	.L71+1
+ 289 0044 8F000000 		.word	.L70+1
+ 290 0048 9F000000 		.word	.L69+1
+ 291 004c AB000000 		.word	.L68+1
+ 292 0050 B3000000 		.word	.L67+1
+ 293 0054 B9000000 		.word	.L66+1
+ 294 0058 BF000000 		.word	.L75+1
+ 295              		.p2align 1
+ 296              	.L72:
+ 297 005c 0222     		movs	r2, #2
+ 298 005e 3721     		movs	r1, #55
+ 299 0060 D9E7     		b	.L80
+ 300              	.L71:
+ 301 0062 91F85930 		ldrb	r3, [r1, #89]	@ zero_extendqisi2
+ 302 0066 91F85820 		ldrb	r2, [r1, #88]	@ zero_extendqisi2
+ 303 006a 9A42     		cmp	r2, r3
+ 304 006c 2AD9     		bls	.L73
+ 305 006e 042B     		cmp	r3, #4
+ 306 0070 28D8     		bhi	.L73
+ 307 0072 01EB8303 		add	r3, r1, r3, lsl #2
+ 308 0076 DB6D     		ldr	r3, [r3, #92]
+ 309 0078 9847     		blx	r3
+ 310 007a 0646     		mov	r6, r0
+ 311 007c 0028     		cmp	r0, #0
+ 312 007e D2D0     		beq	.L64
+ 313 0080 94F85930 		ldrb	r3, [r4, #89]	@ zero_extendqisi2
+ 314 0084 0133     		adds	r3, r3, #1
+ 315 0086 0026     		movs	r6, #0
+ 316 0088 84F85930 		strb	r3, [r4, #89]
+ 317 008c CBE7     		b	.L64
+ 318              	.L70:
+ 319 008e 91F85760 		ldrb	r6, [r1, #87]	@ zero_extendqisi2
+ 320 0092 E6B1     		cbz	r6, .L74
+ 321 0094 0923     		movs	r3, #9
+ 322 0096 81F87430 		strb	r3, [r1, #116]
+ 323              	.L81:
+ 324 009a 0026     		movs	r6, #0
+ 325 009c C3E7     		b	.L64
+ 326              	.L69:
+ 327 009e 91F87020 		ldrb	r2, [r1, #112]	@ zero_extendqisi2
+ 328 00a2 2421     		movs	r1, #36
+ 329 00a4 42F01002 		orr	r2, r2, #16
+ 330 00a8 B5E7     		b	.L80
+ 331              	.L68:
+ 332 00aa 91F87120 		ldrb	r2, [r1, #113]	@ zero_extendqisi2
+ 333 00ae 6721     		movs	r1, #103
+ 334 00b0 B1E7     		b	.L80
+ 335              	.L67:
+ 336 00b2 0022     		movs	r2, #0
+ 337 00b4 3421     		movs	r1, #52
+ 338 00b6 AEE7     		b	.L80
+ 339              	.L66:
+ 340 00b8 2022     		movs	r2, #32
+ 341 00ba 6A21     		movs	r1, #106
+ 342 00bc ABE7     		b	.L80
+ARM GAS  /tmp/ccvENi5v.s 			page 7
+
+
+ 343              	.L75:
+ 344 00be 0126     		movs	r6, #1
+ 345 00c0 3046     		mov	r0, r6
+ 346 00c2 70BD     		pop	{r4, r5, r6, pc}
+ 347              	.L73:
+ 348 00c4 0423     		movs	r3, #4
+ 349 00c6 84F87430 		strb	r3, [r4, #116]
+ 350 00ca 0026     		movs	r6, #0
+ 351 00cc ABE7     		b	.L64
+ 352              	.L74:
+ 353 00ce 3246     		mov	r2, r6
+ 354 00d0 3721     		movs	r1, #55
+ 355 00d2 2046     		mov	r0, r4
+ 356 00d4 A847     		blx	r5
+ 357 00d6 94F87430 		ldrb	r3, [r4, #116]	@ zero_extendqisi2
+ 358 00da 0133     		adds	r3, r3, #1
+ 359 00dc 84F87430 		strb	r3, [r4, #116]
+ 360 00e0 A1E7     		b	.L64
+ 361              		.size	mpu60x0_configure_i2c_slaves, .-mpu60x0_configure_i2c_slaves
+ 362 00e2 00BF     		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccvENi5v.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mpu60x0_i2c.c
+     /tmp/ccvENi5v.s:15     .text.mpu60x0_i2c_write_to_reg:0000000000000000 $t
+     /tmp/ccvENi5v.s:23     .text.mpu60x0_i2c_write_to_reg:0000000000000000 mpu60x0_i2c_write_to_reg
+     /tmp/ccvENi5v.s:38     .text.mpu60x0_i2c_init:0000000000000000 $t
+     /tmp/ccvENi5v.s:46     .text.mpu60x0_i2c_init:0000000000000000 mpu60x0_i2c_init
+     /tmp/ccvENi5v.s:65     .text.mpu60x0_i2c_start_configure:0000000000000000 $t
+     /tmp/ccvENi5v.s:73     .text.mpu60x0_i2c_start_configure:0000000000000000 mpu60x0_i2c_start_configure
+     /tmp/ccvENi5v.s:97     .text.mpu60x0_i2c_start_configure:000000000000002c $d
+     /tmp/ccvENi5v.s:100    .text.mpu60x0_i2c_read:0000000000000000 $t
+     /tmp/ccvENi5v.s:108    .text.mpu60x0_i2c_read:0000000000000000 mpu60x0_i2c_read
+     /tmp/ccvENi5v.s:136    .text.mpu60x0_i2c_event:0000000000000000 $t
+     /tmp/ccvENi5v.s:144    .text.mpu60x0_i2c_event:0000000000000000 mpu60x0_i2c_event
+     /tmp/ccvENi5v.s:242    .text.mpu60x0_i2c_event:00000000000000e8 $d
+     /tmp/ccvENi5v.s:247    .text.mpu60x0_configure_i2c_slaves:0000000000000000 $t
+     /tmp/ccvENi5v.s:255    .text.mpu60x0_configure_i2c_slaves:0000000000000000 mpu60x0_configure_i2c_slaves
+     /tmp/ccvENi5v.s:286    .text.mpu60x0_configure_i2c_slaves:0000000000000038 $d
+     /tmp/ccvENi5v.s:295    .text.mpu60x0_configure_i2c_slaves:000000000000005c $t
+
+UNDEFINED SYMBOLS
+i2c_transmit
+mpu60x0_set_default_config
+mpu60x0_send_config
+i2c_transceive
+memcpy

@@ -1,0 +1,1453 @@
+ARM GAS  /tmp/ccFKjVa4.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"hal_i2c_lld.c"
+  13              		.text
+  14              		.section	.text.i2c_lld_abort_operation,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	i2c_lld_abort_operation, %function
+  23              	i2c_lld_abort_operation:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 10B4     		push	{r4}
+  28 0002 D0E90C43 		ldrd	r4, r3, [r0, #48]
+  29 0006 4FF40042 		mov	r2, #32768
+  30 000a 1A60     		str	r2, [r3]
+  31 000c 0021     		movs	r1, #0
+  32 000e 2268     		ldr	r2, [r4]
+  33 0010 1960     		str	r1, [r3]
+  34 0012 5960     		str	r1, [r3, #4]
+  35 0014 5961     		str	r1, [r3, #20]
+  36 0016 1368     		ldr	r3, [r2]
+  37 0018 23F01F03 		bic	r3, r3, #31
+  38 001c 1360     		str	r3, [r2]
+  39              	.L2:
+  40 001e 1368     		ldr	r3, [r2]
+  41 0020 D907     		lsls	r1, r3, #31
+  42 0022 FCD4     		bmi	.L2
+  43 0024 94F809C0 		ldrb	ip, [r4, #9]	@ zero_extendqisi2
+  44 0028 C16A     		ldr	r1, [r0, #44]
+  45 002a 6068     		ldr	r0, [r4, #4]
+  46 002c 0A68     		ldr	r2, [r1]
+  47 002e 3D23     		movs	r3, #61
+  48 0030 03FA0CF3 		lsl	r3, r3, ip
+  49 0034 0360     		str	r3, [r0]
+  50 0036 1368     		ldr	r3, [r2]
+  51 0038 23F01F03 		bic	r3, r3, #31
+  52 003c 1360     		str	r3, [r2]
+  53              	.L3:
+  54 003e 1368     		ldr	r3, [r2]
+  55 0040 DB07     		lsls	r3, r3, #31
+  56 0042 FCD4     		bmi	.L3
+  57 0044 487A     		ldrb	r0, [r1, #9]	@ zero_extendqisi2
+ARM GAS  /tmp/ccFKjVa4.s 			page 2
+
+
+  58 0046 4A68     		ldr	r2, [r1, #4]
+  59 0048 5DF8044B 		ldr	r4, [sp], #4
+  60 004c 3D23     		movs	r3, #61
+  61 004e 8340     		lsls	r3, r3, r0
+  62 0050 1360     		str	r3, [r2]
+  63 0052 7047     		bx	lr
+  64              		.size	i2c_lld_abort_operation, .-i2c_lld_abort_operation
+  65              		.section	.rodata.i2c_lld_serve_tx_end_irq.str1.4,"aMS",%progbits,1
+  66              		.align	2
+  67              	.LC0:
+  68 0000 444D4120 		.ascii	"DMA failure\000"
+  68      6661696C 
+  68      75726500 
+  69              		.section	.text.i2c_lld_serve_tx_end_irq,"ax",%progbits
+  70              		.align	1
+  71              		.p2align 4,,15
+  72              		.syntax unified
+  73              		.thumb
+  74              		.thumb_func
+  75              		.fpu fpv4-sp-d16
+  76              		.type	i2c_lld_serve_tx_end_irq, %function
+  77              	i2c_lld_serve_tx_end_irq:
+  78              		@ args = 0, pretend = 0, frame = 0
+  79              		@ frame_needed = 0, uses_anonymous_args = 0
+  80 0000 11F00C0F 		tst	r1, #12
+  81 0004 38B5     		push	{r3, r4, r5, lr}
+  82 0006 456B     		ldr	r5, [r0, #52]
+  83 0008 0446     		mov	r4, r0
+  84 000a 12D1     		bne	.L16
+  85              	.L9:
+  86 000c 216B     		ldr	r1, [r4, #48]
+  87 000e 0A68     		ldr	r2, [r1]
+  88 0010 1368     		ldr	r3, [r2]
+  89 0012 23F01F03 		bic	r3, r3, #31
+  90 0016 1360     		str	r3, [r2]
+  91              	.L10:
+  92 0018 1368     		ldr	r3, [r2]
+  93 001a DB07     		lsls	r3, r3, #31
+  94 001c FCD4     		bmi	.L10
+  95 001e 487A     		ldrb	r0, [r1, #9]	@ zero_extendqisi2
+  96 0020 4A68     		ldr	r2, [r1, #4]
+  97 0022 3D23     		movs	r3, #61
+  98 0024 8340     		lsls	r3, r3, r0
+  99 0026 1360     		str	r3, [r2]
+ 100 0028 6B68     		ldr	r3, [r5, #4]
+ 101 002a 43F40073 		orr	r3, r3, #512
+ 102 002e 6B60     		str	r3, [r5, #4]
+ 103 0030 38BD     		pop	{r3, r4, r5, pc}
+ 104              	.L16:
+ 105 0032 0248     		ldr	r0, .L17
+ 106 0034 FFF7FEFF 		bl	chSysHalt
+ 107 0038 E8E7     		b	.L9
+ 108              	.L18:
+ 109 003a 00BF     		.align	2
+ 110              	.L17:
+ 111 003c 00000000 		.word	.LC0
+ 112              		.size	i2c_lld_serve_tx_end_irq, .-i2c_lld_serve_tx_end_irq
+ARM GAS  /tmp/ccFKjVa4.s 			page 3
+
+
+ 113              		.section	.text.i2c_lld_serve_rx_end_irq,"ax",%progbits
+ 114              		.align	1
+ 115              		.p2align 4,,15
+ 116              		.syntax unified
+ 117              		.thumb
+ 118              		.thumb_func
+ 119              		.fpu fpv4-sp-d16
+ 120              		.type	i2c_lld_serve_rx_end_irq, %function
+ 121              	i2c_lld_serve_rx_end_irq:
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124 0000 11F00C0F 		tst	r1, #12
+ 125 0004 70B5     		push	{r4, r5, r6, lr}
+ 126 0006 456B     		ldr	r5, [r0, #52]
+ 127 0008 0646     		mov	r6, r0
+ 128 000a 29D1     		bne	.L27
+ 129              	.L20:
+ 130 000c F26A     		ldr	r2, [r6, #44]
+ 131 000e 1368     		ldr	r3, [r2]
+ 132 0010 1968     		ldr	r1, [r3]
+ 133 0012 21F01F01 		bic	r1, r1, #31
+ 134 0016 1960     		str	r1, [r3]
+ 135              	.L21:
+ 136 0018 1C68     		ldr	r4, [r3]
+ 137 001a 14F00104 		ands	r4, r4, #1
+ 138 001e FBD1     		bne	.L21
+ 139 0020 5168     		ldr	r1, [r2, #4]
+ 140 0022 527A     		ldrb	r2, [r2, #9]	@ zero_extendqisi2
+ 141 0024 3D23     		movs	r3, #61
+ 142 0026 9340     		lsls	r3, r3, r2
+ 143 0028 0B60     		str	r3, [r1]
+ 144 002a 6B68     		ldr	r3, [r5, #4]
+ 145 002c 23F48053 		bic	r3, r3, #4096
+ 146 0030 6B60     		str	r3, [r5, #4]
+ 147 0032 2B68     		ldr	r3, [r5]
+ 148 0034 23F48063 		bic	r3, r3, #1024
+ 149 0038 2B60     		str	r3, [r5]
+ 150 003a 2B68     		ldr	r3, [r5]
+ 151 003c 43F40073 		orr	r3, r3, #512
+ 152 0040 3022     		movs	r2, #48
+ 153 0042 2B60     		str	r3, [r5]
+ 154              		.syntax unified
+ 155              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 156 0044 82F31188 		MSR basepri, r2
+ 157              	@ 0 "" 2
+ 158              		.thumb
+ 159              		.syntax unified
+ 160 0048 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 161 004c 2146     		mov	r1, r4
+ 162 004e 06F11C00 		add	r0, r6, #28
+ 163 0052 FFF7FEFF 		bl	chThdResumeI
+ 164 0056 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 165              		.syntax unified
+ 166              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 167 005a 84F31188 		MSR basepri, r4
+ 168              	@ 0 "" 2
+ 169              		.thumb
+ARM GAS  /tmp/ccFKjVa4.s 			page 4
+
+
+ 170              		.syntax unified
+ 171 005e 70BD     		pop	{r4, r5, r6, pc}
+ 172              	.L27:
+ 173 0060 0148     		ldr	r0, .L28
+ 174 0062 FFF7FEFF 		bl	chSysHalt
+ 175 0066 D1E7     		b	.L20
+ 176              	.L29:
+ 177              		.align	2
+ 178              	.L28:
+ 179 0068 00000000 		.word	.LC0
+ 180              		.size	i2c_lld_serve_rx_end_irq, .-i2c_lld_serve_rx_end_irq
+ 181              		.section	.text.i2c_lld_reset,"ax",%progbits
+ 182              		.align	1
+ 183              		.p2align 4,,15
+ 184              		.syntax unified
+ 185              		.thumb
+ 186              		.thumb_func
+ 187              		.fpu fpv4-sp-d16
+ 188              		.type	i2c_lld_reset, %function
+ 189              	i2c_lld_reset:
+ 190              		@ args = 0, pretend = 0, frame = 0
+ 191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192              		@ link register save eliminated.
+ 193 0000 0E4B     		ldr	r3, .L35
+ 194 0002 9842     		cmp	r0, r3
+ 195 0004 0ED0     		beq	.L33
+ 196 0006 0E4B     		ldr	r3, .L35+4
+ 197 0008 9842     		cmp	r0, r3
+ 198 000a 00D0     		beq	.L34
+ 199 000c 7047     		bx	lr
+ 200              	.L34:
+ 201 000e 0D4B     		ldr	r3, .L35+8
+ 202 0010 1A6A     		ldr	r2, [r3, #32]
+ 203 0012 42F48002 		orr	r2, r2, #4194304
+ 204 0016 1A62     		str	r2, [r3, #32]
+ 205 0018 1A6A     		ldr	r2, [r3, #32]
+ 206 001a 22F48002 		bic	r2, r2, #4194304
+ 207 001e 1A62     		str	r2, [r3, #32]
+ 208 0020 1B6A     		ldr	r3, [r3, #32]
+ 209 0022 7047     		bx	lr
+ 210              	.L33:
+ 211 0024 074B     		ldr	r3, .L35+8
+ 212 0026 1A6A     		ldr	r2, [r3, #32]
+ 213 0028 42F40012 		orr	r2, r2, #2097152
+ 214 002c 1A62     		str	r2, [r3, #32]
+ 215 002e 1A6A     		ldr	r2, [r3, #32]
+ 216 0030 22F40012 		bic	r2, r2, #2097152
+ 217 0034 1A62     		str	r2, [r3, #32]
+ 218 0036 1B6A     		ldr	r3, [r3, #32]
+ 219 0038 7047     		bx	lr
+ 220              	.L36:
+ 221 003a 00BF     		.align	2
+ 222              	.L35:
+ 223 003c 00000000 		.word	.LANCHOR0
+ 224 0040 00000000 		.word	.LANCHOR1
+ 225 0044 00380240 		.word	1073887232
+ 226              		.size	i2c_lld_reset, .-i2c_lld_reset
+ARM GAS  /tmp/ccFKjVa4.s 			page 5
+
+
+ 227              		.section	.text.i2c_lld_serve_event_interrupt,"ax",%progbits
+ 228              		.align	1
+ 229              		.p2align 4,,15
+ 230              		.syntax unified
+ 231              		.thumb
+ 232              		.thumb_func
+ 233              		.fpu fpv4-sp-d16
+ 234              		.type	i2c_lld_serve_event_interrupt, %function
+ 235              	i2c_lld_serve_event_interrupt:
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 239 0002 D0E90D52 		ldrd	r5, r2, [r0, #52]
+ 240 0006 C16B     		ldr	r1, [r0, #60]
+ 241 0008 AB69     		ldr	r3, [r5, #24]
+ 242 000a 6E69     		ldr	r6, [r5, #20]
+ 243 000c 0446     		mov	r4, r0
+ 244 000e 8A42     		cmp	r2, r1
+ 245 0010 02F10100 		add	r0, r2, #1
+ 246 0014 A063     		str	r0, [r4, #56]
+ 247 0016 52D8     		bhi	.L73
+ 248 0018 94F84020 		ldrb	r2, [r4, #64]	@ zero_extendqisi2
+ 249 001c 12B3     		cbz	r2, .L74
+ 250 001e 674A     		ldr	r2, .L76
+ 251 0020 46EA0343 		orr	r3, r6, r3, lsl #16
+ 252 0024 03F0FF13 		and	r3, r3, #16711935
+ 253 0028 9342     		cmp	r3, r2
+ 254 002a 33D8     		bhi	.L45
+ 255 002c B3F5403F 		cmp	r3, #196608
+ 256 0030 21D9     		bls	.L75
+ 257 0032 A3F54033 		sub	r3, r3, #196608
+ 258 0036 013B     		subs	r3, r3, #1
+ 259 0038 102B     		cmp	r3, #16
+ 260 003a 0ED8     		bhi	.L48
+ 261 003c DFE803F0 		tbb	[pc, r3]
+ 262              	.L50:
+ 263 0040 1E       		.byte	(.L47-.L50)/2
+ 264 0041 85       		.byte	(.L52-.L50)/2
+ 265 0042 0D       		.byte	(.L48-.L50)/2
+ 266 0043 0D       		.byte	(.L48-.L50)/2
+ 267 0044 0D       		.byte	(.L48-.L50)/2
+ 268 0045 0D       		.byte	(.L48-.L50)/2
+ 269 0046 0D       		.byte	(.L48-.L50)/2
+ 270 0047 09       		.byte	(.L51-.L50)/2
+ 271 0048 0D       		.byte	(.L48-.L50)/2
+ 272 0049 0D       		.byte	(.L48-.L50)/2
+ 273 004a 0D       		.byte	(.L48-.L50)/2
+ 274 004b 0D       		.byte	(.L48-.L50)/2
+ 275 004c 0D       		.byte	(.L48-.L50)/2
+ 276 004d 0D       		.byte	(.L48-.L50)/2
+ 277 004e 0D       		.byte	(.L48-.L50)/2
+ 278 004f 0D       		.byte	(.L48-.L50)/2
+ 279 0050 7D       		.byte	(.L49-.L50)/2
+ 280 0051 00       		.p2align 1
+ 281              	.L51:
+ 282 0052 238C     		ldrh	r3, [r4, #32]
+ 283 0054 C3F34703 		ubfx	r3, r3, #1, #8
+ARM GAS  /tmp/ccFKjVa4.s 			page 6
+
+
+ 284              	.L72:
+ 285 0058 2B61     		str	r3, [r5, #16]
+ 286              	.L48:
+ 287 005a 16F00A0F 		tst	r6, #10
+ 288 005e 18BF     		it	ne
+ 289 0060 AB69     		ldrne	r3, [r5, #24]
+ 290 0062 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 291              	.L74:
+ 292 0064 2B68     		ldr	r3, [r5]
+ 293 0066 43F40043 		orr	r3, r3, #32768
+ 294 006a 2B60     		str	r3, [r5]
+ 295 006c 2B68     		ldr	r3, [r5]
+ 296 006e 23F00103 		bic	r3, r3, #1
+ 297 0072 2B60     		str	r3, [r5]
+ 298 0074 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 299              	.L75:
+ 300 0076 B3F1011F 		cmp	r3, #65537
+ 301 007a EED1     		bne	.L48
+ 302              	.L47:
+ 303 007c 238C     		ldrh	r3, [r4, #32]
+ 304 007e 1A0A     		lsrs	r2, r3, #8
+ 305 0080 EAD0     		beq	.L72
+ 306 0082 02F00602 		and	r2, r2, #6
+ 307 0086 03F00103 		and	r3, r3, #1
+ 308 008a 1343     		orrs	r3, r3, r2
+ 309 008c 43F0F003 		orr	r3, r3, #240
+ 310 0090 2B61     		str	r3, [r5, #16]
+ 311 0092 E2E7     		b	.L48
+ 312              	.L45:
+ 313 0094 4A4A     		ldr	r2, .L76+4
+ 314 0096 9342     		cmp	r3, r2
+ 315 0098 6ED0     		beq	.L53
+ 316 009a 0232     		adds	r2, r2, #2
+ 317 009c 9342     		cmp	r3, r2
+ 318 009e DCD1     		bne	.L48
+ 319 00a0 E36A     		ldr	r3, [r4, #44]
+ 320 00a2 2A69     		ldr	r2, [r5, #16]
+ 321 00a4 1B68     		ldr	r3, [r3]
+ 322 00a6 5F68     		ldr	r7, [r3, #4]
+ 323 00a8 002F     		cmp	r7, #0
+ 324 00aa 70D0     		beq	.L56
+ 325 00ac 228C     		ldrh	r2, [r4, #32]
+ 326 00ae 2B68     		ldr	r3, [r5]
+ 327 00b0 42F00102 		orr	r2, r2, #1
+ 328 00b4 43F4A063 		orr	r3, r3, #1280
+ 329 00b8 2284     		strh	r2, [r4, #32]	@ movhi
+ 330 00ba 2B60     		str	r3, [r5]
+ 331 00bc F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 332              	.L73:
+ 333 00be A368     		ldr	r3, [r4, #8]
+ 334 00c0 216B     		ldr	r1, [r4, #48]
+ 335 00c2 43F08003 		orr	r3, r3, #128
+ 336 00c6 A360     		str	r3, [r4, #8]
+ 337 00c8 61B1     		cbz	r1, .L39
+ 338 00ca 0A68     		ldr	r2, [r1]
+ 339 00cc 1368     		ldr	r3, [r2]
+ 340 00ce 23F01F03 		bic	r3, r3, #31
+ARM GAS  /tmp/ccFKjVa4.s 			page 7
+
+
+ 341 00d2 1360     		str	r3, [r2]
+ 342              	.L40:
+ 343 00d4 1368     		ldr	r3, [r2]
+ 344 00d6 D807     		lsls	r0, r3, #31
+ 345 00d8 FCD4     		bmi	.L40
+ 346 00da 487A     		ldrb	r0, [r1, #9]	@ zero_extendqisi2
+ 347 00dc 4A68     		ldr	r2, [r1, #4]
+ 348 00de 3D23     		movs	r3, #61
+ 349 00e0 8340     		lsls	r3, r3, r0
+ 350 00e2 1360     		str	r3, [r2]
+ 351              	.L39:
+ 352 00e4 E16A     		ldr	r1, [r4, #44]
+ 353 00e6 61B1     		cbz	r1, .L41
+ 354 00e8 0A68     		ldr	r2, [r1]
+ 355 00ea 1368     		ldr	r3, [r2]
+ 356 00ec 23F01F03 		bic	r3, r3, #31
+ 357 00f0 1360     		str	r3, [r2]
+ 358              	.L42:
+ 359 00f2 1368     		ldr	r3, [r2]
+ 360 00f4 DB07     		lsls	r3, r3, #31
+ 361 00f6 FCD4     		bmi	.L42
+ 362 00f8 487A     		ldrb	r0, [r1, #9]	@ zero_extendqisi2
+ 363 00fa 4A68     		ldr	r2, [r1, #4]
+ 364 00fc 3D23     		movs	r3, #61
+ 365 00fe 8340     		lsls	r3, r3, r0
+ 366 0100 1360     		str	r3, [r2]
+ 367              	.L41:
+ 368 0102 2B68     		ldr	r3, [r5]
+ 369 0104 43F40043 		orr	r3, r3, #32768
+ 370 0108 2B60     		str	r3, [r5]
+ 371 010a 2B68     		ldr	r3, [r5]
+ 372 010c 23F00103 		bic	r3, r3, #1
+ 373 0110 2B60     		str	r3, [r5]
+ 374 0112 2046     		mov	r0, r4
+ 375 0114 FFF7FEFF 		bl	i2c_lld_reset
+ 376 0118 3023     		movs	r3, #48
+ 377              		.syntax unified
+ 378              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 379 011a 83F31188 		MSR basepri, r3
+ 380              	@ 0 "" 2
+ 381              		.thumb
+ 382              		.syntax unified
+ 383 011e FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 384 0122 6FF00101 		mvn	r1, #1
+ 385 0126 04F11C00 		add	r0, r4, #28
+ 386 012a FFF7FEFF 		bl	chThdResumeI
+ 387 012e FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 388 0132 0023     		movs	r3, #0
+ 389              		.syntax unified
+ 390              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 391 0134 83F31188 		MSR basepri, r3
+ 392              	@ 0 "" 2
+ 393              		.thumb
+ 394              		.syntax unified
+ 395 0138 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 396              	.L49:
+ 397 013a 2046     		mov	r0, r4
+ARM GAS  /tmp/ccFKjVa4.s 			page 8
+
+
+ 398 013c FFF7FEFF 		bl	i2c_lld_abort_operation
+ 399 0140 6B68     		ldr	r3, [r5, #4]
+ 400 0142 23F40073 		bic	r3, r3, #512
+ 401 0146 6B60     		str	r3, [r5, #4]
+ 402 0148 87E7     		b	.L48
+ 403              	.L52:
+ 404 014a 6A68     		ldr	r2, [r5, #4]
+ 405 014c E16A     		ldr	r1, [r4, #44]
+ 406 014e 22F40072 		bic	r2, r2, #512
+ 407 0152 0B68     		ldr	r3, [r1]
+ 408 0154 6A60     		str	r2, [r5, #4]
+ 409 0156 1A68     		ldr	r2, [r3]
+ 410 0158 42F00102 		orr	r2, r2, #1
+ 411 015c 1A60     		str	r2, [r3]
+ 412 015e 6A68     		ldr	r2, [r5, #4]
+ 413 0160 42F48052 		orr	r2, r2, #4096
+ 414 0164 6A60     		str	r2, [r5, #4]
+ 415 0166 5B68     		ldr	r3, [r3, #4]
+ 416 0168 012B     		cmp	r3, #1
+ 417 016a 3FF676AF 		bhi	.L48
+ 418 016e 2B68     		ldr	r3, [r5]
+ 419 0170 23F48063 		bic	r3, r3, #1024
+ 420 0174 2B60     		str	r3, [r5]
+ 421 0176 70E7     		b	.L48
+ 422              	.L53:
+ 423 0178 6B68     		ldr	r3, [r5, #4]
+ 424 017a 226B     		ldr	r2, [r4, #48]
+ 425 017c 23F40073 		bic	r3, r3, #512
+ 426 0180 1268     		ldr	r2, [r2]
+ 427 0182 6B60     		str	r3, [r5, #4]
+ 428 0184 1368     		ldr	r3, [r2]
+ 429 0186 43F00103 		orr	r3, r3, #1
+ 430 018a 1360     		str	r3, [r2]
+ 431 018c 65E7     		b	.L48
+ 432              	.L56:
+ 433 018e 6B68     		ldr	r3, [r5, #4]
+ 434 0190 23F40073 		bic	r3, r3, #512
+ 435 0194 6B60     		str	r3, [r5, #4]
+ 436 0196 2B68     		ldr	r3, [r5]
+ 437 0198 43F40073 		orr	r3, r3, #512
+ 438 019c 2B60     		str	r3, [r5]
+ 439 019e 3023     		movs	r3, #48
+ 440              		.syntax unified
+ 441              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 442 01a0 83F31188 		MSR basepri, r3
+ 443              	@ 0 "" 2
+ 444              		.thumb
+ 445              		.syntax unified
+ 446 01a4 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 447 01a8 3946     		mov	r1, r7
+ 448 01aa 04F11C00 		add	r0, r4, #28
+ 449 01ae FFF7FEFF 		bl	chThdResumeI
+ 450 01b2 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 451              		.syntax unified
+ 452              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 453 01b6 87F31188 		MSR basepri, r7
+ 454              	@ 0 "" 2
+ARM GAS  /tmp/ccFKjVa4.s 			page 9
+
+
+ 455              		.thumb
+ 456              		.syntax unified
+ 457 01ba 4EE7     		b	.L48
+ 458              	.L77:
+ 459              		.align	2
+ 460              	.L76:
+ 461 01bc 11000300 		.word	196625
+ 462 01c0 82000700 		.word	458882
+ 463              		.size	i2c_lld_serve_event_interrupt, .-i2c_lld_serve_event_interrupt
+ 464              		.section	.text.i2c_lld_serve_error_interrupt,"ax",%progbits
+ 465              		.align	1
+ 466              		.p2align 4,,15
+ 467              		.syntax unified
+ 468              		.thumb
+ 469              		.thumb_func
+ 470              		.fpu fpv4-sp-d16
+ 471              		.type	i2c_lld_serve_error_interrupt, %function
+ 472              	i2c_lld_serve_error_interrupt:
+ 473              		@ args = 0, pretend = 0, frame = 0
+ 474              		@ frame_needed = 0, uses_anonymous_args = 0
+ 475 0000 10B5     		push	{r4, lr}
+ 476 0002 0446     		mov	r4, r0
+ 477 0004 006B     		ldr	r0, [r0, #48]
+ 478 0006 70B1     		cbz	r0, .L79
+ 479 0008 0268     		ldr	r2, [r0]
+ 480 000a 1368     		ldr	r3, [r2]
+ 481 000c 23F01F03 		bic	r3, r3, #31
+ 482 0010 1360     		str	r3, [r2]
+ 483              	.L80:
+ 484 0012 1368     		ldr	r3, [r2]
+ 485 0014 DB07     		lsls	r3, r3, #31
+ 486 0016 FCD4     		bmi	.L80
+ 487 0018 90F809C0 		ldrb	ip, [r0, #9]	@ zero_extendqisi2
+ 488 001c 4268     		ldr	r2, [r0, #4]
+ 489 001e 3D23     		movs	r3, #61
+ 490 0020 03FA0CF3 		lsl	r3, r3, ip
+ 491 0024 1360     		str	r3, [r2]
+ 492              	.L79:
+ 493 0026 E06A     		ldr	r0, [r4, #44]
+ 494 0028 70B1     		cbz	r0, .L81
+ 495 002a 0268     		ldr	r2, [r0]
+ 496 002c 1368     		ldr	r3, [r2]
+ 497 002e 23F01F03 		bic	r3, r3, #31
+ 498 0032 1360     		str	r3, [r2]
+ 499              	.L82:
+ 500 0034 1368     		ldr	r3, [r2]
+ 501 0036 DB07     		lsls	r3, r3, #31
+ 502 0038 FCD4     		bmi	.L82
+ 503 003a 90F809C0 		ldrb	ip, [r0, #9]	@ zero_extendqisi2
+ 504 003e 4268     		ldr	r2, [r0, #4]
+ 505 0040 3D23     		movs	r3, #61
+ 506 0042 03FA0CF3 		lsl	r3, r3, ip
+ 507 0046 1360     		str	r3, [r2]
+ 508              	.L81:
+ 509 0048 D4E90E32 		ldrd	r3, r2, [r4, #56]
+ 510 004c 581C     		adds	r0, r3, #1
+ 511 004e 9342     		cmp	r3, r2
+ARM GAS  /tmp/ccFKjVa4.s 			page 10
+
+
+ 512 0050 A063     		str	r0, [r4, #56]
+ 513 0052 4FD8     		bhi	.L120
+ 514 0054 94F84030 		ldrb	r3, [r4, #64]	@ zero_extendqisi2
+ 515 0058 002B     		cmp	r3, #0
+ 516 005a 41D0     		beq	.L121
+ 517 005c 11F48073 		ands	r3, r1, #256
+ 518 0060 18BF     		it	ne
+ 519 0062 0123     		movne	r3, #1
+ 520 0064 8805     		lsls	r0, r1, #22
+ 521 0066 A360     		str	r3, [r4, #8]
+ 522 0068 44BF     		itt	mi
+ 523 006a 43F00203 		orrmi	r3, r3, #2
+ 524 006e A360     		strmi	r3, [r4, #8]
+ 525 0070 4A05     		lsls	r2, r1, #21
+ 526 0072 0BD5     		bpl	.L89
+ 527 0074 626B     		ldr	r2, [r4, #52]
+ 528 0076 5068     		ldr	r0, [r2, #4]
+ 529 0078 20F40070 		bic	r0, r0, #512
+ 530 007c 5060     		str	r0, [r2, #4]
+ 531 007e 1068     		ldr	r0, [r2]
+ 532 0080 43F00403 		orr	r3, r3, #4
+ 533 0084 40F40070 		orr	r0, r0, #512
+ 534 0088 1060     		str	r0, [r2]
+ 535 008a A360     		str	r3, [r4, #8]
+ 536              	.L89:
+ 537 008c 0805     		lsls	r0, r1, #20
+ 538 008e 44BF     		itt	mi
+ 539 0090 43F00803 		orrmi	r3, r3, #8
+ 540 0094 A360     		strmi	r3, [r4, #8]
+ 541 0096 4A04     		lsls	r2, r1, #17
+ 542 0098 44BF     		itt	mi
+ 543 009a 43F02003 		orrmi	r3, r3, #32
+ 544 009e A360     		strmi	r3, [r4, #8]
+ 545 00a0 C804     		lsls	r0, r1, #19
+ 546 00a2 18D5     		bpl	.L92
+ 547 00a4 43F01003 		orr	r3, r3, #16
+ 548 00a8 0904     		lsls	r1, r1, #16
+ 549 00aa A360     		str	r3, [r4, #8]
+ 550 00ac 02D5     		bpl	.L94
+ 551              	.L93:
+ 552 00ae 43F04003 		orr	r3, r3, #64
+ 553 00b2 A360     		str	r3, [r4, #8]
+ 554              	.L94:
+ 555 00b4 3023     		movs	r3, #48
+ 556              		.syntax unified
+ 557              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 558 00b6 83F31188 		MSR basepri, r3
+ 559              	@ 0 "" 2
+ 560              		.thumb
+ 561              		.syntax unified
+ 562 00ba FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 563 00be 6FF00101 		mvn	r1, #1
+ 564 00c2 04F11C00 		add	r0, r4, #28
+ 565 00c6 FFF7FEFF 		bl	chThdResumeI
+ 566 00ca FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 567 00ce 0023     		movs	r3, #0
+ 568              		.syntax unified
+ARM GAS  /tmp/ccFKjVa4.s 			page 11
+
+
+ 569              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 570 00d0 83F31188 		MSR basepri, r3
+ 571              	@ 0 "" 2
+ 572              		.thumb
+ 573              		.syntax unified
+ 574 00d4 10BD     		pop	{r4, pc}
+ 575              	.L92:
+ 576 00d6 0A04     		lsls	r2, r1, #16
+ 577 00d8 E9D4     		bmi	.L93
+ 578 00da 002B     		cmp	r3, #0
+ 579 00dc EAD1     		bne	.L94
+ 580 00de 10BD     		pop	{r4, pc}
+ 581              	.L121:
+ 582 00e0 636B     		ldr	r3, [r4, #52]
+ 583 00e2 1A68     		ldr	r2, [r3]
+ 584 00e4 42F40042 		orr	r2, r2, #32768
+ 585 00e8 1A60     		str	r2, [r3]
+ 586 00ea 1A68     		ldr	r2, [r3]
+ 587 00ec 22F00102 		bic	r2, r2, #1
+ 588 00f0 1A60     		str	r2, [r3]
+ 589 00f2 10BD     		pop	{r4, pc}
+ 590              	.L120:
+ 591 00f4 636B     		ldr	r3, [r4, #52]
+ 592 00f6 A168     		ldr	r1, [r4, #8]
+ 593 00f8 1A68     		ldr	r2, [r3]
+ 594 00fa 41F08001 		orr	r1, r1, #128
+ 595 00fe 42F40042 		orr	r2, r2, #32768
+ 596 0102 A160     		str	r1, [r4, #8]
+ 597 0104 1A60     		str	r2, [r3]
+ 598 0106 1A68     		ldr	r2, [r3]
+ 599 0108 22F00102 		bic	r2, r2, #1
+ 600 010c 2046     		mov	r0, r4
+ 601 010e 1A60     		str	r2, [r3]
+ 602 0110 FFF7FEFF 		bl	i2c_lld_reset
+ 603 0114 CEE7     		b	.L94
+ 604              		.size	i2c_lld_serve_error_interrupt, .-i2c_lld_serve_error_interrupt
+ 605 0116 00BF     		.section	.text.VectorBC,"ax",%progbits
+ 606              		.align	1
+ 607              		.p2align 4,,15
+ 608              		.global	VectorBC
+ 609              		.syntax unified
+ 610              		.thumb
+ 611              		.thumb_func
+ 612              		.fpu fpv4-sp-d16
+ 613              		.type	VectorBC, %function
+ 614              	VectorBC:
+ 615              		@ args = 0, pretend = 0, frame = 0
+ 616              		@ frame_needed = 0, uses_anonymous_args = 0
+ 617 0000 08B5     		push	{r3, lr}
+ 618 0002 FFF7FEFF 		bl	__stats_increase_irq
+ 619 0006 0348     		ldr	r0, .L124
+ 620 0008 FFF7FEFF 		bl	i2c_lld_serve_event_interrupt
+ 621 000c BDE80840 		pop	{r3, lr}
+ 622 0010 FFF7FEBF 		b	__port_irq_epilogue
+ 623              	.L125:
+ 624              		.align	2
+ 625              	.L124:
+ARM GAS  /tmp/ccFKjVa4.s 			page 12
+
+
+ 626 0014 00000000 		.word	.LANCHOR0
+ 627              		.size	VectorBC, .-VectorBC
+ 628              		.section	.text.VectorC0,"ax",%progbits
+ 629              		.align	1
+ 630              		.p2align 4,,15
+ 631              		.global	VectorC0
+ 632              		.syntax unified
+ 633              		.thumb
+ 634              		.thumb_func
+ 635              		.fpu fpv4-sp-d16
+ 636              		.type	VectorC0, %function
+ 637              	VectorC0:
+ 638              		@ args = 0, pretend = 0, frame = 0
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 640 0000 38B5     		push	{r3, r4, r5, lr}
+ 641 0002 094C     		ldr	r4, .L128
+ 642 0004 636B     		ldr	r3, [r4, #52]
+ 643 0006 5D69     		ldr	r5, [r3, #20]
+ 644 0008 FFF7FEFF 		bl	__stats_increase_irq
+ 645 000c 626B     		ldr	r2, [r4, #52]
+ 646 000e 05F45F43 		and	r3, r5, #57088
+ 647 0012 DB43     		mvns	r3, r3
+ 648 0014 5361     		str	r3, [r2, #20]
+ 649 0016 A9B2     		uxth	r1, r5
+ 650 0018 2046     		mov	r0, r4
+ 651 001a FFF7FEFF 		bl	i2c_lld_serve_error_interrupt
+ 652 001e BDE83840 		pop	{r3, r4, r5, lr}
+ 653 0022 FFF7FEBF 		b	__port_irq_epilogue
+ 654              	.L129:
+ 655 0026 00BF     		.align	2
+ 656              	.L128:
+ 657 0028 00000000 		.word	.LANCHOR0
+ 658              		.size	VectorC0, .-VectorC0
+ 659              		.section	.text.VectorC4,"ax",%progbits
+ 660              		.align	1
+ 661              		.p2align 4,,15
+ 662              		.global	VectorC4
+ 663              		.syntax unified
+ 664              		.thumb
+ 665              		.thumb_func
+ 666              		.fpu fpv4-sp-d16
+ 667              		.type	VectorC4, %function
+ 668              	VectorC4:
+ 669              		@ args = 0, pretend = 0, frame = 0
+ 670              		@ frame_needed = 0, uses_anonymous_args = 0
+ 671 0000 08B5     		push	{r3, lr}
+ 672 0002 FFF7FEFF 		bl	__stats_increase_irq
+ 673 0006 0348     		ldr	r0, .L132
+ 674 0008 FFF7FEFF 		bl	i2c_lld_serve_event_interrupt
+ 675 000c BDE80840 		pop	{r3, lr}
+ 676 0010 FFF7FEBF 		b	__port_irq_epilogue
+ 677              	.L133:
+ 678              		.align	2
+ 679              	.L132:
+ 680 0014 00000000 		.word	.LANCHOR1
+ 681              		.size	VectorC4, .-VectorC4
+ 682              		.section	.text.VectorC8,"ax",%progbits
+ARM GAS  /tmp/ccFKjVa4.s 			page 13
+
+
+ 683              		.align	1
+ 684              		.p2align 4,,15
+ 685              		.global	VectorC8
+ 686              		.syntax unified
+ 687              		.thumb
+ 688              		.thumb_func
+ 689              		.fpu fpv4-sp-d16
+ 690              		.type	VectorC8, %function
+ 691              	VectorC8:
+ 692              		@ args = 0, pretend = 0, frame = 0
+ 693              		@ frame_needed = 0, uses_anonymous_args = 0
+ 694 0000 38B5     		push	{r3, r4, r5, lr}
+ 695 0002 094C     		ldr	r4, .L136
+ 696 0004 636B     		ldr	r3, [r4, #52]
+ 697 0006 5D69     		ldr	r5, [r3, #20]
+ 698 0008 FFF7FEFF 		bl	__stats_increase_irq
+ 699 000c 626B     		ldr	r2, [r4, #52]
+ 700 000e 05F45F43 		and	r3, r5, #57088
+ 701 0012 DB43     		mvns	r3, r3
+ 702 0014 5361     		str	r3, [r2, #20]
+ 703 0016 A9B2     		uxth	r1, r5
+ 704 0018 2046     		mov	r0, r4
+ 705 001a FFF7FEFF 		bl	i2c_lld_serve_error_interrupt
+ 706 001e BDE83840 		pop	{r3, r4, r5, lr}
+ 707 0022 FFF7FEBF 		b	__port_irq_epilogue
+ 708              	.L137:
+ 709 0026 00BF     		.align	2
+ 710              	.L136:
+ 711 0028 00000000 		.word	.LANCHOR1
+ 712              		.size	VectorC8, .-VectorC8
+ 713              		.section	.text.i2c_lld_init,"ax",%progbits
+ 714              		.align	1
+ 715              		.p2align 4,,15
+ 716              		.global	i2c_lld_init
+ 717              		.syntax unified
+ 718              		.thumb
+ 719              		.thumb_func
+ 720              		.fpu fpv4-sp-d16
+ 721              		.type	i2c_lld_init, %function
+ 722              	i2c_lld_init:
+ 723              		@ args = 0, pretend = 0, frame = 0
+ 724              		@ frame_needed = 0, uses_anonymous_args = 0
+ 725 0000 70B5     		push	{r4, r5, r6, lr}
+ 726 0002 0A4E     		ldr	r6, .L140
+ 727 0004 0A4D     		ldr	r5, .L140+4
+ 728 0006 3046     		mov	r0, r6
+ 729 0008 FFF7FEFF 		bl	i2cObjectInit
+ 730 000c 0024     		movs	r4, #0
+ 731 000e 094B     		ldr	r3, .L140+8
+ 732 0010 7363     		str	r3, [r6, #52]
+ 733 0012 2846     		mov	r0, r5
+ 734 0014 C6E90B44 		strd	r4, r4, [r6, #44]
+ 735 0018 F461     		str	r4, [r6, #28]
+ 736 001a FFF7FEFF 		bl	i2cObjectInit
+ 737 001e 064B     		ldr	r3, .L140+12
+ 738 0020 EC61     		str	r4, [r5, #28]
+ 739 0022 C5E90B44 		strd	r4, r4, [r5, #44]
+ARM GAS  /tmp/ccFKjVa4.s 			page 14
+
+
+ 740 0026 6B63     		str	r3, [r5, #52]
+ 741 0028 70BD     		pop	{r4, r5, r6, pc}
+ 742              	.L141:
+ 743 002a 00BF     		.align	2
+ 744              	.L140:
+ 745 002c 00000000 		.word	.LANCHOR0
+ 746 0030 00000000 		.word	.LANCHOR1
+ 747 0034 00540040 		.word	1073763328
+ 748 0038 00580040 		.word	1073764352
+ 749              		.size	i2c_lld_init, .-i2c_lld_init
+ 750              		.section	.text.i2c_lld_start,"ax",%progbits
+ 751              		.align	1
+ 752              		.p2align 4,,15
+ 753              		.global	i2c_lld_start
+ 754              		.syntax unified
+ 755              		.thumb
+ 756              		.thumb_func
+ 757              		.fpu fpv4-sp-d16
+ 758              		.type	i2c_lld_start, %function
+ 759              	i2c_lld_start:
+ 760              		@ args = 0, pretend = 0, frame = 0
+ 761              		@ frame_needed = 0, uses_anonymous_args = 0
+ 762 0000 70B5     		push	{r4, r5, r6, lr}
+ 763 0002 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 764 0004 456B     		ldr	r5, [r0, #52]
+ 765 0006 012B     		cmp	r3, #1
+ 766 0008 0446     		mov	r4, r0
+ 767 000a 47D0     		beq	.L158
+ 768              	.L153:
+ 769 000c 2B46     		mov	r3, r5
+ 770              	.L143:
+ 771 000e E16A     		ldr	r1, [r4, #44]
+ 772 0010 6068     		ldr	r0, [r4, #4]
+ 773 0012 0968     		ldr	r1, [r1]
+ 774 0014 4668     		ldr	r6, [r0, #4]
+ 775 0016 05F11002 		add	r2, r5, #16
+ 776 001a 8A60     		str	r2, [r1, #8]
+ 777 001c 216B     		ldr	r1, [r4, #48]
+ 778 001e 0968     		ldr	r1, [r1]
+ 779 0020 8A60     		str	r2, [r1, #8]
+ 780 0022 4FF40041 		mov	r1, #32768
+ 781 0026 2960     		str	r1, [r5]
+ 782 0028 0022     		movs	r2, #0
+ 783 002a 4FF41061 		mov	r1, #2304
+ 784 002e 2A60     		str	r2, [r5]
+ 785 0030 6960     		str	r1, [r5, #4]
+ 786 0032 5968     		ldr	r1, [r3, #4]
+ 787 0034 90F808C0 		ldrb	ip, [r0, #8]	@ zero_extendqisi2
+ 788 0038 4FF6C074 		movw	r4, #65472
+ 789 003c 2140     		ands	r1, r1, r4
+ 790 003e 5960     		str	r1, [r3, #4]
+ 791 0040 5968     		ldr	r1, [r3, #4]
+ 792 0042 5F4C     		ldr	r4, .L163
+ 793 0044 41F02A01 		orr	r1, r1, #42
+ 794 0048 A642     		cmp	r6, r4
+ 795 004a 5960     		str	r1, [r3, #4]
+ 796 004c 17DC     		bgt	.L145
+ARM GAS  /tmp/ccFKjVa4.s 			page 15
+
+
+ 797 004e 2B22     		movs	r2, #43
+ 798 0050 7100     		lsls	r1, r6, #1
+ 799 0052 1A62     		str	r2, [r3, #32]
+ 800 0054 5B4A     		ldr	r2, .L163+4
+ 801 0056 92FBF1F2 		sdiv	r2, r2, r1
+ 802 005a C2F30B02 		ubfx	r2, r2, #0, #12
+ 803              	.L146:
+ 804 005e DA61     		str	r2, [r3, #28]
+ 805 0060 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 806 0062 1A68     		ldr	r2, [r3]
+ 807 0064 0229     		cmp	r1, #2
+ 808 0066 92B2     		uxth	r2, r2
+ 809 0068 5DD0     		beq	.L149
+ 810 006a 0329     		cmp	r1, #3
+ 811 006c 58D0     		beq	.L150
+ 812 006e 0129     		cmp	r1, #1
+ 813 0070 52D0     		beq	.L159
+ 814              	.L151:
+ 815 0072 1A60     		str	r2, [r3]
+ 816 0074 2B68     		ldr	r3, [r5]
+ 817 0076 43F00103 		orr	r3, r3, #1
+ 818 007a 2B60     		str	r3, [r5]
+ 819 007c 70BD     		pop	{r4, r5, r6, pc}
+ 820              	.L145:
+ 821 007e 5249     		ldr	r1, .L163+8
+ 822 0080 8E42     		cmp	r6, r1
+ 823 0082 ECDC     		bgt	.L146
+ 824 0084 BCF1020F 		cmp	ip, #2
+ 825 0088 53D0     		beq	.L160
+ 826 008a BCF1030F 		cmp	ip, #3
+ 827 008e 00F08A80 		beq	.L161
+ 828 0092 48F6FF72 		movw	r2, #36863
+ 829              	.L148:
+ 830 0096 0D21     		movs	r1, #13
+ 831 0098 1962     		str	r1, [r3, #32]
+ 832 009a E0E7     		b	.L146
+ 833              	.L158:
+ 834 009c 4B4B     		ldr	r3, .L163+12
+ 835 009e 40F21642 		movw	r2, #1046
+ 836 00a2 40F25641 		movw	r1, #1110
+ 837 00a6 9842     		cmp	r0, r3
+ 838 00a8 C0E90921 		strd	r2, r1, [r0, #36]
+ 839 00ac 4FD0     		beq	.L162
+ 840 00ae 484B     		ldr	r3, .L163+16
+ 841 00b0 9842     		cmp	r0, r3
+ 842 00b2 ABD1     		bne	.L153
+ 843 00b4 474E     		ldr	r6, .L163+20
+ 844 00b6 484A     		ldr	r2, .L163+24
+ 845 00b8 336A     		ldr	r3, [r6, #32]
+ 846 00ba 43F48003 		orr	r3, r3, #4194304
+ 847 00be 3362     		str	r3, [r6, #32]
+ 848 00c0 336A     		ldr	r3, [r6, #32]
+ 849 00c2 23F48003 		bic	r3, r3, #4194304
+ 850 00c6 3362     		str	r3, [r6, #32]
+ 851 00c8 316A     		ldr	r1, [r6, #32]
+ 852 00ca 0346     		mov	r3, r0
+ 853 00cc 0521     		movs	r1, #5
+ARM GAS  /tmp/ccFKjVa4.s 			page 16
+
+
+ 854 00ce 0220     		movs	r0, #2
+ 855 00d0 FFF7FEFF 		bl	dmaStreamAllocI
+ 856 00d4 414A     		ldr	r2, .L163+28
+ 857 00d6 E062     		str	r0, [r4, #44]
+ 858 00d8 2346     		mov	r3, r4
+ 859 00da 0521     		movs	r1, #5
+ 860 00dc 0720     		movs	r0, #7
+ 861 00de FFF7FEFF 		bl	dmaStreamAllocI
+ 862 00e2 336C     		ldr	r3, [r6, #64]
+ 863 00e4 2063     		str	r0, [r4, #48]
+ 864 00e6 43F48003 		orr	r3, r3, #4194304
+ 865 00ea 3364     		str	r3, [r6, #64]
+ 866 00ec 336E     		ldr	r3, [r6, #96]
+ 867 00ee 43F48003 		orr	r3, r3, #4194304
+ 868 00f2 0521     		movs	r1, #5
+ 869 00f4 3366     		str	r3, [r6, #96]
+ 870 00f6 2120     		movs	r0, #33
+ 871 00f8 336E     		ldr	r3, [r6, #96]
+ 872 00fa FFF7FEFF 		bl	nvicEnableVector
+ 873 00fe 0521     		movs	r1, #5
+ 874 0100 2220     		movs	r0, #34
+ 875 0102 FFF7FEFF 		bl	nvicEnableVector
+ 876 0106 616A     		ldr	r1, [r4, #36]
+ 877 0108 354A     		ldr	r2, .L163+32
+ 878              	.L157:
+ 879 010a A36A     		ldr	r3, [r4, #40]
+ 880 010c 1143     		orrs	r1, r1, r2
+ 881 010e 1A43     		orrs	r2, r2, r3
+ 882 0110 C4E90912 		strd	r1, r2, [r4, #36]
+ 883 0114 636B     		ldr	r3, [r4, #52]
+ 884 0116 7AE7     		b	.L143
+ 885              	.L159:
+ 886 0118 22F00A02 		bic	r2, r2, #10
+ 887 011c 92B2     		uxth	r2, r2
+ 888 011e A8E7     		b	.L151
+ 889              	.L150:
+ 890 0120 42F00A02 		orr	r2, r2, #10
+ 891 0124 A5E7     		b	.L151
+ 892              	.L149:
+ 893 0126 22F00802 		bic	r2, r2, #8
+ 894 012a 92B2     		uxth	r2, r2
+ 895 012c 42F00202 		orr	r2, r2, #2
+ 896 0130 9FE7     		b	.L151
+ 897              	.L160:
+ 898 0132 01F11E71 		add	r1, r1, #41418752
+ 899 0136 01F53131 		add	r1, r1, #181248
+ 900 013a 06EB4602 		add	r2, r6, r6, lsl #1
+ 901 013e B1FBF2F2 		udiv	r2, r1, r2
+ 902 0142 6FEA4242 		mvn	r2, r2, lsl #17
+ 903 0146 6FEA5242 		mvn	r2, r2, lsr #17
+ 904 014a 92B2     		uxth	r2, r2
+ 905 014c A3E7     		b	.L148
+ 906              	.L162:
+ 907 014e 214E     		ldr	r6, .L163+20
+ 908 0150 214A     		ldr	r2, .L163+24
+ 909 0152 336A     		ldr	r3, [r6, #32]
+ 910 0154 43F40013 		orr	r3, r3, #2097152
+ARM GAS  /tmp/ccFKjVa4.s 			page 17
+
+
+ 911 0158 3362     		str	r3, [r6, #32]
+ 912 015a 336A     		ldr	r3, [r6, #32]
+ 913 015c 23F40013 		bic	r3, r3, #2097152
+ 914 0160 3362     		str	r3, [r6, #32]
+ 915 0162 316A     		ldr	r1, [r6, #32]
+ 916 0164 0346     		mov	r3, r0
+ 917 0166 0521     		movs	r1, #5
+ 918 0168 0020     		movs	r0, #0
+ 919 016a FFF7FEFF 		bl	dmaStreamAllocI
+ 920 016e 1B4A     		ldr	r2, .L163+28
+ 921 0170 E062     		str	r0, [r4, #44]
+ 922 0172 2346     		mov	r3, r4
+ 923 0174 0521     		movs	r1, #5
+ 924 0176 0620     		movs	r0, #6
+ 925 0178 FFF7FEFF 		bl	dmaStreamAllocI
+ 926 017c 336C     		ldr	r3, [r6, #64]
+ 927 017e 2063     		str	r0, [r4, #48]
+ 928 0180 43F40013 		orr	r3, r3, #2097152
+ 929 0184 3364     		str	r3, [r6, #64]
+ 930 0186 336E     		ldr	r3, [r6, #96]
+ 931 0188 43F40013 		orr	r3, r3, #2097152
+ 932 018c 0521     		movs	r1, #5
+ 933 018e 3366     		str	r3, [r6, #96]
+ 934 0190 1F20     		movs	r0, #31
+ 935 0192 336E     		ldr	r3, [r6, #96]
+ 936 0194 FFF7FEFF 		bl	nvicEnableVector
+ 937 0198 0521     		movs	r1, #5
+ 938 019a 2020     		movs	r0, #32
+ 939 019c FFF7FEFF 		bl	nvicEnableVector
+ 940 01a0 616A     		ldr	r1, [r4, #36]
+ 941 01a2 104A     		ldr	r2, .L163+36
+ 942 01a4 B1E7     		b	.L157
+ 943              	.L161:
+ 944 01a6 06EB8601 		add	r1, r6, r6, lsl #2
+ 945 01aa 064A     		ldr	r2, .L163+4
+ 946 01ac 01EB8101 		add	r1, r1, r1, lsl #2
+ 947 01b0 B2FBF1F2 		udiv	r2, r2, r1
+ 948 01b4 6FEA8242 		mvn	r2, r2, lsl #18
+ 949 01b8 6FEA9242 		mvn	r2, r2, lsr #18
+ 950 01bc 92B2     		uxth	r2, r2
+ 951 01be 6AE7     		b	.L148
+ 952              	.L164:
+ 953              		.align	2
+ 954              	.L163:
+ 955 01c0 A0860100 		.word	100000
+ 956 01c4 80DE8002 		.word	42000000
+ 957 01c8 801A0600 		.word	400000
+ 958 01cc 00000000 		.word	.LANCHOR0
+ 959 01d0 00000000 		.word	.LANCHOR1
+ 960 01d4 00380240 		.word	1073887232
+ 961 01d8 00000000 		.word	i2c_lld_serve_rx_end_irq
+ 962 01dc 00000000 		.word	i2c_lld_serve_tx_end_irq
+ 963 01e0 0000030E 		.word	235077632
+ 964 01e4 00000302 		.word	33751040
+ 965              		.size	i2c_lld_start, .-i2c_lld_start
+ 966              		.section	.text.i2c_lld_stop,"ax",%progbits
+ 967              		.align	1
+ARM GAS  /tmp/ccFKjVa4.s 			page 18
+
+
+ 968              		.p2align 4,,15
+ 969              		.global	i2c_lld_stop
+ 970              		.syntax unified
+ 971              		.thumb
+ 972              		.thumb_func
+ 973              		.fpu fpv4-sp-d16
+ 974              		.type	i2c_lld_stop, %function
+ 975              	i2c_lld_stop:
+ 976              		@ args = 0, pretend = 0, frame = 0
+ 977              		@ frame_needed = 0, uses_anonymous_args = 0
+ 978 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 979 0002 012B     		cmp	r3, #1
+ 980 0004 00D1     		bne	.L174
+ 981 0006 7047     		bx	lr
+ 982              	.L174:
+ 983 0008 10B5     		push	{r4, lr}
+ 984 000a 0446     		mov	r4, r0
+ 985 000c FFF7FEFF 		bl	i2c_lld_abort_operation
+ 986 0010 206B     		ldr	r0, [r4, #48]
+ 987 0012 FFF7FEFF 		bl	dmaStreamFreeI
+ 988 0016 E06A     		ldr	r0, [r4, #44]
+ 989 0018 FFF7FEFF 		bl	dmaStreamFreeI
+ 990 001c 154A     		ldr	r2, .L177
+ 991 001e 0023     		movs	r3, #0
+ 992 0020 9442     		cmp	r4, r2
+ 993 0022 C4E90B33 		strd	r3, r3, [r4, #44]
+ 994 0026 14D0     		beq	.L175
+ 995 0028 134B     		ldr	r3, .L177+4
+ 996 002a 9C42     		cmp	r4, r3
+ 997 002c 00D0     		beq	.L176
+ 998 002e 10BD     		pop	{r4, pc}
+ 999              	.L176:
+ 1000 0030 2120     		movs	r0, #33
+ 1001 0032 FFF7FEFF 		bl	nvicDisableVector
+ 1002 0036 2220     		movs	r0, #34
+ 1003 0038 FFF7FEFF 		bl	nvicDisableVector
+ 1004 003c 0F4B     		ldr	r3, .L177+8
+ 1005 003e 1A6C     		ldr	r2, [r3, #64]
+ 1006 0040 22F48002 		bic	r2, r2, #4194304
+ 1007 0044 1A64     		str	r2, [r3, #64]
+ 1008 0046 1A6E     		ldr	r2, [r3, #96]
+ 1009 0048 22F48002 		bic	r2, r2, #4194304
+ 1010 004c 1A66     		str	r2, [r3, #96]
+ 1011 004e 1B6E     		ldr	r3, [r3, #96]
+ 1012 0050 10BD     		pop	{r4, pc}
+ 1013              	.L175:
+ 1014 0052 1F20     		movs	r0, #31
+ 1015 0054 FFF7FEFF 		bl	nvicDisableVector
+ 1016 0058 2020     		movs	r0, #32
+ 1017 005a FFF7FEFF 		bl	nvicDisableVector
+ 1018 005e 074B     		ldr	r3, .L177+8
+ 1019 0060 1A6C     		ldr	r2, [r3, #64]
+ 1020 0062 22F40012 		bic	r2, r2, #2097152
+ 1021 0066 1A64     		str	r2, [r3, #64]
+ 1022 0068 1A6E     		ldr	r2, [r3, #96]
+ 1023 006a 22F40012 		bic	r2, r2, #2097152
+ 1024 006e 1A66     		str	r2, [r3, #96]
+ARM GAS  /tmp/ccFKjVa4.s 			page 19
+
+
+ 1025 0070 1B6E     		ldr	r3, [r3, #96]
+ 1026 0072 10BD     		pop	{r4, pc}
+ 1027              	.L178:
+ 1028              		.align	2
+ 1029              	.L177:
+ 1030 0074 00000000 		.word	.LANCHOR0
+ 1031 0078 00000000 		.word	.LANCHOR1
+ 1032 007c 00380240 		.word	1073887232
+ 1033              		.size	i2c_lld_stop, .-i2c_lld_stop
+ 1034              		.section	.text.i2c_lld_master_receive_timeout,"ax",%progbits
+ 1035              		.align	1
+ 1036              		.p2align 4,,15
+ 1037              		.global	i2c_lld_master_receive_timeout
+ 1038              		.syntax unified
+ 1039              		.thumb
+ 1040              		.thumb_func
+ 1041              		.fpu fpv4-sp-d16
+ 1042              		.type	i2c_lld_master_receive_timeout, %function
+ 1043              	i2c_lld_master_receive_timeout:
+ 1044              		@ args = 4, pretend = 0, frame = 0
+ 1045              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1046 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1047 0004 4900     		lsls	r1, r1, #1
+ 1048 0006 1E46     		mov	r6, r3
+ 1049 0008 03EB4303 		add	r3, r3, r3, lsl #1
+ 1050 000c 41F00101 		orr	r1, r1, #1
+ 1051 0010 5B00     		lsls	r3, r3, #1
+ 1052 0012 4FF00008 		mov	r8, #0
+ 1053 0016 0184     		strh	r1, [r0, #32]	@ movhi
+ 1054 0018 C363     		str	r3, [r0, #60]
+ 1055 001a C0F83880 		str	r8, [r0, #56]
+ 1056 001e C0F80880 		str	r8, [r0, #8]
+ 1057 0022 456B     		ldr	r5, [r0, #52]
+ 1058 0024 0446     		mov	r4, r0
+ 1059 0026 1746     		mov	r7, r2
+ 1060 0028 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1061              		.syntax unified
+ 1062              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1063 002c 88F31188 		MSR basepri, r8
+ 1064              	@ 0 "" 2
+ 1065              		.thumb
+ 1066              		.syntax unified
+ 1067 0030 E36A     		ldr	r3, [r4, #44]
+ 1068 0032 626A     		ldr	r2, [r4, #36]
+ 1069 0034 1B68     		ldr	r3, [r3]
+ 1070 0036 1A60     		str	r2, [r3]
+ 1071 0038 DF60     		str	r7, [r3, #12]
+ 1072 003a 214F     		ldr	r7, .L188
+ 1073 003c 5E60     		str	r6, [r3, #4]
+ 1074 003e FB69     		ldr	r3, [r7, #28]
+ 1075 0040 3023     		movs	r3, #48
+ 1076              		.syntax unified
+ 1077              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1078 0042 83F31188 		MSR basepri, r3
+ 1079              	@ 0 "" 2
+ 1080              		.thumb
+ 1081              		.syntax unified
+ARM GAS  /tmp/ccFKjVa4.s 			page 20
+
+
+ 1082 0046 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1083 004a AB69     		ldr	r3, [r5, #24]
+ 1084 004c 9907     		lsls	r1, r3, #30
+ 1085 004e 25D4     		bmi	.L180
+ 1086 0050 2B68     		ldr	r3, [r5]
+ 1087 0052 9A05     		lsls	r2, r3, #22
+ 1088 0054 22D4     		bmi	.L180
+ 1089 0056 6B68     		ldr	r3, [r5, #4]
+ 1090 0058 0699     		ldr	r1, [sp, #24]
+ 1091 005a 0122     		movs	r2, #1
+ 1092 005c 43F40073 		orr	r3, r3, #512
+ 1093 0060 84F84020 		strb	r2, [r4, #64]
+ 1094 0064 6B60     		str	r3, [r5, #4]
+ 1095 0066 2B68     		ldr	r3, [r5]
+ 1096 0068 43F4A063 		orr	r3, r3, #1280
+ 1097 006c 2B60     		str	r3, [r5]
+ 1098 006e 04F11C00 		add	r0, r4, #28
+ 1099 0072 FFF7FEFF 		bl	chThdSuspendTimeoutS
+ 1100 0076 E16A     		ldr	r1, [r4, #44]
+ 1101 0078 0A68     		ldr	r2, [r1]
+ 1102 007a 1368     		ldr	r3, [r2]
+ 1103 007c 23F01F03 		bic	r3, r3, #31
+ 1104 0080 1360     		str	r3, [r2]
+ 1105              	.L184:
+ 1106 0082 1368     		ldr	r3, [r2]
+ 1107 0084 13F00103 		ands	r3, r3, #1
+ 1108 0088 FBD1     		bne	.L184
+ 1109 008a 4D68     		ldr	r5, [r1, #4]
+ 1110 008c 497A     		ldrb	r1, [r1, #9]	@ zero_extendqisi2
+ 1111 008e 3D22     		movs	r2, #61
+ 1112 0090 8A40     		lsls	r2, r2, r1
+ 1113 0092 2A60     		str	r2, [r5]
+ 1114 0094 84F84030 		strb	r3, [r4, #64]
+ 1115              	.L179:
+ 1116 0098 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1117              	.L180:
+ 1118 009c E16A     		ldr	r1, [r4, #44]
+ 1119 009e FB69     		ldr	r3, [r7, #28]
+ 1120 00a0 0A68     		ldr	r2, [r1]
+ 1121 00a2 1368     		ldr	r3, [r2]
+ 1122 00a4 23F01F03 		bic	r3, r3, #31
+ 1123 00a8 1360     		str	r3, [r2]
+ 1124              	.L182:
+ 1125 00aa 1368     		ldr	r3, [r2]
+ 1126 00ac DB07     		lsls	r3, r3, #31
+ 1127 00ae FCD4     		bmi	.L182
+ 1128 00b0 487A     		ldrb	r0, [r1, #9]	@ zero_extendqisi2
+ 1129 00b2 4A68     		ldr	r2, [r1, #4]
+ 1130 00b4 3D23     		movs	r3, #61
+ 1131 00b6 8340     		lsls	r3, r3, r0
+ 1132 00b8 1360     		str	r3, [r2]
+ 1133 00ba 4FF0FF30 		mov	r0, #-1
+ 1134 00be EBE7     		b	.L179
+ 1135              	.L189:
+ 1136              		.align	2
+ 1137              	.L188:
+ 1138 00c0 00000000 		.word	ch0
+ARM GAS  /tmp/ccFKjVa4.s 			page 21
+
+
+ 1139              		.size	i2c_lld_master_receive_timeout, .-i2c_lld_master_receive_timeout
+ 1140              		.section	.text.i2c_lld_master_transmit_timeout,"ax",%progbits
+ 1141              		.align	1
+ 1142              		.p2align 4,,15
+ 1143              		.global	i2c_lld_master_transmit_timeout
+ 1144              		.syntax unified
+ 1145              		.thumb
+ 1146              		.thumb_func
+ 1147              		.fpu fpv4-sp-d16
+ 1148              		.type	i2c_lld_master_transmit_timeout, %function
+ 1149              	i2c_lld_master_transmit_timeout:
+ 1150              		@ args = 12, pretend = 0, frame = 0
+ 1151              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1152 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1153 0004 099F     		ldr	r7, [sp, #36]
+ 1154 0006 456B     		ldr	r5, [r0, #52]
+ 1155 0008 4900     		lsls	r1, r1, #1
+ 1156 000a 0184     		strh	r1, [r0, #32]	@ movhi
+ 1157 000c D919     		adds	r1, r3, r7
+ 1158 000e 01EB4101 		add	r1, r1, r1, lsl #1
+ 1159 0012 4900     		lsls	r1, r1, #1
+ 1160 0014 4FF00009 		mov	r9, #0
+ 1161 0018 C163     		str	r1, [r0, #60]
+ 1162 001a C0F83890 		str	r9, [r0, #56]
+ 1163 001e C0F80890 		str	r9, [r0, #8]
+ 1164 0022 1E46     		mov	r6, r3
+ 1165 0024 0446     		mov	r4, r0
+ 1166 0026 9046     		mov	r8, r2
+ 1167 0028 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1168              		.syntax unified
+ 1169              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1170 002c 89F31188 		MSR basepri, r9
+ 1171              	@ 0 "" 2
+ 1172              		.thumb
+ 1173              		.syntax unified
+ 1174 0030 236B     		ldr	r3, [r4, #48]
+ 1175 0032 A06A     		ldr	r0, [r4, #40]
+ 1176 0034 1968     		ldr	r1, [r3]
+ 1177 0036 E36A     		ldr	r3, [r4, #44]
+ 1178 0038 626A     		ldr	r2, [r4, #36]
+ 1179 003a 1B68     		ldr	r3, [r3]
+ 1180 003c 0860     		str	r0, [r1]
+ 1181 003e C1F80C80 		str	r8, [r1, #12]
+ 1182 0042 4E60     		str	r6, [r1, #4]
+ 1183 0044 1A60     		str	r2, [r3]
+ 1184 0046 304E     		ldr	r6, .L203
+ 1185 0048 089A     		ldr	r2, [sp, #32]
+ 1186 004a DA60     		str	r2, [r3, #12]
+ 1187 004c 5F60     		str	r7, [r3, #4]
+ 1188 004e F369     		ldr	r3, [r6, #28]
+ 1189 0050 3023     		movs	r3, #48
+ 1190              		.syntax unified
+ 1191              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1192 0052 83F31188 		MSR basepri, r3
+ 1193              	@ 0 "" 2
+ 1194              		.thumb
+ 1195              		.syntax unified
+ARM GAS  /tmp/ccFKjVa4.s 			page 22
+
+
+ 1196 0056 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1197 005a AB69     		ldr	r3, [r5, #24]
+ 1198 005c 9B07     		lsls	r3, r3, #30
+ 1199 005e 33D4     		bmi	.L191
+ 1200 0060 2B68     		ldr	r3, [r5]
+ 1201 0062 9F05     		lsls	r7, r3, #22
+ 1202 0064 30D4     		bmi	.L191
+ 1203 0066 6B68     		ldr	r3, [r5, #4]
+ 1204 0068 0A99     		ldr	r1, [sp, #40]
+ 1205 006a 0122     		movs	r2, #1
+ 1206 006c 43F40073 		orr	r3, r3, #512
+ 1207 0070 84F84020 		strb	r2, [r4, #64]
+ 1208 0074 6B60     		str	r3, [r5, #4]
+ 1209 0076 2B68     		ldr	r3, [r5]
+ 1210 0078 43F48073 		orr	r3, r3, #256
+ 1211 007c 2B60     		str	r3, [r5]
+ 1212 007e 04F11C00 		add	r0, r4, #28
+ 1213 0082 FFF7FEFF 		bl	chThdSuspendTimeoutS
+ 1214 0086 216B     		ldr	r1, [r4, #48]
+ 1215 0088 0A68     		ldr	r2, [r1]
+ 1216 008a 1368     		ldr	r3, [r2]
+ 1217 008c 23F01F03 		bic	r3, r3, #31
+ 1218 0090 1360     		str	r3, [r2]
+ 1219              	.L196:
+ 1220 0092 1368     		ldr	r3, [r2]
+ 1221 0094 DB07     		lsls	r3, r3, #31
+ 1222 0096 FCD4     		bmi	.L196
+ 1223 0098 4D7A     		ldrb	r5, [r1, #9]	@ zero_extendqisi2
+ 1224 009a 4A68     		ldr	r2, [r1, #4]
+ 1225 009c E16A     		ldr	r1, [r4, #44]
+ 1226 009e 3D23     		movs	r3, #61
+ 1227 00a0 AB40     		lsls	r3, r3, r5
+ 1228 00a2 1360     		str	r3, [r2]
+ 1229 00a4 0A68     		ldr	r2, [r1]
+ 1230 00a6 1368     		ldr	r3, [r2]
+ 1231 00a8 23F01F03 		bic	r3, r3, #31
+ 1232 00ac 1360     		str	r3, [r2]
+ 1233              	.L197:
+ 1234 00ae 1368     		ldr	r3, [r2]
+ 1235 00b0 13F00103 		ands	r3, r3, #1
+ 1236 00b4 FBD1     		bne	.L197
+ 1237 00b6 4D68     		ldr	r5, [r1, #4]
+ 1238 00b8 497A     		ldrb	r1, [r1, #9]	@ zero_extendqisi2
+ 1239 00ba 3D22     		movs	r2, #61
+ 1240 00bc 8A40     		lsls	r2, r2, r1
+ 1241 00be 2A60     		str	r2, [r5]
+ 1242 00c0 84F84030 		strb	r3, [r4, #64]
+ 1243              	.L190:
+ 1244 00c4 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1245              	.L191:
+ 1246 00c8 206B     		ldr	r0, [r4, #48]
+ 1247 00ca F369     		ldr	r3, [r6, #28]
+ 1248 00cc 0268     		ldr	r2, [r0]
+ 1249 00ce 1368     		ldr	r3, [r2]
+ 1250 00d0 23F01F03 		bic	r3, r3, #31
+ 1251 00d4 1360     		str	r3, [r2]
+ 1252              	.L193:
+ARM GAS  /tmp/ccFKjVa4.s 			page 23
+
+
+ 1253 00d6 1368     		ldr	r3, [r2]
+ 1254 00d8 DD07     		lsls	r5, r3, #31
+ 1255 00da FCD4     		bmi	.L193
+ 1256 00dc 457A     		ldrb	r5, [r0, #9]	@ zero_extendqisi2
+ 1257 00de E16A     		ldr	r1, [r4, #44]
+ 1258 00e0 4068     		ldr	r0, [r0, #4]
+ 1259 00e2 0A68     		ldr	r2, [r1]
+ 1260 00e4 3D23     		movs	r3, #61
+ 1261 00e6 AB40     		lsls	r3, r3, r5
+ 1262 00e8 0360     		str	r3, [r0]
+ 1263 00ea 1368     		ldr	r3, [r2]
+ 1264 00ec 23F01F03 		bic	r3, r3, #31
+ 1265 00f0 1360     		str	r3, [r2]
+ 1266              	.L194:
+ 1267 00f2 1368     		ldr	r3, [r2]
+ 1268 00f4 D807     		lsls	r0, r3, #31
+ 1269 00f6 FCD4     		bmi	.L194
+ 1270 00f8 487A     		ldrb	r0, [r1, #9]	@ zero_extendqisi2
+ 1271 00fa 4A68     		ldr	r2, [r1, #4]
+ 1272 00fc 3D23     		movs	r3, #61
+ 1273 00fe 8340     		lsls	r3, r3, r0
+ 1274 0100 1360     		str	r3, [r2]
+ 1275 0102 4FF0FF30 		mov	r0, #-1
+ 1276 0106 DDE7     		b	.L190
+ 1277              	.L204:
+ 1278              		.align	2
+ 1279              	.L203:
+ 1280 0108 00000000 		.word	ch0
+ 1281              		.size	i2c_lld_master_transmit_timeout, .-i2c_lld_master_transmit_timeout
+ 1282              		.global	I2CD2
+ 1283              		.global	I2CD1
+ 1284              		.section	.bss.I2CD1,"aw",%nobits
+ 1285              		.align	2
+ 1286              		.set	.LANCHOR0,. + 0
+ 1287              		.type	I2CD1, %object
+ 1288              		.size	I2CD1, 68
+ 1289              	I2CD1:
+ 1290 0000 00000000 		.space	68
+ 1290      00000000 
+ 1290      00000000 
+ 1290      00000000 
+ 1290      00000000 
+ 1291              		.section	.bss.I2CD2,"aw",%nobits
+ 1292              		.align	2
+ 1293              		.set	.LANCHOR1,. + 0
+ 1294              		.type	I2CD2, %object
+ 1295              		.size	I2CD2, 68
+ 1296              	I2CD2:
+ 1297 0000 00000000 		.space	68
+ 1297      00000000 
+ 1297      00000000 
+ 1297      00000000 
+ 1297      00000000 
+ 1298              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccFKjVa4.s 			page 24
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_i2c_lld.c
+     /tmp/ccFKjVa4.s:15     .text.i2c_lld_abort_operation:0000000000000000 $t
+     /tmp/ccFKjVa4.s:23     .text.i2c_lld_abort_operation:0000000000000000 i2c_lld_abort_operation
+     /tmp/ccFKjVa4.s:66     .rodata.i2c_lld_serve_tx_end_irq.str1.4:0000000000000000 $d
+     /tmp/ccFKjVa4.s:70     .text.i2c_lld_serve_tx_end_irq:0000000000000000 $t
+     /tmp/ccFKjVa4.s:77     .text.i2c_lld_serve_tx_end_irq:0000000000000000 i2c_lld_serve_tx_end_irq
+     /tmp/ccFKjVa4.s:111    .text.i2c_lld_serve_tx_end_irq:000000000000003c $d
+     /tmp/ccFKjVa4.s:114    .text.i2c_lld_serve_rx_end_irq:0000000000000000 $t
+     /tmp/ccFKjVa4.s:121    .text.i2c_lld_serve_rx_end_irq:0000000000000000 i2c_lld_serve_rx_end_irq
+     /tmp/ccFKjVa4.s:179    .text.i2c_lld_serve_rx_end_irq:0000000000000068 $d
+     /tmp/ccFKjVa4.s:182    .text.i2c_lld_reset:0000000000000000 $t
+     /tmp/ccFKjVa4.s:189    .text.i2c_lld_reset:0000000000000000 i2c_lld_reset
+     /tmp/ccFKjVa4.s:223    .text.i2c_lld_reset:000000000000003c $d
+     /tmp/ccFKjVa4.s:228    .text.i2c_lld_serve_event_interrupt:0000000000000000 $t
+     /tmp/ccFKjVa4.s:235    .text.i2c_lld_serve_event_interrupt:0000000000000000 i2c_lld_serve_event_interrupt
+     /tmp/ccFKjVa4.s:263    .text.i2c_lld_serve_event_interrupt:0000000000000040 $d
+     /tmp/ccFKjVa4.s:461    .text.i2c_lld_serve_event_interrupt:00000000000001bc $d
+     /tmp/ccFKjVa4.s:465    .text.i2c_lld_serve_error_interrupt:0000000000000000 $t
+     /tmp/ccFKjVa4.s:472    .text.i2c_lld_serve_error_interrupt:0000000000000000 i2c_lld_serve_error_interrupt
+     /tmp/ccFKjVa4.s:606    .text.VectorBC:0000000000000000 $t
+     /tmp/ccFKjVa4.s:614    .text.VectorBC:0000000000000000 VectorBC
+     /tmp/ccFKjVa4.s:626    .text.VectorBC:0000000000000014 $d
+     /tmp/ccFKjVa4.s:629    .text.VectorC0:0000000000000000 $t
+     /tmp/ccFKjVa4.s:637    .text.VectorC0:0000000000000000 VectorC0
+     /tmp/ccFKjVa4.s:657    .text.VectorC0:0000000000000028 $d
+     /tmp/ccFKjVa4.s:660    .text.VectorC4:0000000000000000 $t
+     /tmp/ccFKjVa4.s:668    .text.VectorC4:0000000000000000 VectorC4
+     /tmp/ccFKjVa4.s:680    .text.VectorC4:0000000000000014 $d
+     /tmp/ccFKjVa4.s:683    .text.VectorC8:0000000000000000 $t
+     /tmp/ccFKjVa4.s:691    .text.VectorC8:0000000000000000 VectorC8
+     /tmp/ccFKjVa4.s:711    .text.VectorC8:0000000000000028 $d
+     /tmp/ccFKjVa4.s:714    .text.i2c_lld_init:0000000000000000 $t
+     /tmp/ccFKjVa4.s:722    .text.i2c_lld_init:0000000000000000 i2c_lld_init
+     /tmp/ccFKjVa4.s:745    .text.i2c_lld_init:000000000000002c $d
+     /tmp/ccFKjVa4.s:751    .text.i2c_lld_start:0000000000000000 $t
+     /tmp/ccFKjVa4.s:759    .text.i2c_lld_start:0000000000000000 i2c_lld_start
+     /tmp/ccFKjVa4.s:955    .text.i2c_lld_start:00000000000001c0 $d
+     /tmp/ccFKjVa4.s:967    .text.i2c_lld_stop:0000000000000000 $t
+     /tmp/ccFKjVa4.s:975    .text.i2c_lld_stop:0000000000000000 i2c_lld_stop
+     /tmp/ccFKjVa4.s:1030   .text.i2c_lld_stop:0000000000000074 $d
+     /tmp/ccFKjVa4.s:1035   .text.i2c_lld_master_receive_timeout:0000000000000000 $t
+     /tmp/ccFKjVa4.s:1043   .text.i2c_lld_master_receive_timeout:0000000000000000 i2c_lld_master_receive_timeout
+     /tmp/ccFKjVa4.s:1138   .text.i2c_lld_master_receive_timeout:00000000000000c0 $d
+     /tmp/ccFKjVa4.s:1141   .text.i2c_lld_master_transmit_timeout:0000000000000000 $t
+     /tmp/ccFKjVa4.s:1149   .text.i2c_lld_master_transmit_timeout:0000000000000000 i2c_lld_master_transmit_timeout
+     /tmp/ccFKjVa4.s:1280   .text.i2c_lld_master_transmit_timeout:0000000000000108 $d
+     /tmp/ccFKjVa4.s:1296   .bss.I2CD2:0000000000000000 I2CD2
+     /tmp/ccFKjVa4.s:1289   .bss.I2CD1:0000000000000000 I2CD1
+     /tmp/ccFKjVa4.s:1285   .bss.I2CD1:0000000000000000 $d
+     /tmp/ccFKjVa4.s:1292   .bss.I2CD2:0000000000000000 $d
+     /tmp/ccFKjVa4.s:280    .text.i2c_lld_serve_event_interrupt:0000000000000051 $d
+     /tmp/ccFKjVa4.s:280    .text.i2c_lld_serve_event_interrupt:0000000000000052 $t
+
+UNDEFINED SYMBOLS
+chSysHalt
+__stats_start_measure_crit_isr
+ARM GAS  /tmp/ccFKjVa4.s 			page 25
+
+
+chThdResumeI
+__stats_stop_measure_crit_isr
+__stats_increase_irq
+__port_irq_epilogue
+i2cObjectInit
+dmaStreamAllocI
+nvicEnableVector
+dmaStreamFreeI
+nvicDisableVector
+__stats_stop_measure_crit_thd
+__stats_start_measure_crit_thd
+chThdSuspendTimeoutS
+ch0

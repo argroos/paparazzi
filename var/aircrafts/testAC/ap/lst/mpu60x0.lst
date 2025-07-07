@@ -1,0 +1,296 @@
+ARM GAS  /tmp/ccMXAyJo.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"mpu60x0.c"
+  13              		.text
+  14              		.section	.text.mpu60x0_set_default_config,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	mpu60x0_set_default_config
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	mpu60x0_set_default_config, %function
+  24              	mpu60x0_set_default_config:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 10B4     		push	{r4}
+  29 0002 0649     		ldr	r1, .L4
+  30 0004 064C     		ldr	r4, .L4+4
+  31 0006 0023     		movs	r3, #0
+  32 0008 0F22     		movs	r2, #15
+  33 000a C0E90041 		strd	r4, r1, [r0]
+  34 000e 0272     		strb	r2, [r0, #8]
+  35 0010 5DF8044B 		ldr	r4, [sp], #4
+  36 0014 C372     		strb	r3, [r0, #11]
+  37 0016 8381     		strh	r3, [r0, #12]	@ movhi
+  38 0018 7047     		bx	lr
+  39              	.L5:
+  40 001a 00BF     		.align	2
+  41              	.L4:
+  42 001c 03030001 		.word	16777987
+  43 0020 00000202 		.word	33685504
+  44              		.size	mpu60x0_set_default_config, .-mpu60x0_set_default_config
+  45              		.section	.text.mpu60x0_send_config,"ax",%progbits
+  46              		.align	1
+  47              		.p2align 4,,15
+  48              		.global	mpu60x0_send_config
+  49              		.syntax unified
+  50              		.thumb
+  51              		.thumb_func
+  52              		.fpu fpv4-sp-d16
+  53              		.type	mpu60x0_send_config, %function
+  54              	mpu60x0_send_config:
+  55              		@ args = 0, pretend = 0, frame = 0
+  56              		@ frame_needed = 0, uses_anonymous_args = 0
+  57 0000 38B5     		push	{r3, r4, r5, lr}
+ARM GAS  /tmp/ccMXAyJo.s 			page 2
+
+
+  58 0002 92F809C0 		ldrb	ip, [r2, #9]	@ zero_extendqisi2
+  59 0006 1446     		mov	r4, r2
+  60 0008 0CF1FF32 		add	r2, ip, #-1
+  61 000c 0546     		mov	r5, r0
+  62 000e 0846     		mov	r0, r1
+  63 0010 0B2A     		cmp	r2, #11
+  64 0012 0DD8     		bhi	.L6
+  65 0014 DFE802F0 		tbb	[pc, r2]
+  66              	.L9:
+  67 0018 06       		.byte	(.L20-.L9)/2
+  68 0019 10       		.byte	(.L19-.L9)/2
+  69 001a 17       		.byte	(.L18-.L9)/2
+  70 001b 19       		.byte	(.L17-.L9)/2
+  71 001c 20       		.byte	(.L16-.L9)/2
+  72 001d 27       		.byte	(.L15-.L9)/2
+  73 001e 31       		.byte	(.L14-.L9)/2
+  74 001f 34       		.byte	(.L13-.L9)/2
+  75 0020 40       		.byte	(.L12-.L9)/2
+  76 0021 45       		.byte	(.L11-.L9)/2
+  77 0022 4C       		.byte	(.L10-.L9)/2
+  78 0023 0D       		.byte	(.L8-.L9)/2
+  79              		.p2align 1
+  80              	.L20:
+  81 0024 4022     		movs	r2, #64
+  82              	.L34:
+  83 0026 6B21     		movs	r1, #107
+  84 0028 A847     		blx	r5
+  85 002a 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
+  86 002c 0133     		adds	r3, r3, #1
+  87 002e 6372     		strb	r3, [r4, #9]
+  88              	.L6:
+  89 0030 38BD     		pop	{r3, r4, r5, pc}
+  90              	.L8:
+  91 0032 0123     		movs	r3, #1
+  92 0034 A372     		strb	r3, [r4, #10]
+  93 0036 38BD     		pop	{r3, r4, r5, pc}
+  94              	.L19:
+  95 0038 0722     		movs	r2, #7
+  96 003a 6A21     		movs	r1, #106
+  97 003c A847     		blx	r5
+  98 003e 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
+  99 0040 0133     		adds	r3, r3, #1
+ 100 0042 6372     		strb	r3, [r4, #9]
+ 101 0044 38BD     		pop	{r3, r4, r5, pc}
+ 102              	.L18:
+ 103 0046 E279     		ldrb	r2, [r4, #7]	@ zero_extendqisi2
+ 104 0048 EDE7     		b	.L34
+ 105              	.L17:
+ 106 004a 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 107 004c 1921     		movs	r1, #25
+ 108 004e A847     		blx	r5
+ 109 0050 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
+ 110 0052 0133     		adds	r3, r3, #1
+ 111 0054 6372     		strb	r3, [r4, #9]
+ 112 0056 38BD     		pop	{r3, r4, r5, pc}
+ 113              	.L16:
+ 114 0058 A278     		ldrb	r2, [r4, #2]	@ zero_extendqisi2
+ARM GAS  /tmp/ccMXAyJo.s 			page 3
+
+
+ 115 005a 1A21     		movs	r1, #26
+ 116 005c A847     		blx	r5
+ 117 005e 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
+ 118 0060 0133     		adds	r3, r3, #1
+ 119 0062 6372     		strb	r3, [r4, #9]
+ 120 0064 38BD     		pop	{r3, r4, r5, pc}
+ 121              	.L15:
+ 122 0066 2279     		ldrb	r2, [r4, #4]	@ zero_extendqisi2
+ 123 0068 1B21     		movs	r1, #27
+ 124              	.L35:
+ 125 006a D200     		lsls	r2, r2, #3
+ 126 006c 02F0F802 		and	r2, r2, #248
+ 127 0070 A847     		blx	r5
+ 128 0072 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
+ 129 0074 0133     		adds	r3, r3, #1
+ 130 0076 6372     		strb	r3, [r4, #9]
+ 131 0078 38BD     		pop	{r3, r4, r5, pc}
+ 132              	.L14:
+ 133 007a 6279     		ldrb	r2, [r4, #5]	@ zero_extendqisi2
+ 134 007c 1C21     		movs	r1, #28
+ 135 007e F4E7     		b	.L35
+ 136              	.L13:
+ 137 0080 2278     		ldrb	r2, [r4]	@ zero_extendqisi2
+ 138 0082 22B1     		cbz	r2, .L23
+ 139 0084 E278     		ldrb	r2, [r4, #3]	@ zero_extendqisi2
+ 140 0086 1D21     		movs	r1, #29
+ 141 0088 A847     		blx	r5
+ 142 008a 94F809C0 		ldrb	ip, [r4, #9]	@ zero_extendqisi2
+ 143              	.L23:
+ 144 008e 0CF1010C 		add	ip, ip, #1
+ 145 0092 84F809C0 		strb	ip, [r4, #9]
+ 146 0096 38BD     		pop	{r3, r4, r5, pc}
+ 147              	.L12:
+ 148 0098 227B     		ldrb	r2, [r4, #12]	@ zero_extendqisi2
+ 149 009a 92B9     		cbnz	r2, .L38
+ 150 009c 0A23     		movs	r3, #10
+ 151 009e 6372     		strb	r3, [r4, #9]
+ 152 00a0 38BD     		pop	{r3, r4, r5, pc}
+ 153              	.L11:
+ 154 00a2 A279     		ldrb	r2, [r4, #6]	@ zero_extendqisi2
+ 155 00a4 3821     		movs	r1, #56
+ 156 00a6 A847     		blx	r5
+ 157              	.L36:
+ 158 00a8 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
+ 159 00aa 0133     		adds	r3, r3, #1
+ 160 00ac 6372     		strb	r3, [r4, #9]
+ 161 00ae 38BD     		pop	{r3, r4, r5, pc}
+ 162              	.L10:
+ 163 00b0 2278     		ldrb	r2, [r4]	@ zero_extendqisi2
+ 164 00b2 002A     		cmp	r2, #0
+ 165 00b4 EBD0     		beq	.L23
+ 166 00b6 C922     		movs	r2, #201
+ 167 00b8 1121     		movs	r1, #17
+ 168 00ba A847     		blx	r5
+ 169 00bc 94F809C0 		ldrb	ip, [r4, #9]	@ zero_extendqisi2
+ 170 00c0 E5E7     		b	.L23
+ 171              	.L38:
+ARM GAS  /tmp/ccMXAyJo.s 			page 4
+
+
+ 172 00c2 2846     		mov	r0, r5
+ 173 00c4 FFF7FEFF 		bl	mpu60x0_configure_i2c_slaves
+ 174 00c8 0028     		cmp	r0, #0
+ 175 00ca EDD1     		bne	.L36
+ 176 00cc 38BD     		pop	{r3, r4, r5, pc}
+ 177              		.size	mpu60x0_send_config, .-mpu60x0_send_config
+ 178              		.global	MPU60X0_ACCEL_SENS_FRAC
+ 179              		.global	MPU60X0_ACCEL_SENS
+ 180              		.global	MPU60X0_GYRO_SENS_FRAC
+ 181              		.global	MPU60X0_GYRO_SENS
+ 182 00ce 00BF     		.section	.rodata.MPU60X0_ACCEL_SENS,"a"
+ 183              		.align	2
+ 184              		.type	MPU60X0_ACCEL_SENS, %object
+ 185              		.size	MPU60X0_ACCEL_SENS, 16
+ 186              	MPU60X0_ACCEL_SENS:
+ 187 0000 C3F51C3F 		.word	1058862531
+ 188 0004 C3F59C3F 		.word	1067251139
+ 189 0008 C3F51C40 		.word	1075639747
+ 190 000c C3F59C40 		.word	1084028355
+ 191              		.section	.rodata.MPU60X0_ACCEL_SENS_FRAC,"a"
+ 192              		.align	2
+ 193              		.type	MPU60X0_ACCEL_SENS_FRAC, %object
+ 194              		.size	MPU60X0_ACCEL_SENS_FRAC, 96
+ 195              	MPU60X0_ACCEL_SENS_FRAC:
+ 196 0000 D5030000 		.word	981
+ 197 0004 D5030000 		.word	981
+ 198 0008 D5030000 		.word	981
+ 199 000c 40060000 		.word	1600
+ 200 0010 40060000 		.word	1600
+ 201 0014 40060000 		.word	1600
+ 202 0018 D5030000 		.word	981
+ 203 001c D5030000 		.word	981
+ 204 0020 D5030000 		.word	981
+ 205 0024 20030000 		.word	800
+ 206 0028 20030000 		.word	800
+ 207 002c 20030000 		.word	800
+ 208 0030 D5030000 		.word	981
+ 209 0034 D5030000 		.word	981
+ 210 0038 D5030000 		.word	981
+ 211 003c 90010000 		.word	400
+ 212 0040 90010000 		.word	400
+ 213 0044 90010000 		.word	400
+ 214 0048 D5030000 		.word	981
+ 215 004c D5030000 		.word	981
+ 216 0050 D5030000 		.word	981
+ 217 0054 C8000000 		.word	200
+ 218 0058 C8000000 		.word	200
+ 219 005c C8000000 		.word	200
+ 220              		.section	.rodata.MPU60X0_GYRO_SENS,"a"
+ 221              		.align	2
+ 222              		.type	MPU60X0_GYRO_SENS, %object
+ 223              		.size	MPU60X0_GYRO_SENS, 16
+ 224              	MPU60X0_GYRO_SENS:
+ 225 0000 747D0B3F 		.word	1057717620
+ 226 0004 957D8B3F 		.word	1066106261
+ 227 0008 6B7D0B40 		.word	1074494827
+ 228 000c 6B7D8B40 		.word	1082883435
+ARM GAS  /tmp/ccMXAyJo.s 			page 5
+
+
+ 229              		.section	.rodata.MPU60X0_GYRO_SENS_FRAC,"a"
+ 230              		.align	2
+ 231              		.type	MPU60X0_GYRO_SENS_FRAC, %object
+ 232              		.size	MPU60X0_GYRO_SENS_FRAC, 96
+ 233              	MPU60X0_GYRO_SENS_FRAC:
+ 234 0000 7F4B0000 		.word	19327
+ 235 0004 7F4B0000 		.word	19327
+ 236 0008 7F4B0000 		.word	19327
+ 237 000c 8E8A0000 		.word	35470
+ 238 0010 8E8A0000 		.word	35470
+ 239 0014 8E8A0000 		.word	35470
+ 240 0018 3FE10000 		.word	57663
+ 241 001c 3FE10000 		.word	57663
+ 242 0020 3FE10000 		.word	57663
+ 243 0024 B1CE0000 		.word	52913
+ 244 0028 B1CE0000 		.word	52913
+ 245 002c B1CE0000 		.word	52913
+ 246 0030 5F470000 		.word	18271
+ 247 0034 5F470000 		.word	18271
+ 248 0038 5F470000 		.word	18271
+ 249 003c BF200000 		.word	8383
+ 250 0040 BF200000 		.word	8383
+ 251 0044 BF200000 		.word	8383
+ 252 0048 BE8E0000 		.word	36542
+ 253 004c BE8E0000 		.word	36542
+ 254 0050 BE8E0000 		.word	36542
+ 255 0054 BF200000 		.word	8383
+ 256 0058 BF200000 		.word	8383
+ 257 005c BF200000 		.word	8383
+ 258              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccMXAyJo.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mpu60x0.c
+     /tmp/ccMXAyJo.s:15     .text.mpu60x0_set_default_config:0000000000000000 $t
+     /tmp/ccMXAyJo.s:24     .text.mpu60x0_set_default_config:0000000000000000 mpu60x0_set_default_config
+     /tmp/ccMXAyJo.s:42     .text.mpu60x0_set_default_config:000000000000001c $d
+     /tmp/ccMXAyJo.s:46     .text.mpu60x0_send_config:0000000000000000 $t
+     /tmp/ccMXAyJo.s:54     .text.mpu60x0_send_config:0000000000000000 mpu60x0_send_config
+     /tmp/ccMXAyJo.s:67     .text.mpu60x0_send_config:0000000000000018 $d
+     /tmp/ccMXAyJo.s:79     .text.mpu60x0_send_config:0000000000000024 $t
+     /tmp/ccMXAyJo.s:195    .rodata.MPU60X0_ACCEL_SENS_FRAC:0000000000000000 MPU60X0_ACCEL_SENS_FRAC
+     /tmp/ccMXAyJo.s:186    .rodata.MPU60X0_ACCEL_SENS:0000000000000000 MPU60X0_ACCEL_SENS
+     /tmp/ccMXAyJo.s:233    .rodata.MPU60X0_GYRO_SENS_FRAC:0000000000000000 MPU60X0_GYRO_SENS_FRAC
+     /tmp/ccMXAyJo.s:224    .rodata.MPU60X0_GYRO_SENS:0000000000000000 MPU60X0_GYRO_SENS
+     /tmp/ccMXAyJo.s:183    .rodata.MPU60X0_ACCEL_SENS:0000000000000000 $d
+     /tmp/ccMXAyJo.s:192    .rodata.MPU60X0_ACCEL_SENS_FRAC:0000000000000000 $d
+     /tmp/ccMXAyJo.s:221    .rodata.MPU60X0_GYRO_SENS:0000000000000000 $d
+     /tmp/ccMXAyJo.s:230    .rodata.MPU60X0_GYRO_SENS_FRAC:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+mpu60x0_configure_i2c_slaves

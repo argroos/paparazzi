@@ -1,0 +1,655 @@
+ARM GAS  /tmp/ccYXjX93.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"ppm.c"
+  13              		.text
+  14              		.section	.rodata.send_ppm.str1.4,"aMS",%progbits,1
+  15              		.align	2
+  16              	.LC0:
+  17 0000 50504D00 		.ascii	"PPM\000"
+  18              		.section	.text.send_ppm,"ax",%progbits
+  19              		.align	1
+  20              		.p2align 4,,15
+  21              		.arch armv7e-m
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  25              		.fpu fpv4-sp-d16
+  26              		.type	send_ppm, %function
+  27              	send_ppm:
+  28              		@ args = 0, pretend = 0, frame = 40
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 70B5     		push	{r4, r5, r6, lr}
+  31 0002 494A     		ldr	r2, .L8
+  32 0004 8CB0     		sub	sp, sp, #48
+  33 0006 0DF11E0C 		add	ip, sp, #30
+  34 000a 02F1100E 		add	lr, r2, #16
+  35              	.L2:
+  36 000e 32F8023F 		ldrh	r3, [r2, #2]!
+  37 0012 5B08     		lsrs	r3, r3, #1
+  38 0014 7245     		cmp	r2, lr
+  39 0016 2CF8023F 		strh	r3, [ip, #2]!	@ movhi
+  40 001a F8D1     		bne	.L2
+  41 001c 0822     		movs	r2, #8
+  42 001e 0024     		movs	r4, #0
+  43 0020 0325     		movs	r5, #3
+  44 0022 0368     		ldr	r3, [r0]
+  45 0024 0690     		str	r0, [sp, #24]
+  46 0026 0791     		str	r1, [sp, #28]
+  47 0028 ADF81450 		strh	r5, [sp, #20]	@ movhi
+  48 002c 8DF80F20 		strb	r2, [sp, #15]
+  49 0030 1621     		movs	r1, #22
+  50 0032 8DF81640 		strb	r4, [sp, #22]
+  51 0036 0494     		str	r4, [sp, #16]
+  52 0038 05A8     		add	r0, sp, #20
+  53 003a 9847     		blx	r3
+  54 003c 069B     		ldr	r3, [sp, #24]
+  55 003e 82B2     		uxth	r2, r0
+  56 0040 5B68     		ldr	r3, [r3, #4]
+  57 0042 0546     		mov	r5, r0
+ARM GAS  /tmp/ccYXjX93.s 			page 2
+
+
+  58 0044 04A9     		add	r1, sp, #16
+  59 0046 05A8     		add	r0, sp, #20
+  60 0048 9847     		blx	r3
+  61 004a 069B     		ldr	r3, [sp, #24]
+  62 004c 0028     		cmp	r0, #0
+  63 004e 66D0     		beq	.L3
+  64 0050 2946     		mov	r1, r5
+  65 0052 05A8     		add	r0, sp, #20
+  66 0054 DB69     		ldr	r3, [r3, #28]
+  67 0056 9847     		blx	r3
+  68 0058 9DF80F20 		ldrb	r2, [sp, #15]	@ zero_extendqisi2
+  69 005c 069B     		ldr	r3, [sp, #24]
+  70 005e 0499     		ldr	r1, [sp, #16]
+  71 0060 1B69     		ldr	r3, [r3, #16]
+  72 0062 0332     		adds	r2, r2, #3
+  73 0064 5200     		lsls	r2, r2, #1
+  74 0066 05A8     		add	r0, sp, #20
+  75 0068 02F0FE02 		and	r2, r2, #254
+  76 006c 9847     		blx	r3
+  77 006e 0125     		movs	r5, #1
+  78 0070 069A     		ldr	r2, [sp, #24]
+  79 0072 0195     		str	r5, [sp, #4]
+  80 0074 05AB     		add	r3, sp, #20
+  81 0076 0093     		str	r3, [sp]
+  82 0078 9668     		ldr	r6, [r2, #8]
+  83 007a 0499     		ldr	r1, [sp, #16]
+  84 007c 2346     		mov	r3, r4
+  85 007e 05A8     		add	r0, sp, #20
+  86 0080 0222     		movs	r2, #2
+  87 0082 B047     		blx	r6
+  88 0084 9DF81530 		ldrb	r3, [sp, #21]	@ zero_extendqisi2
+  89 0088 069A     		ldr	r2, [sp, #24]
+  90 008a 0499     		ldr	r1, [sp, #16]
+  91 008c CDE90034 		strd	r3, r4, [sp]
+  92 0090 05A8     		add	r0, sp, #20
+  93 0092 D668     		ldr	r6, [r2, #12]
+  94 0094 2346     		mov	r3, r4
+  95 0096 0222     		movs	r2, #2
+  96 0098 B047     		blx	r6
+  97 009a 9DF81630 		ldrb	r3, [sp, #22]	@ zero_extendqisi2
+  98 009e 069A     		ldr	r2, [sp, #24]
+  99 00a0 0499     		ldr	r1, [sp, #16]
+ 100 00a2 1B01     		lsls	r3, r3, #4
+ 101 00a4 2B43     		orrs	r3, r3, r5
+ 102 00a6 DBB2     		uxtb	r3, r3
+ 103 00a8 CDE90034 		strd	r3, r4, [sp]
+ 104 00ac 05A8     		add	r0, sp, #20
+ 105 00ae D668     		ldr	r6, [r2, #12]
+ 106 00b0 2346     		mov	r3, r4
+ 107 00b2 0222     		movs	r2, #2
+ 108 00b4 B047     		blx	r6
+ 109 00b6 1D4B     		ldr	r3, .L8+4
+ 110 00b8 069A     		ldr	r2, [sp, #24]
+ 111 00ba 0193     		str	r3, [sp, #4]
+ 112 00bc 6423     		movs	r3, #100
+ 113 00be 0093     		str	r3, [sp]
+ 114 00c0 D668     		ldr	r6, [r2, #12]
+ARM GAS  /tmp/ccYXjX93.s 			page 3
+
+
+ 115 00c2 0499     		ldr	r1, [sp, #16]
+ 116 00c4 2346     		mov	r3, r4
+ 117 00c6 05A8     		add	r0, sp, #20
+ 118 00c8 0222     		movs	r2, #2
+ 119 00ca B047     		blx	r6
+ 120 00cc 184B     		ldr	r3, .L8+8
+ 121 00ce 069A     		ldr	r2, [sp, #24]
+ 122 00d0 0499     		ldr	r1, [sp, #16]
+ 123 00d2 CDE90035 		strd	r3, r5, [sp]
+ 124 00d6 05A8     		add	r0, sp, #20
+ 125 00d8 9668     		ldr	r6, [r2, #8]
+ 126 00da 2346     		mov	r3, r4
+ 127 00dc 0222     		movs	r2, #2
+ 128 00de B047     		blx	r6
+ 129 00e0 0DF10F03 		add	r3, sp, #15
+ 130 00e4 CDE90035 		strd	r3, r5, [sp]
+ 131 00e8 0699     		ldr	r1, [sp, #24]
+ 132 00ea 2346     		mov	r3, r4
+ 133 00ec 2246     		mov	r2, r4
+ 134 00ee 05A8     		add	r0, sp, #20
+ 135 00f0 8C68     		ldr	r4, [r1, #8]
+ 136 00f2 0499     		ldr	r1, [sp, #16]
+ 137 00f4 A047     		blx	r4
+ 138 00f6 9DF80F30 		ldrb	r3, [sp, #15]	@ zero_extendqisi2
+ 139 00fa 069A     		ldr	r2, [sp, #24]
+ 140 00fc AB40     		lsls	r3, r3, r5
+ 141 00fe 08A9     		add	r1, sp, #32
+ 142 0100 CDE90013 		strd	r1, r3, [sp]
+ 143 0104 05A8     		add	r0, sp, #20
+ 144 0106 0499     		ldr	r1, [sp, #16]
+ 145 0108 9468     		ldr	r4, [r2, #8]
+ 146 010a 2B46     		mov	r3, r5
+ 147 010c 0422     		movs	r2, #4
+ 148 010e A047     		blx	r4
+ 149 0110 069B     		ldr	r3, [sp, #24]
+ 150 0112 0499     		ldr	r1, [sp, #16]
+ 151 0114 5B69     		ldr	r3, [r3, #20]
+ 152 0116 05A8     		add	r0, sp, #20
+ 153 0118 9847     		blx	r3
+ 154 011a 0CB0     		add	sp, sp, #48
+ 155              		@ sp needed
+ 156 011c 70BD     		pop	{r4, r5, r6, pc}
+ 157              	.L3:
+ 158 011e 9B69     		ldr	r3, [r3, #24]
+ 159 0120 05A8     		add	r0, sp, #20
+ 160 0122 9847     		blx	r3
+ 161 0124 0CB0     		add	sp, sp, #48
+ 162              		@ sp needed
+ 163 0126 70BD     		pop	{r4, r5, r6, pc}
+ 164              	.L9:
+ 165              		.align	2
+ 166              	.L8:
+ 167 0128 FEFFFFFF 		.word	.LANCHOR0-2
+ 168 012c 00000000 		.word	.LC0
+ 169 0130 03000000 		.word	radio_control+3
+ 170              		.size	send_ppm, .-send_ppm
+ 171              		.section	.text.ppm_init,"ax",%progbits
+ARM GAS  /tmp/ccYXjX93.s 			page 4
+
+
+ 172              		.align	1
+ 173              		.p2align 4,,15
+ 174              		.global	ppm_init
+ 175              		.syntax unified
+ 176              		.thumb
+ 177              		.thumb_func
+ 178              		.fpu fpv4-sp-d16
+ 179              		.type	ppm_init, %function
+ 180              	ppm_init:
+ 181              		@ args = 0, pretend = 0, frame = 0
+ 182              		@ frame_needed = 0, uses_anonymous_args = 0
+ 183 0000 38B5     		push	{r3, r4, r5, lr}
+ 184 0002 0A4A     		ldr	r2, .L12
+ 185 0004 0A48     		ldr	r0, .L12+4
+ 186 0006 0B49     		ldr	r1, .L12+8
+ 187 0008 0B4D     		ldr	r5, .L12+12
+ 188 000a 0C4C     		ldr	r4, .L12+16
+ 189 000c 0023     		movs	r3, #0
+ 190 000e 1360     		str	r3, [r2]
+ 191 0010 0822     		movs	r2, #8
+ 192 0012 2270     		strb	r2, [r4]
+ 193 0014 0370     		strb	r3, [r0]
+ 194 0016 4A71     		strb	r2, [r1, #5]
+ 195 0018 2B70     		strb	r3, [r5]
+ 196 001a FFF7FEFF 		bl	ppm_arch_init
+ 197 001e BDE83840 		pop	{r3, r4, r5, lr}
+ 198 0022 074A     		ldr	r2, .L12+20
+ 199 0024 0748     		ldr	r0, .L12+24
+ 200 0026 6421     		movs	r1, #100
+ 201 0028 FFF7FEBF 		b	register_periodic_telemetry
+ 202              	.L13:
+ 203              		.align	2
+ 204              	.L12:
+ 205 002c 00000000 		.word	.LANCHOR2
+ 206 0030 00000000 		.word	.LANCHOR4
+ 207 0034 00000000 		.word	radio_control
+ 208 0038 00000000 		.word	.LANCHOR1
+ 209 003c 00000000 		.word	.LANCHOR3
+ 210 0040 00000000 		.word	send_ppm
+ 211 0044 00000000 		.word	pprz_telemetry
+ 212              		.size	ppm_init, .-ppm_init
+ 213              		.section	.text.ppm_event,"ax",%progbits
+ 214              		.align	1
+ 215              		.p2align 4,,15
+ 216              		.global	ppm_event
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 220              		.fpu fpv4-sp-d16
+ 221              		.type	ppm_event, %function
+ 222              	ppm_event:
+ 223              		@ args = 0, pretend = 0, frame = 0
+ 224              		@ frame_needed = 0, uses_anonymous_args = 0
+ 225 0000 70B5     		push	{r4, r5, r6, lr}
+ 226 0002 644D     		ldr	r5, .L38
+ 227 0004 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 228 0006 5BB1     		cbz	r3, .L14
+ARM GAS  /tmp/ccYXjX93.s 			page 5
+
+
+ 229 0008 634B     		ldr	r3, .L38+4
+ 230 000a 1979     		ldrb	r1, [r3, #4]	@ zero_extendqisi2
+ 231 000c 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 232 000e 0020     		movs	r0, #0
+ 233 0010 0131     		adds	r1, r1, #1
+ 234 0012 1971     		strb	r1, [r3, #4]
+ 235 0014 5870     		strb	r0, [r3, #1]
+ 236 0016 22B1     		cbz	r2, .L16
+ 237 0018 013A     		subs	r2, r2, #1
+ 238 001a 9A70     		strb	r2, [r3, #2]
+ 239              	.L17:
+ 240 001c 0023     		movs	r3, #0
+ 241 001e 2B70     		strb	r3, [r5]
+ 242              	.L14:
+ 243 0020 70BD     		pop	{r4, r5, r6, pc}
+ 244              	.L16:
+ 245 0022 5E49     		ldr	r1, .L38+8
+ 246 0024 1A70     		strb	r2, [r3]
+ 247 0026 0A88     		ldrh	r2, [r1]
+ 248 0028 B1F802C0 		ldrh	ip, [r1, #2]
+ 249 002c 8888     		ldrh	r0, [r1, #4]
+ 250 002e 5C4E     		ldr	r6, .L38+12
+ 251 0030 A2F69802 		subw	r2, r2, #2200
+ 252 0034 02EB4202 		add	r2, r2, r2, lsl #1
+ 253 0038 5200     		lsls	r2, r2, #1
+ 254 003a B2F5165F 		cmp	r2, #9600
+ 255 003e A8BF     		it	ge
+ 256 0040 4FF41652 		movge	r2, #9600
+ 257 0044 22EAE272 		bic	r2, r2, r2, asr #31
+ 258 0048 DA80     		strh	r2, [r3, #6]	@ movhi
+ 259 004a 0A89     		ldrh	r2, [r1, #8]
+ 260 004c A0F6B830 		subw	r0, r0, #3000
+ 261 0050 ACF6B83C 		subw	ip, ip, #3000
+ 262 0054 A0EB8004 		sub	r4, r0, r0, lsl #2
+ 263 0058 ACEB8C0C 		sub	ip, ip, ip, lsl #2
+ 264 005c C888     		ldrh	r0, [r1, #6]
+ 265 005e A2F6B832 		subw	r2, r2, #3000
+ 266 0062 4FEA8C0C 		lsl	ip, ip, #2
+ 267 0066 02EB4202 		add	r2, r2, r2, lsl #1
+ 268 006a 9200     		lsls	r2, r2, #2
+ 269 006c BCF5165F 		cmp	ip, #9600
+ 270 0070 A0F6B830 		subw	r0, r0, #3000
+ 271 0074 4FEA8404 		lsl	r4, r4, #2
+ 272 0078 A8BF     		it	ge
+ 273 007a 4FF4165C 		movge	ip, #9600
+ 274 007e A0EB8000 		sub	r0, r0, r0, lsl #2
+ 275 0082 B2F5165F 		cmp	r2, #9600
+ 276 0086 4FEA8000 		lsl	r0, r0, #2
+ 277 008a A8BF     		it	ge
+ 278 008c 4FF41652 		movge	r2, #9600
+ 279 0090 B4F5165F 		cmp	r4, #9600
+ 280 0094 A8BF     		it	ge
+ 281 0096 4FF41654 		movge	r4, #9600
+ 282 009a B0F5165F 		cmp	r0, #9600
+ 283 009e A8BF     		it	ge
+ 284 00a0 4FF41650 		movge	r0, #9600
+ 285 00a4 B242     		cmp	r2, r6
+ARM GAS  /tmp/ccYXjX93.s 			page 6
+
+
+ 286 00a6 B8BF     		it	lt
+ 287 00a8 3246     		movlt	r2, r6
+ 288 00aa B445     		cmp	ip, r6
+ 289 00ac B8BF     		it	lt
+ 290 00ae B446     		movlt	ip, r6
+ 291 00b0 B442     		cmp	r4, r6
+ 292 00b2 B8BF     		it	lt
+ 293 00b4 3446     		movlt	r4, r6
+ 294 00b6 B042     		cmp	r0, r6
+ 295 00b8 B8BF     		it	lt
+ 296 00ba 3046     		movlt	r0, r6
+ 297 00bc 9881     		strh	r0, [r3, #12]	@ movhi
+ 298 00be D889     		ldrh	r0, [r3, #14]
+ 299 00c0 5C81     		strh	r4, [r3, #10]	@ movhi
+ 300 00c2 0724     		movs	r4, #7
+ 301 00c4 10FB0420 		smlabb	r0, r0, r4, r2
+ 302 00c8 4A89     		ldrh	r2, [r1, #10]
+ 303 00ca A3F808C0 		strh	ip, [r3, #8]	@ movhi
+ 304 00ce A2F69802 		subw	r2, r2, #2200
+ 305 00d2 0028     		cmp	r0, #0
+ 306 00d4 02EB4202 		add	r2, r2, r2, lsl #1
+ 307 00d8 B8BF     		it	lt
+ 308 00da 0019     		addlt	r0, r0, r4
+ 309 00dc 5200     		lsls	r2, r2, #1
+ 310 00de B2F5165F 		cmp	r2, #9600
+ 311 00e2 4FEAE000 		asr	r0, r0, #3
+ 312 00e6 A8BF     		it	ge
+ 313 00e8 4FF41652 		movge	r2, #9600
+ 314 00ec D881     		strh	r0, [r3, #14]	@ movhi
+ 315 00ee 188A     		ldrh	r0, [r3, #16]
+ 316 00f0 0724     		movs	r4, #7
+ 317 00f2 22EAE272 		bic	r2, r2, r2, asr #31
+ 318 00f6 10FB0420 		smlabb	r0, r0, r4, r2
+ 319 00fa 8A89     		ldrh	r2, [r1, #12]
+ 320 00fc C989     		ldrh	r1, [r1, #14]
+ 321 00fe 0028     		cmp	r0, #0
+ 322 0100 A2F6B832 		subw	r2, r2, #3000
+ 323 0104 B8BF     		it	lt
+ 324 0106 0019     		addlt	r0, r0, r4
+ 325 0108 02EB4202 		add	r2, r2, r2, lsl #1
+ 326 010c 9200     		lsls	r2, r2, #2
+ 327 010e C010     		asrs	r0, r0, #3
+ 328 0110 B2F5165F 		cmp	r2, #9600
+ 329 0114 1882     		strh	r0, [r3, #16]	@ movhi
+ 330 0116 2248     		ldr	r0, .L38+12
+ 331 0118 A8BF     		it	ge
+ 332 011a 4FF41652 		movge	r2, #9600
+ 333 011e 8242     		cmp	r2, r0
+ 334 0120 B8BF     		it	lt
+ 335 0122 0246     		movlt	r2, r0
+ 336 0124 588A     		ldrh	r0, [r3, #18]
+ 337 0126 0724     		movs	r4, #7
+ 338 0128 10FB0420 		smlabb	r0, r0, r4, r2
+ 339 012c A1F6B832 		subw	r2, r1, #3000
+ 340 0130 02EB4202 		add	r2, r2, r2, lsl #1
+ 341 0134 9200     		lsls	r2, r2, #2
+ 342 0136 0028     		cmp	r0, #0
+ARM GAS  /tmp/ccYXjX93.s 			page 7
+
+
+ 343 0138 B8BF     		it	lt
+ 344 013a 0019     		addlt	r0, r0, r4
+ 345 013c B2F5165F 		cmp	r2, #9600
+ 346 0140 174C     		ldr	r4, .L38+12
+ 347 0142 998A     		ldrh	r1, [r3, #20]
+ 348 0144 A8BF     		it	ge
+ 349 0146 4FF41652 		movge	r2, #9600
+ 350 014a A242     		cmp	r2, r4
+ 351 014c 4FEAE000 		asr	r0, r0, #3
+ 352 0150 B8BF     		it	lt
+ 353 0152 2246     		movlt	r2, r4
+ 354 0154 5882     		strh	r0, [r3, #18]	@ movhi
+ 355 0156 0720     		movs	r0, #7
+ 356 0158 11FB0022 		smlabb	r2, r1, r0, r2
+ 357 015c 1149     		ldr	r1, .L38+16
+ 358 015e 002A     		cmp	r2, #0
+ 359 0160 B8BF     		it	lt
+ 360 0162 1218     		addlt	r2, r2, r0
+ 361 0164 8C6F     		ldr	r4, [r1, #120]
+ 362 0166 D210     		asrs	r2, r2, #3
+ 363 0168 9A82     		strh	r2, [r3, #20]	@ movhi
+ 364 016a 002C     		cmp	r4, #0
+ 365 016c 3FF456AF 		beq	.L17
+ 366 0170 094E     		ldr	r6, .L38+4
+ 367 0172 05E0     		b	.L25
+ 368              	.L37:
+ 369 0174 8342     		cmp	r3, r0
+ 370 0176 09D0     		beq	.L23
+ 371              	.L24:
+ 372 0178 A468     		ldr	r4, [r4, #8]
+ 373 017a 002C     		cmp	r4, #0
+ 374 017c 3FF44EAF 		beq	.L17
+ 375              	.L25:
+ 376 0180 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 377 0182 FF2B     		cmp	r3, #255
+ 378 0184 3146     		mov	r1, r6
+ 379 0186 4FF00100 		mov	r0, #1
+ 380 018a F3D1     		bne	.L37
+ 381              	.L23:
+ 382 018c 6368     		ldr	r3, [r4, #4]
+ 383 018e 9847     		blx	r3
+ 384 0190 F2E7     		b	.L24
+ 385              	.L39:
+ 386 0192 00BF     		.align	2
+ 387              	.L38:
+ 388 0194 00000000 		.word	.LANCHOR1
+ 389 0198 00000000 		.word	radio_control
+ 390 019c 00000000 		.word	.LANCHOR0
+ 391 01a0 80DAFFFF 		.word	-9600
+ 392 01a4 00000000 		.word	abi_queues
+ 393              		.size	ppm_event, .-ppm_event
+ 394              		.section	.text.ppm_decode_frame,"ax",%progbits
+ 395              		.align	1
+ 396              		.p2align 4,,15
+ 397              		.global	ppm_decode_frame
+ 398              		.syntax unified
+ 399              		.thumb
+ARM GAS  /tmp/ccYXjX93.s 			page 8
+
+
+ 400              		.thumb_func
+ 401              		.fpu fpv4-sp-d16
+ 402              		.type	ppm_decode_frame, %function
+ 403              	ppm_decode_frame:
+ 404              		@ args = 0, pretend = 0, frame = 0
+ 405              		@ frame_needed = 0, uses_anonymous_args = 0
+ 406              		@ link register save eliminated.
+ 407 0000 10B4     		push	{r4}
+ 408 0002 1F4A     		ldr	r2, .L52
+ 409 0004 1F4B     		ldr	r3, .L52+4
+ 410 0006 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
+ 411 0008 1C68     		ldr	r4, [r3]
+ 412 000a 1860     		str	r0, [r3]
+ 413 000c 0829     		cmp	r1, #8
+ 414 000e A0EB0400 		sub	r0, r0, r4
+ 415 0012 1BD0     		beq	.L50
+ 416 0014 A0F28F74 		subw	r4, r0, #1935
+ 417 0018 40F65203 		movw	r3, #2130
+ 418 001c 9C42     		cmp	r4, r3
+ 419 001e 07D9     		bls	.L51
+ 420 0020 194B     		ldr	r3, .L52+8
+ 421 0022 0820     		movs	r0, #8
+ 422 0024 0021     		movs	r1, #0
+ 423 0026 1070     		strb	r0, [r2]
+ 424 0028 1970     		strb	r1, [r3]
+ 425              	.L40:
+ 426 002a 5DF8044B 		ldr	r4, [sp], #4
+ 427 002e 7047     		bx	lr
+ 428              	.L51:
+ 429 0030 4B1C     		adds	r3, r1, #1
+ 430 0032 DBB2     		uxtb	r3, r3
+ 431 0034 154C     		ldr	r4, .L52+12
+ 432 0036 1370     		strb	r3, [r2]
+ 433 0038 082B     		cmp	r3, #8
+ 434 003a 24F81100 		strh	r0, [r4, r1, lsl #1]	@ movhi
+ 435 003e F4D1     		bne	.L40
+ 436 0040 114B     		ldr	r3, .L52+8
+ 437 0042 5DF8044B 		ldr	r4, [sp], #4
+ 438 0046 0122     		movs	r2, #1
+ 439 0048 1A70     		strb	r2, [r3]
+ 440 004a 7047     		bx	lr
+ 441              	.L50:
+ 442 004c A0F51C50 		sub	r0, r0, #9984
+ 443 0050 44F61E63 		movw	r3, #19998
+ 444 0054 1138     		subs	r0, r0, #17
+ 445 0056 9842     		cmp	r0, r3
+ 446 0058 0B4B     		ldr	r3, .L52+8
+ 447 005a 0BD8     		bhi	.L42
+ 448 005c 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 449 005e 21B1     		cbz	r1, .L43
+ 450 0060 0B48     		ldr	r0, .L52+16
+ 451 0062 0124     		movs	r4, #1
+ 452 0064 0021     		movs	r1, #0
+ 453 0066 0470     		strb	r4, [r0]
+ 454 0068 1970     		strb	r1, [r3]
+ 455              	.L43:
+ 456 006a 0023     		movs	r3, #0
+ARM GAS  /tmp/ccYXjX93.s 			page 9
+
+
+ 457 006c 1370     		strb	r3, [r2]
+ 458 006e 5DF8044B 		ldr	r4, [sp], #4
+ 459 0072 7047     		bx	lr
+ 460              	.L42:
+ 461 0074 0022     		movs	r2, #0
+ 462 0076 5DF8044B 		ldr	r4, [sp], #4
+ 463 007a 1A70     		strb	r2, [r3]
+ 464 007c 7047     		bx	lr
+ 465              	.L53:
+ 466 007e 00BF     		.align	2
+ 467              	.L52:
+ 468 0080 00000000 		.word	.LANCHOR3
+ 469 0084 00000000 		.word	.LANCHOR2
+ 470 0088 00000000 		.word	.LANCHOR4
+ 471 008c 00000000 		.word	.LANCHOR0
+ 472 0090 00000000 		.word	.LANCHOR1
+ 473              		.size	ppm_decode_frame, .-ppm_decode_frame
+ 474              		.section	.text.ppm_decode_frame_width,"ax",%progbits
+ 475              		.align	1
+ 476              		.p2align 4,,15
+ 477              		.global	ppm_decode_frame_width
+ 478              		.syntax unified
+ 479              		.thumb
+ 480              		.thumb_func
+ 481              		.fpu fpv4-sp-d16
+ 482              		.type	ppm_decode_frame_width, %function
+ 483              	ppm_decode_frame_width:
+ 484              		@ args = 0, pretend = 0, frame = 0
+ 485              		@ frame_needed = 0, uses_anonymous_args = 0
+ 486              		@ link register save eliminated.
+ 487 0000 10B4     		push	{r4}
+ 488 0002 1B4B     		ldr	r3, .L67
+ 489 0004 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 490 0006 082A     		cmp	r2, #8
+ 491 0008 1BD0     		beq	.L65
+ 492 000a A0F28F7C 		subw	ip, r0, #1935
+ 493 000e 40F65201 		movw	r1, #2130
+ 494 0012 8C45     		cmp	ip, r1
+ 495 0014 07D9     		bls	.L66
+ 496 0016 174A     		ldr	r2, .L67+4
+ 497 0018 0820     		movs	r0, #8
+ 498 001a 0021     		movs	r1, #0
+ 499 001c 1870     		strb	r0, [r3]
+ 500 001e 1170     		strb	r1, [r2]
+ 501              	.L54:
+ 502 0020 5DF8044B 		ldr	r4, [sp], #4
+ 503 0024 7047     		bx	lr
+ 504              	.L66:
+ 505 0026 511C     		adds	r1, r2, #1
+ 506 0028 C9B2     		uxtb	r1, r1
+ 507 002a 134C     		ldr	r4, .L67+8
+ 508 002c 1970     		strb	r1, [r3]
+ 509 002e 0829     		cmp	r1, #8
+ 510 0030 24F81200 		strh	r0, [r4, r2, lsl #1]	@ movhi
+ 511 0034 F4D1     		bne	.L54
+ 512 0036 0F4B     		ldr	r3, .L67+4
+ 513 0038 0122     		movs	r2, #1
+ARM GAS  /tmp/ccYXjX93.s 			page 10
+
+
+ 514 003a 1A70     		strb	r2, [r3]
+ 515 003c 5DF8044B 		ldr	r4, [sp], #4
+ 516 0040 7047     		bx	lr
+ 517              	.L65:
+ 518 0042 A0F51C50 		sub	r0, r0, #9984
+ 519 0046 1138     		subs	r0, r0, #17
+ 520 0048 44F61E62 		movw	r2, #19998
+ 521 004c 9042     		cmp	r0, r2
+ 522 004e 08D8     		bhi	.L56
+ 523 0050 084A     		ldr	r2, .L67+4
+ 524 0052 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
+ 525 0054 31B1     		cbz	r1, .L64
+ 526 0056 0948     		ldr	r0, .L67+12
+ 527 0058 0124     		movs	r4, #1
+ 528 005a 0021     		movs	r1, #0
+ 529 005c 0470     		strb	r4, [r0]
+ 530 005e 1170     		strb	r1, [r2]
+ 531 0060 00E0     		b	.L64
+ 532              	.L56:
+ 533 0062 044B     		ldr	r3, .L67+4
+ 534              	.L64:
+ 535 0064 0022     		movs	r2, #0
+ 536 0066 1A70     		strb	r2, [r3]
+ 537 0068 5DF8044B 		ldr	r4, [sp], #4
+ 538 006c 7047     		bx	lr
+ 539              	.L68:
+ 540 006e 00BF     		.align	2
+ 541              	.L67:
+ 542 0070 00000000 		.word	.LANCHOR3
+ 543 0074 00000000 		.word	.LANCHOR4
+ 544 0078 00000000 		.word	.LANCHOR0
+ 545 007c 00000000 		.word	.LANCHOR1
+ 546              		.size	ppm_decode_frame_width, .-ppm_decode_frame_width
+ 547              		.global	ppm_frame_available
+ 548              		.global	ppm_pulses
+ 549              		.section	.bss.ppm_cur_pulse,"aw",%nobits
+ 550              		.set	.LANCHOR3,. + 0
+ 551              		.type	ppm_cur_pulse, %object
+ 552              		.size	ppm_cur_pulse, 1
+ 553              	ppm_cur_pulse:
+ 554 0000 00       		.space	1
+ 555              		.section	.bss.ppm_data_valid,"aw",%nobits
+ 556              		.set	.LANCHOR4,. + 0
+ 557              		.type	ppm_data_valid, %object
+ 558              		.size	ppm_data_valid, 1
+ 559              	ppm_data_valid:
+ 560 0000 00       		.space	1
+ 561              		.section	.bss.ppm_frame_available,"aw",%nobits
+ 562              		.set	.LANCHOR1,. + 0
+ 563              		.type	ppm_frame_available, %object
+ 564              		.size	ppm_frame_available, 1
+ 565              	ppm_frame_available:
+ 566 0000 00       		.space	1
+ 567              		.section	.bss.ppm_last_pulse_time,"aw",%nobits
+ 568              		.align	2
+ 569              		.set	.LANCHOR2,. + 0
+ 570              		.type	ppm_last_pulse_time, %object
+ARM GAS  /tmp/ccYXjX93.s 			page 11
+
+
+ 571              		.size	ppm_last_pulse_time, 4
+ 572              	ppm_last_pulse_time:
+ 573 0000 00000000 		.space	4
+ 574              		.section	.bss.ppm_pulses,"aw",%nobits
+ 575              		.align	2
+ 576              		.set	.LANCHOR0,. + 0
+ 577              		.type	ppm_pulses, %object
+ 578              		.size	ppm_pulses, 16
+ 579              	ppm_pulses:
+ 580 0000 00000000 		.space	16
+ 580      00000000 
+ 580      00000000 
+ 580      00000000 
+ 581              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccYXjX93.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ppm.c
+     /tmp/ccYXjX93.s:15     .rodata.send_ppm.str1.4:0000000000000000 $d
+     /tmp/ccYXjX93.s:19     .text.send_ppm:0000000000000000 $t
+     /tmp/ccYXjX93.s:27     .text.send_ppm:0000000000000000 send_ppm
+     /tmp/ccYXjX93.s:167    .text.send_ppm:0000000000000128 $d
+     /tmp/ccYXjX93.s:172    .text.ppm_init:0000000000000000 $t
+     /tmp/ccYXjX93.s:180    .text.ppm_init:0000000000000000 ppm_init
+     /tmp/ccYXjX93.s:205    .text.ppm_init:000000000000002c $d
+     /tmp/ccYXjX93.s:214    .text.ppm_event:0000000000000000 $t
+     /tmp/ccYXjX93.s:222    .text.ppm_event:0000000000000000 ppm_event
+     /tmp/ccYXjX93.s:388    .text.ppm_event:0000000000000194 $d
+     /tmp/ccYXjX93.s:395    .text.ppm_decode_frame:0000000000000000 $t
+     /tmp/ccYXjX93.s:403    .text.ppm_decode_frame:0000000000000000 ppm_decode_frame
+     /tmp/ccYXjX93.s:468    .text.ppm_decode_frame:0000000000000080 $d
+     /tmp/ccYXjX93.s:475    .text.ppm_decode_frame_width:0000000000000000 $t
+     /tmp/ccYXjX93.s:483    .text.ppm_decode_frame_width:0000000000000000 ppm_decode_frame_width
+     /tmp/ccYXjX93.s:542    .text.ppm_decode_frame_width:0000000000000070 $d
+     /tmp/ccYXjX93.s:565    .bss.ppm_frame_available:0000000000000000 ppm_frame_available
+     /tmp/ccYXjX93.s:579    .bss.ppm_pulses:0000000000000000 ppm_pulses
+     /tmp/ccYXjX93.s:553    .bss.ppm_cur_pulse:0000000000000000 ppm_cur_pulse
+     /tmp/ccYXjX93.s:554    .bss.ppm_cur_pulse:0000000000000000 $d
+     /tmp/ccYXjX93.s:559    .bss.ppm_data_valid:0000000000000000 ppm_data_valid
+     /tmp/ccYXjX93.s:560    .bss.ppm_data_valid:0000000000000000 $d
+     /tmp/ccYXjX93.s:566    .bss.ppm_frame_available:0000000000000000 $d
+     /tmp/ccYXjX93.s:568    .bss.ppm_last_pulse_time:0000000000000000 $d
+     /tmp/ccYXjX93.s:572    .bss.ppm_last_pulse_time:0000000000000000 ppm_last_pulse_time
+     /tmp/ccYXjX93.s:575    .bss.ppm_pulses:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+radio_control
+ppm_arch_init
+register_periodic_telemetry
+pprz_telemetry
+abi_queues

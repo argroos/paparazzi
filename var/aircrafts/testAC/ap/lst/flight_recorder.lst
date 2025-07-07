@@ -1,0 +1,825 @@
+ARM GAS  /tmp/ccJHopFh.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"flight_recorder.c"
+  13              		.text
+  14              		.section	.text.flight_recorder_init,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	flight_recorder_init
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	flight_recorder_init, %function
+  24              	flight_recorder_init:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 0149     		ldr	r1, .L3
+  29 0002 0248     		ldr	r0, .L3+4
+  30 0004 FFF7FEBF 		b	chibios_sdlog_init
+  31              	.L4:
+  32              		.align	2
+  33              	.L3:
+  34 0008 00000000 		.word	flightRecorderLogFile
+  35 000c 00000000 		.word	.LANCHOR0
+  36              		.size	flight_recorder_init, .-flight_recorder_init
+  37              		.section	.text.flight_recorder_periodic,"ax",%progbits
+  38              		.align	1
+  39              		.p2align 4,,15
+  40              		.global	flight_recorder_periodic
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  44              		.fpu fpv4-sp-d16
+  45              		.type	flight_recorder_periodic, %function
+  46              	flight_recorder_periodic:
+  47              		@ args = 0, pretend = 0, frame = 0
+  48              		@ frame_needed = 0, uses_anonymous_args = 0
+  49 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  50 0004 A64B     		ldr	r3, .L148
+  51 0006 93F90030 		ldrsb	r3, [r3]
+  52 000a 0133     		adds	r3, r3, #1
+  53 000c 6AD0     		beq	.L5
+  54 000e A54B     		ldr	r3, .L148+4
+  55 0010 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  56 0012 002B     		cmp	r3, #0
+  57 0014 66D1     		bne	.L5
+ARM GAS  /tmp/ccJHopFh.s 			page 2
+
+
+  58 0016 DFF8A4B2 		ldr	fp, .L148+28
+  59 001a DFF8A4A2 		ldr	r10, .L148+32
+  60 001e DBF80010 		ldr	r1, [fp]
+  61 0022 DAF80020 		ldr	r2, [r10]
+  62 0026 A04D     		ldr	r5, .L148+8
+  63 0028 A04F     		ldr	r7, .L148+12
+  64 002a DFF89892 		ldr	r9, .L148+36
+  65 002e DFF89882 		ldr	r8, .L148+40
+  66 0032 0132     		adds	r2, r2, #1
+  67 0034 0131     		adds	r1, r1, #1
+  68 0036 3129     		cmp	r1, #49
+  69 0038 94BF     		ite	ls
+  70 003a 0846     		movls	r0, r1
+  71 003c 1846     		movhi	r0, r3
+  72 003e 132A     		cmp	r2, #19
+  73 0040 98BF     		it	ls
+  74 0042 1346     		movls	r3, r2
+  75 0044 CAF80030 		str	r3, [r10]
+  76 0048 2B68     		ldr	r3, [r5]
+  77 004a D8F80020 		ldr	r2, [r8]
+  78 004e CBF80000 		str	r0, [fp]
+  79 0052 0133     		adds	r3, r3, #1
+  80 0054 042B     		cmp	r3, #4
+  81 0056 88BF     		it	hi
+  82 0058 0023     		movhi	r3, #0
+  83 005a 2B60     		str	r3, [r5]
+  84 005c 3B68     		ldr	r3, [r7]
+  85 005e 0133     		adds	r3, r3, #1
+  86 0060 012B     		cmp	r3, #1
+  87 0062 88BF     		it	hi
+  88 0064 0023     		movhi	r3, #0
+  89 0066 3B60     		str	r3, [r7]
+  90 0068 D9F80030 		ldr	r3, [r9]
+  91 006c 0133     		adds	r3, r3, #1
+  92 006e 0132     		adds	r2, r2, #1
+  93 0070 632B     		cmp	r3, #99
+  94 0072 88BF     		it	hi
+  95 0074 0023     		movhi	r3, #0
+  96 0076 092A     		cmp	r2, #9
+  97 0078 88BF     		it	hi
+  98 007a 0022     		movhi	r2, #0
+  99 007c 3C2B     		cmp	r3, #60
+ 100 007e C9F80030 		str	r3, [r9]
+ 101 0082 C8F80020 		str	r2, [r8]
+ 102 0086 00F0AF81 		beq	.L136
+ 103              	.L19:
+ 104 008a 322B     		cmp	r3, #50
+ 105 008c 00F09881 		beq	.L137
+ 106              	.L22:
+ 107 0090 282B     		cmp	r3, #40
+ 108 0092 00F08181 		beq	.L138
+ 109              	.L25:
+ 110 0096 1E2B     		cmp	r3, #30
+ 111 0098 00F06A81 		beq	.L70
+ 112              	.L31:
+ 113 009c DBF80030 		ldr	r3, [fp]
+ 114 00a0 052B     		cmp	r3, #5
+ARM GAS  /tmp/ccJHopFh.s 			page 3
+
+
+ 115 00a2 00F03D81 		beq	.L139
+ 116              	.L30:
+ 117 00a6 DAF80030 		ldr	r3, [r10]
+ 118 00aa 042B     		cmp	r3, #4
+ 119 00ac 00F02381 		beq	.L140
+ 120              	.L33:
+ 121 00b0 D8F80030 		ldr	r3, [r8]
+ 122 00b4 092B     		cmp	r3, #9
+ 123 00b6 00F00981 		beq	.L141
+ 124              	.L35:
+ 125 00ba 072B     		cmp	r3, #7
+ 126 00bc 00F0DB80 		beq	.L74
+ 127              	.L40:
+ 128 00c0 2E68     		ldr	r6, [r5]
+ 129 00c2 042E     		cmp	r6, #4
+ 130 00c4 00F04081 		beq	.L142
+ 131              	.L39:
+ 132 00c8 012E     		cmp	r6, #1
+ 133 00ca 00F08380 		beq	.L143
+ 134 00ce 5EB1     		cbz	r6, .L144
+ 135              	.L45:
+ 136 00d0 042E     		cmp	r6, #4
+ 137 00d2 30D0     		beq	.L145
+ 138              	.L51:
+ 139 00d4 022E     		cmp	r6, #2
+ 140 00d6 56D0     		beq	.L146
+ 141              	.L57:
+ 142 00d8 012E     		cmp	r6, #1
+ 143 00da 68D0     		beq	.L77
+ 144              	.L63:
+ 145 00dc 3B68     		ldr	r3, [r7]
+ 146 00de 012B     		cmp	r3, #1
+ 147 00e0 00F08F80 		beq	.L147
+ 148              	.L5:
+ 149 00e4 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 150              	.L144:
+ 151 00e8 714C     		ldr	r4, .L148+16
+ 152 00ea DFF8C881 		ldr	r8, .L148+20
+ 153 00ee DFF8C891 		ldr	r9, .L148+24
+ 154              	.L48:
+ 155 00f2 6368     		ldr	r3, [r4, #4]
+ 156 00f4 03EB8603 		add	r3, r3, r6, lsl #2
+ 157 00f8 4146     		mov	r1, r8
+ 158 00fa D3F8A831 		ldr	r3, [r3, #424]
+ 159 00fe 0136     		adds	r6, r6, #1
+ 160 0100 1BB1     		cbz	r3, .L49
+ 161 0102 4846     		mov	r0, r9
+ 162 0104 9847     		blx	r3
+ 163 0106 042E     		cmp	r6, #4
+ 164 0108 F3D1     		bne	.L48
+ 165              	.L49:
+ 166 010a 2E68     		ldr	r6, [r5]
+ 167 010c 002E     		cmp	r6, #0
+ 168 010e DFD1     		bne	.L45
+ 169 0110 DFF8A081 		ldr	r8, .L148+20
+ 170 0114 DFF8A091 		ldr	r9, .L148+24
+ 171              	.L47:
+ARM GAS  /tmp/ccJHopFh.s 			page 4
+
+
+ 172 0118 6368     		ldr	r3, [r4, #4]
+ 173 011a 03EB8603 		add	r3, r3, r6, lsl #2
+ 174 011e 4146     		mov	r1, r8
+ 175 0120 D3F89431 		ldr	r3, [r3, #404]
+ 176 0124 0136     		adds	r6, r6, #1
+ 177 0126 1BB1     		cbz	r3, .L133
+ 178 0128 4846     		mov	r0, r9
+ 179 012a 9847     		blx	r3
+ 180 012c 042E     		cmp	r6, #4
+ 181 012e F3D1     		bne	.L47
+ 182              	.L133:
+ 183 0130 2E68     		ldr	r6, [r5]
+ 184 0132 042E     		cmp	r6, #4
+ 185 0134 CED1     		bne	.L51
+ 186              	.L145:
+ 187 0136 5E4C     		ldr	r4, .L148+16
+ 188 0138 DFF87881 		ldr	r8, .L148+20
+ 189 013c DFF87891 		ldr	r9, .L148+24
+ 190 0140 0026     		movs	r6, #0
+ 191              	.L54:
+ 192 0142 6368     		ldr	r3, [r4, #4]
+ 193 0144 03EB8603 		add	r3, r3, r6, lsl #2
+ 194 0148 4146     		mov	r1, r8
+ 195 014a D3F8D432 		ldr	r3, [r3, #724]
+ 196 014e 0136     		adds	r6, r6, #1
+ 197 0150 1BB1     		cbz	r3, .L55
+ 198 0152 4846     		mov	r0, r9
+ 199 0154 9847     		blx	r3
+ 200 0156 042E     		cmp	r6, #4
+ 201 0158 F3D1     		bne	.L54
+ 202              	.L55:
+ 203 015a 2E68     		ldr	r6, [r5]
+ 204 015c 042E     		cmp	r6, #4
+ 205 015e B9D1     		bne	.L51
+ 206 0160 DFF85081 		ldr	r8, .L148+20
+ 207 0164 DFF85091 		ldr	r9, .L148+24
+ 208 0168 0026     		movs	r6, #0
+ 209              	.L53:
+ 210 016a 6368     		ldr	r3, [r4, #4]
+ 211 016c 03EB8603 		add	r3, r3, r6, lsl #2
+ 212 0170 4146     		mov	r1, r8
+ 213 0172 5B6D     		ldr	r3, [r3, #84]
+ 214 0174 0136     		adds	r6, r6, #1
+ 215 0176 1BB1     		cbz	r3, .L134
+ 216 0178 4846     		mov	r0, r9
+ 217 017a 9847     		blx	r3
+ 218 017c 042E     		cmp	r6, #4
+ 219 017e F4D1     		bne	.L53
+ 220              	.L134:
+ 221 0180 2E68     		ldr	r6, [r5]
+ 222 0182 022E     		cmp	r6, #2
+ 223 0184 A8D1     		bne	.L57
+ 224              	.L146:
+ 225 0186 4A4C     		ldr	r4, .L148+16
+ 226 0188 DFF82881 		ldr	r8, .L148+20
+ 227 018c DFF82891 		ldr	r9, .L148+24
+ 228 0190 0026     		movs	r6, #0
+ARM GAS  /tmp/ccJHopFh.s 			page 5
+
+
+ 229              	.L59:
+ 230 0192 6368     		ldr	r3, [r4, #4]
+ 231 0194 03EB8603 		add	r3, r3, r6, lsl #2
+ 232 0198 4146     		mov	r1, r8
+ 233 019a 9B69     		ldr	r3, [r3, #24]
+ 234 019c 0136     		adds	r6, r6, #1
+ 235 019e 1BB1     		cbz	r3, .L135
+ 236 01a0 4846     		mov	r0, r9
+ 237 01a2 9847     		blx	r3
+ 238 01a4 042E     		cmp	r6, #4
+ 239 01a6 F4D1     		bne	.L59
+ 240              	.L135:
+ 241 01a8 2E68     		ldr	r6, [r5]
+ 242 01aa 012E     		cmp	r6, #1
+ 243 01ac 96D1     		bne	.L63
+ 244              	.L77:
+ 245 01ae 404C     		ldr	r4, .L148+16
+ 246 01b0 404E     		ldr	r6, .L148+20
+ 247 01b2 DFF80481 		ldr	r8, .L148+24
+ 248 01b6 0025     		movs	r5, #0
+ 249              	.L60:
+ 250 01b8 6368     		ldr	r3, [r4, #4]
+ 251 01ba 03EB8503 		add	r3, r3, r5, lsl #2
+ 252 01be 3146     		mov	r1, r6
+ 253 01c0 D3F88031 		ldr	r3, [r3, #384]
+ 254 01c4 0135     		adds	r5, r5, #1
+ 255 01c6 002B     		cmp	r3, #0
+ 256 01c8 88D0     		beq	.L63
+ 257 01ca 4046     		mov	r0, r8
+ 258 01cc 9847     		blx	r3
+ 259 01ce 042D     		cmp	r5, #4
+ 260 01d0 F2D1     		bne	.L60
+ 261 01d2 83E7     		b	.L63
+ 262              	.L143:
+ 263 01d4 364C     		ldr	r4, .L148+16
+ 264 01d6 DFF8DC80 		ldr	r8, .L148+20
+ 265 01da DFF8DC90 		ldr	r9, .L148+24
+ 266 01de 0026     		movs	r6, #0
+ 267              	.L44:
+ 268 01e0 6368     		ldr	r3, [r4, #4]
+ 269 01e2 03EB8603 		add	r3, r3, r6, lsl #2
+ 270 01e6 4146     		mov	r1, r8
+ 271 01e8 D3F8D031 		ldr	r3, [r3, #464]
+ 272 01ec 0136     		adds	r6, r6, #1
+ 273 01ee 1BB1     		cbz	r3, .L132
+ 274 01f0 4846     		mov	r0, r9
+ 275 01f2 9847     		blx	r3
+ 276 01f4 042E     		cmp	r6, #4
+ 277 01f6 F3D1     		bne	.L44
+ 278              	.L132:
+ 279 01f8 2E68     		ldr	r6, [r5]
+ 280 01fa 002E     		cmp	r6, #0
+ 281 01fc 7FF468AF 		bne	.L45
+ 282 0200 72E7     		b	.L144
+ 283              	.L147:
+ 284 0202 2B4C     		ldr	r4, .L148+16
+ 285 0204 2B4E     		ldr	r6, .L148+20
+ARM GAS  /tmp/ccJHopFh.s 			page 6
+
+
+ 286 0206 DFF8B080 		ldr	r8, .L148+24
+ 287 020a 0025     		movs	r5, #0
+ 288              	.L61:
+ 289 020c 6368     		ldr	r3, [r4, #4]
+ 290 020e 03EB8503 		add	r3, r3, r5, lsl #2
+ 291 0212 3146     		mov	r1, r6
+ 292 0214 D3F81C31 		ldr	r3, [r3, #284]
+ 293 0218 0135     		adds	r5, r5, #1
+ 294 021a 1BB1     		cbz	r3, .L66
+ 295 021c 4046     		mov	r0, r8
+ 296 021e 9847     		blx	r3
+ 297 0220 042D     		cmp	r5, #4
+ 298 0222 F3D1     		bne	.L61
+ 299              	.L66:
+ 300 0224 3B68     		ldr	r3, [r7]
+ 301 0226 012B     		cmp	r3, #1
+ 302 0228 7FF45CAF 		bne	.L5
+ 303 022c 214E     		ldr	r6, .L148+20
+ 304 022e DFF88880 		ldr	r8, .L148+24
+ 305 0232 0025     		movs	r5, #0
+ 306              	.L65:
+ 307 0234 6368     		ldr	r3, [r4, #4]
+ 308 0236 03EB8503 		add	r3, r3, r5, lsl #2
+ 309 023a 3146     		mov	r1, r6
+ 310 023c DB6F     		ldr	r3, [r3, #124]
+ 311 023e 0135     		adds	r5, r5, #1
+ 312 0240 1BB1     		cbz	r3, .L69
+ 313 0242 4046     		mov	r0, r8
+ 314 0244 9847     		blx	r3
+ 315 0246 042D     		cmp	r5, #4
+ 316 0248 F4D1     		bne	.L65
+ 317              	.L69:
+ 318 024a 3B68     		ldr	r3, [r7]
+ 319 024c 012B     		cmp	r3, #1
+ 320 024e 7FF449AF 		bne	.L5
+ 321 0252 184E     		ldr	r6, .L148+20
+ 322 0254 184F     		ldr	r7, .L148+24
+ 323 0256 0025     		movs	r5, #0
+ 324              	.L68:
+ 325 0258 6368     		ldr	r3, [r4, #4]
+ 326 025a 03EB8503 		add	r3, r3, r5, lsl #2
+ 327 025e 3146     		mov	r1, r6
+ 328 0260 D3F84431 		ldr	r3, [r3, #324]
+ 329 0264 0135     		adds	r5, r5, #1
+ 330 0266 002B     		cmp	r3, #0
+ 331 0268 3FF43CAF 		beq	.L5
+ 332 026c 3846     		mov	r0, r7
+ 333 026e 9847     		blx	r3
+ 334 0270 042D     		cmp	r5, #4
+ 335 0272 F1D1     		bne	.L68
+ 336 0274 36E7     		b	.L5
+ 337              	.L74:
+ 338 0276 0E4C     		ldr	r4, .L148+16
+ 339 0278 DFF83880 		ldr	r8, .L148+20
+ 340 027c DFF83890 		ldr	r9, .L148+24
+ 341 0280 0026     		movs	r6, #0
+ 342              	.L37:
+ARM GAS  /tmp/ccJHopFh.s 			page 7
+
+
+ 343 0282 6368     		ldr	r3, [r4, #4]
+ 344 0284 03EB8603 		add	r3, r3, r6, lsl #2
+ 345 0288 4146     		mov	r1, r8
+ 346 028a D3F83432 		ldr	r3, [r3, #564]
+ 347 028e 0136     		adds	r6, r6, #1
+ 348 0290 002B     		cmp	r3, #0
+ 349 0292 3FF415AF 		beq	.L40
+ 350 0296 4846     		mov	r0, r9
+ 351 0298 9847     		blx	r3
+ 352 029a 042E     		cmp	r6, #4
+ 353 029c F1D1     		bne	.L37
+ 354 029e 0FE7     		b	.L40
+ 355              	.L149:
+ 356              		.align	2
+ 357              	.L148:
+ 358 02a0 00000000 		.word	flightRecorderLogFile
+ 359 02a4 00000000 		.word	.LANCHOR1
+ 360 02a8 00000000 		.word	.LANCHOR4
+ 361 02ac 00000000 		.word	.LANCHOR5
+ 362 02b0 00000000 		.word	pprz_telemetry
+ 363 02b4 04000000 		.word	.LANCHOR0+4
+ 364 02b8 00000000 		.word	pprzlog_tp
+ 365 02bc 00000000 		.word	.LANCHOR2
+ 366 02c0 00000000 		.word	.LANCHOR3
+ 367 02c4 00000000 		.word	.LANCHOR6
+ 368 02c8 00000000 		.word	.LANCHOR7
+ 369              	.L141:
+ 370 02cc 504C     		ldr	r4, .L150
+ 371 02ce DFF84891 		ldr	r9, .L150+8
+ 372 02d2 DFF840A1 		ldr	r10, .L150+4
+ 373 02d6 0026     		movs	r6, #0
+ 374              	.L34:
+ 375 02d8 6368     		ldr	r3, [r4, #4]
+ 376 02da 03EB8603 		add	r3, r3, r6, lsl #2
+ 377 02de 4946     		mov	r1, r9
+ 378 02e0 D3F8F831 		ldr	r3, [r3, #504]
+ 379 02e4 0136     		adds	r6, r6, #1
+ 380 02e6 1BB1     		cbz	r3, .L130
+ 381 02e8 5046     		mov	r0, r10
+ 382 02ea 9847     		blx	r3
+ 383 02ec 042E     		cmp	r6, #4
+ 384 02ee F3D1     		bne	.L34
+ 385              	.L130:
+ 386 02f0 D8F80030 		ldr	r3, [r8]
+ 387 02f4 E1E6     		b	.L35
+ 388              	.L140:
+ 389 02f6 464C     		ldr	r4, .L150
+ 390 02f8 DFF81C91 		ldr	r9, .L150+8
+ 391 02fc DFF814A1 		ldr	r10, .L150+4
+ 392 0300 0026     		movs	r6, #0
+ 393              	.L32:
+ 394 0302 6368     		ldr	r3, [r4, #4]
+ 395 0304 03EB8603 		add	r3, r3, r6, lsl #2
+ 396 0308 4946     		mov	r1, r9
+ 397 030a D3F88432 		ldr	r3, [r3, #644]
+ 398 030e 0136     		adds	r6, r6, #1
+ 399 0310 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccJHopFh.s 			page 8
+
+
+ 400 0312 3FF4CDAE 		beq	.L33
+ 401 0316 5046     		mov	r0, r10
+ 402 0318 9847     		blx	r3
+ 403 031a 042E     		cmp	r6, #4
+ 404 031c F1D1     		bne	.L32
+ 405 031e C7E6     		b	.L33
+ 406              	.L139:
+ 407 0320 3B4C     		ldr	r4, .L150
+ 408 0322 DFF8F490 		ldr	r9, .L150+8
+ 409 0326 DFF8ECB0 		ldr	fp, .L150+4
+ 410 032a 0026     		movs	r6, #0
+ 411              	.L29:
+ 412 032c 6368     		ldr	r3, [r4, #4]
+ 413 032e 03EB8603 		add	r3, r3, r6, lsl #2
+ 414 0332 4946     		mov	r1, r9
+ 415 0334 9B6E     		ldr	r3, [r3, #104]
+ 416 0336 0136     		adds	r6, r6, #1
+ 417 0338 002B     		cmp	r3, #0
+ 418 033a 3FF4B4AE 		beq	.L30
+ 419 033e 5846     		mov	r0, fp
+ 420 0340 9847     		blx	r3
+ 421 0342 042E     		cmp	r6, #4
+ 422 0344 F2D1     		bne	.L29
+ 423 0346 AEE6     		b	.L30
+ 424              	.L142:
+ 425 0348 314C     		ldr	r4, .L150
+ 426 034a DFF8CC80 		ldr	r8, .L150+8
+ 427 034e DFF8C490 		ldr	r9, .L150+4
+ 428 0352 0026     		movs	r6, #0
+ 429              	.L38:
+ 430 0354 6368     		ldr	r3, [r4, #4]
+ 431 0356 03EB8603 		add	r3, r3, r6, lsl #2
+ 432 035a 4146     		mov	r1, r8
+ 433 035c D3F8B830 		ldr	r3, [r3, #184]
+ 434 0360 0136     		adds	r6, r6, #1
+ 435 0362 1BB1     		cbz	r3, .L131
+ 436 0364 4846     		mov	r0, r9
+ 437 0366 9847     		blx	r3
+ 438 0368 042E     		cmp	r6, #4
+ 439 036a F3D1     		bne	.L38
+ 440              	.L131:
+ 441 036c 2E68     		ldr	r6, [r5]
+ 442 036e ABE6     		b	.L39
+ 443              	.L70:
+ 444 0370 274C     		ldr	r4, .L150
+ 445 0372 DFF8A490 		ldr	r9, .L150+8
+ 446 0376 2748     		ldr	r0, .L150+4
+ 447 0378 0026     		movs	r6, #0
+ 448              	.L28:
+ 449 037a 6368     		ldr	r3, [r4, #4]
+ 450 037c 03EB8603 		add	r3, r3, r6, lsl #2
+ 451 0380 4946     		mov	r1, r9
+ 452 0382 D3F89030 		ldr	r3, [r3, #144]
+ 453 0386 0136     		adds	r6, r6, #1
+ 454 0388 002B     		cmp	r3, #0
+ 455 038a 3FF487AE 		beq	.L31
+ 456 038e 9847     		blx	r3
+ARM GAS  /tmp/ccJHopFh.s 			page 9
+
+
+ 457 0390 042E     		cmp	r6, #4
+ 458 0392 2048     		ldr	r0, .L150+4
+ 459 0394 F1D1     		bne	.L28
+ 460 0396 81E6     		b	.L31
+ 461              	.L138:
+ 462 0398 1D4C     		ldr	r4, .L150
+ 463 039a 1F4A     		ldr	r2, .L150+8
+ 464 039c 1D48     		ldr	r0, .L150+4
+ 465 039e 0026     		movs	r6, #0
+ 466              	.L27:
+ 467 03a0 6368     		ldr	r3, [r4, #4]
+ 468 03a2 03EB8603 		add	r3, r3, r6, lsl #2
+ 469 03a6 1146     		mov	r1, r2
+ 470 03a8 D3F82032 		ldr	r3, [r3, #544]
+ 471 03ac 0136     		adds	r6, r6, #1
+ 472 03ae 23B1     		cbz	r3, .L129
+ 473 03b0 9847     		blx	r3
+ 474 03b2 042E     		cmp	r6, #4
+ 475 03b4 1748     		ldr	r0, .L150+4
+ 476 03b6 184A     		ldr	r2, .L150+8
+ 477 03b8 F2D1     		bne	.L27
+ 478              	.L129:
+ 479 03ba D9F80030 		ldr	r3, [r9]
+ 480 03be 6AE6     		b	.L25
+ 481              	.L137:
+ 482 03c0 134C     		ldr	r4, .L150
+ 483 03c2 154A     		ldr	r2, .L150+8
+ 484 03c4 1348     		ldr	r0, .L150+4
+ 485 03c6 0026     		movs	r6, #0
+ 486              	.L24:
+ 487 03c8 6368     		ldr	r3, [r4, #4]
+ 488 03ca 03EB8603 		add	r3, r3, r6, lsl #2
+ 489 03ce 1146     		mov	r1, r2
+ 490 03d0 D3F8C032 		ldr	r3, [r3, #704]
+ 491 03d4 0136     		adds	r6, r6, #1
+ 492 03d6 23B1     		cbz	r3, .L128
+ 493 03d8 9847     		blx	r3
+ 494 03da 042E     		cmp	r6, #4
+ 495 03dc 0D48     		ldr	r0, .L150+4
+ 496 03de 0E4A     		ldr	r2, .L150+8
+ 497 03e0 F2D1     		bne	.L24
+ 498              	.L128:
+ 499 03e2 D9F80030 		ldr	r3, [r9]
+ 500 03e6 53E6     		b	.L22
+ 501              	.L136:
+ 502 03e8 094C     		ldr	r4, .L150
+ 503 03ea 0B4A     		ldr	r2, .L150+8
+ 504 03ec 0948     		ldr	r0, .L150+4
+ 505 03ee 0026     		movs	r6, #0
+ 506              	.L21:
+ 507 03f0 6368     		ldr	r3, [r4, #4]
+ 508 03f2 03EB8603 		add	r3, r3, r6, lsl #2
+ 509 03f6 1146     		mov	r1, r2
+ 510 03f8 D3F81033 		ldr	r3, [r3, #784]
+ 511 03fc 0136     		adds	r6, r6, #1
+ 512 03fe 23B1     		cbz	r3, .L127
+ 513 0400 9847     		blx	r3
+ARM GAS  /tmp/ccJHopFh.s 			page 10
+
+
+ 514 0402 042E     		cmp	r6, #4
+ 515 0404 0348     		ldr	r0, .L150+4
+ 516 0406 044A     		ldr	r2, .L150+8
+ 517 0408 F2D1     		bne	.L21
+ 518              	.L127:
+ 519 040a D9F80030 		ldr	r3, [r9]
+ 520 040e 3CE6     		b	.L19
+ 521              	.L151:
+ 522              		.align	2
+ 523              	.L150:
+ 524 0410 00000000 		.word	pprz_telemetry
+ 525 0414 00000000 		.word	pprzlog_tp
+ 526 0418 04000000 		.word	.LANCHOR0+4
+ 527              		.size	flight_recorder_periodic, .-flight_recorder_periodic
+ 528              		.section	.rodata.flight_recorder_log_msg_up.str1.4,"aMS",%progbits,1
+ 529              		.align	2
+ 530              	.LC0:
+ 531 0000 494E464F 		.ascii	"INFO_MSG\000"
+ 531      5F4D5347 
+ 531      00
+ 532              		.section	.text.flight_recorder_log_msg_up,"ax",%progbits
+ 533              		.align	1
+ 534              		.p2align 4,,15
+ 535              		.global	flight_recorder_log_msg_up
+ 536              		.syntax unified
+ 537              		.thumb
+ 538              		.thumb_func
+ 539              		.fpu fpv4-sp-d16
+ 540              		.type	flight_recorder_log_msg_up, %function
+ 541              	flight_recorder_log_msg_up:
+ 542              		@ args = 0, pretend = 0, frame = 24
+ 543              		@ frame_needed = 0, uses_anonymous_args = 0
+ 544 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 545 0002 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 546 0004 032B     		cmp	r3, #3
+ 547 0006 89B0     		sub	sp, sp, #36
+ 548 0008 0446     		mov	r4, r0
+ 549 000a 03D0     		beq	.L153
+ 550 000c FF2B     		cmp	r3, #255
+ 551 000e 01D0     		beq	.L153
+ 552              	.L152:
+ 553 0010 09B0     		add	sp, sp, #36
+ 554              		@ sp needed
+ 555 0012 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 556              	.L153:
+ 557 0014 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 558 0016 012B     		cmp	r3, #1
+ 559 0018 FAD8     		bhi	.L152
+ 560 001a A279     		ldrb	r2, [r4, #6]	@ zero_extendqisi2
+ 561 001c 3C4B     		ldr	r3, .L161
+ 562 001e 3D48     		ldr	r0, .L161+4
+ 563 0020 8DF80F20 		strb	r2, [sp, #15]
+ 564 0024 0025     		movs	r5, #0
+ 565 0026 511D     		adds	r1, r2, #5
+ 566 0028 0322     		movs	r2, #3
+ 567 002a 0790     		str	r0, [sp, #28]
+ 568 002c C9B2     		uxtb	r1, r1
+ARM GAS  /tmp/ccJHopFh.s 			page 11
+
+
+ 569 002e 0693     		str	r3, [sp, #24]
+ 570 0030 ADF81420 		strh	r2, [sp, #20]	@ movhi
+ 571 0034 1B68     		ldr	r3, [r3]
+ 572 0036 8DF81650 		strb	r5, [sp, #22]
+ 573 003a 0495     		str	r5, [sp, #16]
+ 574 003c 05A8     		add	r0, sp, #20
+ 575 003e 9847     		blx	r3
+ 576 0040 069B     		ldr	r3, [sp, #24]
+ 577 0042 82B2     		uxth	r2, r0
+ 578 0044 5B68     		ldr	r3, [r3, #4]
+ 579 0046 0646     		mov	r6, r0
+ 580 0048 04A9     		add	r1, sp, #16
+ 581 004a 05A8     		add	r0, sp, #20
+ 582 004c 9847     		blx	r3
+ 583 004e 069B     		ldr	r3, [sp, #24]
+ 584 0050 0028     		cmp	r0, #0
+ 585 0052 58D0     		beq	.L155
+ 586 0054 3146     		mov	r1, r6
+ 587 0056 05A8     		add	r0, sp, #20
+ 588 0058 DB69     		ldr	r3, [r3, #28]
+ 589 005a 9847     		blx	r3
+ 590 005c 9DF80F20 		ldrb	r2, [sp, #15]	@ zero_extendqisi2
+ 591 0060 069B     		ldr	r3, [sp, #24]
+ 592 0062 0499     		ldr	r1, [sp, #16]
+ 593 0064 1B69     		ldr	r3, [r3, #16]
+ 594 0066 0532     		adds	r2, r2, #5
+ 595 0068 05A8     		add	r0, sp, #20
+ 596 006a D2B2     		uxtb	r2, r2
+ 597 006c 9847     		blx	r3
+ 598 006e 0126     		movs	r6, #1
+ 599 0070 069B     		ldr	r3, [sp, #24]
+ 600 0072 0196     		str	r6, [sp, #4]
+ 601 0074 05AA     		add	r2, sp, #20
+ 602 0076 0092     		str	r2, [sp]
+ 603 0078 9F68     		ldr	r7, [r3, #8]
+ 604 007a 0499     		ldr	r1, [sp, #16]
+ 605 007c 2B46     		mov	r3, r5
+ 606 007e 1046     		mov	r0, r2
+ 607 0080 0222     		movs	r2, #2
+ 608 0082 B847     		blx	r7
+ 609 0084 069B     		ldr	r3, [sp, #24]
+ 610 0086 9DF81520 		ldrb	r2, [sp, #21]	@ zero_extendqisi2
+ 611 008a 0092     		str	r2, [sp]
+ 612 008c 0195     		str	r5, [sp, #4]
+ 613 008e DF68     		ldr	r7, [r3, #12]
+ 614 0090 0499     		ldr	r1, [sp, #16]
+ 615 0092 2B46     		mov	r3, r5
+ 616 0094 05A8     		add	r0, sp, #20
+ 617 0096 0222     		movs	r2, #2
+ 618 0098 B847     		blx	r7
+ 619 009a 9DF81630 		ldrb	r3, [sp, #22]	@ zero_extendqisi2
+ 620 009e 069A     		ldr	r2, [sp, #24]
+ 621 00a0 0195     		str	r5, [sp, #4]
+ 622 00a2 1B01     		lsls	r3, r3, #4
+ 623 00a4 3343     		orrs	r3, r3, r6
+ 624 00a6 DBB2     		uxtb	r3, r3
+ 625 00a8 0093     		str	r3, [sp]
+ARM GAS  /tmp/ccJHopFh.s 			page 12
+
+
+ 626 00aa D768     		ldr	r7, [r2, #12]
+ 627 00ac 0499     		ldr	r1, [sp, #16]
+ 628 00ae 2B46     		mov	r3, r5
+ 629 00b0 05A8     		add	r0, sp, #20
+ 630 00b2 0222     		movs	r2, #2
+ 631 00b4 B847     		blx	r7
+ 632 00b6 184A     		ldr	r2, .L161+8
+ 633 00b8 069B     		ldr	r3, [sp, #24]
+ 634 00ba 0192     		str	r2, [sp, #4]
+ 635 00bc D722     		movs	r2, #215
+ 636 00be 0092     		str	r2, [sp]
+ 637 00c0 DF68     		ldr	r7, [r3, #12]
+ 638 00c2 0499     		ldr	r1, [sp, #16]
+ 639 00c4 2B46     		mov	r3, r5
+ 640 00c6 05A8     		add	r0, sp, #20
+ 641 00c8 0222     		movs	r2, #2
+ 642 00ca B847     		blx	r7
+ 643 00cc 069B     		ldr	r3, [sp, #24]
+ 644 00ce 0196     		str	r6, [sp, #4]
+ 645 00d0 0DF10F02 		add	r2, sp, #15
+ 646 00d4 0092     		str	r2, [sp]
+ 647 00d6 9F68     		ldr	r7, [r3, #8]
+ 648 00d8 0499     		ldr	r1, [sp, #16]
+ 649 00da 2B46     		mov	r3, r5
+ 650 00dc 2A46     		mov	r2, r5
+ 651 00de 05A8     		add	r0, sp, #20
+ 652 00e0 B847     		blx	r7
+ 653 00e2 9DF80F20 		ldrb	r2, [sp, #15]	@ zero_extendqisi2
+ 654 00e6 069B     		ldr	r3, [sp, #24]
+ 655 00e8 0499     		ldr	r1, [sp, #16]
+ 656 00ea 0734     		adds	r4, r4, #7
+ 657 00ec CDE90042 		strd	r4, r2, [sp]
+ 658 00f0 05A8     		add	r0, sp, #20
+ 659 00f2 9C68     		ldr	r4, [r3, #8]
+ 660 00f4 3246     		mov	r2, r6
+ 661 00f6 3346     		mov	r3, r6
+ 662 00f8 A047     		blx	r4
+ 663 00fa 069B     		ldr	r3, [sp, #24]
+ 664 00fc 0499     		ldr	r1, [sp, #16]
+ 665 00fe 5B69     		ldr	r3, [r3, #20]
+ 666 0100 05A8     		add	r0, sp, #20
+ 667 0102 9847     		blx	r3
+ 668 0104 84E7     		b	.L152
+ 669              	.L155:
+ 670 0106 9B69     		ldr	r3, [r3, #24]
+ 671 0108 05A8     		add	r0, sp, #20
+ 672 010a 9847     		blx	r3
+ 673 010c 80E7     		b	.L152
+ 674              	.L162:
+ 675 010e 00BF     		.align	2
+ 676              	.L161:
+ 677 0110 00000000 		.word	pprzlog_tp
+ 678 0114 04000000 		.word	.LANCHOR0+4
+ 679 0118 00000000 		.word	.LC0
+ 680              		.size	flight_recorder_log_msg_up, .-flight_recorder_log_msg_up
+ 681              		.global	flightrecorder_sdlog
+ 682              		.global	telemetry_mode_FlightRecorder
+ARM GAS  /tmp/ccJHopFh.s 			page 13
+
+
+ 683              		.section	.bss.flightrecorder_sdlog,"aw",%nobits
+ 684              		.align	2
+ 685              		.set	.LANCHOR0,. + 0
+ 686              		.type	flightrecorder_sdlog, %object
+ 687              		.size	flightrecorder_sdlog, 44
+ 688              	flightrecorder_sdlog:
+ 689 0000 00000000 		.space	44
+ 689      00000000 
+ 689      00000000 
+ 689      00000000 
+ 689      00000000 
+ 690              		.section	.bss.i1.5,"aw",%nobits
+ 691              		.align	2
+ 692              		.set	.LANCHOR2,. + 0
+ 693              		.type	i1.5, %object
+ 694              		.size	i1.5, 4
+ 695              	i1.5:
+ 696 0000 00000000 		.space	4
+ 697              		.section	.bss.i2.4,"aw",%nobits
+ 698              		.align	2
+ 699              		.set	.LANCHOR3,. + 0
+ 700              		.type	i2.4, %object
+ 701              		.size	i2.4, 4
+ 702              	i2.4:
+ 703 0000 00000000 		.space	4
+ 704              		.section	.bss.i3.3,"aw",%nobits
+ 705              		.align	2
+ 706              		.set	.LANCHOR4,. + 0
+ 707              		.type	i3.3, %object
+ 708              		.size	i3.3, 4
+ 709              	i3.3:
+ 710 0000 00000000 		.space	4
+ 711              		.section	.bss.i4.2,"aw",%nobits
+ 712              		.align	2
+ 713              		.set	.LANCHOR5,. + 0
+ 714              		.type	i4.2, %object
+ 715              		.size	i4.2, 4
+ 716              	i4.2:
+ 717 0000 00000000 		.space	4
+ 718              		.section	.bss.i5.1,"aw",%nobits
+ 719              		.align	2
+ 720              		.set	.LANCHOR6,. + 0
+ 721              		.type	i5.1, %object
+ 722              		.size	i5.1, 4
+ 723              	i5.1:
+ 724 0000 00000000 		.space	4
+ 725              		.section	.bss.i6.0,"aw",%nobits
+ 726              		.align	2
+ 727              		.set	.LANCHOR7,. + 0
+ 728              		.type	i6.0, %object
+ 729              		.size	i6.0, 4
+ 730              	i6.0:
+ 731 0000 00000000 		.space	4
+ 732              		.section	.bss.telemetry_mode_FlightRecorder,"aw",%nobits
+ 733              		.set	.LANCHOR1,. + 0
+ 734              		.type	telemetry_mode_FlightRecorder, %object
+ 735              		.size	telemetry_mode_FlightRecorder, 1
+ARM GAS  /tmp/ccJHopFh.s 			page 14
+
+
+ 736              	telemetry_mode_FlightRecorder:
+ 737 0000 00       		.space	1
+ 738              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccJHopFh.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 flight_recorder.c
+     /tmp/ccJHopFh.s:15     .text.flight_recorder_init:0000000000000000 $t
+     /tmp/ccJHopFh.s:24     .text.flight_recorder_init:0000000000000000 flight_recorder_init
+     /tmp/ccJHopFh.s:34     .text.flight_recorder_init:0000000000000008 $d
+     /tmp/ccJHopFh.s:38     .text.flight_recorder_periodic:0000000000000000 $t
+     /tmp/ccJHopFh.s:46     .text.flight_recorder_periodic:0000000000000000 flight_recorder_periodic
+     /tmp/ccJHopFh.s:358    .text.flight_recorder_periodic:00000000000002a0 $d
+     /tmp/ccJHopFh.s:370    .text.flight_recorder_periodic:00000000000002cc $t
+     /tmp/ccJHopFh.s:524    .text.flight_recorder_periodic:0000000000000410 $d
+     /tmp/ccJHopFh.s:529    .rodata.flight_recorder_log_msg_up.str1.4:0000000000000000 $d
+     /tmp/ccJHopFh.s:533    .text.flight_recorder_log_msg_up:0000000000000000 $t
+     /tmp/ccJHopFh.s:541    .text.flight_recorder_log_msg_up:0000000000000000 flight_recorder_log_msg_up
+     /tmp/ccJHopFh.s:677    .text.flight_recorder_log_msg_up:0000000000000110 $d
+     /tmp/ccJHopFh.s:688    .bss.flightrecorder_sdlog:0000000000000000 flightrecorder_sdlog
+     /tmp/ccJHopFh.s:736    .bss.telemetry_mode_FlightRecorder:0000000000000000 telemetry_mode_FlightRecorder
+     /tmp/ccJHopFh.s:684    .bss.flightrecorder_sdlog:0000000000000000 $d
+     /tmp/ccJHopFh.s:691    .bss.i1.5:0000000000000000 $d
+     /tmp/ccJHopFh.s:695    .bss.i1.5:0000000000000000 i1.5
+     /tmp/ccJHopFh.s:698    .bss.i2.4:0000000000000000 $d
+     /tmp/ccJHopFh.s:702    .bss.i2.4:0000000000000000 i2.4
+     /tmp/ccJHopFh.s:705    .bss.i3.3:0000000000000000 $d
+     /tmp/ccJHopFh.s:709    .bss.i3.3:0000000000000000 i3.3
+     /tmp/ccJHopFh.s:712    .bss.i4.2:0000000000000000 $d
+     /tmp/ccJHopFh.s:716    .bss.i4.2:0000000000000000 i4.2
+     /tmp/ccJHopFh.s:719    .bss.i5.1:0000000000000000 $d
+     /tmp/ccJHopFh.s:723    .bss.i5.1:0000000000000000 i5.1
+     /tmp/ccJHopFh.s:726    .bss.i6.0:0000000000000000 $d
+     /tmp/ccJHopFh.s:730    .bss.i6.0:0000000000000000 i6.0
+     /tmp/ccJHopFh.s:737    .bss.telemetry_mode_FlightRecorder:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+chibios_sdlog_init
+flightRecorderLogFile
+pprz_telemetry
+pprzlog_tp

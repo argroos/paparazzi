@@ -1,0 +1,2897 @@
+ARM GAS  /tmp/ccnucHfz.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"usb_msd.c"
+  13              		.text
+  14              		.section	.text.getDescriptor,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	getDescriptor, %function
+  23              	getDescriptor:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 0229     		cmp	r1, #2
+  28 0002 06D0     		beq	.L4
+  29 0004 0329     		cmp	r1, #3
+  30 0006 06D0     		beq	.L3
+  31 0008 0129     		cmp	r1, #1
+  32 000a 0748     		ldr	r0, .L8
+  33 000c 18BF     		it	ne
+  34 000e 0020     		movne	r0, #0
+  35 0010 7047     		bx	lr
+  36              	.L4:
+  37 0012 0648     		ldr	r0, .L8+4
+  38 0014 7047     		bx	lr
+  39              	.L3:
+  40 0016 032A     		cmp	r2, #3
+  41 0018 03D8     		bhi	.L6
+  42 001a 054B     		ldr	r3, .L8+8
+  43 001c 53F82200 		ldr	r0, [r3, r2, lsl #2]
+  44 0020 7047     		bx	lr
+  45              	.L6:
+  46 0022 0020     		movs	r0, #0
+  47 0024 7047     		bx	lr
+  48              	.L9:
+  49 0026 00BF     		.align	2
+  50              	.L8:
+  51 0028 00000000 		.word	.LANCHOR0
+  52 002c 00000000 		.word	.LANCHOR1
+  53 0030 00000000 		.word	.LANCHOR2
+  54              		.size	getDescriptor, .-getDescriptor
+  55              		.section	.text.msd_handle_end_point_notification,"ax",%progbits
+  56              		.align	1
+  57              		.p2align 4,,15
+ARM GAS  /tmp/ccnucHfz.s 			page 2
+
+
+  58              		.syntax unified
+  59              		.thumb
+  60              		.thumb_func
+  61              		.fpu fpv4-sp-d16
+  62              		.type	msd_handle_end_point_notification, %function
+  63              	msd_handle_end_point_notification:
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66 0000 38B5     		push	{r3, r4, r5, lr}
+  67 0002 0446     		mov	r4, r0
+  68 0004 0D46     		mov	r5, r1
+  69 0006 3023     		movs	r3, #48
+  70              		.syntax unified
+  71              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  72 0008 83F31188 		MSR basepri, r3
+  73              	@ 0 "" 2
+  74              		.thumb
+  75              		.syntax unified
+  76 000c 04EB8504 		add	r4, r4, r5, lsl #2
+  77 0010 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+  78 0014 E069     		ldr	r0, [r4, #28]
+  79 0016 C368     		ldr	r3, [r0, #12]
+  80 0018 002B     		cmp	r3, #0
+  81 001a 05DD     		ble	.L13
+  82 001c FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+  83 0020 0023     		movs	r3, #0
+  84              		.syntax unified
+  85              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  86 0022 83F31188 		MSR basepri, r3
+  87              	@ 0 "" 2
+  88              		.thumb
+  89              		.syntax unified
+  90 0026 38BD     		pop	{r3, r4, r5, pc}
+  91              	.L13:
+  92 0028 0430     		adds	r0, r0, #4
+  93 002a FFF7FEFF 		bl	chSemSignalI
+  94 002e FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+  95 0032 0023     		movs	r3, #0
+  96              		.syntax unified
+  97              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  98 0034 83F31188 		MSR basepri, r3
+  99              	@ 0 "" 2
+ 100              		.thumb
+ 101              		.syntax unified
+ 102 0038 38BD     		pop	{r3, r4, r5, pc}
+ 103              		.size	msd_handle_end_point_notification, .-msd_handle_end_point_notification
+ 104 003a 00BF     		.section	.text.msdRequestsHook,"ax",%progbits
+ 105              		.align	1
+ 106              		.p2align 4,,15
+ 107              		.global	msdRequestsHook
+ 108              		.syntax unified
+ 109              		.thumb
+ 110              		.thumb_func
+ 111              		.fpu fpv4-sp-d16
+ 112              		.type	msdRequestsHook, %function
+ 113              	msdRequestsHook:
+ 114              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccnucHfz.s 			page 3
+
+
+ 115              		@ frame_needed = 0, uses_anonymous_args = 0
+ 116 0000 90F84430 		ldrb	r3, [r0, #68]	@ zero_extendqisi2
+ 117 0004 03F07F02 		and	r2, r3, #127
+ 118 0008 212A     		cmp	r2, #33
+ 119 000a 01D0     		beq	.L31
+ 120 000c 0020     		movs	r0, #0
+ 121 000e 7047     		bx	lr
+ 122              	.L31:
+ 123 0010 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 124 0014 0446     		mov	r4, r0
+ 125 0016 B0F84800 		ldrh	r0, [r0, #72]
+ 126 001a 00BB     		cbnz	r0, .L18
+ 127 001c 94F84520 		ldrb	r2, [r4, #69]	@ zero_extendqisi2
+ 128 0020 FE2A     		cmp	r2, #254
+ 129 0022 0CD0     		beq	.L16
+ 130 0024 FF2A     		cmp	r2, #255
+ 131 0026 08D1     		bne	.L15
+ 132 0028 1A06     		lsls	r2, r3, #24
+ 133 002a 06D4     		bmi	.L15
+ 134 002c B4F84A30 		ldrh	r3, [r4, #74]
+ 135 0030 1BB9     		cbnz	r3, .L15
+ 136 0032 B4F84660 		ldrh	r6, [r4, #70]
+ 137 0036 AEB1     		cbz	r6, .L32
+ 138 0038 1846     		mov	r0, r3
+ 139              	.L15:
+ 140 003a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 141              	.L16:
+ 142 003e 1B06     		lsls	r3, r3, #24
+ 143 0040 FBD5     		bpl	.L15
+ 144 0042 B4F84A30 		ldrh	r3, [r4, #74]
+ 145 0046 012B     		cmp	r3, #1
+ 146 0048 F7D1     		bne	.L15
+ 147 004a B4F84620 		ldrh	r2, [r4, #70]
+ 148 004e 002A     		cmp	r2, #0
+ 149 0050 F3D1     		bne	.L15
+ 150 0052 2649     		ldr	r1, .L33
+ 151 0054 2264     		str	r2, [r4, #64]
+ 152 0056 C4E90E13 		strd	r1, r3, [r4, #56]
+ 153 005a 1846     		mov	r0, r3
+ 154 005c EDE7     		b	.L15
+ 155              	.L18:
+ 156 005e 0020     		movs	r0, #0
+ 157 0060 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 158              	.L32:
+ 159 0064 224F     		ldr	r7, .L33+4
+ 160 0066 0125     		movs	r5, #1
+ 161 0068 87F88950 		strb	r5, [r7, #137]
+ 162 006c 4FF03008 		mov	r8, #48
+ 163              		.syntax unified
+ 164              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 165 0070 88F31188 		MSR basepri, r8
+ 166              	@ 0 "" 2
+ 167              		.thumb
+ 168              		.syntax unified
+ 169 0074 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 170 0078 6FF00102 		mvn	r2, #1
+ 171 007c 2946     		mov	r1, r5
+ARM GAS  /tmp/ccnucHfz.s 			page 4
+
+
+ 172 007e 381D     		adds	r0, r7, #4
+ 173 0080 FFF7FEFF 		bl	chSemResetWithMessageI
+ 174 0084 3B68     		ldr	r3, [r7]
+ 175 0086 2046     		mov	r0, r4
+ 176 0088 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 177 008a FFF7FEFF 		bl	usbStallReceiveI
+ 178 008e 3B68     		ldr	r3, [r7]
+ 179 0090 2046     		mov	r0, r4
+ 180 0092 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 181 0094 FFF7FEFF 		bl	usbStallTransmitI
+ 182 0098 3B68     		ldr	r3, [r7]
+ 183 009a 1868     		ldr	r0, [r3]
+ 184 009c 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 185 009e 436D     		ldr	r3, [r0, #84]
+ 186 00a0 03EB4113 		add	r3, r3, r1, lsl #5
+ 187 00a4 4FF00062 		mov	r2, #134217728
+ 188 00a8 C3F80029 		str	r2, [r3, #2304]
+ 189 00ac C3F8002B 		str	r2, [r3, #2816]
+ 190 00b0 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 191              		.syntax unified
+ 192              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 193 00b4 86F31188 		MSR basepri, r6
+ 194              	@ 0 "" 2
+ 195              		.thumb
+ 196              		.syntax unified
+ 197 00b8 C4E90E66 		strd	r6, r6, [r4, #56]
+ 198 00bc 2664     		str	r6, [r4, #64]
+ 199 00be 0D4C     		ldr	r4, .L33+8
+ 200 00c0 0323     		movs	r3, #3
+ 201 00c2 87F82430 		strb	r3, [r7, #36]
+ 202 00c6 2368     		ldr	r3, [r4]
+ 203 00c8 6BB1     		cbz	r3, .L23
+ 204              		.syntax unified
+ 205              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 206 00ca 88F31188 		MSR basepri, r8
+ 207              	@ 0 "" 2
+ 208              		.thumb
+ 209              		.syntax unified
+ 210 00ce FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 211 00d2 2068     		ldr	r0, [r4]
+ 212 00d4 0221     		movs	r1, #2
+ 213 00d6 FFF7FEFF 		bl	chEvtSignalI
+ 214 00da FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 215              		.syntax unified
+ 216              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 217 00de 86F31188 		MSR basepri, r6
+ 218              	@ 0 "" 2
+ 219              		.thumb
+ 220              		.syntax unified
+ 221 00e2 2846     		mov	r0, r5
+ 222 00e4 A9E7     		b	.L15
+ 223              	.L23:
+ 224 00e6 2846     		mov	r0, r5
+ 225 00e8 A7E7     		b	.L15
+ 226              	.L34:
+ 227 00ea 00BF     		.align	2
+ 228              	.L33:
+ARM GAS  /tmp/ccnucHfz.s 			page 5
+
+
+ 229 00ec 00000000 		.word	.LANCHOR5
+ 230 00f0 00000000 		.word	.LANCHOR3
+ 231 00f4 00000000 		.word	.LANCHOR4
+ 232              		.size	msdRequestsHook, .-msdRequestsHook
+ 233              		.section	.text.msdConfigureHookI,"ax",%progbits
+ 234              		.align	1
+ 235              		.p2align 4,,15
+ 236              		.global	msdConfigureHookI
+ 237              		.syntax unified
+ 238              		.thumb
+ 239              		.thumb_func
+ 240              		.fpu fpv4-sp-d16
+ 241              		.type	msdConfigureHookI, %function
+ 242              	msdConfigureHookI:
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245 0000 10B5     		push	{r4, lr}
+ 246 0002 0368     		ldr	r3, [r0]
+ 247 0004 0C4A     		ldr	r2, .L43
+ 248 0006 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 249 0008 0446     		mov	r4, r0
+ 250 000a 1868     		ldr	r0, [r3]
+ 251 000c FFF7FEFF 		bl	usbInitEndpointI
+ 252 0010 E368     		ldr	r3, [r4, #12]
+ 253 0012 002B     		cmp	r3, #0
+ 254 0014 0CDD     		ble	.L42
+ 255              	.L36:
+ 256 0016 094B     		ldr	r3, .L43+4
+ 257 0018 1868     		ldr	r0, [r3]
+ 258 001a 10B1     		cbz	r0, .L37
+ 259 001c 0821     		movs	r1, #8
+ 260 001e FFF7FEFF 		bl	chEvtSignalI
+ 261              	.L37:
+ 262 0022 04F11400 		add	r0, r4, #20
+ 263 0026 0021     		movs	r1, #0
+ 264 0028 BDE81040 		pop	{r4, lr}
+ 265 002c FFF7FEBF 		b	chEvtBroadcastFlagsI
+ 266              	.L42:
+ 267 0030 201D     		adds	r0, r4, #4
+ 268 0032 FFF7FEFF 		bl	chSemSignalI
+ 269 0036 EEE7     		b	.L36
+ 270              	.L44:
+ 271              		.align	2
+ 272              	.L43:
+ 273 0038 00000000 		.word	.LANCHOR6
+ 274 003c 00000000 		.word	.LANCHOR4
+ 275              		.size	msdConfigureHookI, .-msdConfigureHookI
+ 276              		.section	.text.usbEvent,"ax",%progbits
+ 277              		.align	1
+ 278              		.p2align 4,,15
+ 279              		.syntax unified
+ 280              		.thumb
+ 281              		.thumb_func
+ 282              		.fpu fpv4-sp-d16
+ 283              		.type	usbEvent, %function
+ 284              	usbEvent:
+ 285              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccnucHfz.s 			page 6
+
+
+ 286              		@ frame_needed = 0, uses_anonymous_args = 0
+ 287 0000 38B5     		push	{r3, r4, r5, lr}
+ 288 0002 0C46     		mov	r4, r1
+ 289 0004 91B1     		cbz	r1, .L46
+ 290 0006 0229     		cmp	r1, #2
+ 291 0008 0FD1     		bne	.L45
+ 292 000a 3023     		movs	r3, #48
+ 293              		.syntax unified
+ 294              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 295 000c 83F31188 		MSR basepri, r3
+ 296              	@ 0 "" 2
+ 297              		.thumb
+ 298              		.syntax unified
+ 299 0010 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 300 0014 1048     		ldr	r0, .L53
+ 301 0016 0123     		movs	r3, #1
+ 302 0018 80F88730 		strb	r3, [r0, #135]
+ 303 001c FFF7FEFF 		bl	msdConfigureHookI
+ 304 0020 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 305 0024 0023     		movs	r3, #0
+ 306              		.syntax unified
+ 307              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 308 0026 83F31188 		MSR basepri, r3
+ 309              	@ 0 "" 2
+ 310              		.thumb
+ 311              		.syntax unified
+ 312              	.L45:
+ 313 002a 38BD     		pop	{r3, r4, r5, pc}
+ 314              	.L46:
+ 315 002c 0B4D     		ldr	r5, .L53+4
+ 316 002e 2B68     		ldr	r3, [r5]
+ 317 0030 63B1     		cbz	r3, .L48
+ 318 0032 3023     		movs	r3, #48
+ 319              		.syntax unified
+ 320              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 321 0034 83F31188 		MSR basepri, r3
+ 322              	@ 0 "" 2
+ 323              		.thumb
+ 324              		.syntax unified
+ 325 0038 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 326 003c 2868     		ldr	r0, [r5]
+ 327 003e 0121     		movs	r1, #1
+ 328 0040 FFF7FEFF 		bl	chEvtSignalI
+ 329 0044 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 330              		.syntax unified
+ 331              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 332 0048 84F31188 		MSR basepri, r4
+ 333              	@ 0 "" 2
+ 334              		.thumb
+ 335              		.syntax unified
+ 336              	.L48:
+ 337 004c 024B     		ldr	r3, .L53
+ 338 004e 0122     		movs	r2, #1
+ 339 0050 83F88720 		strb	r2, [r3, #135]
+ 340 0054 38BD     		pop	{r3, r4, r5, pc}
+ 341              	.L54:
+ 342 0056 00BF     		.align	2
+ARM GAS  /tmp/ccnucHfz.s 			page 7
+
+
+ 343              	.L53:
+ 344 0058 00000000 		.word	.LANCHOR3
+ 345 005c 00000000 		.word	.LANCHOR4
+ 346              		.size	usbEvent, .-usbEvent
+ 347              		.section	.text.msd_scsi_process_inquiry,"ax",%progbits
+ 348              		.align	1
+ 349              		.p2align 4,,15
+ 350              		.global	msd_scsi_process_inquiry
+ 351              		.syntax unified
+ 352              		.thumb
+ 353              		.thumb_func
+ 354              		.fpu fpv4-sp-d16
+ 355              		.type	msd_scsi_process_inquiry, %function
+ 356              	msd_scsi_process_inquiry:
+ 357              		@ args = 0, pretend = 0, frame = 16
+ 358              		@ frame_needed = 0, uses_anonymous_args = 0
+ 359 0000 30B5     		push	{r4, r5, lr}
+ 360 0002 294B     		ldr	r3, .L70
+ 361 0004 1B68     		ldr	r3, [r3]
+ 362 0006 85B0     		sub	sp, sp, #20
+ 363 0008 0446     		mov	r4, r0
+ 364 000a 23B1     		cbz	r3, .L56
+ 365 000c 4FF48051 		mov	r1, #4096
+ 366 0010 1846     		mov	r0, r3
+ 367 0012 FFF7FEFF 		bl	chEvtSignal
+ 368              	.L56:
+ 369 0016 94F83530 		ldrb	r3, [r4, #53]	@ zero_extendqisi2
+ 370 001a 13F00105 		ands	r5, r3, #1
+ 371 001e 0ED0     		beq	.L57
+ 372 0020 94F83630 		ldrb	r3, [r4, #54]	@ zero_extendqisi2
+ 373 0024 802B     		cmp	r3, #128
+ 374 0026 2AD0     		beq	.L69
+ 375 0028 0020     		movs	r0, #0
+ 376 002a 0522     		movs	r2, #5
+ 377 002c 2423     		movs	r3, #36
+ 378 002e 84F85320 		strb	r2, [r4, #83]
+ 379 0032 84F85D30 		strb	r3, [r4, #93]
+ 380 0036 84F85E00 		strb	r0, [r4, #94]
+ 381 003a 05B0     		add	sp, sp, #20
+ 382              		@ sp needed
+ 383 003c 30BD     		pop	{r4, r5, pc}
+ 384              	.L57:
+ 385 003e 04F16302 		add	r2, r4, #99
+ 386 0042 0192     		str	r2, [sp, #4]
+ 387 0044 3023     		movs	r3, #48
+ 388              		.syntax unified
+ 389              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 390 0046 83F31188 		MSR basepri, r3
+ 391              	@ 0 "" 2
+ 392              		.thumb
+ 393              		.syntax unified
+ 394 004a FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 395 004e 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 396 0052 019A     		ldr	r2, [sp, #4]
+ 397 0054 7BB9     		cbnz	r3, .L62
+ 398 0056 2368     		ldr	r3, [r4]
+ 399 0058 1868     		ldr	r0, [r3]
+ARM GAS  /tmp/ccnucHfz.s 			page 8
+
+
+ 400              	.L63:
+ 401 005a 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 402 005c 2423     		movs	r3, #36
+ 403              	.L68:
+ 404 005e FFF7FEFF 		bl	usbStartTransmitI
+ 405 0062 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 406 0066 0023     		movs	r3, #0
+ 407              		.syntax unified
+ 408              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 409 0068 83F31188 		MSR basepri, r3
+ 410              	@ 0 "" 2
+ 411              		.thumb
+ 412              		.syntax unified
+ 413 006c 0120     		movs	r0, #1
+ 414 006e 84F88800 		strb	r0, [r4, #136]
+ 415 0072 05B0     		add	sp, sp, #20
+ 416              		@ sp needed
+ 417 0074 30BD     		pop	{r4, r5, pc}
+ 418              	.L62:
+ 419 0076 2368     		ldr	r3, [r4]
+ 420 0078 1868     		ldr	r0, [r3]
+ 421 007a 0581     		strh	r5, [r0, #8]	@ movhi
+ 422 007c EDE7     		b	.L63
+ 423              	.L69:
+ 424 007e 3023     		movs	r3, #48
+ 425 0080 8DF80C30 		strb	r3, [sp, #12]
+ 426              		.syntax unified
+ 427              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 428 0084 83F31188 		MSR basepri, r3
+ 429              	@ 0 "" 2
+ 430              		.thumb
+ 431              		.syntax unified
+ 432 0088 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 433 008c 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 434 0090 2BB9     		cbnz	r3, .L59
+ 435 0092 2368     		ldr	r3, [r4]
+ 436 0094 1868     		ldr	r0, [r3]
+ 437              	.L60:
+ 438 0096 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 439 0098 03AA     		add	r2, sp, #12
+ 440 009a 0123     		movs	r3, #1
+ 441 009c DFE7     		b	.L68
+ 442              	.L59:
+ 443 009e 2368     		ldr	r3, [r4]
+ 444 00a0 1868     		ldr	r0, [r3]
+ 445 00a2 0022     		movs	r2, #0
+ 446 00a4 0281     		strh	r2, [r0, #8]	@ movhi
+ 447 00a6 F6E7     		b	.L60
+ 448              	.L71:
+ 449              		.align	2
+ 450              	.L70:
+ 451 00a8 00000000 		.word	.LANCHOR4
+ 452              		.size	msd_scsi_process_inquiry, .-msd_scsi_process_inquiry
+ 453              		.section	.text.msd_scsi_process_request_sense,"ax",%progbits
+ 454              		.align	1
+ 455              		.p2align 4,,15
+ 456              		.global	msd_scsi_process_request_sense
+ARM GAS  /tmp/ccnucHfz.s 			page 9
+
+
+ 457              		.syntax unified
+ 458              		.thumb
+ 459              		.thumb_func
+ 460              		.fpu fpv4-sp-d16
+ 461              		.type	msd_scsi_process_request_sense, %function
+ 462              	msd_scsi_process_request_sense:
+ 463              		@ args = 0, pretend = 0, frame = 8
+ 464              		@ frame_needed = 0, uses_anonymous_args = 0
+ 465 0000 10B5     		push	{r4, lr}
+ 466 0002 82B0     		sub	sp, sp, #8
+ 467 0004 00F15102 		add	r2, r0, #81
+ 468 0008 0446     		mov	r4, r0
+ 469 000a 0192     		str	r2, [sp, #4]
+ 470 000c 3023     		movs	r3, #48
+ 471              		.syntax unified
+ 472              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 473 000e 83F31188 		MSR basepri, r3
+ 474              	@ 0 "" 2
+ 475              		.thumb
+ 476              		.syntax unified
+ 477 0012 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 478 0016 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 479 001a 019A     		ldr	r2, [sp, #4]
+ 480 001c 13BB     		cbnz	r3, .L73
+ 481 001e 2368     		ldr	r3, [r4]
+ 482 0020 1868     		ldr	r0, [r3]
+ 483              	.L74:
+ 484 0022 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 485 0024 1223     		movs	r3, #18
+ 486 0026 FFF7FEFF 		bl	usbStartTransmitI
+ 487 002a FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 488 002e 0023     		movs	r3, #0
+ 489              		.syntax unified
+ 490              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 491 0030 83F31188 		MSR basepri, r3
+ 492              	@ 0 "" 2
+ 493              		.thumb
+ 494              		.syntax unified
+ 495 0034 0123     		movs	r3, #1
+ 496 0036 84F88830 		strb	r3, [r4, #136]
+ 497 003a 3023     		movs	r3, #48
+ 498              		.syntax unified
+ 499              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 500 003c 83F31188 		MSR basepri, r3
+ 501              	@ 0 "" 2
+ 502              		.thumb
+ 503              		.syntax unified
+ 504 0040 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 505 0044 201D     		adds	r0, r4, #4
+ 506 0046 FFF7FEFF 		bl	chSemWaitS
+ 507 004a 094B     		ldr	r3, .L80
+ 508 004c 1868     		ldr	r0, [r3]
+ 509 004e 10B1     		cbz	r0, .L75
+ 510 0050 0421     		movs	r1, #4
+ 511 0052 FFF7FEFF 		bl	chEvtSignalI
+ 512              	.L75:
+ 513 0056 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ARM GAS  /tmp/ccnucHfz.s 			page 10
+
+
+ 514 005a 0020     		movs	r0, #0
+ 515              		.syntax unified
+ 516              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 517 005c 80F31188 		MSR basepri, r0
+ 518              	@ 0 "" 2
+ 519              		.thumb
+ 520              		.syntax unified
+ 521 0060 02B0     		add	sp, sp, #8
+ 522              		@ sp needed
+ 523 0062 10BD     		pop	{r4, pc}
+ 524              	.L73:
+ 525 0064 2368     		ldr	r3, [r4]
+ 526 0066 1868     		ldr	r0, [r3]
+ 527 0068 0021     		movs	r1, #0
+ 528 006a 0181     		strh	r1, [r0, #8]	@ movhi
+ 529 006c D9E7     		b	.L74
+ 530              	.L81:
+ 531 006e 00BF     		.align	2
+ 532              	.L80:
+ 533 0070 00000000 		.word	.LANCHOR4
+ 534              		.size	msd_scsi_process_request_sense, .-msd_scsi_process_request_sense
+ 535              		.section	.text.msd_scsi_process_read_capacity_10,"ax",%progbits
+ 536              		.align	1
+ 537              		.p2align 4,,15
+ 538              		.global	msd_scsi_process_read_capacity_10
+ 539              		.syntax unified
+ 540              		.thumb
+ 541              		.thumb_func
+ 542              		.fpu fpv4-sp-d16
+ 543              		.type	msd_scsi_process_read_capacity_10, %function
+ 544              	msd_scsi_process_read_capacity_10:
+ 545              		@ args = 0, pretend = 0, frame = 0
+ 546              		@ frame_needed = 0, uses_anonymous_args = 0
+ 547 0000 174B     		ldr	r3, .L90
+ 548 0002 1B68     		ldr	r3, [r3]
+ 549 0004 10B5     		push	{r4, lr}
+ 550 0006 0446     		mov	r4, r0
+ 551 0008 23B1     		cbz	r3, .L83
+ 552 000a 4FF40061 		mov	r1, #2048
+ 553 000e 1846     		mov	r0, r3
+ 554 0010 FFF7FEFF 		bl	chEvtSignal
+ 555              	.L83:
+ 556 0014 D4E90723 		ldrd	r2, r3, [r4, #28]
+ 557 0018 1249     		ldr	r1, .L90+4
+ 558 001a 013B     		subs	r3, r3, #1
+ 559 001c 12BA     		rev	r2, r2
+ 560 001e 1BBA     		rev	r3, r3
+ 561 0020 C1E90032 		strd	r3, r2, [r1]
+ 562 0024 3023     		movs	r3, #48
+ 563              		.syntax unified
+ 564              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 565 0026 83F31188 		MSR basepri, r3
+ 566              	@ 0 "" 2
+ 567              		.thumb
+ 568              		.syntax unified
+ 569 002a FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 570 002e 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ARM GAS  /tmp/ccnucHfz.s 			page 11
+
+
+ 571 0032 7BB9     		cbnz	r3, .L84
+ 572 0034 2368     		ldr	r3, [r4]
+ 573 0036 1868     		ldr	r0, [r3]
+ 574              	.L85:
+ 575 0038 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 576 003a 0A4A     		ldr	r2, .L90+4
+ 577 003c 0823     		movs	r3, #8
+ 578 003e FFF7FEFF 		bl	usbStartTransmitI
+ 579 0042 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 580 0046 0023     		movs	r3, #0
+ 581              		.syntax unified
+ 582              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 583 0048 83F31188 		MSR basepri, r3
+ 584              	@ 0 "" 2
+ 585              		.thumb
+ 586              		.syntax unified
+ 587 004c 0120     		movs	r0, #1
+ 588 004e 84F88800 		strb	r0, [r4, #136]
+ 589 0052 10BD     		pop	{r4, pc}
+ 590              	.L84:
+ 591 0054 2368     		ldr	r3, [r4]
+ 592 0056 1868     		ldr	r0, [r3]
+ 593 0058 0022     		movs	r2, #0
+ 594 005a 0281     		strh	r2, [r0, #8]	@ movhi
+ 595 005c ECE7     		b	.L85
+ 596              	.L91:
+ 597 005e 00BF     		.align	2
+ 598              	.L90:
+ 599 0060 00000000 		.word	.LANCHOR4
+ 600 0064 00000000 		.word	.LANCHOR7
+ 601              		.size	msd_scsi_process_read_capacity_10, .-msd_scsi_process_read_capacity_10
+ 602              		.section	.text.msd_scsi_process_send_diagnostic,"ax",%progbits
+ 603              		.align	1
+ 604              		.p2align 4,,15
+ 605              		.global	msd_scsi_process_send_diagnostic
+ 606              		.syntax unified
+ 607              		.thumb
+ 608              		.thumb_func
+ 609              		.fpu fpv4-sp-d16
+ 610              		.type	msd_scsi_process_send_diagnostic, %function
+ 611              	msd_scsi_process_send_diagnostic:
+ 612              		@ args = 0, pretend = 0, frame = 0
+ 613              		@ frame_needed = 0, uses_anonymous_args = 0
+ 614              		@ link register save eliminated.
+ 615 0000 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 616 0004 13F00403 		ands	r3, r3, #4
+ 617 0008 04D0     		beq	.L95
+ 618 000a 0123     		movs	r3, #1
+ 619 000c 80F88830 		strb	r3, [r0, #136]
+ 620 0010 0020     		movs	r0, #0
+ 621 0012 7047     		bx	lr
+ 622              	.L95:
+ 623 0014 0521     		movs	r1, #5
+ 624 0016 2422     		movs	r2, #36
+ 625 0018 80F85310 		strb	r1, [r0, #83]
+ 626 001c 80F85D20 		strb	r2, [r0, #93]
+ 627 0020 80F85E30 		strb	r3, [r0, #94]
+ARM GAS  /tmp/ccnucHfz.s 			page 12
+
+
+ 628 0024 80F88830 		strb	r3, [r0, #136]
+ 629 0028 0020     		movs	r0, #0
+ 630 002a 7047     		bx	lr
+ 631              		.size	msd_scsi_process_send_diagnostic, .-msd_scsi_process_send_diagnostic
+ 632              		.section	.text.msd_scsi_process_start_read_write_10,"ax",%progbits
+ 633              		.align	1
+ 634              		.p2align 4,,15
+ 635              		.global	msd_scsi_process_start_read_write_10
+ 636              		.syntax unified
+ 637              		.thumb
+ 638              		.thumb_func
+ 639              		.fpu fpv4-sp-d16
+ 640              		.type	msd_scsi_process_start_read_write_10, %function
+ 641              	msd_scsi_process_start_read_write_10:
+ 642              		@ args = 0, pretend = 0, frame = 16
+ 643              		@ frame_needed = 0, uses_anonymous_args = 0
+ 644 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 645 0004 BF4B     		ldr	r3, .L149
+ 646 0006 2DED028B 		vpush.64	{d8}
+ 647 000a 1B68     		ldr	r3, [r3]
+ 648 000c 85B0     		sub	sp, sp, #20
+ 649 000e 0446     		mov	r4, r0
+ 650 0010 23B1     		cbz	r3, .L97
+ 651 0012 4FF48071 		mov	r1, #256
+ 652 0016 1846     		mov	r0, r3
+ 653 0018 FFF7FEFF 		bl	chEvtSignal
+ 654              	.L97:
+ 655 001c 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 656 0020 2A2B     		cmp	r3, #42
+ 657 0022 6BD0     		beq	.L145
+ 658 0024 D4F83660 		ldr	r6, [r4, #54]
+ 659 0028 236A     		ldr	r3, [r4, #32]
+ 660 002a 36BA     		rev	r6, r6
+ 661 002c 9E42     		cmp	r6, r3
+ 662 002e 74D2     		bcs	.L123
+ 663 0030 B4F83B30 		ldrh	r3, [r4, #59]
+ 664 0034 5BBA     		rev16	r3, r3
+ 665 0036 1FFA83FB 		uxth	fp, r3
+ 666              	.L102:
+ 667 003a 2368     		ldr	r3, [r4]
+ 668 003c B24A     		ldr	r2, .L149+4
+ 669 003e 5868     		ldr	r0, [r3, #4]
+ 670 0040 0368     		ldr	r3, [r0]
+ 671 0042 3146     		mov	r1, r6
+ 672 0044 5D69     		ldr	r5, [r3, #20]
+ 673 0046 0123     		movs	r3, #1
+ 674 0048 A847     		blx	r5
+ 675 004a 0028     		cmp	r0, #0
+ 676 004c 40F02281 		bne	.L114
+ 677 0050 BBF1000F 		cmp	fp, #0
+ 678 0054 72D0     		beq	.L113
+ 679 0056 0BF1FF33 		add	r3, fp, #-1
+ 680 005a DFF8AC92 		ldr	r9, .L149+4
+ 681 005e 0393     		str	r3, [sp, #12]
+ 682 0060 0546     		mov	r5, r0
+ 683 0062 0136     		adds	r6, r6, #1
+ 684 0064 4FF0300A 		mov	r10, #48
+ARM GAS  /tmp/ccnucHfz.s 			page 13
+
+
+ 685 0068 8046     		mov	r8, r0
+ 686 006a 31E0     		b	.L120
+ 687              	.L147:
+ 688 006c 2168     		ldr	r1, [r4]
+ 689 006e 0868     		ldr	r0, [r1]
+ 690              	.L117:
+ 691 0070 097A     		ldrb	r1, [r1, #8]	@ zero_extendqisi2
+ 692 0072 FFF7FEFF 		bl	usbStartTransmitI
+ 693 0076 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 694              		.syntax unified
+ 695              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 696 007a 88F31188 		MSR basepri, r8
+ 697              	@ 0 "" 2
+ 698              		.thumb
+ 699              		.syntax unified
+ 700 007e 0398     		ldr	r0, [sp, #12]
+ 701 0080 6F1C     		adds	r7, r5, #1
+ 702 0082 07F00102 		and	r2, r7, #1
+ 703 0086 8542     		cmp	r5, r0
+ 704 0088 4FF00103 		mov	r3, #1
+ 705 008c 3146     		mov	r1, r6
+ 706 008e 09EB4222 		add	r2, r9, r2, lsl #9
+ 707 0092 08DA     		bge	.L118
+ 708 0094 2068     		ldr	r0, [r4]
+ 709 0096 4068     		ldr	r0, [r0, #4]
+ 710 0098 0568     		ldr	r5, [r0]
+ 711 009a 6D69     		ldr	r5, [r5, #20]
+ 712 009c 0136     		adds	r6, r6, #1
+ 713 009e A847     		blx	r5
+ 714 00a0 0028     		cmp	r0, #0
+ 715 00a2 40F00881 		bne	.L146
+ 716              	.L118:
+ 717              		.syntax unified
+ 718              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 719 00a6 8AF31188 		MSR basepri, r10
+ 720              	@ 0 "" 2
+ 721              		.thumb
+ 722              		.syntax unified
+ 723 00aa FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 724 00ae 201D     		adds	r0, r4, #4
+ 725 00b0 FFF7FEFF 		bl	chSemWaitS
+ 726 00b4 934B     		ldr	r3, .L149
+ 727 00b6 1868     		ldr	r0, [r3]
+ 728 00b8 0421     		movs	r1, #4
+ 729 00ba 08B1     		cbz	r0, .L119
+ 730 00bc FFF7FEFF 		bl	chEvtSignalI
+ 731              	.L119:
+ 732 00c0 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 733              		.syntax unified
+ 734              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 735 00c4 88F31188 		MSR basepri, r8
+ 736              	@ 0 "" 2
+ 737              		.thumb
+ 738              		.syntax unified
+ 739 00c8 BBB2     		uxth	r3, r7
+ 740 00ca 9B45     		cmp	fp, r3
+ 741 00cc 3D46     		mov	r5, r7
+ARM GAS  /tmp/ccnucHfz.s 			page 14
+
+
+ 742 00ce 35D9     		bls	.L113
+ 743              	.L120:
+ 744 00d0 05F00102 		and	r2, r5, #1
+ 745 00d4 E369     		ldr	r3, [r4, #28]
+ 746 00d6 0193     		str	r3, [sp, #4]
+ 747 00d8 09EB4222 		add	r2, r9, r2, lsl #9
+ 748 00dc 0292     		str	r2, [sp, #8]
+ 749              		.syntax unified
+ 750              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 751 00de 8AF31188 		MSR basepri, r10
+ 752              	@ 0 "" 2
+ 753              		.thumb
+ 754              		.syntax unified
+ 755 00e2 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 756 00e6 94F88910 		ldrb	r1, [r4, #137]	@ zero_extendqisi2
+ 757 00ea DDE90132 		ldrd	r3, r2, [sp, #4]
+ 758 00ee 0029     		cmp	r1, #0
+ 759 00f0 BCD0     		beq	.L147
+ 760 00f2 2168     		ldr	r1, [r4]
+ 761 00f4 0868     		ldr	r0, [r1]
+ 762 00f6 A0F80880 		strh	r8, [r0, #8]	@ movhi
+ 763 00fa B9E7     		b	.L117
+ 764              	.L145:
+ 765 00fc 2368     		ldr	r3, [r4]
+ 766 00fe 5868     		ldr	r0, [r3, #4]
+ 767 0100 0368     		ldr	r3, [r0]
+ 768 0102 9B68     		ldr	r3, [r3, #8]
+ 769 0104 9847     		blx	r3
+ 770 0106 0546     		mov	r5, r0
+ 771 0108 0028     		cmp	r0, #0
+ 772 010a 40F0E580 		bne	.L148
+ 773 010e D4F83660 		ldr	r6, [r4, #54]
+ 774 0112 236A     		ldr	r3, [r4, #32]
+ 775 0114 36BA     		rev	r6, r6
+ 776 0116 B342     		cmp	r3, r6
+ 777 0118 1AD8     		bhi	.L101
+ 778              	.L123:
+ 779 011a 0025     		movs	r5, #0
+ 780 011c 0522     		movs	r2, #5
+ 781 011e 2123     		movs	r3, #33
+ 782 0120 84F85320 		strb	r2, [r4, #83]
+ 783 0124 84F85D30 		strb	r3, [r4, #93]
+ 784 0128 84F85E50 		strb	r5, [r4, #94]
+ 785 012c 84F88850 		strb	r5, [r4, #136]
+ 786              	.L141:
+ 787 0130 2846     		mov	r0, r5
+ 788 0132 05B0     		add	sp, sp, #20
+ 789              		@ sp needed
+ 790 0134 BDEC028B 		vldm	sp!, {d8}
+ 791 0138 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 792              	.L113:
+ 793 013c 0025     		movs	r5, #0
+ 794 013e 0123     		movs	r3, #1
+ 795 0140 2846     		mov	r0, r5
+ 796 0142 84F88830 		strb	r3, [r4, #136]
+ 797 0146 05B0     		add	sp, sp, #20
+ 798              		@ sp needed
+ARM GAS  /tmp/ccnucHfz.s 			page 15
+
+
+ 799 0148 BDEC028B 		vldm	sp!, {d8}
+ 800 014c BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 801              	.L101:
+ 802 0150 B4F83B30 		ldrh	r3, [r4, #59]
+ 803 0154 5BBA     		rev16	r3, r3
+ 804 0156 1FFA83FB 		uxth	fp, r3
+ 805 015a 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 806 015e 2A2B     		cmp	r3, #42
+ 807 0160 7FF46BAF 		bne	.L102
+ 808 0164 E369     		ldr	r3, [r4, #28]
+ 809 0166 0193     		str	r3, [sp, #4]
+ 810 0168 3022     		movs	r2, #48
+ 811              		.syntax unified
+ 812              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 813 016a 82F31188 		MSR basepri, r2
+ 814              	@ 0 "" 2
+ 815              		.thumb
+ 816              		.syntax unified
+ 817 016e FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 818 0172 94F88920 		ldrb	r2, [r4, #137]	@ zero_extendqisi2
+ 819 0176 019B     		ldr	r3, [sp, #4]
+ 820 0178 002A     		cmp	r2, #0
+ 821 017a 40F0BE80 		bne	.L103
+ 822 017e 2268     		ldr	r2, [r4]
+ 823 0180 1068     		ldr	r0, [r2]
+ 824              	.L104:
+ 825 0182 117A     		ldrb	r1, [r2, #8]	@ zero_extendqisi2
+ 826 0184 604A     		ldr	r2, .L149+4
+ 827 0186 FFF7FEFF 		bl	usbStartReceiveI
+ 828 018a FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 829 018e 0023     		movs	r3, #0
+ 830              		.syntax unified
+ 831              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 832 0190 83F31188 		MSR basepri, r3
+ 833              	@ 0 "" 2
+ 834              		.thumb
+ 835              		.syntax unified
+ 836 0194 3023     		movs	r3, #48
+ 837              		.syntax unified
+ 838              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 839 0196 83F31188 		MSR basepri, r3
+ 840              	@ 0 "" 2
+ 841              		.thumb
+ 842              		.syntax unified
+ 843 019a FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 844 019e 231D     		adds	r3, r4, #4
+ 845 01a0 1846     		mov	r0, r3
+ 846 01a2 08EE103A 		vmov	s16, r3	@ int
+ 847 01a6 FFF7FEFF 		bl	chSemWaitS
+ 848 01aa 564B     		ldr	r3, .L149
+ 849 01ac 1868     		ldr	r0, [r3]
+ 850 01ae 10B1     		cbz	r0, .L105
+ 851 01b0 0421     		movs	r1, #4
+ 852 01b2 FFF7FEFF 		bl	chEvtSignalI
+ 853              	.L105:
+ 854 01b6 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 855 01ba 0027     		movs	r7, #0
+ARM GAS  /tmp/ccnucHfz.s 			page 16
+
+
+ 856              		.syntax unified
+ 857              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 858 01bc 87F31188 		MSR basepri, r7
+ 859              	@ 0 "" 2
+ 860              		.thumb
+ 861              		.syntax unified
+ 862 01c0 BBF1000F 		cmp	fp, #0
+ 863 01c4 BAD0     		beq	.L113
+ 864 01c6 0BF1FF33 		add	r3, fp, #-1
+ 865 01ca 06F1010A 		add	r10, r6, #1
+ 866 01ce DFF83891 		ldr	r9, .L149+4
+ 867 01d2 0395     		str	r5, [sp, #12]
+ 868 01d4 3E46     		mov	r6, r7
+ 869 01d6 9846     		mov	r8, r3
+ 870 01d8 13E0     		b	.L112
+ 871              	.L107:
+ 872 01da 2368     		ldr	r3, [r4]
+ 873 01dc 5868     		ldr	r0, [r3, #4]
+ 874 01de 2946     		mov	r1, r5
+ 875 01e0 0568     		ldr	r5, [r0]
+ 876 01e2 06F00102 		and	r2, r6, #1
+ 877 01e6 AD69     		ldr	r5, [r5, #24]
+ 878 01e8 09EB4222 		add	r2, r9, r2, lsl #9
+ 879 01ec 0123     		movs	r3, #1
+ 880 01ee A847     		blx	r5
+ 881 01f0 0028     		cmp	r0, #0
+ 882 01f2 40F08B80 		bne	.L121
+ 883 01f6 0137     		adds	r7, r7, #1
+ 884              	.L122:
+ 885 01f8 BEB2     		uxth	r6, r7
+ 886 01fa B345     		cmp	fp, r6
+ 887 01fc 0AF1010A 		add	r10, r10, #1
+ 888 0200 9CD9     		bls	.L113
+ 889              	.L112:
+ 890 0202 4745     		cmp	r7, r8
+ 891 0204 0AF1FF35 		add	r5, r10, #-1
+ 892 0208 E7DA     		bge	.L107
+ 893 020a 0137     		adds	r7, r7, #1
+ 894 020c 07F00102 		and	r2, r7, #1
+ 895 0210 E369     		ldr	r3, [r4, #28]
+ 896 0212 0193     		str	r3, [sp, #4]
+ 897 0214 09EB4222 		add	r2, r9, r2, lsl #9
+ 898 0218 0292     		str	r2, [sp, #8]
+ 899 021a 3023     		movs	r3, #48
+ 900              		.syntax unified
+ 901              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 902 021c 83F31188 		MSR basepri, r3
+ 903              	@ 0 "" 2
+ 904              		.thumb
+ 905              		.syntax unified
+ 906 0220 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 907 0224 94F88910 		ldrb	r1, [r4, #137]	@ zero_extendqisi2
+ 908 0228 DDE90132 		ldrd	r3, r2, [sp, #4]
+ 909 022c 59BB     		cbnz	r1, .L108
+ 910 022e 2168     		ldr	r1, [r4]
+ 911 0230 0868     		ldr	r0, [r1]
+ 912              	.L109:
+ARM GAS  /tmp/ccnucHfz.s 			page 17
+
+
+ 913 0232 097A     		ldrb	r1, [r1, #8]	@ zero_extendqisi2
+ 914 0234 FFF7FEFF 		bl	usbStartReceiveI
+ 915 0238 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 916 023c 0023     		movs	r3, #0
+ 917              		.syntax unified
+ 918              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 919 023e 83F31188 		MSR basepri, r3
+ 920              	@ 0 "" 2
+ 921              		.thumb
+ 922              		.syntax unified
+ 923 0242 2368     		ldr	r3, [r4]
+ 924 0244 5868     		ldr	r0, [r3, #4]
+ 925 0246 2946     		mov	r1, r5
+ 926 0248 0568     		ldr	r5, [r0]
+ 927 024a 06F00102 		and	r2, r6, #1
+ 928 024e AD69     		ldr	r5, [r5, #24]
+ 929 0250 09EB4222 		add	r2, r9, r2, lsl #9
+ 930 0254 0123     		movs	r3, #1
+ 931 0256 A847     		blx	r5
+ 932 0258 0028     		cmp	r0, #0
+ 933 025a 57D1     		bne	.L121
+ 934 025c 3023     		movs	r3, #48
+ 935              		.syntax unified
+ 936              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 937 025e 83F31188 		MSR basepri, r3
+ 938              	@ 0 "" 2
+ 939              		.thumb
+ 940              		.syntax unified
+ 941 0262 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 942 0266 18EE100A 		vmov	r0, s16	@ int
+ 943 026a FFF7FEFF 		bl	chSemWaitS
+ 944 026e 254B     		ldr	r3, .L149
+ 945 0270 1868     		ldr	r0, [r3]
+ 946 0272 10B1     		cbz	r0, .L111
+ 947 0274 0421     		movs	r1, #4
+ 948 0276 FFF7FEFF 		bl	chEvtSignalI
+ 949              	.L111:
+ 950 027a FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 951 027e 0023     		movs	r3, #0
+ 952              		.syntax unified
+ 953              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 954 0280 83F31188 		MSR basepri, r3
+ 955              	@ 0 "" 2
+ 956              		.thumb
+ 957              		.syntax unified
+ 958 0284 B8E7     		b	.L122
+ 959              	.L108:
+ 960 0286 2168     		ldr	r1, [r4]
+ 961 0288 0868     		ldr	r0, [r1]
+ 962 028a 4FF0000C 		mov	ip, #0	@ movhi
+ 963 028e A0F80AC0 		strh	ip, [r0, #10]	@ movhi
+ 964 0292 CEE7     		b	.L109
+ 965              	.L114:
+ 966 0294 0025     		movs	r5, #0
+ 967 0296 0322     		movs	r2, #3
+ 968 0298 1123     		movs	r3, #17
+ 969 029a 2846     		mov	r0, r5
+ARM GAS  /tmp/ccnucHfz.s 			page 18
+
+
+ 970 029c 84F85320 		strb	r2, [r4, #83]
+ 971 02a0 84F85D30 		strb	r3, [r4, #93]
+ 972 02a4 84F85E50 		strb	r5, [r4, #94]
+ 973 02a8 84F88850 		strb	r5, [r4, #136]
+ 974 02ac 05B0     		add	sp, sp, #20
+ 975              		@ sp needed
+ 976 02ae BDEC028B 		vldm	sp!, {d8}
+ 977 02b2 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 978              	.L146:
+ 979 02b6 0546     		mov	r5, r0
+ 980 02b8 0322     		movs	r2, #3
+ 981 02ba 1123     		movs	r3, #17
+ 982 02bc 2846     		mov	r0, r5
+ 983 02be 84F85320 		strb	r2, [r4, #83]
+ 984 02c2 84F85D30 		strb	r3, [r4, #93]
+ 985 02c6 84F85E80 		strb	r8, [r4, #94]
+ 986 02ca 84F88880 		strb	r8, [r4, #136]
+ 987 02ce 05B0     		add	sp, sp, #20
+ 988              		@ sp needed
+ 989 02d0 BDEC028B 		vldm	sp!, {d8}
+ 990 02d4 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 991              	.L148:
+ 992 02d8 0025     		movs	r5, #0
+ 993 02da 0722     		movs	r2, #7
+ 994 02dc 2723     		movs	r3, #39
+ 995 02de 2846     		mov	r0, r5
+ 996 02e0 84F85320 		strb	r2, [r4, #83]
+ 997 02e4 84F85D30 		strb	r3, [r4, #93]
+ 998 02e8 84F85E50 		strb	r5, [r4, #94]
+ 999 02ec 84F88850 		strb	r5, [r4, #136]
+ 1000 02f0 05B0     		add	sp, sp, #20
+ 1001              		@ sp needed
+ 1002 02f2 BDEC028B 		vldm	sp!, {d8}
+ 1003 02f6 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1004              	.L103:
+ 1005 02fa 2268     		ldr	r2, [r4]
+ 1006 02fc 1068     		ldr	r0, [r2]
+ 1007 02fe 4581     		strh	r5, [r0, #10]	@ movhi
+ 1008 0300 3FE7     		b	.L104
+ 1009              	.L150:
+ 1010 0302 00BF     		.align	2
+ 1011              	.L149:
+ 1012 0304 00000000 		.word	.LANCHOR4
+ 1013 0308 00000000 		.word	.LANCHOR8
+ 1014              	.L121:
+ 1015 030c 0322     		movs	r2, #3
+ 1016 030e 0023     		movs	r3, #0
+ 1017 0310 039D     		ldr	r5, [sp, #12]
+ 1018 0312 84F85320 		strb	r2, [r4, #83]
+ 1019 0316 84F85D20 		strb	r2, [r4, #93]
+ 1020 031a 84F85E30 		strb	r3, [r4, #94]
+ 1021 031e 84F88830 		strb	r3, [r4, #136]
+ 1022 0322 05E7     		b	.L141
+ 1023              		.size	msd_scsi_process_start_read_write_10, .-msd_scsi_process_start_read_write_10
+ 1024              		.section	.text.msd_scsi_process_start_stop_unit,"ax",%progbits
+ 1025              		.align	1
+ 1026              		.p2align 4,,15
+ARM GAS  /tmp/ccnucHfz.s 			page 19
+
+
+ 1027              		.global	msd_scsi_process_start_stop_unit
+ 1028              		.syntax unified
+ 1029              		.thumb
+ 1030              		.thumb_func
+ 1031              		.fpu fpv4-sp-d16
+ 1032              		.type	msd_scsi_process_start_stop_unit, %function
+ 1033              	msd_scsi_process_start_stop_unit:
+ 1034              		@ args = 0, pretend = 0, frame = 0
+ 1035              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1036 0000 38B5     		push	{r3, r4, r5, lr}
+ 1037 0002 90F83850 		ldrb	r5, [r0, #56]	@ zero_extendqisi2
+ 1038 0006 05F00305 		and	r5, r5, #3
+ 1039 000a 022D     		cmp	r5, #2
+ 1040 000c 0446     		mov	r4, r0
+ 1041 000e 04D0     		beq	.L154
+ 1042 0010 0123     		movs	r3, #1
+ 1043 0012 84F88830 		strb	r3, [r4, #136]
+ 1044 0016 0020     		movs	r0, #0
+ 1045 0018 38BD     		pop	{r3, r4, r5, pc}
+ 1046              	.L154:
+ 1047 001a 0021     		movs	r1, #0
+ 1048 001c 1830     		adds	r0, r0, #24
+ 1049 001e FFF7FEFF 		bl	chEvtBroadcastFlags
+ 1050 0022 0123     		movs	r3, #1
+ 1051 0024 84F82450 		strb	r5, [r4, #36]
+ 1052 0028 84F88830 		strb	r3, [r4, #136]
+ 1053 002c 0020     		movs	r0, #0
+ 1054 002e 38BD     		pop	{r3, r4, r5, pc}
+ 1055              		.size	msd_scsi_process_start_stop_unit, .-msd_scsi_process_start_stop_unit
+ 1056              		.section	.text.msd_scsi_process_mode_sense_6,"ax",%progbits
+ 1057              		.align	1
+ 1058              		.p2align 4,,15
+ 1059              		.global	msd_scsi_process_mode_sense_6
+ 1060              		.syntax unified
+ 1061              		.thumb
+ 1062              		.thumb_func
+ 1063              		.fpu fpv4-sp-d16
+ 1064              		.type	msd_scsi_process_mode_sense_6, %function
+ 1065              	msd_scsi_process_mode_sense_6:
+ 1066              		@ args = 0, pretend = 0, frame = 0
+ 1067              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1068 0000 124B     		ldr	r3, .L163
+ 1069 0002 1B68     		ldr	r3, [r3]
+ 1070 0004 10B5     		push	{r4, lr}
+ 1071 0006 0446     		mov	r4, r0
+ 1072 0008 1BB1     		cbz	r3, .L156
+ 1073 000a 8021     		movs	r1, #128
+ 1074 000c 1846     		mov	r0, r3
+ 1075 000e FFF7FEFF 		bl	chEvtSignal
+ 1076              	.L156:
+ 1077 0012 3023     		movs	r3, #48
+ 1078              		.syntax unified
+ 1079              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1080 0014 83F31188 		MSR basepri, r3
+ 1081              	@ 0 "" 2
+ 1082              		.thumb
+ 1083              		.syntax unified
+ARM GAS  /tmp/ccnucHfz.s 			page 20
+
+
+ 1084 0018 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1085 001c 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 1086 0020 7BB9     		cbnz	r3, .L157
+ 1087 0022 2368     		ldr	r3, [r4]
+ 1088 0024 1868     		ldr	r0, [r3]
+ 1089              	.L158:
+ 1090 0026 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1091 0028 094A     		ldr	r2, .L163+4
+ 1092 002a 0423     		movs	r3, #4
+ 1093 002c FFF7FEFF 		bl	usbStartTransmitI
+ 1094 0030 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1095 0034 0023     		movs	r3, #0
+ 1096              		.syntax unified
+ 1097              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1098 0036 83F31188 		MSR basepri, r3
+ 1099              	@ 0 "" 2
+ 1100              		.thumb
+ 1101              		.syntax unified
+ 1102 003a 0120     		movs	r0, #1
+ 1103 003c 84F88800 		strb	r0, [r4, #136]
+ 1104 0040 10BD     		pop	{r4, pc}
+ 1105              	.L157:
+ 1106 0042 2368     		ldr	r3, [r4]
+ 1107 0044 1868     		ldr	r0, [r3]
+ 1108 0046 0022     		movs	r2, #0
+ 1109 0048 0281     		strh	r2, [r0, #8]	@ movhi
+ 1110 004a ECE7     		b	.L158
+ 1111              	.L164:
+ 1112              		.align	2
+ 1113              	.L163:
+ 1114 004c 00000000 		.word	.LANCHOR4
+ 1115 0050 00000000 		.word	.LANCHOR9
+ 1116              		.size	msd_scsi_process_mode_sense_6, .-msd_scsi_process_mode_sense_6
+ 1117              		.section	.text.msd_scsi_process_read_format_capacities,"ax",%progbits
+ 1118              		.align	1
+ 1119              		.p2align 4,,15
+ 1120              		.global	msd_scsi_process_read_format_capacities
+ 1121              		.syntax unified
+ 1122              		.thumb
+ 1123              		.thumb_func
+ 1124              		.fpu fpv4-sp-d16
+ 1125              		.type	msd_scsi_process_read_format_capacities, %function
+ 1126              	msd_scsi_process_read_format_capacities:
+ 1127              		@ args = 0, pretend = 0, frame = 16
+ 1128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1129 0000 10B5     		push	{r4, lr}
+ 1130 0002 1A4B     		ldr	r3, .L173
+ 1131 0004 1B68     		ldr	r3, [r3]
+ 1132 0006 84B0     		sub	sp, sp, #16
+ 1133 0008 0446     		mov	r4, r0
+ 1134 000a 1BB1     		cbz	r3, .L166
+ 1135 000c 4021     		movs	r1, #64
+ 1136 000e 1846     		mov	r0, r3
+ 1137 0010 FFF7FEFF 		bl	chEvtSignal
+ 1138              	.L166:
+ 1139 0014 D4E90732 		ldrd	r3, r2, [r4, #28]
+ 1140 0018 23F07F43 		bic	r3, r3, #-16777216
+ARM GAS  /tmp/ccnucHfz.s 			page 21
+
+
+ 1141 001c 43F00073 		orr	r3, r3, #33554432
+ 1142 0020 12BA     		rev	r2, r2
+ 1143 0022 1BBA     		rev	r3, r3
+ 1144 0024 0121     		movs	r1, #1
+ 1145 0026 CDE90223 		strd	r2, r3, [sp, #8]
+ 1146 002a 8DF80710 		strb	r1, [sp, #7]
+ 1147 002e 3023     		movs	r3, #48
+ 1148              		.syntax unified
+ 1149              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1150 0030 83F31188 		MSR basepri, r3
+ 1151              	@ 0 "" 2
+ 1152              		.thumb
+ 1153              		.syntax unified
+ 1154 0034 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1155 0038 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 1156 003c 83B9     		cbnz	r3, .L167
+ 1157 003e 2368     		ldr	r3, [r4]
+ 1158 0040 1868     		ldr	r0, [r3]
+ 1159              	.L168:
+ 1160 0042 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1161 0044 01AA     		add	r2, sp, #4
+ 1162 0046 0C23     		movs	r3, #12
+ 1163 0048 FFF7FEFF 		bl	usbStartTransmitI
+ 1164 004c FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1165 0050 0023     		movs	r3, #0
+ 1166              		.syntax unified
+ 1167              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1168 0052 83F31188 		MSR basepri, r3
+ 1169              	@ 0 "" 2
+ 1170              		.thumb
+ 1171              		.syntax unified
+ 1172 0056 0120     		movs	r0, #1
+ 1173 0058 84F88800 		strb	r0, [r4, #136]
+ 1174 005c 04B0     		add	sp, sp, #16
+ 1175              		@ sp needed
+ 1176 005e 10BD     		pop	{r4, pc}
+ 1177              	.L167:
+ 1178 0060 2368     		ldr	r3, [r4]
+ 1179 0062 1868     		ldr	r0, [r3]
+ 1180 0064 0022     		movs	r2, #0
+ 1181 0066 0281     		strh	r2, [r0, #8]	@ movhi
+ 1182 0068 EBE7     		b	.L168
+ 1183              	.L174:
+ 1184 006a 00BF     		.align	2
+ 1185              	.L173:
+ 1186 006c 00000000 		.word	.LANCHOR4
+ 1187              		.size	msd_scsi_process_read_format_capacities, .-msd_scsi_process_read_format_capacities
+ 1188              		.section	.text.msd_scsi_process_test_unit_ready,"ax",%progbits
+ 1189              		.align	1
+ 1190              		.p2align 4,,15
+ 1191              		.global	msd_scsi_process_test_unit_ready
+ 1192              		.syntax unified
+ 1193              		.thumb
+ 1194              		.thumb_func
+ 1195              		.fpu fpv4-sp-d16
+ 1196              		.type	msd_scsi_process_test_unit_ready, %function
+ 1197              	msd_scsi_process_test_unit_ready:
+ARM GAS  /tmp/ccnucHfz.s 			page 22
+
+
+ 1198              		@ args = 0, pretend = 0, frame = 0
+ 1199              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1200 0000 134B     		ldr	r3, .L183
+ 1201 0002 1B68     		ldr	r3, [r3]
+ 1202 0004 10B5     		push	{r4, lr}
+ 1203 0006 0446     		mov	r4, r0
+ 1204 0008 1BB1     		cbz	r3, .L176
+ 1205 000a 2021     		movs	r1, #32
+ 1206 000c 1846     		mov	r0, r3
+ 1207 000e FFF7FEFF 		bl	chEvtSignal
+ 1208              	.L176:
+ 1209 0012 2368     		ldr	r3, [r4]
+ 1210 0014 5868     		ldr	r0, [r3, #4]
+ 1211 0016 0368     		ldr	r3, [r0]
+ 1212 0018 5B68     		ldr	r3, [r3, #4]
+ 1213 001a 9847     		blx	r3
+ 1214 001c 58B1     		cbz	r0, .L177
+ 1215 001e 0122     		movs	r2, #1
+ 1216 0020 0023     		movs	r3, #0
+ 1217 0022 84F85320 		strb	r2, [r4, #83]
+ 1218 0026 84F85D30 		strb	r3, [r4, #93]
+ 1219 002a 84F85E30 		strb	r3, [r4, #94]
+ 1220 002e 84F88820 		strb	r2, [r4, #136]
+ 1221 0032 0020     		movs	r0, #0
+ 1222 0034 10BD     		pop	{r4, pc}
+ 1223              	.L177:
+ 1224 0036 0222     		movs	r2, #2
+ 1225 0038 3A23     		movs	r3, #58
+ 1226 003a 84F85E00 		strb	r0, [r4, #94]
+ 1227 003e 84F85320 		strb	r2, [r4, #83]
+ 1228 0042 84F85D30 		strb	r3, [r4, #93]
+ 1229 0046 84F88800 		strb	r0, [r4, #136]
+ 1230 004a 0020     		movs	r0, #0
+ 1231 004c 10BD     		pop	{r4, pc}
+ 1232              	.L184:
+ 1233 004e 00BF     		.align	2
+ 1234              	.L183:
+ 1235 0050 00000000 		.word	.LANCHOR4
+ 1236              		.size	msd_scsi_process_test_unit_ready, .-msd_scsi_process_test_unit_ready
+ 1237              		.section	.text.msd_wait_for_command_block,"ax",%progbits
+ 1238              		.align	1
+ 1239              		.p2align 4,,15
+ 1240              		.global	msd_wait_for_command_block
+ 1241              		.syntax unified
+ 1242              		.thumb
+ 1243              		.thumb_func
+ 1244              		.fpu fpv4-sp-d16
+ 1245              		.type	msd_wait_for_command_block, %function
+ 1246              	msd_wait_for_command_block:
+ 1247              		@ args = 0, pretend = 0, frame = 8
+ 1248              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1249 0000 10B5     		push	{r4, lr}
+ 1250 0002 154B     		ldr	r3, .L193
+ 1251 0004 1B68     		ldr	r3, [r3]
+ 1252 0006 82B0     		sub	sp, sp, #8
+ 1253 0008 0446     		mov	r4, r0
+ 1254 000a 23B1     		cbz	r3, .L186
+ARM GAS  /tmp/ccnucHfz.s 			page 23
+
+
+ 1255 000c 4FF40071 		mov	r1, #512
+ 1256 0010 1846     		mov	r0, r3
+ 1257 0012 FFF7FEFF 		bl	chEvtSignal
+ 1258              	.L186:
+ 1259 0016 04F12502 		add	r2, r4, #37
+ 1260 001a 0192     		str	r2, [sp, #4]
+ 1261 001c 3023     		movs	r3, #48
+ 1262              		.syntax unified
+ 1263              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1264 001e 83F31188 		MSR basepri, r3
+ 1265              	@ 0 "" 2
+ 1266              		.thumb
+ 1267              		.syntax unified
+ 1268 0022 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1269 0026 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 1270 002a 019A     		ldr	r2, [sp, #4]
+ 1271 002c 7BB9     		cbnz	r3, .L187
+ 1272 002e 2368     		ldr	r3, [r4]
+ 1273 0030 1868     		ldr	r0, [r3]
+ 1274              	.L188:
+ 1275 0032 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1276 0034 1F23     		movs	r3, #31
+ 1277 0036 FFF7FEFF 		bl	usbStartReceiveI
+ 1278 003a FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1279 003e 0023     		movs	r3, #0
+ 1280              		.syntax unified
+ 1281              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1282 0040 83F31188 		MSR basepri, r3
+ 1283              	@ 0 "" 2
+ 1284              		.thumb
+ 1285              		.syntax unified
+ 1286 0044 0120     		movs	r0, #1
+ 1287 0046 84F82400 		strb	r0, [r4, #36]
+ 1288 004a 02B0     		add	sp, sp, #8
+ 1289              		@ sp needed
+ 1290 004c 10BD     		pop	{r4, pc}
+ 1291              	.L187:
+ 1292 004e 2368     		ldr	r3, [r4]
+ 1293 0050 1868     		ldr	r0, [r3]
+ 1294 0052 0021     		movs	r1, #0
+ 1295 0054 4181     		strh	r1, [r0, #10]	@ movhi
+ 1296 0056 ECE7     		b	.L188
+ 1297              	.L194:
+ 1298              		.align	2
+ 1299              	.L193:
+ 1300 0058 00000000 		.word	.LANCHOR4
+ 1301              		.size	msd_wait_for_command_block, .-msd_wait_for_command_block
+ 1302              		.section	.text.msd_read_command_block,"ax",%progbits
+ 1303              		.align	1
+ 1304              		.p2align 4,,15
+ 1305              		.global	msd_read_command_block
+ 1306              		.syntax unified
+ 1307              		.thumb
+ 1308              		.thumb_func
+ 1309              		.fpu fpv4-sp-d16
+ 1310              		.type	msd_read_command_block, %function
+ 1311              	msd_read_command_block:
+ARM GAS  /tmp/ccnucHfz.s 			page 24
+
+
+ 1312              		@ args = 0, pretend = 0, frame = 0
+ 1313              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1314 0000 AD4B     		ldr	r3, .L258
+ 1315 0002 D0F82520 		ldr	r2, [r0, #37]	@ unaligned
+ 1316 0006 0021     		movs	r1, #0
+ 1317 0008 9A42     		cmp	r2, r3
+ 1318 000a 70B5     		push	{r4, r5, r6, lr}
+ 1319 000c 0446     		mov	r4, r0
+ 1320 000e 80F82410 		strb	r1, [r0, #36]
+ 1321 0012 46D1     		bne	.L196
+ 1322 0014 90F83230 		ldrb	r3, [r0, #50]	@ zero_extendqisi2
+ 1323 0018 002B     		cmp	r3, #0
+ 1324 001a 42D1     		bne	.L196
+ 1325 001c D0F82D10 		ldr	r1, [r0, #45]	@ unaligned
+ 1326 0020 19B1     		cbz	r1, .L197
+ 1327 0022 90F83130 		ldrb	r3, [r0, #49]	@ zero_extendqisi2
+ 1328 0026 DB06     		lsls	r3, r3, #27
+ 1329 0028 3BD1     		bne	.L196
+ 1330              	.L197:
+ 1331 002a 94F83330 		ldrb	r3, [r4, #51]	@ zero_extendqisi2
+ 1332 002e 013B     		subs	r3, r3, #1
+ 1333 0030 0F2B     		cmp	r3, #15
+ 1334 0032 36D8     		bhi	.L196
+ 1335 0034 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1336 0038 2F2B     		cmp	r3, #47
+ 1337 003a 00F2A780 		bhi	.L200
+ 1338 003e DFE813F0 		tbh	[pc, r3, lsl #1]
+ 1339              	.L202:
+ 1340 0042 3001     		.2byte	(.L211-.L202)/2
+ 1341 0044 A500     		.2byte	(.L200-.L202)/2
+ 1342 0046 A500     		.2byte	(.L200-.L202)/2
+ 1343 0048 3501     		.2byte	(.L210-.L202)/2
+ 1344 004a 5C00     		.2byte	(.L201-.L202)/2
+ 1345 004c A500     		.2byte	(.L200-.L202)/2
+ 1346 004e A500     		.2byte	(.L200-.L202)/2
+ 1347 0050 A500     		.2byte	(.L200-.L202)/2
+ 1348 0052 A500     		.2byte	(.L200-.L202)/2
+ 1349 0054 A500     		.2byte	(.L200-.L202)/2
+ 1350 0056 A500     		.2byte	(.L200-.L202)/2
+ 1351 0058 A500     		.2byte	(.L200-.L202)/2
+ 1352 005a A500     		.2byte	(.L200-.L202)/2
+ 1353 005c A500     		.2byte	(.L200-.L202)/2
+ 1354 005e A500     		.2byte	(.L200-.L202)/2
+ 1355 0060 A500     		.2byte	(.L200-.L202)/2
+ 1356 0062 A500     		.2byte	(.L200-.L202)/2
+ 1357 0064 A500     		.2byte	(.L200-.L202)/2
+ 1358 0066 1201     		.2byte	(.L209-.L202)/2
+ 1359 0068 A500     		.2byte	(.L200-.L202)/2
+ 1360 006a A500     		.2byte	(.L200-.L202)/2
+ 1361 006c A500     		.2byte	(.L200-.L202)/2
+ 1362 006e A500     		.2byte	(.L200-.L202)/2
+ 1363 0070 A500     		.2byte	(.L200-.L202)/2
+ 1364 0072 A500     		.2byte	(.L200-.L202)/2
+ 1365 0074 A500     		.2byte	(.L200-.L202)/2
+ 1366 0076 3F01     		.2byte	(.L208-.L202)/2
+ 1367 0078 4F00     		.2byte	(.L207-.L202)/2
+ 1368 007a A500     		.2byte	(.L200-.L202)/2
+ARM GAS  /tmp/ccnucHfz.s 			page 25
+
+
+ 1369 007c 1701     		.2byte	(.L206-.L202)/2
+ 1370 007e 5C00     		.2byte	(.L201-.L202)/2
+ 1371 0080 A500     		.2byte	(.L200-.L202)/2
+ 1372 0082 A500     		.2byte	(.L200-.L202)/2
+ 1373 0084 A500     		.2byte	(.L200-.L202)/2
+ 1374 0086 A500     		.2byte	(.L200-.L202)/2
+ 1375 0088 2B01     		.2byte	(.L205-.L202)/2
+ 1376 008a A500     		.2byte	(.L200-.L202)/2
+ 1377 008c 0D01     		.2byte	(.L204-.L202)/2
+ 1378 008e A500     		.2byte	(.L200-.L202)/2
+ 1379 0090 A500     		.2byte	(.L200-.L202)/2
+ 1380 0092 BE00     		.2byte	(.L203-.L202)/2
+ 1381 0094 A500     		.2byte	(.L200-.L202)/2
+ 1382 0096 BE00     		.2byte	(.L203-.L202)/2
+ 1383 0098 A500     		.2byte	(.L200-.L202)/2
+ 1384 009a A500     		.2byte	(.L200-.L202)/2
+ 1385 009c A500     		.2byte	(.L200-.L202)/2
+ 1386 009e A500     		.2byte	(.L200-.L202)/2
+ 1387 00a0 5C00     		.2byte	(.L201-.L202)/2
+ 1388              		.p2align 1
+ 1389              	.L196:
+ 1390 00a2 3023     		movs	r3, #48
+ 1391              		.syntax unified
+ 1392              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1393 00a4 83F31188 		MSR basepri, r3
+ 1394              	@ 0 "" 2
+ 1395              		.thumb
+ 1396              		.syntax unified
+ 1397 00a8 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1398 00ac 2368     		ldr	r3, [r4]
+ 1399 00ae 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1400 00b0 1868     		ldr	r0, [r3]
+ 1401 00b2 FFF7FEFF 		bl	usbStallReceiveI
+ 1402 00b6 2368     		ldr	r3, [r4]
+ 1403 00b8 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1404 00ba 1868     		ldr	r0, [r3]
+ 1405 00bc FFF7FEFF 		bl	usbStallTransmitI
+ 1406 00c0 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1407 00c4 0020     		movs	r0, #0
+ 1408              		.syntax unified
+ 1409              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1410 00c6 80F31188 		MSR basepri, r0
+ 1411              	@ 0 "" 2
+ 1412              		.thumb
+ 1413              		.syntax unified
+ 1414 00ca 0522     		movs	r2, #5
+ 1415 00cc 2423     		movs	r3, #36
+ 1416 00ce 84F85320 		strb	r2, [r4, #83]
+ 1417 00d2 84F85D30 		strb	r3, [r4, #93]
+ 1418 00d6 84F85E00 		strb	r0, [r4, #94]
+ 1419 00da 84F88800 		strb	r0, [r4, #136]
+ 1420 00de 70BD     		pop	{r4, r5, r6, pc}
+ 1421              	.L207:
+ 1422 00e0 94F83850 		ldrb	r5, [r4, #56]	@ zero_extendqisi2
+ 1423 00e4 05F00305 		and	r5, r5, #3
+ 1424 00e8 022D     		cmp	r5, #2
+ 1425 00ea 06D1     		bne	.L201
+ARM GAS  /tmp/ccnucHfz.s 			page 26
+
+
+ 1426 00ec 0021     		movs	r1, #0
+ 1427 00ee 04F11800 		add	r0, r4, #24
+ 1428 00f2 FFF7FEFF 		bl	chEvtBroadcastFlags
+ 1429 00f6 84F82450 		strb	r5, [r4, #36]
+ 1430              	.L201:
+ 1431 00fa 0123     		movs	r3, #1
+ 1432 00fc 84F88830 		strb	r3, [r4, #136]
+ 1433 0100 0023     		movs	r3, #0
+ 1434 0102 84F85330 		strb	r3, [r4, #83]
+ 1435 0106 84F85D30 		strb	r3, [r4, #93]
+ 1436 010a 84F85E30 		strb	r3, [r4, #94]
+ 1437 010e 84F82D30 		strb	r3, [r4, #45]
+ 1438 0112 84F82E30 		strb	r3, [r4, #46]
+ 1439 0116 84F82F30 		strb	r3, [r4, #47]
+ 1440 011a 84F83030 		strb	r3, [r4, #48]
+ 1441              	.L231:
+ 1442 011e 94F88820 		ldrb	r2, [r4, #136]	@ zero_extendqisi2
+ 1443 0122 002A     		cmp	r2, #0
+ 1444 0124 82F00103 		eor	r3, r2, #1
+ 1445 0128 04F14405 		add	r5, r4, #68
+ 1446 012c 4FF00001 		mov	r1, #0
+ 1447 0130 08BF     		it	eq
+ 1448 0132 0123     		moveq	r3, #1
+ 1449              	.L225:
+ 1450 0134 E164     		str	r1, [r4, #76]	@ unaligned
+ 1451 0136 5521     		movs	r1, #85
+ 1452 0138 D4F82920 		ldr	r2, [r4, #41]	@ unaligned
+ 1453 013c 84F85030 		strb	r3, [r4, #80]
+ 1454 0140 84F84410 		strb	r1, [r4, #68]
+ 1455 0144 5323     		movs	r3, #83
+ 1456 0146 4221     		movs	r1, #66
+ 1457 0148 84F84530 		strb	r3, [r4, #69]
+ 1458 014c 84F84730 		strb	r3, [r4, #71]
+ 1459 0150 84F84610 		strb	r1, [r4, #70]
+ 1460 0154 A264     		str	r2, [r4, #72]	@ unaligned
+ 1461 0156 0026     		movs	r6, #0
+ 1462 0158 3023     		movs	r3, #48
+ 1463              		.syntax unified
+ 1464              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1465 015a 83F31188 		MSR basepri, r3
+ 1466              	@ 0 "" 2
+ 1467              		.thumb
+ 1468              		.syntax unified
+ 1469 015e FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1470 0162 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 1471 0166 6BB9     		cbnz	r3, .L227
+ 1472 0168 2368     		ldr	r3, [r4]
+ 1473 016a 1868     		ldr	r0, [r3]
+ 1474              	.L228:
+ 1475 016c 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1476 016e 2A46     		mov	r2, r5
+ 1477 0170 0D23     		movs	r3, #13
+ 1478 0172 FFF7FEFF 		bl	usbStartTransmitI
+ 1479 0176 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1480 017a 0023     		movs	r3, #0
+ 1481              		.syntax unified
+ 1482              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ARM GAS  /tmp/ccnucHfz.s 			page 27
+
+
+ 1483 017c 83F31188 		MSR basepri, r3
+ 1484              	@ 0 "" 2
+ 1485              		.thumb
+ 1486              		.syntax unified
+ 1487 0180 0120     		movs	r0, #1
+ 1488 0182 70BD     		pop	{r4, r5, r6, pc}
+ 1489              	.L227:
+ 1490 0184 2368     		ldr	r3, [r4]
+ 1491 0186 1868     		ldr	r0, [r3]
+ 1492 0188 0681     		strh	r6, [r0, #8]	@ movhi
+ 1493 018a EFE7     		b	.L228
+ 1494              	.L200:
+ 1495 018c 0522     		movs	r2, #5
+ 1496 018e 2023     		movs	r3, #32
+ 1497 0190 0025     		movs	r5, #0
+ 1498 0192 84F85D30 		strb	r3, [r4, #93]
+ 1499 0196 84F85320 		strb	r2, [r4, #83]
+ 1500 019a 84F85E50 		strb	r5, [r4, #94]
+ 1501 019e 3023     		movs	r3, #48
+ 1502              		.syntax unified
+ 1503              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1504 01a0 83F31188 		MSR basepri, r3
+ 1505              	@ 0 "" 2
+ 1506              		.thumb
+ 1507              		.syntax unified
+ 1508 01a4 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1509 01a8 2368     		ldr	r3, [r4]
+ 1510 01aa 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1511 01ac 1868     		ldr	r0, [r3]
+ 1512 01ae FFF7FEFF 		bl	usbStallTransmitI
+ 1513 01b2 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1514              		.syntax unified
+ 1515              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1516 01b6 85F31188 		MSR basepri, r5
+ 1517              	@ 0 "" 2
+ 1518              		.thumb
+ 1519              		.syntax unified
+ 1520 01ba 2846     		mov	r0, r5
+ 1521 01bc 70BD     		pop	{r4, r5, r6, pc}
+ 1522              	.L203:
+ 1523 01be 2368     		ldr	r3, [r4]
+ 1524 01c0 DB68     		ldr	r3, [r3, #12]
+ 1525 01c2 0BB1     		cbz	r3, .L213
+ 1526 01c4 0120     		movs	r0, #1
+ 1527 01c6 9847     		blx	r3
+ 1528              	.L213:
+ 1529 01c8 2046     		mov	r0, r4
+ 1530 01ca FFF7FEFF 		bl	msd_scsi_process_start_read_write_10
+ 1531 01ce 2368     		ldr	r3, [r4]
+ 1532 01d0 DB68     		ldr	r3, [r3, #12]
+ 1533 01d2 0546     		mov	r5, r0
+ 1534 01d4 0BB1     		cbz	r3, .L212
+ 1535 01d6 0020     		movs	r0, #0
+ 1536 01d8 9847     		blx	r3
+ 1537              	.L212:
+ 1538 01da 94F88830 		ldrb	r3, [r4, #136]	@ zero_extendqisi2
+ 1539 01de 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccnucHfz.s 			page 28
+
+
+ 1540 01e0 40F08C80 		bne	.L220
+ 1541 01e4 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 1542 01e8 012B     		cmp	r3, #1
+ 1543 01ea 00F09F80 		beq	.L230
+ 1544 01ee 002D     		cmp	r5, #0
+ 1545 01f0 00F09C80 		beq	.L230
+ 1546              	.L222:
+ 1547 01f4 3023     		movs	r3, #48
+ 1548              		.syntax unified
+ 1549              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1550 01f6 83F31188 		MSR basepri, r3
+ 1551              	@ 0 "" 2
+ 1552              		.thumb
+ 1553              		.syntax unified
+ 1554 01fa FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1555 01fe 201D     		adds	r0, r4, #4
+ 1556 0200 FFF7FEFF 		bl	chSemWaitS
+ 1557 0204 2D4B     		ldr	r3, .L258+4
+ 1558 0206 1868     		ldr	r0, [r3]
+ 1559 0208 10B1     		cbz	r0, .L226
+ 1560 020a 0421     		movs	r1, #4
+ 1561 020c FFF7FEFF 		bl	chEvtSignalI
+ 1562              	.L226:
+ 1563 0210 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1564 0214 0023     		movs	r3, #0
+ 1565              		.syntax unified
+ 1566              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1567 0216 83F31188 		MSR basepri, r3
+ 1568              	@ 0 "" 2
+ 1569              		.thumb
+ 1570              		.syntax unified
+ 1571 021a 94F88820 		ldrb	r2, [r4, #136]	@ zero_extendqisi2
+ 1572 021e D4F82D10 		ldr	r1, [r4, #45]	@ unaligned
+ 1573 0222 04F14405 		add	r5, r4, #68
+ 1574 0226 82F00103 		eor	r3, r2, #1
+ 1575 022a 002A     		cmp	r2, #0
+ 1576 022c 82D1     		bne	.L225
+ 1577              	.L215:
+ 1578 022e 0029     		cmp	r1, #0
+ 1579 0230 80D0     		beq	.L225
+ 1580 0232 3023     		movs	r3, #48
+ 1581              		.syntax unified
+ 1582              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1583 0234 83F31188 		MSR basepri, r3
+ 1584              	@ 0 "" 2
+ 1585              		.thumb
+ 1586              		.syntax unified
+ 1587 0238 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1588 023c 2368     		ldr	r3, [r4]
+ 1589 023e 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1590 0240 1868     		ldr	r0, [r3]
+ 1591 0242 FFF7FEFF 		bl	usbStallReceiveI
+ 1592 0246 2368     		ldr	r3, [r4]
+ 1593 0248 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1594 024a 1868     		ldr	r0, [r3]
+ 1595 024c FFF7FEFF 		bl	usbStallTransmitI
+ 1596 0250 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ARM GAS  /tmp/ccnucHfz.s 			page 29
+
+
+ 1597 0254 0020     		movs	r0, #0
+ 1598              		.syntax unified
+ 1599              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1600 0256 80F31188 		MSR basepri, r0
+ 1601              	@ 0 "" 2
+ 1602              		.thumb
+ 1603              		.syntax unified
+ 1604 025a 70BD     		pop	{r4, r5, r6, pc}
+ 1605              	.L204:
+ 1606 025c 2046     		mov	r0, r4
+ 1607 025e FFF7FEFF 		bl	msd_scsi_process_read_capacity_10
+ 1608 0262 0546     		mov	r5, r0
+ 1609 0264 B9E7     		b	.L212
+ 1610              	.L209:
+ 1611 0266 2046     		mov	r0, r4
+ 1612 0268 FFF7FEFF 		bl	msd_scsi_process_inquiry
+ 1613 026c 0546     		mov	r5, r0
+ 1614 026e B4E7     		b	.L212
+ 1615              	.L206:
+ 1616 0270 94F83530 		ldrb	r3, [r4, #53]	@ zero_extendqisi2
+ 1617 0274 13F00403 		ands	r3, r3, #4
+ 1618 0278 7FF43FAF 		bne	.L201
+ 1619 027c 0520     		movs	r0, #5
+ 1620 027e 2422     		movs	r2, #36
+ 1621 0280 84F85E30 		strb	r3, [r4, #94]
+ 1622 0284 84F88830 		strb	r3, [r4, #136]
+ 1623 0288 84F85300 		strb	r0, [r4, #83]
+ 1624 028c 84F85D20 		strb	r2, [r4, #93]
+ 1625 0290 04F14405 		add	r5, r4, #68
+ 1626 0294 0123     		movs	r3, #1
+ 1627 0296 CAE7     		b	.L215
+ 1628              	.L205:
+ 1629 0298 2046     		mov	r0, r4
+ 1630 029a FFF7FEFF 		bl	msd_scsi_process_read_format_capacities
+ 1631 029e 0546     		mov	r5, r0
+ 1632 02a0 9BE7     		b	.L212
+ 1633              	.L211:
+ 1634 02a2 2046     		mov	r0, r4
+ 1635 02a4 FFF7FEFF 		bl	msd_scsi_process_test_unit_ready
+ 1636 02a8 0546     		mov	r5, r0
+ 1637 02aa 96E7     		b	.L212
+ 1638              	.L210:
+ 1639 02ac 2046     		mov	r0, r4
+ 1640 02ae FFF7FEFF 		bl	msd_scsi_process_request_sense
+ 1641 02b2 0546     		mov	r5, r0
+ 1642 02b4 91E7     		b	.L212
+ 1643              	.L259:
+ 1644 02b6 00BF     		.align	2
+ 1645              	.L258:
+ 1646 02b8 55534243 		.word	1128420181
+ 1647 02bc 00000000 		.word	.LANCHOR4
+ 1648              	.L208:
+ 1649 02c0 204B     		ldr	r3, .L260
+ 1650 02c2 1868     		ldr	r0, [r3]
+ 1651 02c4 10B1     		cbz	r0, .L217
+ 1652 02c6 8021     		movs	r1, #128
+ 1653 02c8 FFF7FEFF 		bl	chEvtSignal
+ARM GAS  /tmp/ccnucHfz.s 			page 30
+
+
+ 1654              	.L217:
+ 1655 02cc 3023     		movs	r3, #48
+ 1656              		.syntax unified
+ 1657              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1658 02ce 83F31188 		MSR basepri, r3
+ 1659              	@ 0 "" 2
+ 1660              		.thumb
+ 1661              		.syntax unified
+ 1662 02d2 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1663 02d6 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 1664 02da 6BBB     		cbnz	r3, .L218
+ 1665 02dc 2368     		ldr	r3, [r4]
+ 1666 02de 1868     		ldr	r0, [r3]
+ 1667              	.L219:
+ 1668 02e0 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1669 02e2 194A     		ldr	r2, .L260+4
+ 1670 02e4 0423     		movs	r3, #4
+ 1671 02e6 FFF7FEFF 		bl	usbStartTransmitI
+ 1672 02ea FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1673 02ee 0023     		movs	r3, #0
+ 1674              		.syntax unified
+ 1675              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1676 02f0 83F31188 		MSR basepri, r3
+ 1677              	@ 0 "" 2
+ 1678              		.thumb
+ 1679              		.syntax unified
+ 1680 02f4 0120     		movs	r0, #1
+ 1681 02f6 84F88800 		strb	r0, [r4, #136]
+ 1682 02fa 0546     		mov	r5, r0
+ 1683              	.L220:
+ 1684 02fc 94F88920 		ldrb	r2, [r4, #137]	@ zero_extendqisi2
+ 1685 0300 0023     		movs	r3, #0
+ 1686 0302 012A     		cmp	r2, #1
+ 1687 0304 84F85330 		strb	r3, [r4, #83]
+ 1688 0308 84F85D30 		strb	r3, [r4, #93]
+ 1689 030c 84F85E30 		strb	r3, [r4, #94]
+ 1690 0310 84F82D30 		strb	r3, [r4, #45]
+ 1691 0314 84F82E30 		strb	r3, [r4, #46]
+ 1692 0318 84F82F30 		strb	r3, [r4, #47]
+ 1693 031c 84F83030 		strb	r3, [r4, #48]
+ 1694 0320 3FF4FDAE 		beq	.L231
+ 1695 0324 002D     		cmp	r5, #0
+ 1696 0326 7FF465AF 		bne	.L222
+ 1697 032a F8E6     		b	.L231
+ 1698              	.L230:
+ 1699 032c D4F82D10 		ldr	r1, [r4, #45]	@ unaligned
+ 1700 0330 04F14405 		add	r5, r4, #68
+ 1701 0334 0123     		movs	r3, #1
+ 1702 0336 7AE7     		b	.L215
+ 1703              	.L218:
+ 1704 0338 2368     		ldr	r3, [r4]
+ 1705 033a 1868     		ldr	r0, [r3]
+ 1706 033c 0022     		movs	r2, #0
+ 1707 033e 0281     		strh	r2, [r0, #8]	@ movhi
+ 1708 0340 CEE7     		b	.L219
+ 1709              	.L261:
+ 1710 0342 00BF     		.align	2
+ARM GAS  /tmp/ccnucHfz.s 			page 31
+
+
+ 1711              	.L260:
+ 1712 0344 00000000 		.word	.LANCHOR4
+ 1713 0348 00000000 		.word	.LANCHOR9
+ 1714              		.size	msd_read_command_block, .-msd_read_command_block
+ 1715              		.section	.rodata.mass_storage_thread.str1.4,"aMS",%progbits,1
+ 1716              		.align	2
+ 1717              	.LC0:
+ 1718 0000 5553422D 		.ascii	"USB-MSD\000"
+ 1718      4D534400 
+ 1719              		.section	.text.mass_storage_thread,"ax",%progbits
+ 1720              		.align	1
+ 1721              		.p2align 4,,15
+ 1722              		.syntax unified
+ 1723              		.thumb
+ 1724              		.thumb_func
+ 1725              		.fpu fpv4-sp-d16
+ 1726              		.type	mass_storage_thread, %function
+ 1727              	mass_storage_thread:
+ 1728              		@ args = 0, pretend = 0, frame = 8
+ 1729              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1730 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 1731 0004 624E     		ldr	r6, .L292
+ 1732 0006 634A     		ldr	r2, .L292+4
+ 1733 0008 F368     		ldr	r3, [r6, #12]
+ 1734 000a 82B0     		sub	sp, sp, #8
+ 1735 000c DA61     		str	r2, [r3, #28]
+ 1736 000e 0446     		mov	r4, r0
+ 1737 0010 3023     		movs	r3, #48
+ 1738              		.syntax unified
+ 1739              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1740 0012 83F31188 		MSR basepri, r3
+ 1741              	@ 0 "" 2
+ 1742              		.thumb
+ 1743              		.syntax unified
+ 1744 0016 DFF88091 		ldr	r9, .L292+8
+ 1745 001a 00F10408 		add	r8, r0, #4
+ 1746 001e FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1747 0022 4046     		mov	r0, r8
+ 1748 0024 FFF7FEFF 		bl	chSemWaitS
+ 1749 0028 D9F80000 		ldr	r0, [r9]
+ 1750 002c 10B1     		cbz	r0, .L263
+ 1751 002e 0421     		movs	r1, #4
+ 1752 0030 FFF7FEFF 		bl	chEvtSignalI
+ 1753              	.L263:
+ 1754 0034 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1755 0038 0025     		movs	r5, #0
+ 1756              		.syntax unified
+ 1757              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1758 003a 85F31188 		MSR basepri, r5
+ 1759              	@ 0 "" 2
+ 1760              		.thumb
+ 1761              		.syntax unified
+ 1762 003e DFF85CA1 		ldr	r10, .L292+12
+ 1763 0042 3027     		movs	r7, #48
+ 1764              	.L264:
+ 1765 0044 F368     		ldr	r3, [r6, #12]
+ 1766 0046 93F82530 		ldrb	r3, [r3, #37]	@ zero_extendqisi2
+ARM GAS  /tmp/ccnucHfz.s 			page 32
+
+
+ 1767 004a 13F00403 		ands	r3, r3, #4
+ 1768 004e 40F08180 		bne	.L291
+ 1769              	.L278:
+ 1770 0052 94F88720 		ldrb	r2, [r4, #135]	@ zero_extendqisi2
+ 1771 0056 52B3     		cbz	r2, .L265
+ 1772 0058 84F88730 		strb	r3, [r4, #135]
+ 1773 005c 84F82430 		strb	r3, [r4, #36]
+ 1774 0060 84F85330 		strb	r3, [r4, #83]
+ 1775 0064 84F85D30 		strb	r3, [r4, #93]
+ 1776 0068 84F85E30 		strb	r3, [r4, #94]
+ 1777              	.L266:
+ 1778 006c D9F80000 		ldr	r0, [r9]
+ 1779 0070 18B1     		cbz	r0, .L272
+ 1780 0072 4FF40071 		mov	r1, #512
+ 1781 0076 FFF7FEFF 		bl	chEvtSignal
+ 1782              	.L272:
+ 1783 007a 04F12502 		add	r2, r4, #37
+ 1784 007e 0192     		str	r2, [sp, #4]
+ 1785              		.syntax unified
+ 1786              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1787 0080 87F31188 		MSR basepri, r7
+ 1788              	@ 0 "" 2
+ 1789              		.thumb
+ 1790              		.syntax unified
+ 1791 0084 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1792 0088 94F88930 		ldrb	r3, [r4, #137]	@ zero_extendqisi2
+ 1793 008c 019A     		ldr	r2, [sp, #4]
+ 1794 008e 002B     		cmp	r3, #0
+ 1795 0090 79D1     		bne	.L273
+ 1796 0092 2368     		ldr	r3, [r4]
+ 1797 0094 1868     		ldr	r0, [r3]
+ 1798              	.L274:
+ 1799 0096 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1800 0098 1F23     		movs	r3, #31
+ 1801 009a FFF7FEFF 		bl	usbStartReceiveI
+ 1802 009e FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1803              		.syntax unified
+ 1804              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1805 00a2 85F31188 		MSR basepri, r5
+ 1806              	@ 0 "" 2
+ 1807              		.thumb
+ 1808              		.syntax unified
+ 1809 00a6 0123     		movs	r3, #1
+ 1810 00a8 84F82430 		strb	r3, [r4, #36]
+ 1811 00ac 3AE0     		b	.L275
+ 1812              	.L265:
+ 1813 00ae 94F82420 		ldrb	r2, [r4, #36]	@ zero_extendqisi2
+ 1814 00b2 032A     		cmp	r2, #3
+ 1815 00b4 CDD8     		bhi	.L278
+ 1816 00b6 01A1     		adr	r1, .L269
+ 1817 00b8 51F822F0 		ldr	pc, [r1, r2, lsl #2]
+ 1818              		.p2align 2
+ 1819              	.L269:
+ 1820 00bc 6D000000 		.word	.L266+1
+ 1821 00c0 79010000 		.word	.L271+1
+ 1822 00c4 5B010000 		.word	.L270+1
+ 1823 00c8 CD000000 		.word	.L268+1
+ARM GAS  /tmp/ccnucHfz.s 			page 33
+
+
+ 1824              		.p2align 1
+ 1825              	.L268:
+ 1826 00cc 4FF47A70 		mov	r0, #1000
+ 1827 00d0 FFF7FEFF 		bl	chThdSleep
+ 1828              		.syntax unified
+ 1829              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1830 00d4 87F31188 		MSR basepri, r7
+ 1831              	@ 0 "" 2
+ 1832              		.thumb
+ 1833              		.syntax unified
+ 1834 00d8 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1835 00dc 2368     		ldr	r3, [r4]
+ 1836 00de 1868     		ldr	r0, [r3]
+ 1837 00e0 FFF7FEFF 		bl	usb_lld_disable_endpoints
+ 1838 00e4 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1839              		.syntax unified
+ 1840              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1841 00e8 85F31188 		MSR basepri, r5
+ 1842              	@ 0 "" 2
+ 1843              		.thumb
+ 1844              		.syntax unified
+ 1845 00ec 4FF47A70 		mov	r0, #1000
+ 1846 00f0 FFF7FEFF 		bl	chThdSleep
+ 1847              		.syntax unified
+ 1848              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1849 00f4 87F31188 		MSR basepri, r7
+ 1850              	@ 0 "" 2
+ 1851              		.thumb
+ 1852              		.syntax unified
+ 1853 00f8 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1854 00fc 2368     		ldr	r3, [r4]
+ 1855 00fe 1868     		ldr	r0, [r3]
+ 1856 0100 0121     		movs	r1, #1
+ 1857 0102 C0F810A0 		str	r10, [r0, #16]
+ 1858 0106 FFF7FEFF 		bl	usb_lld_init_endpoint
+ 1859 010a 6FF00102 		mvn	r2, #1
+ 1860 010e 0121     		movs	r1, #1
+ 1861 0110 4046     		mov	r0, r8
+ 1862 0112 FFF7FEFF 		bl	chSemResetWithMessage
+ 1863 0116 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1864              		.syntax unified
+ 1865              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1866 011a 85F31188 		MSR basepri, r5
+ 1867              	@ 0 "" 2
+ 1868              		.thumb
+ 1869              		.syntax unified
+ 1870 011e 0123     		movs	r3, #1
+ 1871 0120 84F82430 		strb	r3, [r4, #36]
+ 1872              	.L275:
+ 1873              		.syntax unified
+ 1874              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1875 0124 87F31188 		MSR basepri, r7
+ 1876              	@ 0 "" 2
+ 1877              		.thumb
+ 1878              		.syntax unified
+ 1879 0128 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 1880 012c 4046     		mov	r0, r8
+ARM GAS  /tmp/ccnucHfz.s 			page 34
+
+
+ 1881 012e FFF7FEFF 		bl	chSemWaitS
+ 1882 0132 D9F80000 		ldr	r0, [r9]
+ 1883 0136 10B1     		cbz	r0, .L277
+ 1884 0138 0421     		movs	r1, #4
+ 1885 013a FFF7FEFF 		bl	chEvtSignalI
+ 1886              	.L277:
+ 1887 013e FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 1888              		.syntax unified
+ 1889              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1890 0142 85F31188 		MSR basepri, r5
+ 1891              	@ 0 "" 2
+ 1892              		.thumb
+ 1893              		.syntax unified
+ 1894 0146 F368     		ldr	r3, [r6, #12]
+ 1895 0148 93F82530 		ldrb	r3, [r3, #37]	@ zero_extendqisi2
+ 1896 014c 13F00403 		ands	r3, r3, #4
+ 1897 0150 3FF47FAF 		beq	.L278
+ 1898              	.L291:
+ 1899 0154 02B0     		add	sp, sp, #8
+ 1900              		@ sp needed
+ 1901 0156 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1902              	.L270:
+ 1903 015a 2368     		ldr	r3, [r4]
+ 1904 015c 1868     		ldr	r0, [r3]
+ 1905 015e 426D     		ldr	r2, [r0, #84]
+ 1906 0160 936B     		ldr	r3, [r2, #56]
+ 1907 0162 23F40023 		bic	r3, r3, #524288
+ 1908 0166 9363     		str	r3, [r2, #56]
+ 1909 0168 FFF7FEFF 		bl	usbStop
+ 1910 016c 0020     		movs	r0, #0
+ 1911 016e 02B0     		add	sp, sp, #8
+ 1912              		@ sp needed
+ 1913 0170 BDE8F047 		pop	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 1914 0174 FFF7FEBF 		b	chThdExit
+ 1915              	.L271:
+ 1916 0178 2046     		mov	r0, r4
+ 1917 017a FFF7FEFF 		bl	msd_read_command_block
+ 1918 017e 0028     		cmp	r0, #0
+ 1919 0180 3FF460AF 		beq	.L264
+ 1920 0184 CEE7     		b	.L275
+ 1921              	.L273:
+ 1922 0186 2368     		ldr	r3, [r4]
+ 1923 0188 1868     		ldr	r0, [r3]
+ 1924 018a 4581     		strh	r5, [r0, #10]	@ movhi
+ 1925 018c 83E7     		b	.L274
+ 1926              	.L293:
+ 1927 018e 00BF     		.align	2
+ 1928              	.L292:
+ 1929 0190 00000000 		.word	ch0
+ 1930 0194 00000000 		.word	.LC0
+ 1931 0198 00000000 		.word	.LANCHOR4
+ 1932 019c 00000000 		.word	.LANCHOR6
+ 1933              		.size	mass_storage_thread, .-mass_storage_thread
+ 1934              		.section	.text.msdInit,"ax",%progbits
+ 1935              		.align	1
+ 1936              		.p2align 4,,15
+ 1937              		.global	msdInit
+ARM GAS  /tmp/ccnucHfz.s 			page 35
+
+
+ 1938              		.syntax unified
+ 1939              		.thumb
+ 1940              		.thumb_func
+ 1941              		.fpu fpv4-sp-d16
+ 1942              		.type	msdInit, %function
+ 1943              	msdInit:
+ 1944              		@ args = 0, pretend = 0, frame = 0
+ 1945              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1946 0000 70B5     		push	{r4, r5, r6, lr}
+ 1947 0002 0446     		mov	r4, r0
+ 1948 0004 0025     		movs	r5, #0
+ 1949 0006 1430     		adds	r0, r0, #20
+ 1950 0008 84F88950 		strb	r5, [r4, #137]
+ 1951 000c 84F88750 		strb	r5, [r4, #135]
+ 1952 0010 2560     		str	r5, [r4]
+ 1953 0012 2561     		str	r5, [r4, #16]
+ 1954 0014 84F82450 		strb	r5, [r4, #36]
+ 1955 0018 FFF7FEFF 		bl	chEvtObjectInit
+ 1956 001c 184E     		ldr	r6, .L300
+ 1957 001e 04F11800 		add	r0, r4, #24
+ 1958 0022 FFF7FEFF 		bl	chEvtObjectInit
+ 1959 0026 2946     		mov	r1, r5
+ 1960 0028 201D     		adds	r0, r4, #4
+ 1961 002a FFF7FEFF 		bl	chSemObjectInit
+ 1962 002e 3368     		ldr	r3, [r6]
+ 1963 0030 63B1     		cbz	r3, .L295
+ 1964 0032 3023     		movs	r3, #48
+ 1965              		.syntax unified
+ 1966              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1967 0034 83F31188 		MSR basepri, r3
+ 1968              	@ 0 "" 2
+ 1969              		.thumb
+ 1970              		.syntax unified
+ 1971 0038 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 1972 003c 3068     		ldr	r0, [r6]
+ 1973 003e 0421     		movs	r1, #4
+ 1974 0040 FFF7FEFF 		bl	chEvtSignalI
+ 1975 0044 FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 1976              		.syntax unified
+ 1977              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 1978 0048 85F31188 		MSR basepri, r5
+ 1979              	@ 0 "" 2
+ 1980              		.thumb
+ 1981              		.syntax unified
+ 1982              	.L295:
+ 1983 004c 0023     		movs	r3, #0
+ 1984 004e 0D4A     		ldr	r2, .L300+4
+ 1985 0050 C4F85130 		str	r3, [r4, #81]	@ unaligned
+ 1986 0054 7020     		movs	r0, #112
+ 1987 0056 0A21     		movs	r1, #10
+ 1988 0058 C4F85530 		str	r3, [r4, #85]	@ unaligned
+ 1989 005c C4F85930 		str	r3, [r4, #89]	@ unaligned
+ 1990 0060 C4F85D30 		str	r3, [r4, #93]	@ unaligned
+ 1991 0064 A4F86130 		strh	r3, [r4, #97]	@ unaligned
+ 1992 0068 84F85100 		strb	r0, [r4, #81]
+ 1993 006c 84F85810 		strb	r1, [r4, #88]
+ 1994 0070 84F86330 		strb	r3, [r4, #99]
+ARM GAS  /tmp/ccnucHfz.s 			page 36
+
+
+ 1995 0074 6266     		str	r2, [r4, #100]
+ 1996 0076 A4F86830 		strh	r3, [r4, #104]	@ movhi
+ 1997 007a 84F86A30 		strb	r3, [r4, #106]
+ 1998 007e 70BD     		pop	{r4, r5, r6, pc}
+ 1999              	.L301:
+ 2000              		.align	2
+ 2001              	.L300:
+ 2002 0080 00000000 		.word	.LANCHOR4
+ 2003 0084 80040220 		.word	537003136
+ 2004              		.size	msdInit, .-msdInit
+ 2005              		.section	.text.msdStart,"ax",%progbits
+ 2006              		.align	1
+ 2007              		.p2align 4,,15
+ 2008              		.global	msdStart
+ 2009              		.syntax unified
+ 2010              		.thumb
+ 2011              		.thumb_func
+ 2012              		.fpu fpv4-sp-d16
+ 2013              		.type	msdStart, %function
+ 2014              	msdStart:
+ 2015              		@ args = 0, pretend = 0, frame = 0
+ 2016              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2017 0000 30B5     		push	{r4, r5, lr}
+ 2018 0002 0246     		mov	r2, r0
+ 2019 0004 0546     		mov	r5, r0
+ 2020 0006 42F86B1B 		str	r1, [r2], #107
+ 2021 000a 83B0     		sub	sp, sp, #12
+ 2022 000c 0C46     		mov	r4, r1
+ 2023 000e 01F11003 		add	r3, r1, #16
+ 2024 0012 01F11800 		add	r0, r1, #24
+ 2025              	.L303:
+ 2026 0016 13F8011B 		ldrb	r1, [r3], #1	@ zero_extendqisi2
+ 2027 001a 02F8011B 		strb	r1, [r2], #1
+ 2028 001e 8342     		cmp	r3, r0
+ 2029 0020 F9D1     		bne	.L303
+ 2030 0022 04F11703 		add	r3, r4, #23
+ 2031 0026 05F17202 		add	r2, r5, #114
+ 2032 002a 04F12701 		add	r1, r4, #39
+ 2033              	.L304:
+ 2034 002e 13F801CF 		ldrb	ip, [r3, #1]!	@ zero_extendqisi2
+ 2035 0032 02F801CF 		strb	ip, [r2, #1]!
+ 2036 0036 8B42     		cmp	r3, r1
+ 2037 0038 F9D1     		bne	.L304
+ 2038 003a 94F82830 		ldrb	r3, [r4, #40]	@ zero_extendqisi2
+ 2039 003e 85F88330 		strb	r3, [r5, #131]
+ 2040 0042 94F82930 		ldrb	r3, [r4, #41]	@ zero_extendqisi2
+ 2041 0046 85F88430 		strb	r3, [r5, #132]
+ 2042 004a 94F82A30 		ldrb	r3, [r4, #42]	@ zero_extendqisi2
+ 2043 004e 85F88530 		strb	r3, [r5, #133]
+ 2044 0052 94F82B20 		ldrb	r2, [r4, #43]	@ zero_extendqisi2
+ 2045 0056 85F88620 		strb	r2, [r5, #134]
+ 2046 005a 0023     		movs	r3, #0
+ 2047 005c 85F82430 		strb	r3, [r5, #36]
+ 2048 0060 6068     		ldr	r0, [r4, #4]
+ 2049 0062 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 2050 0064 052B     		cmp	r3, #5
+ 2051 0066 07D0     		beq	.L305
+ARM GAS  /tmp/ccnucHfz.s 			page 37
+
+
+ 2052              	.L306:
+ 2053 0068 4FF4FA70 		mov	r0, #500
+ 2054 006c FFF7FEFF 		bl	chThdSleep
+ 2055 0070 6068     		ldr	r0, [r4, #4]
+ 2056 0072 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 2057 0074 052B     		cmp	r3, #5
+ 2058 0076 F7D1     		bne	.L306
+ 2059              	.L305:
+ 2060 0078 0368     		ldr	r3, [r0]
+ 2061 007a 05F11C01 		add	r1, r5, #28
+ 2062 007e 1B6A     		ldr	r3, [r3, #32]
+ 2063 0080 9847     		blx	r3
+ 2064 0082 227A     		ldrb	r2, [r4, #8]	@ zero_extendqisi2
+ 2065 0084 2168     		ldr	r1, [r4]
+ 2066 0086 074B     		ldr	r3, .L314
+ 2067 0088 0748     		ldr	r0, .L314+4
+ 2068 008a 01EB8201 		add	r1, r1, r2, lsl #2
+ 2069 008e 8022     		movs	r2, #128
+ 2070 0090 CD61     		str	r5, [r1, #28]
+ 2071 0092 8D62     		str	r5, [r1, #40]
+ 2072 0094 4FF4BB61 		mov	r1, #1496
+ 2073 0098 0095     		str	r5, [sp]
+ 2074 009a FFF7FEFF 		bl	chThdCreateStatic
+ 2075 009e 2861     		str	r0, [r5, #16]
+ 2076 00a0 03B0     		add	sp, sp, #12
+ 2077              		@ sp needed
+ 2078 00a2 30BD     		pop	{r4, r5, pc}
+ 2079              	.L315:
+ 2080              		.align	2
+ 2081              	.L314:
+ 2082 00a4 00000000 		.word	mass_storage_thread
+ 2083 00a8 00000000 		.word	.LANCHOR10
+ 2084              		.size	msdStart, .-msdStart
+ 2085              		.section	.text.msdStop,"ax",%progbits
+ 2086              		.align	1
+ 2087              		.p2align 4,,15
+ 2088              		.global	msdStop
+ 2089              		.syntax unified
+ 2090              		.thumb
+ 2091              		.thumb_func
+ 2092              		.fpu fpv4-sp-d16
+ 2093              		.type	msdStop, %function
+ 2094              	msdStop:
+ 2095              		@ args = 0, pretend = 0, frame = 0
+ 2096              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2097 0000 38B5     		push	{r3, r4, r5, lr}
+ 2098 0002 0446     		mov	r4, r0
+ 2099 0004 0069     		ldr	r0, [r0, #16]
+ 2100 0006 FFF7FEFF 		bl	chThdTerminate
+ 2101 000a 3023     		movs	r3, #48
+ 2102              		.syntax unified
+ 2103              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 2104 000c 83F31188 		MSR basepri, r3
+ 2105              	@ 0 "" 2
+ 2106              		.thumb
+ 2107              		.syntax unified
+ 2108 0010 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ARM GAS  /tmp/ccnucHfz.s 			page 38
+
+
+ 2109 0014 E368     		ldr	r3, [r4, #12]
+ 2110 0016 002B     		cmp	r3, #0
+ 2111 0018 12DD     		ble	.L319
+ 2112              	.L317:
+ 2113 001a FFF7FEFF 		bl	chSchRescheduleS
+ 2114 001e 0025     		movs	r5, #0
+ 2115 0020 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 2116              		.syntax unified
+ 2117              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 2118 0024 85F31188 		MSR basepri, r5
+ 2119              	@ 0 "" 2
+ 2120              		.thumb
+ 2121              		.syntax unified
+ 2122 0028 2069     		ldr	r0, [r4, #16]
+ 2123 002a FFF7FEFF 		bl	chThdWait
+ 2124 002e 2268     		ldr	r2, [r4]
+ 2125 0030 2561     		str	r5, [r4, #16]
+ 2126 0032 117A     		ldrb	r1, [r2, #8]	@ zero_extendqisi2
+ 2127 0034 1368     		ldr	r3, [r2]
+ 2128 0036 03EB8103 		add	r3, r3, r1, lsl #2
+ 2129 003a DD61     		str	r5, [r3, #28]
+ 2130 003c 9D62     		str	r5, [r3, #40]
+ 2131 003e 38BD     		pop	{r3, r4, r5, pc}
+ 2132              	.L319:
+ 2133 0040 201D     		adds	r0, r4, #4
+ 2134 0042 FFF7FEFF 		bl	chSemSignalI
+ 2135 0046 E8E7     		b	.L317
+ 2136              		.size	msdStop, .-msdStop
+ 2137              		.section	.text.debug_snd_evt_i,"ax",%progbits
+ 2138              		.align	1
+ 2139              		.p2align 4,,15
+ 2140              		.global	debug_snd_evt_i
+ 2141              		.syntax unified
+ 2142              		.thumb
+ 2143              		.thumb_func
+ 2144              		.fpu fpv4-sp-d16
+ 2145              		.type	debug_snd_evt_i, %function
+ 2146              	debug_snd_evt_i:
+ 2147              		@ args = 0, pretend = 0, frame = 0
+ 2148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2149 0000 38B5     		push	{r3, r4, r5, lr}
+ 2150 0002 094D     		ldr	r5, .L326
+ 2151 0004 2B68     		ldr	r3, [r5]
+ 2152 0006 73B1     		cbz	r3, .L320
+ 2153 0008 0446     		mov	r4, r0
+ 2154 000a 3023     		movs	r3, #48
+ 2155              		.syntax unified
+ 2156              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 2157 000c 83F31188 		MSR basepri, r3
+ 2158              	@ 0 "" 2
+ 2159              		.thumb
+ 2160              		.syntax unified
+ 2161 0010 FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 2162 0014 2868     		ldr	r0, [r5]
+ 2163 0016 2146     		mov	r1, r4
+ 2164 0018 FFF7FEFF 		bl	chEvtSignalI
+ 2165 001c FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ARM GAS  /tmp/ccnucHfz.s 			page 39
+
+
+ 2166 0020 0023     		movs	r3, #0
+ 2167              		.syntax unified
+ 2168              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 2169 0022 83F31188 		MSR basepri, r3
+ 2170              	@ 0 "" 2
+ 2171              		.thumb
+ 2172              		.syntax unified
+ 2173              	.L320:
+ 2174 0026 38BD     		pop	{r3, r4, r5, pc}
+ 2175              	.L327:
+ 2176              		.align	2
+ 2177              	.L326:
+ 2178 0028 00000000 		.word	.LANCHOR4
+ 2179              		.size	debug_snd_evt_i, .-debug_snd_evt_i
+ 2180              		.section	.text.debug_snd_evt_inl,"ax",%progbits
+ 2181              		.align	1
+ 2182              		.p2align 4,,15
+ 2183              		.global	debug_snd_evt_inl
+ 2184              		.syntax unified
+ 2185              		.thumb
+ 2186              		.thumb_func
+ 2187              		.fpu fpv4-sp-d16
+ 2188              		.type	debug_snd_evt_inl, %function
+ 2189              	debug_snd_evt_inl:
+ 2190              		@ args = 0, pretend = 0, frame = 0
+ 2191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2192              		@ link register save eliminated.
+ 2193 0000 034B     		ldr	r3, .L330
+ 2194 0002 1B68     		ldr	r3, [r3]
+ 2195 0004 0146     		mov	r1, r0
+ 2196 0006 13B1     		cbz	r3, .L328
+ 2197 0008 1846     		mov	r0, r3
+ 2198 000a FFF7FEBF 		b	chEvtSignalI
+ 2199              	.L328:
+ 2200 000e 7047     		bx	lr
+ 2201              	.L331:
+ 2202              		.align	2
+ 2203              	.L330:
+ 2204 0010 00000000 		.word	.LANCHOR4
+ 2205              		.size	debug_snd_evt_inl, .-debug_snd_evt_inl
+ 2206              		.section	.text.debug_snd_evt_nl,"ax",%progbits
+ 2207              		.align	1
+ 2208              		.p2align 4,,15
+ 2209              		.global	debug_snd_evt_nl
+ 2210              		.syntax unified
+ 2211              		.thumb
+ 2212              		.thumb_func
+ 2213              		.fpu fpv4-sp-d16
+ 2214              		.type	debug_snd_evt_nl, %function
+ 2215              	debug_snd_evt_nl:
+ 2216              		@ args = 0, pretend = 0, frame = 0
+ 2217              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2218              		@ link register save eliminated.
+ 2219 0000 034B     		ldr	r3, .L334
+ 2220 0002 1B68     		ldr	r3, [r3]
+ 2221 0004 0146     		mov	r1, r0
+ 2222 0006 13B1     		cbz	r3, .L332
+ARM GAS  /tmp/ccnucHfz.s 			page 40
+
+
+ 2223 0008 1846     		mov	r0, r3
+ 2224 000a FFF7FEBF 		b	chEvtSignal
+ 2225              	.L332:
+ 2226 000e 7047     		bx	lr
+ 2227              	.L335:
+ 2228              		.align	2
+ 2229              	.L334:
+ 2230 0010 00000000 		.word	.LANCHOR4
+ 2231              		.size	debug_snd_evt_nl, .-debug_snd_evt_nl
+ 2232              		.section	.text.deinit_msd_driver,"ax",%progbits
+ 2233              		.align	1
+ 2234              		.p2align 4,,15
+ 2235              		.global	deinit_msd_driver
+ 2236              		.syntax unified
+ 2237              		.thumb
+ 2238              		.thumb_func
+ 2239              		.fpu fpv4-sp-d16
+ 2240              		.type	deinit_msd_driver, %function
+ 2241              	deinit_msd_driver:
+ 2242              		@ args = 0, pretend = 0, frame = 0
+ 2243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2244              		@ link register save eliminated.
+ 2245 0000 0148     		ldr	r0, .L337
+ 2246 0002 FFF7FEBF 		b	msdStop
+ 2247              	.L338:
+ 2248 0006 00BF     		.align	2
+ 2249              	.L337:
+ 2250 0008 00000000 		.word	.LANCHOR3
+ 2251              		.size	deinit_msd_driver, .-deinit_msd_driver
+ 2252              		.section	.text.init_msd_driver,"ax",%progbits
+ 2253              		.align	1
+ 2254              		.p2align 4,,15
+ 2255              		.global	init_msd_driver
+ 2256              		.syntax unified
+ 2257              		.thumb
+ 2258              		.thumb_func
+ 2259              		.fpu fpv4-sp-d16
+ 2260              		.type	init_msd_driver, %function
+ 2261              	init_msd_driver:
+ 2262              		@ args = 0, pretend = 0, frame = 8
+ 2263              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2264 0000 30B5     		push	{r4, r5, lr}
+ 2265 0002 144C     		ldr	r4, .L341
+ 2266 0004 83B0     		sub	sp, sp, #12
+ 2267 0006 0546     		mov	r5, r0
+ 2268 0008 2046     		mov	r0, r4
+ 2269 000a 0191     		str	r1, [sp, #4]
+ 2270 000c FFF7FEFF 		bl	usbStop
+ 2271 0010 626D     		ldr	r2, [r4, #84]
+ 2272 0012 1148     		ldr	r0, .L341+4
+ 2273 0014 936B     		ldr	r3, [r2, #56]
+ 2274 0016 23F40023 		bic	r3, r3, #524288
+ 2275 001a 9363     		str	r3, [r2, #56]
+ 2276 001c FFF7FEFF 		bl	msdInit
+ 2277 0020 0199     		ldr	r1, [sp, #4]
+ 2278 0022 0D48     		ldr	r0, .L341+4
+ 2279 0024 FFF7FEFF 		bl	msdStart
+ARM GAS  /tmp/ccnucHfz.s 			page 41
+
+
+ 2280 0028 626D     		ldr	r2, [r4, #84]
+ 2281 002a 0C49     		ldr	r1, .L341+8
+ 2282 002c 936B     		ldr	r3, [r2, #56]
+ 2283 002e 0D60     		str	r5, [r1]
+ 2284 0030 23F40023 		bic	r3, r3, #524288
+ 2285 0034 9363     		str	r3, [r2, #56]
+ 2286 0036 42F21070 		movw	r0, #10000
+ 2287 003a FFF7FEFF 		bl	chThdSleep
+ 2288 003e 0849     		ldr	r1, .L341+12
+ 2289 0040 2046     		mov	r0, r4
+ 2290 0042 FFF7FEFF 		bl	usbStart
+ 2291 0046 626D     		ldr	r2, [r4, #84]
+ 2292 0048 936B     		ldr	r3, [r2, #56]
+ 2293 004a 43F40023 		orr	r3, r3, #524288
+ 2294 004e 9363     		str	r3, [r2, #56]
+ 2295 0050 03B0     		add	sp, sp, #12
+ 2296              		@ sp needed
+ 2297 0052 30BD     		pop	{r4, r5, pc}
+ 2298              	.L342:
+ 2299              		.align	2
+ 2300              	.L341:
+ 2301 0054 00000000 		.word	USBD1
+ 2302 0058 00000000 		.word	.LANCHOR3
+ 2303 005c 00000000 		.word	.LANCHOR4
+ 2304 0060 00000000 		.word	.LANCHOR11
+ 2305              		.size	init_msd_driver, .-init_msd_driver
+ 2306              		.section	.text.msd_register_evt_connected,"ax",%progbits
+ 2307              		.align	1
+ 2308              		.p2align 4,,15
+ 2309              		.global	msd_register_evt_connected
+ 2310              		.syntax unified
+ 2311              		.thumb
+ 2312              		.thumb_func
+ 2313              		.fpu fpv4-sp-d16
+ 2314              		.type	msd_register_evt_connected, %function
+ 2315              	msd_register_evt_connected:
+ 2316              		@ args = 0, pretend = 0, frame = 0
+ 2317              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2318              		@ link register save eliminated.
+ 2319 0000 8446     		mov	ip, r0
+ 2320 0002 0A46     		mov	r2, r1
+ 2321 0004 0248     		ldr	r0, .L344
+ 2322 0006 4FF0FF33 		mov	r3, #-1
+ 2323 000a 6146     		mov	r1, ip
+ 2324 000c FFF7FEBF 		b	chEvtRegisterMaskWithFlags
+ 2325              	.L345:
+ 2326              		.align	2
+ 2327              	.L344:
+ 2328 0010 14000000 		.word	.LANCHOR3+20
+ 2329              		.size	msd_register_evt_connected, .-msd_register_evt_connected
+ 2330              		.section	.text.msd_register_evt_ejected,"ax",%progbits
+ 2331              		.align	1
+ 2332              		.p2align 4,,15
+ 2333              		.global	msd_register_evt_ejected
+ 2334              		.syntax unified
+ 2335              		.thumb
+ 2336              		.thumb_func
+ARM GAS  /tmp/ccnucHfz.s 			page 42
+
+
+ 2337              		.fpu fpv4-sp-d16
+ 2338              		.type	msd_register_evt_ejected, %function
+ 2339              	msd_register_evt_ejected:
+ 2340              		@ args = 0, pretend = 0, frame = 0
+ 2341              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2342              		@ link register save eliminated.
+ 2343 0000 8446     		mov	ip, r0
+ 2344 0002 0A46     		mov	r2, r1
+ 2345 0004 0248     		ldr	r0, .L347
+ 2346 0006 4FF0FF33 		mov	r3, #-1
+ 2347 000a 6146     		mov	r1, ip
+ 2348 000c FFF7FEBF 		b	chEvtRegisterMaskWithFlags
+ 2349              	.L348:
+ 2350              		.align	2
+ 2351              	.L347:
+ 2352 0010 18000000 		.word	.LANCHOR3+24
+ 2353              		.size	msd_register_evt_ejected, .-msd_register_evt_ejected
+ 2354              		.global	dbg_printer
+ 2355              		.section	.bss.UMSD,"aw",%nobits
+ 2356              		.align	2
+ 2357              		.set	.LANCHOR3,. + 0
+ 2358              		.type	UMSD, %object
+ 2359              		.size	UMSD, 140
+ 2360              	UMSD:
+ 2361 0000 00000000 		.space	140
+ 2361      00000000 
+ 2361      00000000 
+ 2361      00000000 
+ 2361      00000000 
+ 2362              		.section	.bss.dbg_printer,"aw",%nobits
+ 2363              		.align	2
+ 2364              		.set	.LANCHOR4,. + 0
+ 2365              		.type	dbg_printer, %object
+ 2366              		.size	dbg_printer, 4
+ 2367              	dbg_printer:
+ 2368 0000 00000000 		.space	4
+ 2369              		.section	.bss.ep1_in_state,"aw",%nobits
+ 2370              		.align	2
+ 2371              		.type	ep1_in_state, %object
+ 2372              		.size	ep1_in_state, 16
+ 2373              	ep1_in_state:
+ 2374 0000 00000000 		.space	16
+ 2374      00000000 
+ 2374      00000000 
+ 2374      00000000 
+ 2375              		.section	.bss.ep1_out_state,"aw",%nobits
+ 2376              		.align	2
+ 2377              		.type	ep1_out_state, %object
+ 2378              		.size	ep1_out_state, 16
+ 2379              	ep1_out_state:
+ 2380 0000 00000000 		.space	16
+ 2380      00000000 
+ 2380      00000000 
+ 2380      00000000 
+ 2381              		.section	.bss.len_buf.2,"aw",%nobits
+ 2382              		.align	2
+ 2383              		.set	.LANCHOR5,. + 0
+ARM GAS  /tmp/ccnucHfz.s 			page 43
+
+
+ 2384              		.type	len_buf.2, %object
+ 2385              		.size	len_buf.2, 1
+ 2386              	len_buf.2:
+ 2387 0000 00       		.space	1
+ 2388              		.section	.bss.mass_storage_thread_wa,"aw",%nobits
+ 2389              		.align	3
+ 2390              		.set	.LANCHOR10,. + 0
+ 2391              		.type	mass_storage_thread_wa, %object
+ 2392              		.size	mass_storage_thread_wa, 1496
+ 2393              	mass_storage_thread_wa:
+ 2394 0000 00000000 		.space	1496
+ 2394      00000000 
+ 2394      00000000 
+ 2394      00000000 
+ 2394      00000000 
+ 2395              		.section	.bss.response.1,"aw",%nobits
+ 2396              		.align	2
+ 2397              		.set	.LANCHOR7,. + 0
+ 2398              		.type	response.1, %object
+ 2399              		.size	response.1, 8
+ 2400              	response.1:
+ 2401 0000 00000000 		.space	8
+ 2401      00000000 
+ 2402              		.section	.data.response.0,"aw"
+ 2403              		.align	2
+ 2404              		.set	.LANCHOR9,. + 0
+ 2405              		.type	response.0, %object
+ 2406              		.size	response.0, 4
+ 2407              	response.0:
+ 2408 0000 03000000 		.ascii	"\003\000\000\000"
+ 2409              		.section	.ram0_clear,"aw"
+ 2410              		.align	3
+ 2411              		.set	.LANCHOR8,. + 0
+ 2412              		.type	rw_buf, %object
+ 2413              		.size	rw_buf, 1024
+ 2414              	rw_buf:
+ 2415 0000 00000000 		.space	1024
+ 2415      00000000 
+ 2415      00000000 
+ 2415      00000000 
+ 2415      00000000 
+ 2416              		.section	.rodata.CSWTCH.23,"a"
+ 2417              		.align	2
+ 2418              		.set	.LANCHOR2,. + 0
+ 2419              		.type	CSWTCH.23, %object
+ 2420              		.size	CSWTCH.23, 16
+ 2421              	CSWTCH.23:
+ 2422 0000 00000000 		.word	languageDescriptor
+ 2423 0004 00000000 		.word	vendorDescriptor
+ 2424 0008 00000000 		.word	productDescriptor
+ 2425 000c 00000000 		.word	serialNumberDescriptor
+ 2426              		.section	.rodata.configurationDescriptor,"a"
+ 2427              		.align	2
+ 2428              		.set	.LANCHOR1,. + 0
+ 2429              		.type	configurationDescriptor, %object
+ 2430              		.size	configurationDescriptor, 8
+ 2431              	configurationDescriptor:
+ARM GAS  /tmp/ccnucHfz.s 			page 44
+
+
+ 2432 0000 20000000 		.word	32
+ 2433 0004 00000000 		.word	configurationDescriptorData
+ 2434              		.section	.rodata.configurationDescriptorData,"a"
+ 2435              		.align	2
+ 2436              		.type	configurationDescriptorData, %object
+ 2437              		.size	configurationDescriptorData, 32
+ 2438              	configurationDescriptorData:
+ 2439 0000 09022000 		.ascii	"\011\002 \000\001\001\000\300d\011\004\000\000\002\010"
+ 2439      010100C0 
+ 2439      64090400 
+ 2439      000208
+ 2440 000f 06500007 		.ascii	"\006P\000\007\005\201\002@\000\005\007\005\001\002@"
+ 2440      05810240 
+ 2440      00050705 
+ 2440      010240
+ 2441 001e 0005     		.ascii	"\000\005"
+ 2442              		.section	.rodata.deviceDescriptor,"a"
+ 2443              		.align	2
+ 2444              		.set	.LANCHOR0,. + 0
+ 2445              		.type	deviceDescriptor, %object
+ 2446              		.size	deviceDescriptor, 8
+ 2447              	deviceDescriptor:
+ 2448 0000 12000000 		.word	18
+ 2449 0004 00000000 		.word	deviceDescriptorData
+ 2450              		.section	.rodata.deviceDescriptorData,"a"
+ 2451              		.align	2
+ 2452              		.type	deviceDescriptorData, %object
+ 2453              		.size	deviceDescriptorData, 18
+ 2454              	deviceDescriptorData:
+ 2455 0000 12010002 		.ascii	"\022\001\000\002\000\000\000@\203\004\276\272\000\001"
+ 2455      00000040 
+ 2455      8304BEBA 
+ 2455      0001
+ 2456 000e 01020301 		.ascii	"\001\002\003\001"
+ 2457              		.section	.rodata.ep_data_config,"a"
+ 2458              		.align	2
+ 2459              		.set	.LANCHOR6,. + 0
+ 2460              		.type	ep_data_config, %object
+ 2461              		.size	ep_data_config, 36
+ 2462              	ep_data_config:
+ 2463 0000 02000000 		.word	2
+ 2464 0004 00000000 		.word	0
+ 2465 0008 00000000 		.word	msd_handle_end_point_notification
+ 2466 000c 00000000 		.word	msd_handle_end_point_notification
+ 2467 0010 4000     		.short	64
+ 2468 0012 4000     		.short	64
+ 2469 0014 00000000 		.word	ep1_in_state
+ 2470 0018 00000000 		.word	ep1_out_state
+ 2471 001c 0100     		.short	1
+ 2472 001e 0000     		.space	2
+ 2473 0020 00000000 		.word	0
+ 2474              		.section	.rodata.languageDescriptor,"a"
+ 2475              		.align	2
+ 2476              		.type	languageDescriptor, %object
+ 2477              		.size	languageDescriptor, 8
+ 2478              	languageDescriptor:
+ 2479 0000 04000000 		.word	4
+ARM GAS  /tmp/ccnucHfz.s 			page 45
+
+
+ 2480 0004 00000000 		.word	languageDescriptorData
+ 2481              		.section	.rodata.languageDescriptorData,"a"
+ 2482              		.align	2
+ 2483              		.type	languageDescriptorData, %object
+ 2484              		.size	languageDescriptorData, 4
+ 2485              	languageDescriptorData:
+ 2486 0000 04030904 		.ascii	"\004\003\011\004"
+ 2487              		.section	.rodata.productDescriptor,"a"
+ 2488              		.align	2
+ 2489              		.type	productDescriptor, %object
+ 2490              		.size	productDescriptor, 8
+ 2491              	productDescriptor:
+ 2492 0000 18000000 		.word	24
+ 2493 0004 00000000 		.word	productDescriptorData
+ 2494              		.section	.rodata.productDescriptorData,"a"
+ 2495              		.align	2
+ 2496              		.type	productDescriptorData, %object
+ 2497              		.size	productDescriptorData, 24
+ 2498              	productDescriptorData:
+ 2499 0000 18034D00 		.ascii	"\030\003M\000S\000D\000 \000E\000x\000a\000m\000p\000"
+ 2499      53004400 
+ 2499      20004500 
+ 2499      78006100 
+ 2499      6D007000 
+ 2500 0014 6C006500 		.ascii	"l\000e\000"
+ 2501              		.section	.rodata.serialNumberDescriptor,"a"
+ 2502              		.align	2
+ 2503              		.type	serialNumberDescriptor, %object
+ 2504              		.size	serialNumberDescriptor, 8
+ 2505              	serialNumberDescriptor:
+ 2506 0000 1A000000 		.word	26
+ 2507 0004 00000000 		.word	serialNumberDescriptorData
+ 2508              		.section	.rodata.serialNumberDescriptorData,"a"
+ 2509              		.align	2
+ 2510              		.type	serialNumberDescriptorData, %object
+ 2511              		.size	serialNumberDescriptorData, 26
+ 2512              	serialNumberDescriptorData:
+ 2513 0000 1A033000 		.ascii	"\032\0030\0001\0004\0002\0003\0000\000F\000K\0000\000"
+ 2513      31003400 
+ 2513      32003300 
+ 2513      30004600 
+ 2513      4B003000 
+ 2514 0014 30003000 		.ascii	"0\0000\0001\000"
+ 2514      3100
+ 2515              		.section	.rodata.usbConfig,"a"
+ 2516              		.align	2
+ 2517              		.set	.LANCHOR11,. + 0
+ 2518              		.type	usbConfig, %object
+ 2519              		.size	usbConfig, 16
+ 2520              	usbConfig:
+ 2521 0000 00000000 		.word	usbEvent
+ 2522 0004 00000000 		.word	getDescriptor
+ 2523 0008 00000000 		.word	msdRequestsHook
+ 2524 000c 00000000 		.word	0
+ 2525              		.section	.rodata.vendorDescriptor,"a"
+ 2526              		.align	2
+ 2527              		.type	vendorDescriptor, %object
+ARM GAS  /tmp/ccnucHfz.s 			page 46
+
+
+ 2528              		.size	vendorDescriptor, 8
+ 2529              	vendorDescriptor:
+ 2530 0000 16000000 		.word	22
+ 2531 0004 00000000 		.word	vendorDescriptorData
+ 2532              		.section	.rodata.vendorDescriptorData,"a"
+ 2533              		.align	2
+ 2534              		.type	vendorDescriptorData, %object
+ 2535              		.size	vendorDescriptorData, 22
+ 2536              	vendorDescriptorData:
+ 2537 0000 16035300 		.ascii	"\026\003S\000T\000M\000i\000c\000r\000o\000M\000S\000"
+ 2537      54004D00 
+ 2537      69006300 
+ 2537      72006F00 
+ 2537      4D005300 
+ 2538 0014 4400     		.ascii	"D\000"
+ 2539              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccnucHfz.s 			page 47
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 usb_msd.c
+     /tmp/ccnucHfz.s:15     .text.getDescriptor:0000000000000000 $t
+     /tmp/ccnucHfz.s:23     .text.getDescriptor:0000000000000000 getDescriptor
+     /tmp/ccnucHfz.s:51     .text.getDescriptor:0000000000000028 $d
+     /tmp/ccnucHfz.s:56     .text.msd_handle_end_point_notification:0000000000000000 $t
+     /tmp/ccnucHfz.s:63     .text.msd_handle_end_point_notification:0000000000000000 msd_handle_end_point_notification
+     /tmp/ccnucHfz.s:105    .text.msdRequestsHook:0000000000000000 $t
+     /tmp/ccnucHfz.s:113    .text.msdRequestsHook:0000000000000000 msdRequestsHook
+     /tmp/ccnucHfz.s:229    .text.msdRequestsHook:00000000000000ec $d
+     /tmp/ccnucHfz.s:234    .text.msdConfigureHookI:0000000000000000 $t
+     /tmp/ccnucHfz.s:242    .text.msdConfigureHookI:0000000000000000 msdConfigureHookI
+     /tmp/ccnucHfz.s:273    .text.msdConfigureHookI:0000000000000038 $d
+     /tmp/ccnucHfz.s:277    .text.usbEvent:0000000000000000 $t
+     /tmp/ccnucHfz.s:284    .text.usbEvent:0000000000000000 usbEvent
+     /tmp/ccnucHfz.s:344    .text.usbEvent:0000000000000058 $d
+     /tmp/ccnucHfz.s:348    .text.msd_scsi_process_inquiry:0000000000000000 $t
+     /tmp/ccnucHfz.s:356    .text.msd_scsi_process_inquiry:0000000000000000 msd_scsi_process_inquiry
+     /tmp/ccnucHfz.s:451    .text.msd_scsi_process_inquiry:00000000000000a8 $d
+     /tmp/ccnucHfz.s:454    .text.msd_scsi_process_request_sense:0000000000000000 $t
+     /tmp/ccnucHfz.s:462    .text.msd_scsi_process_request_sense:0000000000000000 msd_scsi_process_request_sense
+     /tmp/ccnucHfz.s:533    .text.msd_scsi_process_request_sense:0000000000000070 $d
+     /tmp/ccnucHfz.s:536    .text.msd_scsi_process_read_capacity_10:0000000000000000 $t
+     /tmp/ccnucHfz.s:544    .text.msd_scsi_process_read_capacity_10:0000000000000000 msd_scsi_process_read_capacity_10
+     /tmp/ccnucHfz.s:599    .text.msd_scsi_process_read_capacity_10:0000000000000060 $d
+     /tmp/ccnucHfz.s:603    .text.msd_scsi_process_send_diagnostic:0000000000000000 $t
+     /tmp/ccnucHfz.s:611    .text.msd_scsi_process_send_diagnostic:0000000000000000 msd_scsi_process_send_diagnostic
+     /tmp/ccnucHfz.s:633    .text.msd_scsi_process_start_read_write_10:0000000000000000 $t
+     /tmp/ccnucHfz.s:641    .text.msd_scsi_process_start_read_write_10:0000000000000000 msd_scsi_process_start_read_write_10
+     /tmp/ccnucHfz.s:1012   .text.msd_scsi_process_start_read_write_10:0000000000000304 $d
+     /tmp/ccnucHfz.s:1015   .text.msd_scsi_process_start_read_write_10:000000000000030c $t
+     /tmp/ccnucHfz.s:1025   .text.msd_scsi_process_start_stop_unit:0000000000000000 $t
+     /tmp/ccnucHfz.s:1033   .text.msd_scsi_process_start_stop_unit:0000000000000000 msd_scsi_process_start_stop_unit
+     /tmp/ccnucHfz.s:1057   .text.msd_scsi_process_mode_sense_6:0000000000000000 $t
+     /tmp/ccnucHfz.s:1065   .text.msd_scsi_process_mode_sense_6:0000000000000000 msd_scsi_process_mode_sense_6
+     /tmp/ccnucHfz.s:1114   .text.msd_scsi_process_mode_sense_6:000000000000004c $d
+     /tmp/ccnucHfz.s:1118   .text.msd_scsi_process_read_format_capacities:0000000000000000 $t
+     /tmp/ccnucHfz.s:1126   .text.msd_scsi_process_read_format_capacities:0000000000000000 msd_scsi_process_read_format_capacities
+     /tmp/ccnucHfz.s:1186   .text.msd_scsi_process_read_format_capacities:000000000000006c $d
+     /tmp/ccnucHfz.s:1189   .text.msd_scsi_process_test_unit_ready:0000000000000000 $t
+     /tmp/ccnucHfz.s:1197   .text.msd_scsi_process_test_unit_ready:0000000000000000 msd_scsi_process_test_unit_ready
+     /tmp/ccnucHfz.s:1235   .text.msd_scsi_process_test_unit_ready:0000000000000050 $d
+     /tmp/ccnucHfz.s:1238   .text.msd_wait_for_command_block:0000000000000000 $t
+     /tmp/ccnucHfz.s:1246   .text.msd_wait_for_command_block:0000000000000000 msd_wait_for_command_block
+     /tmp/ccnucHfz.s:1300   .text.msd_wait_for_command_block:0000000000000058 $d
+     /tmp/ccnucHfz.s:1303   .text.msd_read_command_block:0000000000000000 $t
+     /tmp/ccnucHfz.s:1311   .text.msd_read_command_block:0000000000000000 msd_read_command_block
+     /tmp/ccnucHfz.s:1340   .text.msd_read_command_block:0000000000000042 $d
+     /tmp/ccnucHfz.s:1388   .text.msd_read_command_block:00000000000000a2 $t
+     /tmp/ccnucHfz.s:1646   .text.msd_read_command_block:00000000000002b8 $d
+     /tmp/ccnucHfz.s:1649   .text.msd_read_command_block:00000000000002c0 $t
+     /tmp/ccnucHfz.s:1712   .text.msd_read_command_block:0000000000000344 $d
+     /tmp/ccnucHfz.s:1716   .rodata.mass_storage_thread.str1.4:0000000000000000 $d
+     /tmp/ccnucHfz.s:1720   .text.mass_storage_thread:0000000000000000 $t
+     /tmp/ccnucHfz.s:1727   .text.mass_storage_thread:0000000000000000 mass_storage_thread
+     /tmp/ccnucHfz.s:1820   .text.mass_storage_thread:00000000000000bc $d
+     /tmp/ccnucHfz.s:1824   .text.mass_storage_thread:00000000000000cc $t
+ARM GAS  /tmp/ccnucHfz.s 			page 48
+
+
+     /tmp/ccnucHfz.s:1929   .text.mass_storage_thread:0000000000000190 $d
+     /tmp/ccnucHfz.s:1935   .text.msdInit:0000000000000000 $t
+     /tmp/ccnucHfz.s:1943   .text.msdInit:0000000000000000 msdInit
+     /tmp/ccnucHfz.s:2002   .text.msdInit:0000000000000080 $d
+     /tmp/ccnucHfz.s:2006   .text.msdStart:0000000000000000 $t
+     /tmp/ccnucHfz.s:2014   .text.msdStart:0000000000000000 msdStart
+     /tmp/ccnucHfz.s:2082   .text.msdStart:00000000000000a4 $d
+     /tmp/ccnucHfz.s:2086   .text.msdStop:0000000000000000 $t
+     /tmp/ccnucHfz.s:2094   .text.msdStop:0000000000000000 msdStop
+     /tmp/ccnucHfz.s:2138   .text.debug_snd_evt_i:0000000000000000 $t
+     /tmp/ccnucHfz.s:2146   .text.debug_snd_evt_i:0000000000000000 debug_snd_evt_i
+     /tmp/ccnucHfz.s:2178   .text.debug_snd_evt_i:0000000000000028 $d
+     /tmp/ccnucHfz.s:2181   .text.debug_snd_evt_inl:0000000000000000 $t
+     /tmp/ccnucHfz.s:2189   .text.debug_snd_evt_inl:0000000000000000 debug_snd_evt_inl
+     /tmp/ccnucHfz.s:2204   .text.debug_snd_evt_inl:0000000000000010 $d
+     /tmp/ccnucHfz.s:2207   .text.debug_snd_evt_nl:0000000000000000 $t
+     /tmp/ccnucHfz.s:2215   .text.debug_snd_evt_nl:0000000000000000 debug_snd_evt_nl
+     /tmp/ccnucHfz.s:2230   .text.debug_snd_evt_nl:0000000000000010 $d
+     /tmp/ccnucHfz.s:2233   .text.deinit_msd_driver:0000000000000000 $t
+     /tmp/ccnucHfz.s:2241   .text.deinit_msd_driver:0000000000000000 deinit_msd_driver
+     /tmp/ccnucHfz.s:2250   .text.deinit_msd_driver:0000000000000008 $d
+     /tmp/ccnucHfz.s:2253   .text.init_msd_driver:0000000000000000 $t
+     /tmp/ccnucHfz.s:2261   .text.init_msd_driver:0000000000000000 init_msd_driver
+     /tmp/ccnucHfz.s:2301   .text.init_msd_driver:0000000000000054 $d
+     /tmp/ccnucHfz.s:2307   .text.msd_register_evt_connected:0000000000000000 $t
+     /tmp/ccnucHfz.s:2315   .text.msd_register_evt_connected:0000000000000000 msd_register_evt_connected
+     /tmp/ccnucHfz.s:2328   .text.msd_register_evt_connected:0000000000000010 $d
+     /tmp/ccnucHfz.s:2331   .text.msd_register_evt_ejected:0000000000000000 $t
+     /tmp/ccnucHfz.s:2339   .text.msd_register_evt_ejected:0000000000000000 msd_register_evt_ejected
+     /tmp/ccnucHfz.s:2352   .text.msd_register_evt_ejected:0000000000000010 $d
+     /tmp/ccnucHfz.s:2367   .bss.dbg_printer:0000000000000000 dbg_printer
+     /tmp/ccnucHfz.s:2356   .bss.UMSD:0000000000000000 $d
+     /tmp/ccnucHfz.s:2360   .bss.UMSD:0000000000000000 UMSD
+     /tmp/ccnucHfz.s:2363   .bss.dbg_printer:0000000000000000 $d
+     /tmp/ccnucHfz.s:2370   .bss.ep1_in_state:0000000000000000 $d
+     /tmp/ccnucHfz.s:2373   .bss.ep1_in_state:0000000000000000 ep1_in_state
+     /tmp/ccnucHfz.s:2376   .bss.ep1_out_state:0000000000000000 $d
+     /tmp/ccnucHfz.s:2379   .bss.ep1_out_state:0000000000000000 ep1_out_state
+     /tmp/ccnucHfz.s:2382   .bss.len_buf.2:0000000000000000 $d
+     /tmp/ccnucHfz.s:2386   .bss.len_buf.2:0000000000000000 len_buf.2
+     /tmp/ccnucHfz.s:2389   .bss.mass_storage_thread_wa:0000000000000000 $d
+     /tmp/ccnucHfz.s:2393   .bss.mass_storage_thread_wa:0000000000000000 mass_storage_thread_wa
+     /tmp/ccnucHfz.s:2396   .bss.response.1:0000000000000000 $d
+     /tmp/ccnucHfz.s:2400   .bss.response.1:0000000000000000 response.1
+     /tmp/ccnucHfz.s:2403   .data.response.0:0000000000000000 $d
+     /tmp/ccnucHfz.s:2407   .data.response.0:0000000000000000 response.0
+     /tmp/ccnucHfz.s:2410   .ram0_clear:0000000000000000 $d
+     /tmp/ccnucHfz.s:2414   .ram0_clear:0000000000000000 rw_buf
+     /tmp/ccnucHfz.s:2417   .rodata.CSWTCH.23:0000000000000000 $d
+     /tmp/ccnucHfz.s:2421   .rodata.CSWTCH.23:0000000000000000 CSWTCH.23
+     /tmp/ccnucHfz.s:2478   .rodata.languageDescriptor:0000000000000000 languageDescriptor
+     /tmp/ccnucHfz.s:2529   .rodata.vendorDescriptor:0000000000000000 vendorDescriptor
+     /tmp/ccnucHfz.s:2491   .rodata.productDescriptor:0000000000000000 productDescriptor
+     /tmp/ccnucHfz.s:2505   .rodata.serialNumberDescriptor:0000000000000000 serialNumberDescriptor
+     /tmp/ccnucHfz.s:2427   .rodata.configurationDescriptor:0000000000000000 $d
+     /tmp/ccnucHfz.s:2431   .rodata.configurationDescriptor:0000000000000000 configurationDescriptor
+     /tmp/ccnucHfz.s:2438   .rodata.configurationDescriptorData:0000000000000000 configurationDescriptorData
+ARM GAS  /tmp/ccnucHfz.s 			page 49
+
+
+     /tmp/ccnucHfz.s:2435   .rodata.configurationDescriptorData:0000000000000000 $d
+     /tmp/ccnucHfz.s:2443   .rodata.deviceDescriptor:0000000000000000 $d
+     /tmp/ccnucHfz.s:2447   .rodata.deviceDescriptor:0000000000000000 deviceDescriptor
+     /tmp/ccnucHfz.s:2454   .rodata.deviceDescriptorData:0000000000000000 deviceDescriptorData
+     /tmp/ccnucHfz.s:2451   .rodata.deviceDescriptorData:0000000000000000 $d
+     /tmp/ccnucHfz.s:2458   .rodata.ep_data_config:0000000000000000 $d
+     /tmp/ccnucHfz.s:2462   .rodata.ep_data_config:0000000000000000 ep_data_config
+     /tmp/ccnucHfz.s:2475   .rodata.languageDescriptor:0000000000000000 $d
+     /tmp/ccnucHfz.s:2485   .rodata.languageDescriptorData:0000000000000000 languageDescriptorData
+     /tmp/ccnucHfz.s:2482   .rodata.languageDescriptorData:0000000000000000 $d
+     /tmp/ccnucHfz.s:2488   .rodata.productDescriptor:0000000000000000 $d
+     /tmp/ccnucHfz.s:2498   .rodata.productDescriptorData:0000000000000000 productDescriptorData
+     /tmp/ccnucHfz.s:2495   .rodata.productDescriptorData:0000000000000000 $d
+     /tmp/ccnucHfz.s:2502   .rodata.serialNumberDescriptor:0000000000000000 $d
+     /tmp/ccnucHfz.s:2512   .rodata.serialNumberDescriptorData:0000000000000000 serialNumberDescriptorData
+     /tmp/ccnucHfz.s:2509   .rodata.serialNumberDescriptorData:0000000000000000 $d
+     /tmp/ccnucHfz.s:2516   .rodata.usbConfig:0000000000000000 $d
+     /tmp/ccnucHfz.s:2520   .rodata.usbConfig:0000000000000000 usbConfig
+     /tmp/ccnucHfz.s:2526   .rodata.vendorDescriptor:0000000000000000 $d
+     /tmp/ccnucHfz.s:2536   .rodata.vendorDescriptorData:0000000000000000 vendorDescriptorData
+     /tmp/ccnucHfz.s:2533   .rodata.vendorDescriptorData:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+__stats_start_measure_crit_isr
+__stats_stop_measure_crit_isr
+chSemSignalI
+chSemResetWithMessageI
+usbStallReceiveI
+usbStallTransmitI
+chEvtSignalI
+usbInitEndpointI
+chEvtBroadcastFlagsI
+chEvtSignal
+__stats_start_measure_crit_thd
+usbStartTransmitI
+__stats_stop_measure_crit_thd
+chSemWaitS
+usbStartReceiveI
+chEvtBroadcastFlags
+chThdSleep
+usb_lld_disable_endpoints
+usb_lld_init_endpoint
+chSemResetWithMessage
+usbStop
+chThdExit
+ch0
+chEvtObjectInit
+chSemObjectInit
+chThdCreateStatic
+chThdTerminate
+chSchRescheduleS
+chThdWait
+usbStart
+USBD1
+chEvtRegisterMaskWithFlags

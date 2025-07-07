@@ -1,0 +1,2674 @@
+ARM GAS  /tmp/ccTGJ6oL.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"tlsf.c"
+  13              		.text
+  14              		.section	.rodata.remove_free_block.str1.4,"aMS",%progbits,1
+  15              		.align	2
+  16              	.LC0:
+  17 0000 70726576 		.ascii	"prev && \"prev_free field can not be null\"\000"
+  17      20262620 
+  17      22707265 
+  17      765F6672 
+  17      65652066 
+  18 002a 0000     		.align	2
+  19              	.LC1:
+  20 002c 6E657874 		.ascii	"next && \"next_free field can not be null\"\000"
+  20      20262620 
+  20      226E6578 
+  20      745F6672 
+  20      65652066 
+  21              		.section	.text.remove_free_block,"ax",%progbits
+  22              		.align	1
+  23              		.p2align 4,,15
+  24              		.arch armv7e-m
+  25              		.syntax unified
+  26              		.thumb
+  27              		.thumb_func
+  28              		.fpu fpv4-sp-d16
+  29              		.type	remove_free_block, %function
+  30              	remove_free_block:
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  34 0002 CE68     		ldr	r6, [r1, #12]
+  35 0004 8D68     		ldr	r5, [r1, #8]
+  36 0006 85B0     		sub	sp, sp, #20
+  37 0008 0446     		mov	r4, r0
+  38 000a 5EB1     		cbz	r6, .L15
+  39 000c C5B1     		cbz	r5, .L16
+  40              	.L3:
+  41 000e 03EB4210 		add	r0, r3, r2, lsl #5
+  42 0012 04EB8000 		add	r0, r4, r0, lsl #2
+  43 0016 EE60     		str	r6, [r5, #12]
+  44 0018 B560     		str	r5, [r6, #8]
+  45 001a C66B     		ldr	r6, [r0, #60]
+  46 001c 8E42     		cmp	r6, r1
+  47 001e 1CD0     		beq	.L17
+  48              	.L1:
+  49 0020 05B0     		add	sp, sp, #20
+ARM GAS  /tmp/ccTGJ6oL.s 			page 2
+
+
+  50              		@ sp needed
+  51 0022 F0BD     		pop	{r4, r5, r6, r7, pc}
+  52              	.L15:
+  53 0024 1748     		ldr	r0, .L18
+  54 0026 0768     		ldr	r7, [r0]
+  55 0028 002F     		cmp	r7, #0
+  56 002a F0D0     		beq	.L3
+  57 002c 1648     		ldr	r0, .L18+4
+  58 002e 0191     		str	r1, [sp, #4]
+  59 0030 CDE90223 		strd	r2, r3, [sp, #8]
+  60 0034 B847     		blx	r7
+  61 0036 DDE90223 		ldrd	r2, r3, [sp, #8]
+  62 003a 0199     		ldr	r1, [sp, #4]
+  63 003c 002D     		cmp	r5, #0
+  64 003e E6D1     		bne	.L3
+  65              	.L16:
+  66 0040 1048     		ldr	r0, .L18
+  67 0042 0768     		ldr	r7, [r0]
+  68 0044 002F     		cmp	r7, #0
+  69 0046 E2D0     		beq	.L3
+  70 0048 1048     		ldr	r0, .L18+8
+  71 004a 0191     		str	r1, [sp, #4]
+  72 004c CDE90223 		strd	r2, r3, [sp, #8]
+  73 0050 B847     		blx	r7
+  74 0052 DDE90223 		ldrd	r2, r3, [sp, #8]
+  75 0056 0199     		ldr	r1, [sp, #4]
+  76 0058 D9E7     		b	.L3
+  77              	.L17:
+  78 005a AC42     		cmp	r4, r5
+  79 005c C563     		str	r5, [r0, #60]
+  80 005e DFD1     		bne	.L1
+  81 0060 04EB8205 		add	r5, r4, r2, lsl #2
+  82 0064 0120     		movs	r0, #1
+  83 0066 6969     		ldr	r1, [r5, #20]
+  84 0068 00FA03F3 		lsl	r3, r0, r3
+  85 006c 21EA0303 		bic	r3, r1, r3
+  86 0070 6B61     		str	r3, [r5, #20]
+  87 0072 002B     		cmp	r3, #0
+  88 0074 D4D1     		bne	.L1
+  89 0076 2369     		ldr	r3, [r4, #16]
+  90 0078 00FA02F2 		lsl	r2, r0, r2
+  91 007c 23EA0202 		bic	r2, r3, r2
+  92 0080 2261     		str	r2, [r4, #16]
+  93 0082 CDE7     		b	.L1
+  94              	.L19:
+  95              		.align	2
+  96              	.L18:
+  97 0084 00000000 		.word	.LANCHOR0
+  98 0088 00000000 		.word	.LC0
+  99 008c 2C000000 		.word	.LC1
+ 100              		.size	remove_free_block, .-remove_free_block
+ 101              		.section	.rodata.block_insert.str1.4,"aMS",%progbits,1
+ 102              		.align	2
+ 103              	.LC2:
+ 104 0000 63757272 		.ascii	"current && \"free list cannot have a null entry\"\000"
+ 104      656E7420 
+ 104      26262022 
+ARM GAS  /tmp/ccTGJ6oL.s 			page 3
+
+
+ 104      66726565 
+ 104      206C6973 
+ 105              		.align	2
+ 106              	.LC3:
+ 107 0030 626C6F63 		.ascii	"block_to_ptr(block) == align_ptr(block_to_ptr(block"
+ 107      6B5F746F 
+ 107      5F707472 
+ 107      28626C6F 
+ 107      636B2920 
+ 108 0063 292C2041 		.ascii	"), ALIGN_SIZE) && \"block not aligned properly\"\000"
+ 108      4C49474E 
+ 108      5F53495A 
+ 108      45292026 
+ 108      26202262 
+ 109              		.section	.text.block_insert,"ax",%progbits
+ 110              		.align	1
+ 111              		.p2align 4,,15
+ 112              		.syntax unified
+ 113              		.thumb
+ 114              		.thumb_func
+ 115              		.fpu fpv4-sp-d16
+ 116              		.type	block_insert, %function
+ 117              	block_insert:
+ 118              		@ args = 0, pretend = 0, frame = 8
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 121 0004 4B68     		ldr	r3, [r1, #4]
+ 122 0006 23F00303 		bic	r3, r3, #3
+ 123 000a 7F2B     		cmp	r3, #127
+ 124 000c 82B0     		sub	sp, sp, #8
+ 125 000e 0646     		mov	r6, r0
+ 126 0010 26D8     		bhi	.L21
+ 127 0012 9D10     		asrs	r5, r3, #2
+ 128 0014 0024     		movs	r4, #0
+ 129 0016 05EB4417 		add	r7, r5, r4, lsl #5
+ 130 001a 06EB8707 		add	r7, r6, r7, lsl #2
+ 131 001e 4FF00108 		mov	r8, #1
+ 132 0022 FB6B     		ldr	r3, [r7, #60]
+ 133 0024 83B3     		cbz	r3, .L34
+ 134              	.L23:
+ 135 0026 C1E90236 		strd	r3, r6, [r1, #8]
+ 136 002a D960     		str	r1, [r3, #12]
+ 137 002c 01F10B03 		add	r3, r1, #11
+ 138 0030 23F00303 		bic	r3, r3, #3
+ 139 0034 01F10802 		add	r2, r1, #8
+ 140 0038 9A42     		cmp	r2, r3
+ 141 003a 02D0     		beq	.L24
+ 142 003c 1A4B     		ldr	r3, .L36
+ 143 003e 1B68     		ldr	r3, [r3]
+ 144 0040 6BBB     		cbnz	r3, .L35
+ 145              	.L24:
+ 146 0042 F963     		str	r1, [r7, #60]
+ 147 0044 3369     		ldr	r3, [r6, #16]
+ 148 0046 06EB8404 		add	r4, r6, r4, lsl #2
+ 149 004a 43EA0803 		orr	r3, r3, r8
+ 150 004e 3361     		str	r3, [r6, #16]
+ 151 0050 6269     		ldr	r2, [r4, #20]
+ARM GAS  /tmp/ccTGJ6oL.s 			page 4
+
+
+ 152 0052 0123     		movs	r3, #1
+ 153 0054 AB40     		lsls	r3, r3, r5
+ 154 0056 1A43     		orrs	r2, r2, r3
+ 155 0058 6261     		str	r2, [r4, #20]
+ 156 005a 02B0     		add	sp, sp, #8
+ 157              		@ sp needed
+ 158 005c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 159              	.L21:
+ 160 0060 B3FA83F4 		clz	r4, r3
+ 161 0064 C4F11A05 		rsb	r5, r4, #26
+ 162 0068 EB40     		lsrs	r3, r3, r5
+ 163 006a C4F11904 		rsb	r4, r4, #25
+ 164 006e 83F02005 		eor	r5, r3, #32
+ 165 0072 05EB4417 		add	r7, r5, r4, lsl #5
+ 166 0076 06EB8707 		add	r7, r6, r7, lsl #2
+ 167 007a 4FF00108 		mov	r8, #1
+ 168 007e FB6B     		ldr	r3, [r7, #60]
+ 169 0080 08FA04F8 		lsl	r8, r8, r4
+ 170 0084 002B     		cmp	r3, #0
+ 171 0086 CED1     		bne	.L23
+ 172              	.L34:
+ 173 0088 074A     		ldr	r2, .L36
+ 174 008a 1268     		ldr	r2, [r2]
+ 175 008c 002A     		cmp	r2, #0
+ 176 008e CAD0     		beq	.L23
+ 177 0090 0648     		ldr	r0, .L36+4
+ 178 0092 CDE90031 		strd	r3, r1, [sp]
+ 179 0096 9047     		blx	r2
+ 180 0098 DDE90031 		ldrd	r3, r1, [sp]
+ 181 009c C3E7     		b	.L23
+ 182              	.L35:
+ 183 009e 0448     		ldr	r0, .L36+8
+ 184 00a0 0091     		str	r1, [sp]
+ 185 00a2 9847     		blx	r3
+ 186 00a4 0099     		ldr	r1, [sp]
+ 187 00a6 CCE7     		b	.L24
+ 188              	.L37:
+ 189              		.align	2
+ 190              	.L36:
+ 191 00a8 00000000 		.word	.LANCHOR0
+ 192 00ac 00000000 		.word	.LC2
+ 193 00b0 30000000 		.word	.LC3
+ 194              		.size	block_insert, .-block_insert
+ 195              		.section	.rodata.block_locate_free.str1.4,"aMS",%progbits,1
+ 196              		.align	2
+ 197              	.LC4:
+ 198 0000 736C5F6D 		.ascii	"sl_map && \"internal error - second level bitmap is"
+ 198      61702026 
+ 198      26202269 
+ 198      6E746572 
+ 198      6E616C20 
+ 199 0032 206E756C 		.ascii	" null\"\000"
+ 199      6C2200
+ 200 0039 000000   		.align	2
+ 201              	.LC5:
+ 202 003c 626C6F63 		.ascii	"block_size(block) >= size\000"
+ 202      6B5F7369 
+ARM GAS  /tmp/ccTGJ6oL.s 			page 5
+
+
+ 202      7A652862 
+ 202      6C6F636B 
+ 202      29203E3D 
+ 203              		.section	.text.block_locate_free,"ax",%progbits
+ 204              		.align	1
+ 205              		.p2align 4,,15
+ 206              		.syntax unified
+ 207              		.thumb
+ 208              		.thumb_func
+ 209              		.fpu fpv4-sp-d16
+ 210              		.type	block_locate_free, %function
+ 211              	block_locate_free:
+ 212              		@ args = 0, pretend = 0, frame = 16
+ 213              		@ frame_needed = 0, uses_anonymous_args = 0
+ 214 0000 30B5     		push	{r4, r5, lr}
+ 215 0002 85B0     		sub	sp, sp, #20
+ 216 0004 61B3     		cbz	r1, .L47
+ 217 0006 1F29     		cmp	r1, #31
+ 218 0008 0446     		mov	r4, r0
+ 219 000a 2DD8     		bhi	.L64
+ 220 000c 0B46     		mov	r3, r1
+ 221 000e 7F2B     		cmp	r3, #127
+ 222 0010 34D8     		bhi	.L42
+ 223              	.L66:
+ 224 0012 4FEAA30C 		asr	ip, r3, #2
+ 225 0016 0022     		movs	r2, #0
+ 226              	.L43:
+ 227 0018 04EB8203 		add	r3, r4, r2, lsl #2
+ 228 001c 4FF0FF3E 		mov	lr, #-1
+ 229 0020 5B69     		ldr	r3, [r3, #20]
+ 230 0022 0EFA0CFC 		lsl	ip, lr, ip
+ 231 0026 1CEA030C 		ands	ip, ip, r3
+ 232 002a 32D0     		beq	.L44
+ 233 002c 9CFAACF3 		rbit	r3, ip
+ 234 0030 B3FA83F3 		clz	r3, r3
+ 235              	.L46:
+ 236 0034 03EB4210 		add	r0, r3, r2, lsl #5
+ 237 0038 04EB8000 		add	r0, r4, r0, lsl #2
+ 238 003c C56B     		ldr	r5, [r0, #60]
+ 239 003e 7DB1     		cbz	r5, .L47
+ 240 0040 6868     		ldr	r0, [r5, #4]
+ 241 0042 20F00300 		bic	r0, r0, #3
+ 242 0046 8142     		cmp	r1, r0
+ 243 0048 03D9     		bls	.L51
+ 244 004a 2649     		ldr	r1, .L68
+ 245 004c 0968     		ldr	r1, [r1]
+ 246 004e 0029     		cmp	r1, #0
+ 247 0050 3CD1     		bne	.L65
+ 248              	.L51:
+ 249 0052 2046     		mov	r0, r4
+ 250 0054 2946     		mov	r1, r5
+ 251 0056 FFF7FEFF 		bl	remove_free_block
+ 252 005a 2846     		mov	r0, r5
+ 253 005c 05B0     		add	sp, sp, #20
+ 254              		@ sp needed
+ 255 005e 30BD     		pop	{r4, r5, pc}
+ 256              	.L47:
+ARM GAS  /tmp/ccTGJ6oL.s 			page 6
+
+
+ 257 0060 0025     		movs	r5, #0
+ 258 0062 2846     		mov	r0, r5
+ 259 0064 05B0     		add	sp, sp, #20
+ 260              		@ sp needed
+ 261 0066 30BD     		pop	{r4, r5, pc}
+ 262              	.L64:
+ 263 0068 B1FA81F3 		clz	r3, r1
+ 264 006c C3F11A02 		rsb	r2, r3, #26
+ 265 0070 0123     		movs	r3, #1
+ 266 0072 9340     		lsls	r3, r3, r2
+ 267 0074 013B     		subs	r3, r3, #1
+ 268 0076 0B44     		add	r3, r3, r1
+ 269 0078 7F2B     		cmp	r3, #127
+ 270 007a CAD9     		bls	.L66
+ 271              	.L42:
+ 272 007c B3FA83F2 		clz	r2, r3
+ 273 0080 C2F11A0C 		rsb	ip, r2, #26
+ 274 0084 23FA0CF3 		lsr	r3, r3, ip
+ 275 0088 83F0200C 		eor	ip, r3, #32
+ 276 008c C2F11902 		rsb	r2, r2, #25
+ 277 0090 C2E7     		b	.L43
+ 278              	.L44:
+ 279 0092 2069     		ldr	r0, [r4, #16]
+ 280 0094 0132     		adds	r2, r2, #1
+ 281 0096 0EFA02F2 		lsl	r2, lr, r2
+ 282 009a 0240     		ands	r2, r2, r0
+ 283 009c E0D0     		beq	.L47
+ 284 009e 92FAA2F2 		rbit	r2, r2
+ 285 00a2 B2FA82F2 		clz	r2, r2
+ 286 00a6 04EB8203 		add	r3, r4, r2, lsl #2
+ 287 00aa 5B69     		ldr	r3, [r3, #20]
+ 288 00ac ABB9     		cbnz	r3, .L67
+ 289 00ae 0D4B     		ldr	r3, .L68
+ 290 00b0 1D68     		ldr	r5, [r3]
+ 291 00b2 7346     		mov	r3, lr
+ 292 00b4 002D     		cmp	r5, #0
+ 293 00b6 BDD0     		beq	.L46
+ 294 00b8 0B48     		ldr	r0, .L68+4
+ 295 00ba CDF804E0 		str	lr, [sp, #4]
+ 296 00be CDE90221 		strd	r2, r1, [sp, #8]
+ 297 00c2 A847     		blx	r5
+ 298 00c4 DDE90132 		ldrd	r3, r2, [sp, #4]
+ 299 00c8 0399     		ldr	r1, [sp, #12]
+ 300 00ca B3E7     		b	.L46
+ 301              	.L65:
+ 302 00cc 0748     		ldr	r0, .L68+8
+ 303 00ce CDE90123 		strd	r2, r3, [sp, #4]
+ 304 00d2 8847     		blx	r1
+ 305 00d4 DDE90123 		ldrd	r2, r3, [sp, #4]
+ 306 00d8 BBE7     		b	.L51
+ 307              	.L67:
+ 308 00da 93FAA3F3 		rbit	r3, r3
+ 309 00de B3FA83F3 		clz	r3, r3
+ 310 00e2 A7E7     		b	.L46
+ 311              	.L69:
+ 312              		.align	2
+ 313              	.L68:
+ARM GAS  /tmp/ccTGJ6oL.s 			page 7
+
+
+ 314 00e4 00000000 		.word	.LANCHOR0
+ 315 00e8 00000000 		.word	.LC4
+ 316 00ec 3C000000 		.word	.LC5
+ 317              		.size	block_locate_free, .-block_locate_free
+ 318              		.section	.rodata.block_absorb.str1.4,"aMS",%progbits,1
+ 319              		.align	2
+ 320              	.LC6:
+ 321 0000 21626C6F 		.ascii	"!block_is_last(prev) && \"previous block can't be l"
+ 321      636B5F69 
+ 321      735F6C61 
+ 321      73742870 
+ 321      72657629 
+ 322 0032 61737421 		.ascii	"ast!\"\000"
+ 322      2200
+ 323              		.align	2
+ 324              	.LC7:
+ 325 0038 21626C6F 		.ascii	"!block_is_last(block)\000"
+ 325      636B5F69 
+ 325      735F6C61 
+ 325      73742862 
+ 325      6C6F636B 
+ 326              		.section	.text.block_absorb,"ax",%progbits
+ 327              		.align	1
+ 328              		.p2align 4,,15
+ 329              		.syntax unified
+ 330              		.thumb
+ 331              		.thumb_func
+ 332              		.fpu fpv4-sp-d16
+ 333              		.type	block_absorb, %function
+ 334              	block_absorb:
+ 335              		@ args = 0, pretend = 0, frame = 8
+ 336              		@ frame_needed = 0, uses_anonymous_args = 0
+ 337 0000 70B5     		push	{r4, r5, r6, lr}
+ 338 0002 4268     		ldr	r2, [r0, #4]
+ 339 0004 32F00303 		bics	r3, r2, #3
+ 340 0008 82B0     		sub	sp, sp, #8
+ 341 000a 0546     		mov	r5, r0
+ 342 000c 02D1     		bne	.L71
+ 343 000e 0F4B     		ldr	r3, .L82
+ 344 0010 1B68     		ldr	r3, [r3]
+ 345 0012 A3B9     		cbnz	r3, .L80
+ 346              	.L71:
+ 347 0014 4B68     		ldr	r3, [r1, #4]
+ 348 0016 23F00303 		bic	r3, r3, #3
+ 349 001a 0433     		adds	r3, r3, #4
+ 350 001c 1344     		add	r3, r3, r2
+ 351 001e 2E46     		mov	r6, r5
+ 352 0020 33F00304 		bics	r4, r3, #3
+ 353 0024 46F8043F 		str	r3, [r6, #4]!
+ 354 0028 02D1     		bne	.L72
+ 355 002a 084B     		ldr	r3, .L82
+ 356 002c 1B68     		ldr	r3, [r3]
+ 357 002e 1BB9     		cbnz	r3, .L81
+ 358              	.L72:
+ 359 0030 2846     		mov	r0, r5
+ 360 0032 3551     		str	r5, [r6, r4]
+ 361 0034 02B0     		add	sp, sp, #8
+ARM GAS  /tmp/ccTGJ6oL.s 			page 8
+
+
+ 362              		@ sp needed
+ 363 0036 70BD     		pop	{r4, r5, r6, pc}
+ 364              	.L81:
+ 365 0038 0548     		ldr	r0, .L82+4
+ 366 003a 9847     		blx	r3
+ 367 003c F8E7     		b	.L72
+ 368              	.L80:
+ 369 003e 0548     		ldr	r0, .L82+8
+ 370 0040 0191     		str	r1, [sp, #4]
+ 371 0042 9847     		blx	r3
+ 372 0044 6A68     		ldr	r2, [r5, #4]
+ 373 0046 0199     		ldr	r1, [sp, #4]
+ 374 0048 E4E7     		b	.L71
+ 375              	.L83:
+ 376 004a 00BF     		.align	2
+ 377              	.L82:
+ 378 004c 00000000 		.word	.LANCHOR0
+ 379 0050 38000000 		.word	.LC7
+ 380 0054 00000000 		.word	.LC6
+ 381              		.size	block_absorb, .-block_absorb
+ 382              		.section	.rodata.block_merge_next.str1.4,"aMS",%progbits,1
+ 383              		.align	2
+ 384              	.LC8:
+ 385 0000 6E657874 		.ascii	"next && \"next physical block can't be null\"\000"
+ 385      20262620 
+ 385      226E6578 
+ 385      74207068 
+ 385      79736963 
+ 386              		.align	2
+ 387              	.LC9:
+ 388 002c 21626C6F 		.ascii	"!block_is_last(block) && \"previous block can't be "
+ 388      636B5F69 
+ 388      735F6C61 
+ 388      73742862 
+ 388      6C6F636B 
+ 389 005e 6C617374 		.ascii	"last!\"\000"
+ 389      212200
+ 390              		.section	.text.block_merge_next,"ax",%progbits
+ 391              		.align	1
+ 392              		.p2align 4,,15
+ 393              		.syntax unified
+ 394              		.thumb
+ 395              		.thumb_func
+ 396              		.fpu fpv4-sp-d16
+ 397              		.type	block_merge_next, %function
+ 398              	block_merge_next:
+ 399              		@ args = 0, pretend = 0, frame = 0
+ 400              		@ frame_needed = 0, uses_anonymous_args = 0
+ 401 0000 4B68     		ldr	r3, [r1, #4]
+ 402 0002 23F00303 		bic	r3, r3, #3
+ 403 0006 70B5     		push	{r4, r5, r6, lr}
+ 404 0008 CD18     		adds	r5, r1, r3
+ 405 000a 0C46     		mov	r4, r1
+ 406 000c 0646     		mov	r6, r0
+ 407 000e 0435     		adds	r5, r5, #4
+ 408 0010 2BBB     		cbnz	r3, .L85
+ 409 0012 1C4B     		ldr	r3, .L103
+ARM GAS  /tmp/ccTGJ6oL.s 			page 9
+
+
+ 410 0014 1B68     		ldr	r3, [r3]
+ 411 0016 03BB     		cbnz	r3, .L100
+ 412              	.L87:
+ 413 0018 6B68     		ldr	r3, [r5, #4]
+ 414 001a DA07     		lsls	r2, r3, #31
+ 415 001c 2BD5     		bpl	.L89
+ 416 001e 6268     		ldr	r2, [r4, #4]
+ 417 0020 32F00302 		bics	r2, r2, #3
+ 418 0024 02D1     		bne	.L90
+ 419 0026 174A     		ldr	r2, .L103
+ 420 0028 1268     		ldr	r2, [r2]
+ 421 002a 32BB     		cbnz	r2, .L101
+ 422              	.L90:
+ 423 002c 23F00303 		bic	r3, r3, #3
+ 424 0030 7F2B     		cmp	r3, #127
+ 425 0032 1DD9     		bls	.L102
+ 426 0034 B3FA83F2 		clz	r2, r3
+ 427 0038 C2F11A01 		rsb	r1, r2, #26
+ 428 003c CB40     		lsrs	r3, r3, r1
+ 429 003e 83F02003 		eor	r3, r3, #32
+ 430 0042 C2F11902 		rsb	r2, r2, #25
+ 431              	.L92:
+ 432 0046 3046     		mov	r0, r6
+ 433 0048 2946     		mov	r1, r5
+ 434 004a FFF7FEFF 		bl	remove_free_block
+ 435 004e 2946     		mov	r1, r5
+ 436 0050 2046     		mov	r0, r4
+ 437 0052 BDE87040 		pop	{r4, r5, r6, lr}
+ 438 0056 FFF7FEBF 		b	block_absorb
+ 439              	.L100:
+ 440 005a 0B48     		ldr	r0, .L103+4
+ 441 005c 9847     		blx	r3
+ 442              	.L85:
+ 443 005e 002D     		cmp	r5, #0
+ 444 0060 DAD1     		bne	.L87
+ 445 0062 084B     		ldr	r3, .L103
+ 446 0064 1B68     		ldr	r3, [r3]
+ 447 0066 002B     		cmp	r3, #0
+ 448 0068 D6D0     		beq	.L87
+ 449 006a 0848     		ldr	r0, .L103+8
+ 450 006c 9847     		blx	r3
+ 451 006e D3E7     		b	.L87
+ 452              	.L102:
+ 453 0070 9B10     		asrs	r3, r3, #2
+ 454 0072 0022     		movs	r2, #0
+ 455 0074 E7E7     		b	.L92
+ 456              	.L89:
+ 457 0076 2046     		mov	r0, r4
+ 458 0078 70BD     		pop	{r4, r5, r6, pc}
+ 459              	.L101:
+ 460 007a 0548     		ldr	r0, .L103+12
+ 461 007c 9047     		blx	r2
+ 462 007e 6B68     		ldr	r3, [r5, #4]
+ 463 0080 D4E7     		b	.L90
+ 464              	.L104:
+ 465 0082 00BF     		.align	2
+ 466              	.L103:
+ARM GAS  /tmp/ccTGJ6oL.s 			page 10
+
+
+ 467 0084 00000000 		.word	.LANCHOR0
+ 468 0088 38000000 		.word	.LC7
+ 469 008c 00000000 		.word	.LC8
+ 470 0090 2C000000 		.word	.LC9
+ 471              		.size	block_merge_next, .-block_merge_next
+ 472              		.section	.rodata.block_split.str1.4,"aMS",%progbits,1
+ 473              		.align	2
+ 474              	.LC10:
+ 475 0000 626C6F63 		.ascii	"block_to_ptr(remaining) == align_ptr(block_to_ptr(r"
+ 475      6B5F746F 
+ 475      5F707472 
+ 475      2872656D 
+ 475      61696E69 
+ 476 0033 656D6169 		.ascii	"emaining), ALIGN_SIZE) && \"remaining block not ali"
+ 476      6E696E67 
+ 476      292C2041 
+ 476      4C49474E 
+ 476      5F53495A 
+ 477 0065 676E6564 		.ascii	"gned properly\"\000"
+ 477      2070726F 
+ 477      7065726C 
+ 477      792200
+ 478              		.align	2
+ 479              	.LC11:
+ 480 0074 626C6F63 		.ascii	"block_size(block) == remain_size + size + block_hea"
+ 480      6B5F7369 
+ 480      7A652862 
+ 480      6C6F636B 
+ 480      29203D3D 
+ 481 00a7 6465725F 		.ascii	"der_overhead\000"
+ 481      6F766572 
+ 481      68656164 
+ 481      00
+ 482              		.align	2
+ 483              	.LC12:
+ 484 00b4 626C6F63 		.ascii	"block_size(remaining) >= block_size_min && \"block "
+ 484      6B5F7369 
+ 484      7A652872 
+ 484      656D6169 
+ 484      6E696E67 
+ 485 00e6 73706C69 		.ascii	"split with invalid size\"\000"
+ 485      74207769 
+ 485      74682069 
+ 485      6E76616C 
+ 485      69642073 
+ 486              		.section	.text.block_split,"ax",%progbits
+ 487              		.align	1
+ 488              		.p2align 4,,15
+ 489              		.syntax unified
+ 490              		.thumb
+ 491              		.thumb_func
+ 492              		.fpu fpv4-sp-d16
+ 493              		.type	block_split, %function
+ 494              	block_split:
+ 495              		@ args = 0, pretend = 0, frame = 0
+ 496              		@ frame_needed = 0, uses_anonymous_args = 0
+ 497 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ARM GAS  /tmp/ccTGJ6oL.s 			page 11
+
+
+ 498 0004 4268     		ldr	r2, [r0, #4]
+ 499 0006 4418     		adds	r4, r0, r1
+ 500 0008 0646     		mov	r6, r0
+ 501 000a 04F10F00 		add	r0, r4, #15
+ 502 000e 22F00302 		bic	r2, r2, #3
+ 503 0012 251D     		adds	r5, r4, #4
+ 504 0014 20F00300 		bic	r0, r0, #3
+ 505 0018 0C34     		adds	r4, r4, #12
+ 506 001a 531A     		subs	r3, r2, r1
+ 507 001c 8442     		cmp	r4, r0
+ 508 001e 8846     		mov	r8, r1
+ 509 0020 A3F10407 		sub	r7, r3, #4
+ 510 0024 2FD0     		beq	.L106
+ 511 0026 214B     		ldr	r3, .L126
+ 512 0028 1B68     		ldr	r3, [r3]
+ 513 002a 3BBB     		cbnz	r3, .L123
+ 514              	.L107:
+ 515 002c 6B68     		ldr	r3, [r5, #4]
+ 516 002e 03F00303 		and	r3, r3, #3
+ 517 0032 3B43     		orrs	r3, r3, r7
+ 518 0034 6B60     		str	r3, [r5, #4]
+ 519 0036 23F00303 		bic	r3, r3, #3
+ 520 003a 0B2B     		cmp	r3, #11
+ 521 003c 02D8     		bhi	.L108
+ 522 003e 1B4B     		ldr	r3, .L126
+ 523 0040 1B68     		ldr	r3, [r3]
+ 524 0042 63BB     		cbnz	r3, .L124
+ 525              	.L108:
+ 526 0044 7368     		ldr	r3, [r6, #4]
+ 527 0046 03F00303 		and	r3, r3, #3
+ 528 004a 43EA0801 		orr	r1, r3, r8
+ 529 004e 7160     		str	r1, [r6, #4]
+ 530 0050 6B68     		ldr	r3, [r5, #4]
+ 531 0052 23F00303 		bic	r3, r3, #3
+ 532 0056 1C44     		add	r4, r4, r3
+ 533 0058 261F     		subs	r6, r4, #4
+ 534 005a 13B9     		cbnz	r3, .L109
+ 535 005c 134B     		ldr	r3, .L126
+ 536 005e 1B68     		ldr	r3, [r3]
+ 537 0060 03BB     		cbnz	r3, .L125
+ 538              	.L109:
+ 539 0062 7368     		ldr	r3, [r6, #4]
+ 540 0064 44F8045C 		str	r5, [r4, #-4]
+ 541 0068 43F00203 		orr	r3, r3, #2
+ 542 006c 7360     		str	r3, [r6, #4]
+ 543 006e 6B68     		ldr	r3, [r5, #4]
+ 544 0070 43F00103 		orr	r3, r3, #1
+ 545 0074 2846     		mov	r0, r5
+ 546 0076 6B60     		str	r3, [r5, #4]
+ 547 0078 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 548              	.L123:
+ 549 007c 0C48     		ldr	r0, .L126+4
+ 550 007e 9847     		blx	r3
+ 551 0080 7268     		ldr	r2, [r6, #4]
+ 552 0082 22F00302 		bic	r2, r2, #3
+ 553              	.L106:
+ 554 0086 08F10403 		add	r3, r8, #4
+ARM GAS  /tmp/ccTGJ6oL.s 			page 12
+
+
+ 555 008a 3B44     		add	r3, r3, r7
+ 556 008c 9342     		cmp	r3, r2
+ 557 008e CDD0     		beq	.L107
+ 558 0090 064B     		ldr	r3, .L126
+ 559 0092 1B68     		ldr	r3, [r3]
+ 560 0094 002B     		cmp	r3, #0
+ 561 0096 C9D0     		beq	.L107
+ 562 0098 0648     		ldr	r0, .L126+8
+ 563 009a 9847     		blx	r3
+ 564 009c C6E7     		b	.L107
+ 565              	.L124:
+ 566 009e 0648     		ldr	r0, .L126+12
+ 567 00a0 9847     		blx	r3
+ 568 00a2 CFE7     		b	.L108
+ 569              	.L125:
+ 570 00a4 0548     		ldr	r0, .L126+16
+ 571 00a6 9847     		blx	r3
+ 572 00a8 DBE7     		b	.L109
+ 573              	.L127:
+ 574 00aa 00BF     		.align	2
+ 575              	.L126:
+ 576 00ac 00000000 		.word	.LANCHOR0
+ 577 00b0 00000000 		.word	.LC10
+ 578 00b4 74000000 		.word	.LC11
+ 579 00b8 B4000000 		.word	.LC12
+ 580 00bc 38000000 		.word	.LC7
+ 581              		.size	block_split, .-block_split
+ 582              		.section	.rodata.block_trim_free.str1.4,"aMS",%progbits,1
+ 583              		.align	2
+ 584              	.LC13:
+ 585 0000 626C6F63 		.ascii	"block_is_free(block) && \"block must be free\"\000"
+ 585      6B5F6973 
+ 585      5F667265 
+ 585      6528626C 
+ 585      6F636B29 
+ 586              		.section	.text.block_trim_free,"ax",%progbits
+ 587              		.align	1
+ 588              		.p2align 4,,15
+ 589              		.syntax unified
+ 590              		.thumb
+ 591              		.thumb_func
+ 592              		.fpu fpv4-sp-d16
+ 593              		.type	block_trim_free, %function
+ 594              	block_trim_free:
+ 595              		@ args = 0, pretend = 0, frame = 8
+ 596              		@ frame_needed = 0, uses_anonymous_args = 0
+ 597 0000 70B5     		push	{r4, r5, r6, lr}
+ 598 0002 4B68     		ldr	r3, [r1, #4]
+ 599 0004 0C46     		mov	r4, r1
+ 600 0006 D907     		lsls	r1, r3, #31
+ 601 0008 82B0     		sub	sp, sp, #8
+ 602 000a 0546     		mov	r5, r0
+ 603 000c 02D4     		bmi	.L129
+ 604 000e 1849     		ldr	r1, .L142
+ 605 0010 0968     		ldr	r1, [r1]
+ 606 0012 11BB     		cbnz	r1, .L139
+ 607              	.L129:
+ARM GAS  /tmp/ccTGJ6oL.s 			page 13
+
+
+ 608 0014 23F00303 		bic	r3, r3, #3
+ 609 0018 02F11001 		add	r1, r2, #16
+ 610 001c 8B42     		cmp	r3, r1
+ 611 001e 01D2     		bcs	.L140
+ 612 0020 02B0     		add	sp, sp, #8
+ 613              		@ sp needed
+ 614 0022 70BD     		pop	{r4, r5, r6, pc}
+ 615              	.L140:
+ 616 0024 1146     		mov	r1, r2
+ 617 0026 2046     		mov	r0, r4
+ 618 0028 FFF7FEFF 		bl	block_split
+ 619 002c 6368     		ldr	r3, [r4, #4]
+ 620 002e 04F10806 		add	r6, r4, #8
+ 621 0032 23F00303 		bic	r3, r3, #3
+ 622 0036 0146     		mov	r1, r0
+ 623 0038 1E44     		add	r6, r6, r3
+ 624 003a 13B9     		cbnz	r3, .L131
+ 625 003c 0C4B     		ldr	r3, .L142
+ 626 003e 1B68     		ldr	r3, [r3]
+ 627 0040 8BB9     		cbnz	r3, .L141
+ 628              	.L131:
+ 629 0042 4B68     		ldr	r3, [r1, #4]
+ 630 0044 46F8044C 		str	r4, [r6, #-4]
+ 631 0048 43F00203 		orr	r3, r3, #2
+ 632 004c 2846     		mov	r0, r5
+ 633 004e 4B60     		str	r3, [r1, #4]
+ 634 0050 02B0     		add	sp, sp, #8
+ 635              		@ sp needed
+ 636 0052 BDE87040 		pop	{r4, r5, r6, lr}
+ 637 0056 FFF7FEBF 		b	block_insert
+ 638              	.L139:
+ 639 005a 0648     		ldr	r0, .L142+4
+ 640 005c 0192     		str	r2, [sp, #4]
+ 641 005e 8847     		blx	r1
+ 642 0060 6368     		ldr	r3, [r4, #4]
+ 643 0062 019A     		ldr	r2, [sp, #4]
+ 644 0064 D6E7     		b	.L129
+ 645              	.L141:
+ 646 0066 0190     		str	r0, [sp, #4]
+ 647 0068 0348     		ldr	r0, .L142+8
+ 648 006a 9847     		blx	r3
+ 649 006c 0199     		ldr	r1, [sp, #4]
+ 650 006e E8E7     		b	.L131
+ 651              	.L143:
+ 652              		.align	2
+ 653              	.L142:
+ 654 0070 00000000 		.word	.LANCHOR0
+ 655 0074 00000000 		.word	.LC13
+ 656 0078 38000000 		.word	.LC7
+ 657              		.size	block_trim_free, .-block_trim_free
+ 658              		.section	.rodata.tlsf_check.str1.4,"aMS",%progbits,1
+ 659              		.align	2
+ 660              	.LC14:
+ 661 0000 21736C5F 		.ascii	"!sl_map && \"second-level map must be null\"\000"
+ 661      6D617020 
+ 661      26262022 
+ 661      7365636F 
+ARM GAS  /tmp/ccTGJ6oL.s 			page 14
+
+
+ 661      6E642D6C 
+ 662 002b 00       		.align	2
+ 663              	.LC15:
+ 664 002c 626C6F63 		.ascii	"block == &control->block_null && \"block list must "
+ 664      6B203D3D 
+ 664      2026636F 
+ 664      6E74726F 
+ 664      6C2D3E62 
+ 665 005e 6265206E 		.ascii	"be null\"\000"
+ 665      756C6C22 
+ 665      00
+ 666 0067 00       		.align	2
+ 667              	.LC16:
+ 668 0068 626C6F63 		.ascii	"block != &control->block_null && \"block should not"
+ 668      6B20213D 
+ 668      2026636F 
+ 668      6E74726F 
+ 668      6C2D3E62 
+ 669 009a 20626520 		.ascii	" be null\"\000"
+ 669      6E756C6C 
+ 669      2200
+ 670              		.align	2
+ 671              	.LC17:
+ 672 00a4 626C6F63 		.ascii	"block_is_free(block) && \"block should be free\"\000"
+ 672      6B5F6973 
+ 672      5F667265 
+ 672      6528626C 
+ 672      6F636B29 
+ 673 00d3 00       		.align	2
+ 674              	.LC18:
+ 675 00d4 21626C6F 		.ascii	"!block_is_prev_free(block) && \"blocks should have "
+ 675      636B5F69 
+ 675      735F7072 
+ 675      65765F66 
+ 675      72656528 
+ 676 0106 636F616C 		.ascii	"coalesced\"\000"
+ 676      65736365 
+ 676      642200
+ 677 0111 000000   		.align	2
+ 678              	.LC19:
+ 679 0114 21626C6F 		.ascii	"!block_is_free(block_next(block)) && \"blocks shoul"
+ 679      636B5F69 
+ 679      735F6672 
+ 679      65652862 
+ 679      6C6F636B 
+ 680 0146 64206861 		.ascii	"d have coalesced\"\000"
+ 680      76652063 
+ 680      6F616C65 
+ 680      73636564 
+ 680      2200
+ 681              		.align	2
+ 682              	.LC20:
+ 683 0158 626C6F63 		.ascii	"block_is_prev_free(block_next(block)) && \"block sh"
+ 683      6B5F6973 
+ 683      5F707265 
+ 683      765F6672 
+ 683      65652862 
+ARM GAS  /tmp/ccTGJ6oL.s 			page 15
+
+
+ 684 018a 6F756C64 		.ascii	"ould be free\"\000"
+ 684      20626520 
+ 684      66726565 
+ 684      2200
+ 685              		.align	2
+ 686              	.LC21:
+ 687 0198 626C6F63 		.ascii	"block_size(block) >= block_size_min && \"block not "
+ 687      6B5F7369 
+ 687      7A652862 
+ 687      6C6F636B 
+ 687      29203E3D 
+ 688 01ca 6D696E69 		.ascii	"minimum size\"\000"
+ 688      6D756D20 
+ 688      73697A65 
+ 688      2200
+ 689              		.align	2
+ 690              	.LC22:
+ 691 01d8 666C6920 		.ascii	"fli == i && sli == j && \"block size indexed in wro"
+ 691      3D3D2069 
+ 691      20262620 
+ 691      736C6920 
+ 691      3D3D206A 
+ 692 020a 6E67206C 		.ascii	"ng list\"\000"
+ 692      69737422 
+ 692      00
+ 693              		.section	.text.tlsf_check,"ax",%progbits
+ 694              		.align	1
+ 695              		.p2align 4,,15
+ 696              		.global	tlsf_check
+ 697              		.syntax unified
+ 698              		.thumb
+ 699              		.thumb_func
+ 700              		.fpu fpv4-sp-d16
+ 701              		.type	tlsf_check, %function
+ 702              	tlsf_check:
+ 703              		@ args = 0, pretend = 0, frame = 16
+ 704              		@ frame_needed = 0, uses_anonymous_args = 0
+ 705 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 706 0004 85B0     		sub	sp, sp, #20
+ 707 0006 00F13803 		add	r3, r0, #56
+ 708 000a 0025     		movs	r5, #0
+ 709 000c 0393     		str	r3, [sp, #12]
+ 710 000e DFF88482 		ldr	r8, .L264+40
+ 711 0012 00F11403 		add	r3, r0, #20
+ 712 0016 8146     		mov	r9, r0
+ 713 0018 0193     		str	r3, [sp, #4]
+ 714 001a AA46     		mov	r10, r5
+ 715              	.L145:
+ 716 001c 0123     		movs	r3, #1
+ 717 001e 03FA0AF3 		lsl	r3, r3, r10
+ 718 0022 0293     		str	r3, [sp, #8]
+ 719 0024 039B     		ldr	r3, [sp, #12]
+ 720 0026 0093     		str	r3, [sp]
+ 721 0028 4FF0000B 		mov	fp, #0
+ 722 002c 4B46     		mov	r3, r9
+ 723 002e D946     		mov	r9, fp
+ 724 0030 9B46     		mov	fp, r3
+ARM GAS  /tmp/ccTGJ6oL.s 			page 16
+
+
+ 725              	.L181:
+ 726 0032 019B     		ldr	r3, [sp, #4]
+ 727 0034 1968     		ldr	r1, [r3]
+ 728 0036 0123     		movs	r3, #1
+ 729 0038 03FA09F0 		lsl	r0, r3, r9
+ 730 003c 009B     		ldr	r3, [sp]
+ 731 003e 53F8044F 		ldr	r4, [r3, #4]!
+ 732 0042 0093     		str	r3, [sp]
+ 733 0044 0840     		ands	r0, r0, r1
+ 734 0046 029B     		ldr	r3, [sp, #8]
+ 735 0048 DBF81010 		ldr	r1, [fp, #16]
+ 736 004c 0B42     		tst	r3, r1
+ 737 004e 40F0AD80 		bne	.L146
+ 738 0052 0028     		cmp	r0, #0
+ 739 0054 00F0AD80 		beq	.L147
+ 740 0058 D8F80010 		ldr	r1, [r8]
+ 741 005c 0029     		cmp	r1, #0
+ 742 005e 40F00281 		bne	.L250
+ 743              	.L148:
+ 744 0062 013D     		subs	r5, r5, #1
+ 745              	.L149:
+ 746 0064 A345     		cmp	fp, r4
+ 747 0066 39D1     		bne	.L152
+ 748 0068 F3E0     		b	.L251
+ 749              	.L261:
+ 750 006a D8F80030 		ldr	r3, [r8]
+ 751 006e 002B     		cmp	r3, #0
+ 752 0070 40F0CC80 		bne	.L252
+ 753 0074 6368     		ldr	r3, [r4, #4]
+ 754 0076 23F00301 		bic	r1, r3, #3
+ 755 007a 7E18     		adds	r6, r7, r1
+ 756 007c 043E     		subs	r6, r6, #4
+ 757 007e 0029     		cmp	r1, #0
+ 758 0080 40F09080 		bne	.L162
+ 759              	.L163:
+ 760 0084 7368     		ldr	r3, [r6, #4]
+ 761 0086 DB07     		lsls	r3, r3, #31
+ 762 0088 05D5     		bpl	.L166
+ 763 008a 013D     		subs	r5, r5, #1
+ 764              	.L188:
+ 765 008c D8F80030 		ldr	r3, [r8]
+ 766 0090 002B     		cmp	r3, #0
+ 767 0092 40F0D180 		bne	.L253
+ 768              	.L166:
+ 769 0096 7368     		ldr	r3, [r6, #4]
+ 770 0098 9907     		lsls	r1, r3, #30
+ 771 009a 5BD5     		bpl	.L187
+ 772              	.L167:
+ 773 009c 6368     		ldr	r3, [r4, #4]
+ 774 009e 23F00301 		bic	r1, r3, #3
+ 775 00a2 0F44     		add	r7, r7, r1
+ 776 00a4 043F     		subs	r7, r7, #4
+ 777 00a6 0029     		cmp	r1, #0
+ 778 00a8 5FD1     		bne	.L190
+ 779 00aa D8F80020 		ldr	r2, [r8]
+ 780 00ae 002A     		cmp	r2, #0
+ 781 00b0 40F0AF80 		bne	.L254
+ARM GAS  /tmp/ccTGJ6oL.s 			page 17
+
+
+ 782              	.L171:
+ 783 00b4 7A68     		ldr	r2, [r7, #4]
+ 784 00b6 9207     		lsls	r2, r2, #30
+ 785 00b8 40F19980 		bpl	.L255
+ 786              	.L174:
+ 787 00bc 23F00301 		bic	r1, r3, #3
+ 788              	.L186:
+ 789 00c0 013D     		subs	r5, r5, #1
+ 790              	.L175:
+ 791 00c2 0023     		movs	r3, #0
+ 792 00c4 5345     		cmp	r3, r10
+ 793 00c6 4FEAA101 		asr	r1, r1, #2
+ 794 00ca 62D0     		beq	.L256
+ 795              	.L178:
+ 796 00cc D8F80030 		ldr	r3, [r8]
+ 797 00d0 002B     		cmp	r3, #0
+ 798 00d2 64D1     		bne	.L257
+ 799              	.L184:
+ 800 00d4 013D     		subs	r5, r5, #1
+ 801              	.L180:
+ 802 00d6 A468     		ldr	r4, [r4, #8]
+ 803 00d8 A345     		cmp	fp, r4
+ 804 00da 71D0     		beq	.L150
+ 805              	.L152:
+ 806 00dc 6368     		ldr	r3, [r4, #4]
+ 807 00de D807     		lsls	r0, r3, #31
+ 808 00e0 05D4     		bmi	.L154
+ 809 00e2 D8F80020 		ldr	r2, [r8]
+ 810 00e6 002A     		cmp	r2, #0
+ 811 00e8 40F0AC80 		bne	.L258
+ 812              	.L155:
+ 813 00ec 013D     		subs	r5, r5, #1
+ 814              	.L154:
+ 815 00ee 9A07     		lsls	r2, r3, #30
+ 816 00f0 05D5     		bpl	.L158
+ 817 00f2 D8F80020 		ldr	r2, [r8]
+ 818 00f6 002A     		cmp	r2, #0
+ 819 00f8 40F09480 		bne	.L259
+ 820              	.L189:
+ 821 00fc 013D     		subs	r5, r5, #1
+ 822              	.L158:
+ 823 00fe 23F00303 		bic	r3, r3, #3
+ 824 0102 261D     		adds	r6, r4, #4
+ 825 0104 1E44     		add	r6, r6, r3
+ 826 0106 04F10807 		add	r7, r4, #8
+ 827 010a 23B9     		cbnz	r3, .L159
+ 828 010c D8F80030 		ldr	r3, [r8]
+ 829 0110 002B     		cmp	r3, #0
+ 830 0112 40F08E80 		bne	.L260
+ 831              	.L159:
+ 832 0116 7368     		ldr	r3, [r6, #4]
+ 833 0118 DE07     		lsls	r6, r3, #31
+ 834 011a A6D4     		bmi	.L261
+ 835              	.L160:
+ 836 011c 6368     		ldr	r3, [r4, #4]
+ 837 011e 23F00301 		bic	r1, r3, #3
+ 838 0122 7E18     		adds	r6, r7, r1
+ARM GAS  /tmp/ccTGJ6oL.s 			page 18
+
+
+ 839 0124 043E     		subs	r6, r6, #4
+ 840 0126 0029     		cmp	r1, #0
+ 841 0128 3CD1     		bne	.L162
+ 842 012a D8F80030 		ldr	r3, [r8]
+ 843 012e 002B     		cmp	r3, #0
+ 844 0130 A8D0     		beq	.L163
+ 845 0132 4E48     		ldr	r0, .L264
+ 846 0134 9847     		blx	r3
+ 847 0136 6368     		ldr	r3, [r4, #4]
+ 848 0138 7268     		ldr	r2, [r6, #4]
+ 849 013a 23F00301 		bic	r1, r3, #3
+ 850 013e 7E18     		adds	r6, r7, r1
+ 851 0140 D007     		lsls	r0, r2, #31
+ 852 0142 A6F10406 		sub	r6, r6, #4
+ 853 0146 00D5     		bpl	.L164
+ 854              	.L191:
+ 855 0148 013D     		subs	r5, r5, #1
+ 856              	.L164:
+ 857 014a 0029     		cmp	r1, #0
+ 858 014c 9ED0     		beq	.L188
+ 859              	.L165:
+ 860 014e 7268     		ldr	r2, [r6, #4]
+ 861 0150 9207     		lsls	r2, r2, #30
+ 862 0152 0FD4     		bmi	.L172
+ 863              	.L187:
+ 864 0154 D8F80030 		ldr	r3, [r8]
+ 865 0158 002B     		cmp	r3, #0
+ 866 015a 70D1     		bne	.L262
+ 867 015c 6368     		ldr	r3, [r4, #4]
+ 868 015e 23F00301 		bic	r1, r3, #3
+ 869 0162 0F44     		add	r7, r7, r1
+ 870 0164 043F     		subs	r7, r7, #4
+ 871 0166 0029     		cmp	r1, #0
+ 872 0168 A4D0     		beq	.L171
+ 873              	.L190:
+ 874 016a 7A68     		ldr	r2, [r7, #4]
+ 875 016c 02F00202 		and	r2, r2, #2
+ 876              	.L170:
+ 877 0170 02B9     		cbnz	r2, .L172
+ 878 0172 013D     		subs	r5, r5, #1
+ 879              	.L172:
+ 880 0174 0B29     		cmp	r1, #11
+ 881 0176 3BD9     		bls	.L192
+ 882              	.L173:
+ 883 0178 7F29     		cmp	r1, #127
+ 884 017a A2D9     		bls	.L175
+ 885 017c B1FA81F3 		clz	r3, r1
+ 886 0180 C3F11A02 		rsb	r2, r3, #26
+ 887 0184 C3F11903 		rsb	r3, r3, #25
+ 888 0188 D140     		lsrs	r1, r1, r2
+ 889 018a 5345     		cmp	r3, r10
+ 890 018c 81F02001 		eor	r1, r1, #32
+ 891 0190 9CD1     		bne	.L178
+ 892              	.L256:
+ 893 0192 4945     		cmp	r1, r9
+ 894 0194 9FD0     		beq	.L180
+ 895 0196 D8F80030 		ldr	r3, [r8]
+ARM GAS  /tmp/ccTGJ6oL.s 			page 19
+
+
+ 896 019a 002B     		cmp	r3, #0
+ 897 019c 9AD0     		beq	.L184
+ 898              	.L257:
+ 899 019e 3448     		ldr	r0, .L264+4
+ 900 01a0 9847     		blx	r3
+ 901 01a2 97E7     		b	.L184
+ 902              	.L162:
+ 903 01a4 7268     		ldr	r2, [r6, #4]
+ 904 01a6 D007     		lsls	r0, r2, #31
+ 905 01a8 CED4     		bmi	.L191
+ 906 01aa D0E7     		b	.L165
+ 907              	.L146:
+ 908 01ac 0028     		cmp	r0, #0
+ 909 01ae 7FF459AF 		bne	.L149
+ 910              	.L147:
+ 911 01b2 A345     		cmp	fp, r4
+ 912 01b4 04D0     		beq	.L150
+ 913 01b6 D8F80010 		ldr	r1, [r8]
+ 914 01ba 0029     		cmp	r1, #0
+ 915 01bc 50D1     		bne	.L263
+ 916              	.L153:
+ 917 01be 013D     		subs	r5, r5, #1
+ 918              	.L150:
+ 919 01c0 09F10109 		add	r9, r9, #1
+ 920 01c4 B9F1200F 		cmp	r9, #32
+ 921 01c8 7FF433AF 		bne	.L181
+ 922 01cc 039B     		ldr	r3, [sp, #12]
+ 923 01ce 8033     		adds	r3, r3, #128
+ 924 01d0 0393     		str	r3, [sp, #12]
+ 925 01d2 019B     		ldr	r3, [sp, #4]
+ 926 01d4 0AF1010A 		add	r10, r10, #1
+ 927 01d8 0433     		adds	r3, r3, #4
+ 928 01da BAF10A0F 		cmp	r10, #10
+ 929 01de D946     		mov	r9, fp
+ 930 01e0 0193     		str	r3, [sp, #4]
+ 931 01e2 7FF41BAF 		bne	.L145
+ 932 01e6 2846     		mov	r0, r5
+ 933 01e8 05B0     		add	sp, sp, #20
+ 934              		@ sp needed
+ 935 01ea BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 936              	.L255:
+ 937 01ee 013D     		subs	r5, r5, #1
+ 938              	.L192:
+ 939 01f0 D8F80020 		ldr	r2, [r8]
+ 940 01f4 002A     		cmp	r2, #0
+ 941 01f6 3FF461AF 		beq	.L174
+ 942 01fa 1E48     		ldr	r0, .L264+8
+ 943 01fc 9047     		blx	r2
+ 944 01fe 6168     		ldr	r1, [r4, #4]
+ 945 0200 21F00301 		bic	r1, r1, #3
+ 946 0204 0B29     		cmp	r1, #11
+ 947 0206 7FF65BAF 		bls	.L186
+ 948 020a B5E7     		b	.L173
+ 949              	.L252:
+ 950 020c 1A48     		ldr	r0, .L264+12
+ 951 020e 9847     		blx	r3
+ 952 0210 84E7     		b	.L160
+ARM GAS  /tmp/ccTGJ6oL.s 			page 20
+
+
+ 953              	.L254:
+ 954 0212 1648     		ldr	r0, .L264
+ 955 0214 9047     		blx	r2
+ 956 0216 7A68     		ldr	r2, [r7, #4]
+ 957 0218 6368     		ldr	r3, [r4, #4]
+ 958 021a 02F00202 		and	r2, r2, #2
+ 959 021e 23F00301 		bic	r1, r3, #3
+ 960 0222 A5E7     		b	.L170
+ 961              	.L259:
+ 962 0224 1548     		ldr	r0, .L264+16
+ 963 0226 9047     		blx	r2
+ 964 0228 6368     		ldr	r3, [r4, #4]
+ 965 022a 9F07     		lsls	r7, r3, #30
+ 966 022c 7FF567AF 		bpl	.L158
+ 967 0230 64E7     		b	.L189
+ 968              	.L260:
+ 969 0232 0E48     		ldr	r0, .L264
+ 970 0234 9847     		blx	r3
+ 971 0236 6EE7     		b	.L159
+ 972              	.L253:
+ 973 0238 0C48     		ldr	r0, .L264
+ 974 023a 9847     		blx	r3
+ 975 023c 2BE7     		b	.L166
+ 976              	.L262:
+ 977 023e 1048     		ldr	r0, .L264+20
+ 978 0240 9847     		blx	r3
+ 979 0242 2BE7     		b	.L167
+ 980              	.L258:
+ 981 0244 0F48     		ldr	r0, .L264+24
+ 982 0246 9047     		blx	r2
+ 983 0248 6368     		ldr	r3, [r4, #4]
+ 984 024a D907     		lsls	r1, r3, #31
+ 985 024c 3FF54FAF 		bmi	.L154
+ 986 0250 4CE7     		b	.L155
+ 987              	.L251:
+ 988 0252 D8F80010 		ldr	r1, [r8]
+ 989 0256 0029     		cmp	r1, #0
+ 990 0258 B1D0     		beq	.L153
+ 991 025a 0B48     		ldr	r0, .L264+28
+ 992 025c 8847     		blx	r1
+ 993 025e AEE7     		b	.L153
+ 994              	.L263:
+ 995 0260 0A48     		ldr	r0, .L264+32
+ 996 0262 8847     		blx	r1
+ 997 0264 ABE7     		b	.L153
+ 998              	.L250:
+ 999 0266 0A48     		ldr	r0, .L264+36
+ 1000 0268 8847     		blx	r1
+ 1001 026a FAE6     		b	.L148
+ 1002              	.L265:
+ 1003              		.align	2
+ 1004              	.L264:
+ 1005 026c 38000000 		.word	.LC7
+ 1006 0270 D8010000 		.word	.LC22
+ 1007 0274 98010000 		.word	.LC21
+ 1008 0278 14010000 		.word	.LC19
+ 1009 027c D4000000 		.word	.LC18
+ARM GAS  /tmp/ccTGJ6oL.s 			page 21
+
+
+ 1010 0280 58010000 		.word	.LC20
+ 1011 0284 A4000000 		.word	.LC17
+ 1012 0288 68000000 		.word	.LC16
+ 1013 028c 2C000000 		.word	.LC15
+ 1014 0290 00000000 		.word	.LC14
+ 1015 0294 00000000 		.word	.LANCHOR0
+ 1016              		.size	tlsf_check, .-tlsf_check
+ 1017              		.section	.text.tlsf_walk_pool,"ax",%progbits
+ 1018              		.align	1
+ 1019              		.p2align 4,,15
+ 1020              		.global	tlsf_walk_pool
+ 1021              		.syntax unified
+ 1022              		.thumb
+ 1023              		.thumb_func
+ 1024              		.fpu fpv4-sp-d16
+ 1025              		.type	tlsf_walk_pool, %function
+ 1026              	tlsf_walk_pool:
+ 1027              		@ args = 0, pretend = 0, frame = 0
+ 1028              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1029 0000 0428     		cmp	r0, #4
+ 1030 0002 25D0     		beq	.L279
+ 1031 0004 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1032 0008 DFF84880 		ldr	r8, .L283
+ 1033 000c DFF84890 		ldr	r9, .L283+4
+ 1034 0010 0F46     		mov	r7, r1
+ 1035 0012 1646     		mov	r6, r2
+ 1036 0014 051F     		subs	r5, r0, #4
+ 1037 0016 0BE0     		b	.L267
+ 1038              	.L270:
+ 1039 0018 B847     		blx	r7
+ 1040 001a 6B68     		ldr	r3, [r5, #4]
+ 1041 001c 23F00303 		bic	r3, r3, #3
+ 1042 0020 1C44     		add	r4, r4, r3
+ 1043 0022 251F     		subs	r5, r4, #4
+ 1044 0024 13B9     		cbnz	r3, .L268
+ 1045 0026 D8F80030 		ldr	r3, [r8]
+ 1046 002a 73B9     		cbnz	r3, .L282
+ 1047              	.L268:
+ 1048 002c 042C     		cmp	r4, #4
+ 1049 002e 0AD0     		beq	.L266
+ 1050              	.L267:
+ 1051 0030 6968     		ldr	r1, [r5, #4]
+ 1052 0032 05F10804 		add	r4, r5, #8
+ 1053 0036 CA43     		mvns	r2, r1
+ 1054 0038 31F00301 		bics	r1, r1, #3
+ 1055 003c 3346     		mov	r3, r6
+ 1056 003e 2046     		mov	r0, r4
+ 1057 0040 02F00102 		and	r2, r2, #1
+ 1058 0044 E8D1     		bne	.L270
+ 1059              	.L266:
+ 1060 0046 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1061              	.L282:
+ 1062 004a 4846     		mov	r0, r9
+ 1063 004c 9847     		blx	r3
+ 1064 004e EDE7     		b	.L268
+ 1065              	.L279:
+ 1066 0050 7047     		bx	lr
+ARM GAS  /tmp/ccTGJ6oL.s 			page 22
+
+
+ 1067              	.L284:
+ 1068 0052 00BF     		.align	2
+ 1069              	.L283:
+ 1070 0054 00000000 		.word	.LANCHOR0
+ 1071 0058 38000000 		.word	.LC7
+ 1072              		.size	tlsf_walk_pool, .-tlsf_walk_pool
+ 1073              		.section	.text.tlsf_block_size,"ax",%progbits
+ 1074              		.align	1
+ 1075              		.p2align 4,,15
+ 1076              		.global	tlsf_block_size
+ 1077              		.syntax unified
+ 1078              		.thumb
+ 1079              		.thumb_func
+ 1080              		.fpu fpv4-sp-d16
+ 1081              		.type	tlsf_block_size, %function
+ 1082              	tlsf_block_size:
+ 1083              		@ args = 0, pretend = 0, frame = 0
+ 1084              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1085              		@ link register save eliminated.
+ 1086 0000 18B1     		cbz	r0, .L285
+ 1087 0002 50F8040C 		ldr	r0, [r0, #-4]
+ 1088 0006 20F00300 		bic	r0, r0, #3
+ 1089              	.L285:
+ 1090 000a 7047     		bx	lr
+ 1091              		.size	tlsf_block_size, .-tlsf_block_size
+ 1092              		.section	.rodata.tlsf_check_pool.str1.4,"aMS",%progbits,1
+ 1093              		.align	2
+ 1094              	.LC23:
+ 1095 0000 696E7465 		.ascii	"integ->prev_status == this_prev_status && \"prev st"
+ 1095      672D3E70 
+ 1095      7265765F 
+ 1095      73746174 
+ 1095      7573203D 
+ 1096 0032 61747573 		.ascii	"atus incorrect\"\000"
+ 1096      20696E63 
+ 1096      6F727265 
+ 1096      63742200 
+ 1097              		.section	.text.tlsf_check_pool,"ax",%progbits
+ 1098              		.align	1
+ 1099              		.p2align 4,,15
+ 1100              		.global	tlsf_check_pool
+ 1101              		.syntax unified
+ 1102              		.thumb
+ 1103              		.thumb_func
+ 1104              		.fpu fpv4-sp-d16
+ 1105              		.type	tlsf_check_pool, %function
+ 1106              	tlsf_check_pool:
+ 1107              		@ args = 0, pretend = 0, frame = 0
+ 1108              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1109 0000 0428     		cmp	r0, #4
+ 1110 0002 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1111 0006 08BF     		it	eq
+ 1112 0008 0026     		moveq	r6, #0
+ 1113 000a 2CD0     		beq	.L288
+ 1114 000c 0026     		movs	r6, #0
+ 1115 000e DFF86090 		ldr	r9, .L304+4
+ 1116 0012 164F     		ldr	r7, .L304
+ARM GAS  /tmp/ccTGJ6oL.s 			page 23
+
+
+ 1117 0014 DFF85C80 		ldr	r8, .L304+8
+ 1118 0018 041F     		subs	r4, r0, #4
+ 1119 001a 3046     		mov	r0, r6
+ 1120              	.L289:
+ 1121 001c 6568     		ldr	r5, [r4, #4]
+ 1122 001e 35F00302 		bics	r2, r5, #3
+ 1123 0022 C5F34001 		ubfx	r1, r5, #1, #1
+ 1124 0026 05F00105 		and	r5, r5, #1
+ 1125 002a 1CD0     		beq	.L288
+ 1126 002c 8142     		cmp	r1, r0
+ 1127 002e 03D0     		beq	.L291
+ 1128 0030 D9F80030 		ldr	r3, [r9]
+ 1129 0034 2BB9     		cbnz	r3, .L292
+ 1130 0036 013E     		subs	r6, r6, #1
+ 1131              	.L291:
+ 1132 0038 1444     		add	r4, r4, r2
+ 1133 003a 0434     		adds	r4, r4, #4
+ 1134              	.L293:
+ 1135 003c 9CB1     		cbz	r4, .L288
+ 1136              	.L303:
+ 1137 003e 2846     		mov	r0, r5
+ 1138 0040 ECE7     		b	.L289
+ 1139              	.L292:
+ 1140 0042 3846     		mov	r0, r7
+ 1141 0044 9847     		blx	r3
+ 1142 0046 6368     		ldr	r3, [r4, #4]
+ 1143 0048 23F00303 		bic	r3, r3, #3
+ 1144 004c 1C44     		add	r4, r4, r3
+ 1145 004e 013E     		subs	r6, r6, #1
+ 1146 0050 0434     		adds	r4, r4, #4
+ 1147 0052 002B     		cmp	r3, #0
+ 1148 0054 F2D1     		bne	.L293
+ 1149 0056 D9F80030 		ldr	r3, [r9]
+ 1150 005a 002B     		cmp	r3, #0
+ 1151 005c EED0     		beq	.L293
+ 1152 005e 4046     		mov	r0, r8
+ 1153 0060 9847     		blx	r3
+ 1154 0062 002C     		cmp	r4, #0
+ 1155 0064 EBD1     		bne	.L303
+ 1156              	.L288:
+ 1157 0066 3046     		mov	r0, r6
+ 1158 0068 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1159              	.L305:
+ 1160              		.align	2
+ 1161              	.L304:
+ 1162 006c 00000000 		.word	.LC23
+ 1163 0070 00000000 		.word	.LANCHOR0
+ 1164 0074 38000000 		.word	.LC7
+ 1165              		.size	tlsf_check_pool, .-tlsf_check_pool
+ 1166              		.section	.text.tlsf_size,"ax",%progbits
+ 1167              		.align	1
+ 1168              		.p2align 4,,15
+ 1169              		.global	tlsf_size
+ 1170              		.syntax unified
+ 1171              		.thumb
+ 1172              		.thumb_func
+ 1173              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccTGJ6oL.s 			page 24
+
+
+ 1174              		.type	tlsf_size, %function
+ 1175              	tlsf_size:
+ 1176              		@ args = 0, pretend = 0, frame = 0
+ 1177              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1178              		@ link register save eliminated.
+ 1179 0000 40F23C50 		movw	r0, #1340
+ 1180 0004 7047     		bx	lr
+ 1181              		.size	tlsf_size, .-tlsf_size
+ 1182 0006 00BF     		.section	.text.tlsf_align_size,"ax",%progbits
+ 1183              		.align	1
+ 1184              		.p2align 4,,15
+ 1185              		.global	tlsf_align_size
+ 1186              		.syntax unified
+ 1187              		.thumb
+ 1188              		.thumb_func
+ 1189              		.fpu fpv4-sp-d16
+ 1190              		.type	tlsf_align_size, %function
+ 1191              	tlsf_align_size:
+ 1192              		@ args = 0, pretend = 0, frame = 0
+ 1193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1194              		@ link register save eliminated.
+ 1195 0000 0420     		movs	r0, #4
+ 1196 0002 7047     		bx	lr
+ 1197              		.size	tlsf_align_size, .-tlsf_align_size
+ 1198              		.section	.text.tlsf_block_size_min,"ax",%progbits
+ 1199              		.align	1
+ 1200              		.p2align 4,,15
+ 1201              		.global	tlsf_block_size_min
+ 1202              		.syntax unified
+ 1203              		.thumb
+ 1204              		.thumb_func
+ 1205              		.fpu fpv4-sp-d16
+ 1206              		.type	tlsf_block_size_min, %function
+ 1207              	tlsf_block_size_min:
+ 1208              		@ args = 0, pretend = 0, frame = 0
+ 1209              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1210              		@ link register save eliminated.
+ 1211 0000 0C20     		movs	r0, #12
+ 1212 0002 7047     		bx	lr
+ 1213              		.size	tlsf_block_size_min, .-tlsf_block_size_min
+ 1214              		.section	.text.tlsf_block_size_max,"ax",%progbits
+ 1215              		.align	1
+ 1216              		.p2align 4,,15
+ 1217              		.global	tlsf_block_size_max
+ 1218              		.syntax unified
+ 1219              		.thumb
+ 1220              		.thumb_func
+ 1221              		.fpu fpv4-sp-d16
+ 1222              		.type	tlsf_block_size_max, %function
+ 1223              	tlsf_block_size_max:
+ 1224              		@ args = 0, pretend = 0, frame = 0
+ 1225              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1226              		@ link register save eliminated.
+ 1227 0000 4FF48030 		mov	r0, #65536
+ 1228 0004 7047     		bx	lr
+ 1229              		.size	tlsf_block_size_max, .-tlsf_block_size_max
+ 1230 0006 00BF     		.section	.text.tlsf_pool_overhead,"ax",%progbits
+ARM GAS  /tmp/ccTGJ6oL.s 			page 25
+
+
+ 1231              		.align	1
+ 1232              		.p2align 4,,15
+ 1233              		.global	tlsf_pool_overhead
+ 1234              		.syntax unified
+ 1235              		.thumb
+ 1236              		.thumb_func
+ 1237              		.fpu fpv4-sp-d16
+ 1238              		.type	tlsf_pool_overhead, %function
+ 1239              	tlsf_pool_overhead:
+ 1240              		@ args = 0, pretend = 0, frame = 0
+ 1241              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1242              		@ link register save eliminated.
+ 1243 0000 0820     		movs	r0, #8
+ 1244 0002 7047     		bx	lr
+ 1245              		.size	tlsf_pool_overhead, .-tlsf_pool_overhead
+ 1246              		.section	.text.tlsf_alloc_overhead,"ax",%progbits
+ 1247              		.align	1
+ 1248              		.p2align 4,,15
+ 1249              		.global	tlsf_alloc_overhead
+ 1250              		.syntax unified
+ 1251              		.thumb
+ 1252              		.thumb_func
+ 1253              		.fpu fpv4-sp-d16
+ 1254              		.type	tlsf_alloc_overhead, %function
+ 1255              	tlsf_alloc_overhead:
+ 1256              		@ args = 0, pretend = 0, frame = 0
+ 1257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1258              		@ link register save eliminated.
+ 1259 0000 0420     		movs	r0, #4
+ 1260 0002 7047     		bx	lr
+ 1261              		.size	tlsf_alloc_overhead, .-tlsf_alloc_overhead
+ 1262              		.section	.rodata.tlsf_add_pool.str1.4,"aMS",%progbits,1
+ 1263              		.align	2
+ 1264              	.LC24:
+ 1265 0000 746C7366 		.ascii	"tlsf_add_pool: Memory must be aligned by ALIGN_SIZE"
+ 1265      5F616464 
+ 1265      5F706F6F 
+ 1265      6C3A204D 
+ 1265      656D6F72 
+ 1266 0033 20627974 		.ascii	" bytes\000"
+ 1266      657300
+ 1267 003a 0000     		.align	2
+ 1268              	.LC25:
+ 1269 003c 746C7366 		.ascii	"tlsf_add_pool: Memory size error, adjust MAX_FLI co"
+ 1269      5F616464 
+ 1269      5F706F6F 
+ 1269      6C3A204D 
+ 1269      656D6F72 
+ 1270 006f 6E737461 		.ascii	"nstant\000"
+ 1270      6E7400
+ 1271              		.section	.text.tlsf_add_pool,"ax",%progbits
+ 1272              		.align	1
+ 1273              		.p2align 4,,15
+ 1274              		.global	tlsf_add_pool
+ 1275              		.syntax unified
+ 1276              		.thumb
+ 1277              		.thumb_func
+ARM GAS  /tmp/ccTGJ6oL.s 			page 26
+
+
+ 1278              		.fpu fpv4-sp-d16
+ 1279              		.type	tlsf_add_pool, %function
+ 1280              	tlsf_add_pool:
+ 1281              		@ args = 0, pretend = 0, frame = 0
+ 1282              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1283 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1284 0002 11F00305 		ands	r5, r1, #3
+ 1285 0006 2BD1     		bne	.L324
+ 1286 0008 083A     		subs	r2, r2, #8
+ 1287 000a 22F00302 		bic	r2, r2, #3
+ 1288 000e 0C46     		mov	r4, r1
+ 1289 0010 4FF6F473 		movw	r3, #65524
+ 1290 0014 A2F10C01 		sub	r1, r2, #12
+ 1291 0018 9942     		cmp	r1, r3
+ 1292 001a 18D8     		bhi	.L325
+ 1293 001c 2646     		mov	r6, r4
+ 1294 001e 42F00102 		orr	r2, r2, #1
+ 1295 0022 56F80439 		ldr	r3, [r6], #-4
+ 1296 0026 7260     		str	r2, [r6, #4]
+ 1297 0028 3146     		mov	r1, r6
+ 1298 002a FFF7FEFF 		bl	block_insert
+ 1299 002e 7368     		ldr	r3, [r6, #4]
+ 1300 0030 251D     		adds	r5, r4, #4
+ 1301 0032 23F00303 		bic	r3, r3, #3
+ 1302 0036 1D44     		add	r5, r5, r3
+ 1303 0038 2F1F     		subs	r7, r5, #4
+ 1304 003a 13B9     		cbnz	r3, .L316
+ 1305 003c 0E4B     		ldr	r3, .L328
+ 1306 003e 1B68     		ldr	r3, [r3]
+ 1307 0040 9BB9     		cbnz	r3, .L326
+ 1308              	.L316:
+ 1309 0042 0223     		movs	r3, #2
+ 1310 0044 45F8046C 		str	r6, [r5, #-4]
+ 1311 0048 2046     		mov	r0, r4
+ 1312 004a 7B60     		str	r3, [r7, #4]
+ 1313              	.L312:
+ 1314 004c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1315              	.L325:
+ 1316 004e 0A4B     		ldr	r3, .L328
+ 1317 0050 1C68     		ldr	r4, [r3]
+ 1318 0052 2046     		mov	r0, r4
+ 1319 0054 002C     		cmp	r4, #0
+ 1320 0056 F9D0     		beq	.L312
+ 1321 0058 0848     		ldr	r0, .L328+4
+ 1322 005a A047     		blx	r4
+ 1323 005c 2846     		mov	r0, r5
+ 1324 005e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1325              	.L324:
+ 1326 0060 054B     		ldr	r3, .L328
+ 1327 0062 1C68     		ldr	r4, [r3]
+ 1328 0064 24B9     		cbnz	r4, .L327
+ 1329              	.L323:
+ 1330 0066 0020     		movs	r0, #0
+ 1331 0068 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1332              	.L326:
+ 1333 006a 0548     		ldr	r0, .L328+8
+ 1334 006c 9847     		blx	r3
+ARM GAS  /tmp/ccTGJ6oL.s 			page 27
+
+
+ 1335 006e E8E7     		b	.L316
+ 1336              	.L327:
+ 1337 0070 0448     		ldr	r0, .L328+12
+ 1338 0072 A047     		blx	r4
+ 1339 0074 F7E7     		b	.L323
+ 1340              	.L329:
+ 1341 0076 00BF     		.align	2
+ 1342              	.L328:
+ 1343 0078 00000000 		.word	.LANCHOR0
+ 1344 007c 3C000000 		.word	.LC25
+ 1345 0080 38000000 		.word	.LC7
+ 1346 0084 00000000 		.word	.LC24
+ 1347              		.size	tlsf_add_pool, .-tlsf_add_pool
+ 1348              		.section	.rodata.tlsf_remove_pool.str1.4,"aMS",%progbits,1
+ 1349              		.align	2
+ 1350              	.LC26:
+ 1351 0000 21626C6F 		.ascii	"!block_is_free(block_next(block)) && \"next block s"
+ 1351      636B5F69 
+ 1351      735F6672 
+ 1351      65652862 
+ 1351      6C6F636B 
+ 1352 0032 686F756C 		.ascii	"hould not be free\"\000"
+ 1352      64206E6F 
+ 1352      74206265 
+ 1352      20667265 
+ 1352      652200
+ 1353 0045 000000   		.align	2
+ 1354              	.LC27:
+ 1355 0048 626C6F63 		.ascii	"block_size(block_next(block)) == 0 && \"next block "
+ 1355      6B5F7369 
+ 1355      7A652862 
+ 1355      6C6F636B 
+ 1355      5F6E6578 
+ 1356 007a 73697A65 		.ascii	"size should be zero\"\000"
+ 1356      2073686F 
+ 1356      756C6420 
+ 1356      6265207A 
+ 1356      65726F22 
+ 1357              		.section	.text.tlsf_remove_pool,"ax",%progbits
+ 1358              		.align	1
+ 1359              		.p2align 4,,15
+ 1360              		.global	tlsf_remove_pool
+ 1361              		.syntax unified
+ 1362              		.thumb
+ 1363              		.thumb_func
+ 1364              		.fpu fpv4-sp-d16
+ 1365              		.type	tlsf_remove_pool, %function
+ 1366              	tlsf_remove_pool:
+ 1367              		@ args = 0, pretend = 0, frame = 8
+ 1368              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1369 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1370 0002 51F80439 		ldr	r3, [r1], #-4
+ 1371 0006 DD07     		lsls	r5, r3, #31
+ 1372 0008 83B0     		sub	sp, sp, #12
+ 1373 000a 0446     		mov	r4, r0
+ 1374 000c 03D4     		bmi	.L331
+ 1375 000e 324F     		ldr	r7, .L365
+ARM GAS  /tmp/ccTGJ6oL.s 			page 28
+
+
+ 1376 0010 3A68     		ldr	r2, [r7]
+ 1377 0012 002A     		cmp	r2, #0
+ 1378 0014 49D1     		bne	.L360
+ 1379              	.L331:
+ 1380 0016 23F00303 		bic	r3, r3, #3
+ 1381 001a 0D1D     		adds	r5, r1, #4
+ 1382 001c 01F10806 		add	r6, r1, #8
+ 1383 0020 1D44     		add	r5, r5, r3
+ 1384 0022 D3B9     		cbnz	r3, .L332
+ 1385 0024 2C4F     		ldr	r7, .L365
+ 1386 0026 3B68     		ldr	r3, [r7]
+ 1387 0028 002B     		cmp	r3, #0
+ 1388 002a 44D1     		bne	.L361
+ 1389              	.L333:
+ 1390 002c 6B68     		ldr	r3, [r5, #4]
+ 1391 002e D807     		lsls	r0, r3, #31
+ 1392 0030 02D5     		bpl	.L335
+ 1393 0032 3B68     		ldr	r3, [r7]
+ 1394 0034 002B     		cmp	r3, #0
+ 1395 0036 49D1     		bne	.L362
+ 1396              	.L335:
+ 1397 0038 4B68     		ldr	r3, [r1, #4]
+ 1398 003a 23F00303 		bic	r3, r3, #3
+ 1399 003e 1E44     		add	r6, r6, r3
+ 1400 0040 043E     		subs	r6, r6, #4
+ 1401 0042 93B9     		cbnz	r3, .L363
+ 1402 0044 3A68     		ldr	r2, [r7]
+ 1403 0046 002A     		cmp	r2, #0
+ 1404 0048 3AD1     		bne	.L364
+ 1405              	.L339:
+ 1406 004a 9B10     		asrs	r3, r3, #2
+ 1407 004c 0022     		movs	r2, #0
+ 1408 004e 2046     		mov	r0, r4
+ 1409 0050 03B0     		add	sp, sp, #12
+ 1410              		@ sp needed
+ 1411 0052 BDE8F040 		pop	{r4, r5, r6, r7, lr}
+ 1412 0056 FFF7FEBF 		b	remove_free_block
+ 1413              	.L332:
+ 1414 005a 6B68     		ldr	r3, [r5, #4]
+ 1415 005c DA07     		lsls	r2, r3, #31
+ 1416 005e 05D5     		bpl	.L338
+ 1417 0060 1D4F     		ldr	r7, .L365
+ 1418 0062 3B68     		ldr	r3, [r7]
+ 1419 0064 002B     		cmp	r3, #0
+ 1420 0066 E7D0     		beq	.L335
+ 1421 0068 30E0     		b	.L362
+ 1422              	.L363:
+ 1423 006a 7368     		ldr	r3, [r6, #4]
+ 1424              	.L338:
+ 1425 006c 33F00303 		bics	r3, r3, #3
+ 1426 0070 02D0     		beq	.L359
+ 1427 0072 194B     		ldr	r3, .L365
+ 1428 0074 1B68     		ldr	r3, [r3]
+ 1429 0076 9BB9     		cbnz	r3, .L342
+ 1430              	.L359:
+ 1431 0078 4B68     		ldr	r3, [r1, #4]
+ 1432 007a 23F00303 		bic	r3, r3, #3
+ARM GAS  /tmp/ccTGJ6oL.s 			page 29
+
+
+ 1433 007e 7F2B     		cmp	r3, #127
+ 1434 0080 E3D9     		bls	.L339
+ 1435 0082 B3FA83F2 		clz	r2, r3
+ 1436 0086 C2F11A00 		rsb	r0, r2, #26
+ 1437 008a C340     		lsrs	r3, r3, r0
+ 1438 008c 83F02003 		eor	r3, r3, #32
+ 1439 0090 C2F11902 		rsb	r2, r2, #25
+ 1440 0094 2046     		mov	r0, r4
+ 1441 0096 03B0     		add	sp, sp, #12
+ 1442              		@ sp needed
+ 1443 0098 BDE8F040 		pop	{r4, r5, r6, r7, lr}
+ 1444 009c FFF7FEBF 		b	remove_free_block
+ 1445              	.L342:
+ 1446 00a0 0E48     		ldr	r0, .L365+4
+ 1447 00a2 0191     		str	r1, [sp, #4]
+ 1448 00a4 9847     		blx	r3
+ 1449 00a6 0199     		ldr	r1, [sp, #4]
+ 1450 00a8 E6E7     		b	.L359
+ 1451              	.L360:
+ 1452 00aa 0D48     		ldr	r0, .L365+8
+ 1453 00ac 0191     		str	r1, [sp, #4]
+ 1454 00ae 9047     		blx	r2
+ 1455 00b0 0199     		ldr	r1, [sp, #4]
+ 1456 00b2 4B68     		ldr	r3, [r1, #4]
+ 1457 00b4 AFE7     		b	.L331
+ 1458              	.L361:
+ 1459 00b6 0B48     		ldr	r0, .L365+12
+ 1460 00b8 0191     		str	r1, [sp, #4]
+ 1461 00ba 9847     		blx	r3
+ 1462 00bc 0199     		ldr	r1, [sp, #4]
+ 1463 00be B5E7     		b	.L333
+ 1464              	.L364:
+ 1465 00c0 0848     		ldr	r0, .L365+12
+ 1466 00c2 0191     		str	r1, [sp, #4]
+ 1467 00c4 9047     		blx	r2
+ 1468 00c6 7368     		ldr	r3, [r6, #4]
+ 1469 00c8 0199     		ldr	r1, [sp, #4]
+ 1470 00ca CFE7     		b	.L338
+ 1471              	.L362:
+ 1472 00cc 0648     		ldr	r0, .L365+16
+ 1473 00ce 0191     		str	r1, [sp, #4]
+ 1474 00d0 9847     		blx	r3
+ 1475 00d2 0199     		ldr	r1, [sp, #4]
+ 1476 00d4 B0E7     		b	.L335
+ 1477              	.L366:
+ 1478 00d6 00BF     		.align	2
+ 1479              	.L365:
+ 1480 00d8 00000000 		.word	.LANCHOR0
+ 1481 00dc 48000000 		.word	.LC27
+ 1482 00e0 A4000000 		.word	.LC17
+ 1483 00e4 38000000 		.word	.LC7
+ 1484 00e8 00000000 		.word	.LC26
+ 1485              		.size	tlsf_remove_pool, .-tlsf_remove_pool
+ 1486              		.section	.rodata.tlsf_create.str1.4,"aMS",%progbits,1
+ 1487              		.align	2
+ 1488              	.LC28:
+ 1489 0000 746C7366 		.ascii	"tlsf_create: Memory must be aligned to ALIGN_SIZE b"
+ARM GAS  /tmp/ccTGJ6oL.s 			page 30
+
+
+ 1489      5F637265 
+ 1489      6174653A 
+ 1489      204D656D 
+ 1489      6F727920 
+ 1490 0033 79746573 		.ascii	"ytes\000"
+ 1490      00
+ 1491              		.section	.text.tlsf_create,"ax",%progbits
+ 1492              		.align	1
+ 1493              		.p2align 4,,15
+ 1494              		.global	tlsf_create
+ 1495              		.syntax unified
+ 1496              		.thumb
+ 1497              		.thumb_func
+ 1498              		.fpu fpv4-sp-d16
+ 1499              		.type	tlsf_create, %function
+ 1500              	tlsf_create:
+ 1501              		@ args = 0, pretend = 0, frame = 0
+ 1502              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1503 0000 124B     		ldr	r3, .L377
+ 1504 0002 10B5     		push	{r4, lr}
+ 1505 0004 1960     		str	r1, [r3]
+ 1506 0006 10F00303 		ands	r3, r0, #3
+ 1507 000a 17D1     		bne	.L376
+ 1508 000c 0446     		mov	r4, r0
+ 1509 000e C0E90200 		strd	r0, r0, [r0, #8]
+ 1510 0012 0361     		str	r3, [r0, #16]
+ 1511 0014 2822     		movs	r2, #40
+ 1512 0016 1946     		mov	r1, r3
+ 1513 0018 1430     		adds	r0, r0, #20
+ 1514 001a FFF7FEFF 		bl	memset
+ 1515 001e 04F1B802 		add	r2, r4, #184
+ 1516 0022 04F5B761 		add	r1, r4, #1464
+ 1517              	.L371:
+ 1518 0026 A2F18003 		sub	r3, r2, #128
+ 1519              	.L370:
+ 1520 002a 43F8044F 		str	r4, [r3, #4]!
+ 1521 002e 9342     		cmp	r3, r2
+ 1522 0030 FBD1     		bne	.L370
+ 1523 0032 8032     		adds	r2, r2, #128
+ 1524 0034 8A42     		cmp	r2, r1
+ 1525 0036 F6D1     		bne	.L371
+ 1526              	.L369:
+ 1527 0038 2046     		mov	r0, r4
+ 1528 003a 10BD     		pop	{r4, pc}
+ 1529              	.L376:
+ 1530 003c 0C46     		mov	r4, r1
+ 1531 003e 0029     		cmp	r1, #0
+ 1532 0040 FAD0     		beq	.L369
+ 1533 0042 0348     		ldr	r0, .L377+4
+ 1534 0044 8847     		blx	r1
+ 1535 0046 0024     		movs	r4, #0
+ 1536 0048 F6E7     		b	.L369
+ 1537              	.L378:
+ 1538 004a 00BF     		.align	2
+ 1539              	.L377:
+ 1540 004c 00000000 		.word	.LANCHOR0
+ 1541 0050 00000000 		.word	.LC28
+ARM GAS  /tmp/ccTGJ6oL.s 			page 31
+
+
+ 1542              		.size	tlsf_create, .-tlsf_create
+ 1543              		.section	.text.tlsf_create_with_pool,"ax",%progbits
+ 1544              		.align	1
+ 1545              		.p2align 4,,15
+ 1546              		.global	tlsf_create_with_pool
+ 1547              		.syntax unified
+ 1548              		.thumb
+ 1549              		.thumb_func
+ 1550              		.fpu fpv4-sp-d16
+ 1551              		.type	tlsf_create_with_pool, %function
+ 1552              	tlsf_create_with_pool:
+ 1553              		@ args = 0, pretend = 0, frame = 0
+ 1554              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1555 0000 70B5     		push	{r4, r5, r6, lr}
+ 1556 0002 0E46     		mov	r6, r1
+ 1557 0004 1146     		mov	r1, r2
+ 1558 0006 0546     		mov	r5, r0
+ 1559 0008 FFF7FEFF 		bl	tlsf_create
+ 1560 000c A6F23C52 		subw	r2, r6, #1340
+ 1561 0010 0446     		mov	r4, r0
+ 1562 0012 05F23C51 		addw	r1, r5, #1340
+ 1563 0016 FFF7FEFF 		bl	tlsf_add_pool
+ 1564 001a 2046     		mov	r0, r4
+ 1565 001c 70BD     		pop	{r4, r5, r6, pc}
+ 1566              		.size	tlsf_create_with_pool, .-tlsf_create_with_pool
+ 1567 001e 00BF     		.section	.text.tlsf_destroy,"ax",%progbits
+ 1568              		.align	1
+ 1569              		.p2align 4,,15
+ 1570              		.global	tlsf_destroy
+ 1571              		.syntax unified
+ 1572              		.thumb
+ 1573              		.thumb_func
+ 1574              		.fpu fpv4-sp-d16
+ 1575              		.type	tlsf_destroy, %function
+ 1576              	tlsf_destroy:
+ 1577              		@ args = 0, pretend = 0, frame = 0
+ 1578              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1579              		@ link register save eliminated.
+ 1580 0000 7047     		bx	lr
+ 1581              		.size	tlsf_destroy, .-tlsf_destroy
+ 1582 0002 00BF     		.section	.text.tlsf_get_pool,"ax",%progbits
+ 1583              		.align	1
+ 1584              		.p2align 4,,15
+ 1585              		.global	tlsf_get_pool
+ 1586              		.syntax unified
+ 1587              		.thumb
+ 1588              		.thumb_func
+ 1589              		.fpu fpv4-sp-d16
+ 1590              		.type	tlsf_get_pool, %function
+ 1591              	tlsf_get_pool:
+ 1592              		@ args = 0, pretend = 0, frame = 0
+ 1593              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1594              		@ link register save eliminated.
+ 1595 0000 00F23C50 		addw	r0, r0, #1340
+ 1596 0004 7047     		bx	lr
+ 1597              		.size	tlsf_get_pool, .-tlsf_get_pool
+ 1598 0006 00BF     		.section	.text.tlsf_malloc,"ax",%progbits
+ARM GAS  /tmp/ccTGJ6oL.s 			page 32
+
+
+ 1599              		.align	1
+ 1600              		.p2align 4,,15
+ 1601              		.global	tlsf_malloc
+ 1602              		.syntax unified
+ 1603              		.thumb
+ 1604              		.thumb_func
+ 1605              		.fpu fpv4-sp-d16
+ 1606              		.type	tlsf_malloc, %function
+ 1607              	tlsf_malloc:
+ 1608              		@ args = 0, pretend = 0, frame = 8
+ 1609              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1610 0000 70B5     		push	{r4, r5, r6, lr}
+ 1611 0002 4A1E     		subs	r2, r1, #1
+ 1612 0004 4FF6FE73 		movw	r3, #65534
+ 1613 0008 9A42     		cmp	r2, r3
+ 1614 000a 82B0     		sub	sp, sp, #8
+ 1615 000c 0546     		mov	r5, r0
+ 1616 000e 26D9     		bls	.L393
+ 1617 0010 0022     		movs	r2, #0
+ 1618 0012 1146     		mov	r1, r2
+ 1619 0014 2846     		mov	r0, r5
+ 1620 0016 0192     		str	r2, [sp, #4]
+ 1621 0018 FFF7FEFF 		bl	block_locate_free
+ 1622 001c 0446     		mov	r4, r0
+ 1623 001e 60B3     		cbz	r0, .L388
+ 1624              	.L395:
+ 1625 0020 0146     		mov	r1, r0
+ 1626 0022 019A     		ldr	r2, [sp, #4]
+ 1627 0024 2846     		mov	r0, r5
+ 1628 0026 FFF7FEFF 		bl	block_trim_free
+ 1629 002a 6368     		ldr	r3, [r4, #4]
+ 1630 002c 04F10806 		add	r6, r4, #8
+ 1631 0030 23F00303 		bic	r3, r3, #3
+ 1632 0034 F518     		adds	r5, r6, r3
+ 1633 0036 043D     		subs	r5, r5, #4
+ 1634 0038 53B1     		cbz	r3, .L394
+ 1635              	.L386:
+ 1636 003a 6B68     		ldr	r3, [r5, #4]
+ 1637 003c 23F00203 		bic	r3, r3, #2
+ 1638 0040 6B60     		str	r3, [r5, #4]
+ 1639 0042 6368     		ldr	r3, [r4, #4]
+ 1640 0044 3046     		mov	r0, r6
+ 1641 0046 23F00103 		bic	r3, r3, #1
+ 1642 004a 6360     		str	r3, [r4, #4]
+ 1643 004c 02B0     		add	sp, sp, #8
+ 1644              		@ sp needed
+ 1645 004e 70BD     		pop	{r4, r5, r6, pc}
+ 1646              	.L394:
+ 1647 0050 0C4B     		ldr	r3, .L396
+ 1648 0052 1B68     		ldr	r3, [r3]
+ 1649 0054 002B     		cmp	r3, #0
+ 1650 0056 F0D0     		beq	.L386
+ 1651 0058 0B48     		ldr	r0, .L396+4
+ 1652 005a 9847     		blx	r3
+ 1653 005c EDE7     		b	.L386
+ 1654              	.L393:
+ 1655 005e 0331     		adds	r1, r1, #3
+ARM GAS  /tmp/ccTGJ6oL.s 			page 33
+
+
+ 1656 0060 21F00302 		bic	r2, r1, #3
+ 1657 0064 0C2A     		cmp	r2, #12
+ 1658 0066 38BF     		it	cc
+ 1659 0068 0C22     		movcc	r2, #12
+ 1660 006a 1146     		mov	r1, r2
+ 1661 006c 2846     		mov	r0, r5
+ 1662 006e 0192     		str	r2, [sp, #4]
+ 1663 0070 FFF7FEFF 		bl	block_locate_free
+ 1664 0074 0446     		mov	r4, r0
+ 1665 0076 0028     		cmp	r0, #0
+ 1666 0078 D2D1     		bne	.L395
+ 1667              	.L388:
+ 1668 007a 0646     		mov	r6, r0
+ 1669 007c 3046     		mov	r0, r6
+ 1670 007e 02B0     		add	sp, sp, #8
+ 1671              		@ sp needed
+ 1672 0080 70BD     		pop	{r4, r5, r6, pc}
+ 1673              	.L397:
+ 1674 0082 00BF     		.align	2
+ 1675              	.L396:
+ 1676 0084 00000000 		.word	.LANCHOR0
+ 1677 0088 38000000 		.word	.LC7
+ 1678              		.size	tlsf_malloc, .-tlsf_malloc
+ 1679              		.section	.rodata.tlsf_memalign.str1.4,"aMS",%progbits,1
+ 1680              		.align	2
+ 1681              	.LC29:
+ 1682 0000 30203D3D 		.ascii	"0 == (align & (align - 1)) && \"must align to a pow"
+ 1682      2028616C 
+ 1682      69676E20 
+ 1682      26202861 
+ 1682      6C69676E 
+ 1683 0032 6572206F 		.ascii	"er of two\"\000"
+ 1683      66207477 
+ 1683      6F2200
+ 1684 003d 000000   		.align	2
+ 1685              	.LC30:
+ 1686 0040 67617020 		.ascii	"gap >= gap_minimum && \"gap size too small\"\000"
+ 1686      3E3D2067 
+ 1686      61705F6D 
+ 1686      696E696D 
+ 1686      756D2026 
+ 1687              		.section	.text.tlsf_memalign,"ax",%progbits
+ 1688              		.align	1
+ 1689              		.p2align 4,,15
+ 1690              		.global	tlsf_memalign
+ 1691              		.syntax unified
+ 1692              		.thumb
+ 1693              		.thumb_func
+ 1694              		.fpu fpv4-sp-d16
+ 1695              		.type	tlsf_memalign, %function
+ 1696              	tlsf_memalign:
+ 1697              		@ args = 0, pretend = 0, frame = 8
+ 1698              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1699 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1700 0004 4FF6FE73 		movw	r3, #65534
+ 1701 0008 541E     		subs	r4, r2, #1
+ 1702 000a 9C42     		cmp	r4, r3
+ARM GAS  /tmp/ccTGJ6oL.s 			page 34
+
+
+ 1703 000c 83B0     		sub	sp, sp, #12
+ 1704 000e 0746     		mov	r7, r0
+ 1705 0010 0E46     		mov	r6, r1
+ 1706 0012 66D9     		bls	.L443
+ 1707 0014 0C46     		mov	r4, r1
+ 1708 0016 0025     		movs	r5, #0
+ 1709              	.L399:
+ 1710 0018 04F10F02 		add	r2, r4, #15
+ 1711 001c 4FF6FE73 		movw	r3, #65534
+ 1712 0020 9A42     		cmp	r2, r3
+ 1713 0022 4ED9     		bls	.L444
+ 1714 0024 0021     		movs	r1, #0
+ 1715              	.L400:
+ 1716 0026 042E     		cmp	r6, #4
+ 1717 0028 98BF     		it	ls
+ 1718 002a 2946     		movls	r1, r5
+ 1719 002c 3846     		mov	r0, r7
+ 1720 002e FFF7FEFF 		bl	block_locate_free
+ 1721 0032 0446     		mov	r4, r0
+ 1722 0034 0028     		cmp	r0, #0
+ 1723 0036 39D0     		beq	.L398
+ 1724 0038 06F1FF3B 		add	fp, r6, #-1
+ 1725 003c 00F10808 		add	r8, r0, #8
+ 1726 0040 C6F1000A 		rsb	r10, r6, #0
+ 1727 0044 08EB0B09 		add	r9, r8, fp
+ 1728 0048 16EA0B0F 		tst	r6, fp
+ 1729 004c 09EA0A09 		and	r9, r9, r10
+ 1730 0050 03D0     		beq	.L404
+ 1731 0052 4D4B     		ldr	r3, .L451
+ 1732 0054 1A68     		ldr	r2, [r3]
+ 1733 0056 002A     		cmp	r2, #0
+ 1734 0058 76D1     		bne	.L445
+ 1735              	.L404:
+ 1736 005a A9EB0801 		sub	r1, r9, r8
+ 1737 005e 4B1E     		subs	r3, r1, #1
+ 1738 0060 0E2B     		cmp	r3, #14
+ 1739 0062 46D9     		bls	.L446
+ 1740              	.L407:
+ 1741 0064 69B1     		cbz	r1, .L408
+ 1742              	.L450:
+ 1743 0066 0F29     		cmp	r1, #15
+ 1744 0068 04D8     		bhi	.L409
+ 1745 006a 474B     		ldr	r3, .L451
+ 1746 006c 1B68     		ldr	r3, [r3]
+ 1747 006e 002B     		cmp	r3, #0
+ 1748 0070 40F08480 		bne	.L447
+ 1749              	.L409:
+ 1750 0074 6368     		ldr	r3, [r4, #4]
+ 1751 0076 01F11002 		add	r2, r1, #16
+ 1752 007a 23F00303 		bic	r3, r3, #3
+ 1753 007e 9342     		cmp	r3, r2
+ 1754 0080 45D2     		bcs	.L448
+ 1755              	.L408:
+ 1756 0082 2A46     		mov	r2, r5
+ 1757 0084 2146     		mov	r1, r4
+ 1758 0086 3846     		mov	r0, r7
+ 1759 0088 FFF7FEFF 		bl	block_trim_free
+ARM GAS  /tmp/ccTGJ6oL.s 			page 35
+
+
+ 1760 008c 6368     		ldr	r3, [r4, #4]
+ 1761 008e A8F10405 		sub	r5, r8, #4
+ 1762 0092 23F00303 		bic	r3, r3, #3
+ 1763 0096 1D44     		add	r5, r5, r3
+ 1764 0098 63B1     		cbz	r3, .L412
+ 1765              	.L411:
+ 1766 009a 6B68     		ldr	r3, [r5, #4]
+ 1767 009c 23F00203 		bic	r3, r3, #2
+ 1768 00a0 6B60     		str	r3, [r5, #4]
+ 1769 00a2 6368     		ldr	r3, [r4, #4]
+ 1770 00a4 23F00103 		bic	r3, r3, #1
+ 1771 00a8 6360     		str	r3, [r4, #4]
+ 1772 00aa 4446     		mov	r4, r8
+ 1773              	.L398:
+ 1774 00ac 2046     		mov	r0, r4
+ 1775 00ae 03B0     		add	sp, sp, #12
+ 1776              		@ sp needed
+ 1777 00b0 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1778              	.L412:
+ 1779 00b4 344B     		ldr	r3, .L451
+ 1780 00b6 1B68     		ldr	r3, [r3]
+ 1781 00b8 002B     		cmp	r3, #0
+ 1782 00ba EED0     		beq	.L411
+ 1783 00bc 3348     		ldr	r0, .L451+4
+ 1784 00be 9847     		blx	r3
+ 1785 00c0 EBE7     		b	.L411
+ 1786              	.L444:
+ 1787 00c2 731E     		subs	r3, r6, #1
+ 1788 00c4 3342     		tst	r3, r6
+ 1789 00c6 03D0     		beq	.L401
+ 1790 00c8 2F4B     		ldr	r3, .L451
+ 1791 00ca 1B68     		ldr	r3, [r3]
+ 1792 00cc 002B     		cmp	r3, #0
+ 1793 00ce 52D1     		bne	.L449
+ 1794              	.L401:
+ 1795 00d0 06F10F01 		add	r1, r6, #15
+ 1796 00d4 2144     		add	r1, r1, r4
+ 1797 00d6 7342     		rsbs	r3, r6, #0
+ 1798 00d8 1940     		ands	r1, r1, r3
+ 1799 00da 0C29     		cmp	r1, #12
+ 1800 00dc 38BF     		it	cc
+ 1801 00de 0C21     		movcc	r1, #12
+ 1802 00e0 A1E7     		b	.L400
+ 1803              	.L443:
+ 1804 00e2 0332     		adds	r2, r2, #3
+ 1805 00e4 22F00305 		bic	r5, r2, #3
+ 1806 00e8 0C2D     		cmp	r5, #12
+ 1807 00ea 38BF     		it	cc
+ 1808 00ec 0C25     		movcc	r5, #12
+ 1809 00ee 4C19     		adds	r4, r1, r5
+ 1810 00f0 92E7     		b	.L399
+ 1811              	.L446:
+ 1812 00f2 D944     		add	r9, r9, fp
+ 1813 00f4 C1F11001 		rsb	r1, r1, #16
+ 1814 00f8 B142     		cmp	r1, r6
+ 1815 00fa 2CBF     		ite	cs
+ 1816 00fc 8944     		addcs	r9, r9, r1
+ARM GAS  /tmp/ccTGJ6oL.s 			page 36
+
+
+ 1817 00fe B144     		addcc	r9, r9, r6
+ 1818 0100 09EA0A09 		and	r9, r9, r10
+ 1819              	.L414:
+ 1820 0104 A9EB0801 		sub	r1, r9, r8
+ 1821 0108 0029     		cmp	r1, #0
+ 1822 010a BAD0     		beq	.L408
+ 1823 010c ABE7     		b	.L450
+ 1824              	.L448:
+ 1825 010e 0439     		subs	r1, r1, #4
+ 1826 0110 2046     		mov	r0, r4
+ 1827 0112 FFF7FEFF 		bl	block_split
+ 1828 0116 4368     		ldr	r3, [r0, #4]
+ 1829 0118 43F00203 		orr	r3, r3, #2
+ 1830 011c 4360     		str	r3, [r0, #4]
+ 1831 011e 6368     		ldr	r3, [r4, #4]
+ 1832 0120 23F00303 		bic	r3, r3, #3
+ 1833 0124 0646     		mov	r6, r0
+ 1834 0126 9844     		add	r8, r8, r3
+ 1835 0128 23B9     		cbnz	r3, .L410
+ 1836 012a 174B     		ldr	r3, .L451
+ 1837 012c 1B68     		ldr	r3, [r3]
+ 1838 012e 0BB1     		cbz	r3, .L410
+ 1839 0130 1648     		ldr	r0, .L451+4
+ 1840 0132 9847     		blx	r3
+ 1841              	.L410:
+ 1842 0134 48F8044C 		str	r4, [r8, #-4]
+ 1843 0138 2146     		mov	r1, r4
+ 1844 013a 3846     		mov	r0, r7
+ 1845 013c FFF7FEFF 		bl	block_insert
+ 1846 0140 06F10808 		add	r8, r6, #8
+ 1847 0144 3446     		mov	r4, r6
+ 1848 0146 9CE7     		b	.L408
+ 1849              	.L445:
+ 1850 0148 1148     		ldr	r0, .L451+8
+ 1851 014a 9047     		blx	r2
+ 1852 014c A9EB0801 		sub	r1, r9, r8
+ 1853 0150 4A1E     		subs	r2, r1, #1
+ 1854 0152 0E2A     		cmp	r2, #14
+ 1855 0154 0C4B     		ldr	r3, .L451
+ 1856 0156 85D8     		bhi	.L407
+ 1857 0158 D944     		add	r9, r9, fp
+ 1858 015a C1F11001 		rsb	r1, r1, #16
+ 1859 015e 1B68     		ldr	r3, [r3]
+ 1860 0160 B142     		cmp	r1, r6
+ 1861 0162 2CBF     		ite	cs
+ 1862 0164 8944     		addcs	r9, r9, r1
+ 1863 0166 B144     		addcc	r9, r9, r6
+ 1864 0168 09EA0A09 		and	r9, r9, r10
+ 1865 016c 002B     		cmp	r3, #0
+ 1866 016e C9D0     		beq	.L414
+ 1867 0170 0748     		ldr	r0, .L451+8
+ 1868 0172 9847     		blx	r3
+ 1869 0174 C6E7     		b	.L414
+ 1870              	.L449:
+ 1871 0176 0648     		ldr	r0, .L451+8
+ 1872 0178 9847     		blx	r3
+ 1873 017a A9E7     		b	.L401
+ARM GAS  /tmp/ccTGJ6oL.s 			page 37
+
+
+ 1874              	.L447:
+ 1875 017c 0548     		ldr	r0, .L451+12
+ 1876 017e 0191     		str	r1, [sp, #4]
+ 1877 0180 9847     		blx	r3
+ 1878 0182 0199     		ldr	r1, [sp, #4]
+ 1879 0184 76E7     		b	.L409
+ 1880              	.L452:
+ 1881 0186 00BF     		.align	2
+ 1882              	.L451:
+ 1883 0188 00000000 		.word	.LANCHOR0
+ 1884 018c 38000000 		.word	.LC7
+ 1885 0190 00000000 		.word	.LC29
+ 1886 0194 40000000 		.word	.LC30
+ 1887              		.size	tlsf_memalign, .-tlsf_memalign
+ 1888              		.section	.rodata.tlsf_free.str1.4,"aMS",%progbits,1
+ 1889              		.align	2
+ 1890              	.LC31:
+ 1891 0000 21626C6F 		.ascii	"!block_is_free(block) && \"block already marked as "
+ 1891      636B5F69 
+ 1891      735F6672 
+ 1891      65652862 
+ 1891      6C6F636B 
+ 1892 0032 66726565 		.ascii	"free\"\000"
+ 1892      2200
+ 1893              		.align	2
+ 1894              	.LC32:
+ 1895 0038 70726576 		.ascii	"prev && \"prev physical block can't be null\"\000"
+ 1895      20262620 
+ 1895      22707265 
+ 1895      76207068 
+ 1895      79736963 
+ 1896              		.align	2
+ 1897              	.LC33:
+ 1898 0064 626C6F63 		.ascii	"block_is_free(prev) && \"prev block is not free tho"
+ 1898      6B5F6973 
+ 1898      5F667265 
+ 1898      65287072 
+ 1898      65762920 
+ 1899 0096 75676820 		.ascii	"ugh marked as such\"\000"
+ 1899      6D61726B 
+ 1899      65642061 
+ 1899      73207375 
+ 1899      63682200 
+ 1900              		.section	.text.tlsf_free,"ax",%progbits
+ 1901              		.align	1
+ 1902              		.p2align 4,,15
+ 1903              		.global	tlsf_free
+ 1904              		.syntax unified
+ 1905              		.thumb
+ 1906              		.thumb_func
+ 1907              		.fpu fpv4-sp-d16
+ 1908              		.type	tlsf_free, %function
+ 1909              	tlsf_free:
+ 1910              		@ args = 0, pretend = 0, frame = 8
+ 1911              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1912 0000 0029     		cmp	r1, #0
+ 1913 0002 5ED0     		beq	.L453
+ARM GAS  /tmp/ccTGJ6oL.s 			page 38
+
+
+ 1914 0004 70B5     		push	{r4, r5, r6, lr}
+ 1915 0006 51F8045C 		ldr	r5, [r1, #-4]
+ 1916 000a EB07     		lsls	r3, r5, #31
+ 1917 000c 82B0     		sub	sp, sp, #8
+ 1918 000e 0446     		mov	r4, r0
+ 1919 0010 A1F10806 		sub	r6, r1, #8
+ 1920 0014 46D5     		bpl	.L455
+ 1921 0016 344B     		ldr	r3, .L485
+ 1922 0018 1B68     		ldr	r3, [r3]
+ 1923 001a 002B     		cmp	r3, #0
+ 1924 001c 3CD1     		bne	.L480
+ 1925 001e 25F00303 		bic	r3, r5, #3
+ 1926 0022 0D1F     		subs	r5, r1, #4
+ 1927 0024 1D44     		add	r5, r5, r3
+ 1928              	.L457:
+ 1929 0026 6B68     		ldr	r3, [r5, #4]
+ 1930 0028 2E60     		str	r6, [r5]
+ 1931 002a 43F00203 		orr	r3, r3, #2
+ 1932 002e 6B60     		str	r3, [r5, #4]
+ 1933 0030 51F8043C 		ldr	r3, [r1, #-4]
+ 1934 0034 43F00103 		orr	r3, r3, #1
+ 1935 0038 9807     		lsls	r0, r3, #30
+ 1936 003a 41F8043C 		str	r3, [r1, #-4]
+ 1937 003e 20D5     		bpl	.L458
+ 1938 0040 51F8085C 		ldr	r5, [r1, #-8]
+ 1939 0044 002D     		cmp	r5, #0
+ 1940 0046 40D0     		beq	.L481
+ 1941              	.L459:
+ 1942 0048 6B68     		ldr	r3, [r5, #4]
+ 1943 004a DA07     		lsls	r2, r3, #31
+ 1944 004c 03D4     		bmi	.L461
+ 1945 004e 264A     		ldr	r2, .L485
+ 1946 0050 1268     		ldr	r2, [r2]
+ 1947 0052 002A     		cmp	r2, #0
+ 1948 0054 42D1     		bne	.L482
+ 1949              	.L461:
+ 1950 0056 23F00303 		bic	r3, r3, #3
+ 1951 005a 7F2B     		cmp	r3, #127
+ 1952 005c 32D9     		bls	.L483
+ 1953              	.L462:
+ 1954 005e B3FA83F2 		clz	r2, r3
+ 1955 0062 C2F11A01 		rsb	r1, r2, #26
+ 1956 0066 CB40     		lsrs	r3, r3, r1
+ 1957 0068 83F02003 		eor	r3, r3, #32
+ 1958 006c C2F11902 		rsb	r2, r2, #25
+ 1959              	.L463:
+ 1960 0070 2946     		mov	r1, r5
+ 1961 0072 2046     		mov	r0, r4
+ 1962 0074 FFF7FEFF 		bl	remove_free_block
+ 1963 0078 3146     		mov	r1, r6
+ 1964 007a 2846     		mov	r0, r5
+ 1965 007c FFF7FEFF 		bl	block_absorb
+ 1966 0080 0646     		mov	r6, r0
+ 1967              	.L458:
+ 1968 0082 3146     		mov	r1, r6
+ 1969 0084 2046     		mov	r0, r4
+ 1970 0086 FFF7FEFF 		bl	block_merge_next
+ARM GAS  /tmp/ccTGJ6oL.s 			page 39
+
+
+ 1971 008a 0146     		mov	r1, r0
+ 1972 008c 2046     		mov	r0, r4
+ 1973 008e 02B0     		add	sp, sp, #8
+ 1974              		@ sp needed
+ 1975 0090 BDE87040 		pop	{r4, r5, r6, lr}
+ 1976 0094 FFF7FEBF 		b	block_insert
+ 1977              	.L480:
+ 1978 0098 1448     		ldr	r0, .L485+4
+ 1979 009a 0191     		str	r1, [sp, #4]
+ 1980 009c 9847     		blx	r3
+ 1981 009e 0199     		ldr	r1, [sp, #4]
+ 1982 00a0 51F8045C 		ldr	r5, [r1, #-4]
+ 1983              	.L455:
+ 1984 00a4 25F00303 		bic	r3, r5, #3
+ 1985 00a8 0D1F     		subs	r5, r1, #4
+ 1986 00aa 1D44     		add	r5, r5, r3
+ 1987 00ac 002B     		cmp	r3, #0
+ 1988 00ae BAD1     		bne	.L457
+ 1989 00b0 0D4B     		ldr	r3, .L485
+ 1990 00b2 1B68     		ldr	r3, [r3]
+ 1991 00b4 002B     		cmp	r3, #0
+ 1992 00b6 B6D0     		beq	.L457
+ 1993 00b8 0D48     		ldr	r0, .L485+8
+ 1994 00ba 0191     		str	r1, [sp, #4]
+ 1995 00bc 9847     		blx	r3
+ 1996 00be 0199     		ldr	r1, [sp, #4]
+ 1997 00c0 B1E7     		b	.L457
+ 1998              	.L453:
+ 1999 00c2 7047     		bx	lr
+ 2000              	.L483:
+ 2001 00c4 9B10     		asrs	r3, r3, #2
+ 2002 00c6 0022     		movs	r2, #0
+ 2003 00c8 D2E7     		b	.L463
+ 2004              	.L481:
+ 2005 00ca 074B     		ldr	r3, .L485
+ 2006 00cc 1B68     		ldr	r3, [r3]
+ 2007 00ce 43B9     		cbnz	r3, .L484
+ 2008              	.L479:
+ 2009 00d0 6B68     		ldr	r3, [r5, #4]
+ 2010 00d2 23F00303 		bic	r3, r3, #3
+ 2011 00d6 7F2B     		cmp	r3, #127
+ 2012 00d8 C1D8     		bhi	.L462
+ 2013 00da F3E7     		b	.L483
+ 2014              	.L482:
+ 2015 00dc 0548     		ldr	r0, .L485+12
+ 2016 00de 9047     		blx	r2
+ 2017 00e0 F6E7     		b	.L479
+ 2018              	.L484:
+ 2019 00e2 0548     		ldr	r0, .L485+16
+ 2020 00e4 9847     		blx	r3
+ 2021 00e6 AFE7     		b	.L459
+ 2022              	.L486:
+ 2023              		.align	2
+ 2024              	.L485:
+ 2025 00e8 00000000 		.word	.LANCHOR0
+ 2026 00ec 00000000 		.word	.LC31
+ 2027 00f0 38000000 		.word	.LC7
+ARM GAS  /tmp/ccTGJ6oL.s 			page 40
+
+
+ 2028 00f4 64000000 		.word	.LC33
+ 2029 00f8 38000000 		.word	.LC32
+ 2030              		.size	tlsf_free, .-tlsf_free
+ 2031              		.section	.rodata.tlsf_realloc.str1.4,"aMS",%progbits,1
+ 2032              		.align	2
+ 2033              	.LC34:
+ 2034 0000 21626C6F 		.ascii	"!block_is_free(block) && \"block must be used\"\000"
+ 2034      636B5F69 
+ 2034      735F6672 
+ 2034      65652862 
+ 2034      6C6F636B 
+ 2035              		.section	.text.tlsf_realloc,"ax",%progbits
+ 2036              		.align	1
+ 2037              		.p2align 4,,15
+ 2038              		.global	tlsf_realloc
+ 2039              		.syntax unified
+ 2040              		.thumb
+ 2041              		.thumb_func
+ 2042              		.fpu fpv4-sp-d16
+ 2043              		.type	tlsf_realloc, %function
+ 2044              	tlsf_realloc:
+ 2045              		@ args = 0, pretend = 0, frame = 8
+ 2046              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2047 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 2048 0004 1546     		mov	r5, r2
+ 2049 0006 83B0     		sub	sp, sp, #12
+ 2050 0008 0029     		cmp	r1, #0
+ 2051 000a 73D0     		beq	.L488
+ 2052 000c 002A     		cmp	r2, #0
+ 2053 000e 00F0AF80 		beq	.L527
+ 2054 0012 8846     		mov	r8, r1
+ 2055 0014 0646     		mov	r6, r0
+ 2056 0016 58F8040D 		ldr	r0, [r8, #-4]!
+ 2057 001a 20F00307 		bic	r7, r0, #3
+ 2058 001e 0C46     		mov	r4, r1
+ 2059 0020 A1F1080B 		sub	fp, r1, #8
+ 2060 0024 07EB080A 		add	r10, r7, r8
+ 2061 0028 27B9     		cbnz	r7, .L491
+ 2062 002a 5D4B     		ldr	r3, .L536
+ 2063 002c 1B68     		ldr	r3, [r3]
+ 2064 002e 002B     		cmp	r3, #0
+ 2065 0030 40F0A580 		bne	.L528
+ 2066              	.L491:
+ 2067 0034 691E     		subs	r1, r5, #1
+ 2068 0036 4FF6FE72 		movw	r2, #65534
+ 2069 003a 9142     		cmp	r1, r2
+ 2070 003c DAF80430 		ldr	r3, [r10, #4]
+ 2071 0040 0AD9     		bls	.L529
+ 2072 0042 10F00109 		ands	r9, r0, #1
+ 2073 0046 5BD1     		bne	.L503
+ 2074 0048 1025     		movs	r5, #16
+ 2075              	.L501:
+ 2076 004a AF42     		cmp	r7, r5
+ 2077 004c 3DD2     		bcs	.L530
+ 2078              	.L506:
+ 2079 004e A046     		mov	r8, r4
+ 2080              	.L487:
+ARM GAS  /tmp/ccTGJ6oL.s 			page 41
+
+
+ 2081 0050 4046     		mov	r0, r8
+ 2082 0052 03B0     		add	sp, sp, #12
+ 2083              		@ sp needed
+ 2084 0054 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2085              	.L529:
+ 2086 0058 05F10309 		add	r9, r5, #3
+ 2087 005c 29F00309 		bic	r9, r9, #3
+ 2088 0060 B9F10C0F 		cmp	r9, #12
+ 2089 0064 38BF     		it	cc
+ 2090 0066 4FF00C09 		movcc	r9, #12
+ 2091 006a C007     		lsls	r0, r0, #31
+ 2092 006c 54D4     		bmi	.L531
+ 2093 006e B945     		cmp	r9, r7
+ 2094 0070 98BF     		it	ls
+ 2095 0072 09F11005 		addls	r5, r9, #16
+ 2096 0076 E8D9     		bls	.L501
+ 2097 0078 1A46     		mov	r2, r3
+ 2098 007a D207     		lsls	r2, r2, #31
+ 2099 007c 56D5     		bpl	.L497
+ 2100              	.L535:
+ 2101 007e 23F00303 		bic	r3, r3, #3
+ 2102 0082 0433     		adds	r3, r3, #4
+ 2103 0084 3B44     		add	r3, r3, r7
+ 2104 0086 4B45     		cmp	r3, r9
+ 2105 0088 50D3     		bcc	.L497
+ 2106 008a 5946     		mov	r1, fp
+ 2107 008c 3046     		mov	r0, r6
+ 2108 008e FFF7FEFF 		bl	block_merge_next
+ 2109 0092 54F8043C 		ldr	r3, [r4, #-4]
+ 2110 0096 23F00303 		bic	r3, r3, #3
+ 2111 009a 9844     		add	r8, r8, r3
+ 2112 009c 1BB9     		cbnz	r3, .L499
+ 2113 009e 404B     		ldr	r3, .L536
+ 2114 00a0 1B68     		ldr	r3, [r3]
+ 2115 00a2 002B     		cmp	r3, #0
+ 2116 00a4 72D1     		bne	.L532
+ 2117              	.L499:
+ 2118 00a6 D8F80430 		ldr	r3, [r8, #4]
+ 2119 00aa 23F00203 		bic	r3, r3, #2
+ 2120 00ae C8F80430 		str	r3, [r8, #4]
+ 2121 00b2 54F8040C 		ldr	r0, [r4, #-4]
+ 2122 00b6 20F00100 		bic	r0, r0, #1
+ 2123 00ba 44F8040C 		str	r0, [r4, #-4]
+ 2124 00be 09F11005 		add	r5, r9, #16
+ 2125              	.L526:
+ 2126 00c2 20F00307 		bic	r7, r0, #3
+ 2127 00c6 AF42     		cmp	r7, r5
+ 2128 00c8 C1D3     		bcc	.L506
+ 2129              	.L530:
+ 2130 00ca 4946     		mov	r1, r9
+ 2131 00cc 5846     		mov	r0, fp
+ 2132 00ce FFF7FEFF 		bl	block_split
+ 2133 00d2 4368     		ldr	r3, [r0, #4]
+ 2134 00d4 23F00203 		bic	r3, r3, #2
+ 2135 00d8 4360     		str	r3, [r0, #4]
+ 2136 00da 0146     		mov	r1, r0
+ 2137 00dc 3046     		mov	r0, r6
+ARM GAS  /tmp/ccTGJ6oL.s 			page 42
+
+
+ 2138 00de FFF7FEFF 		bl	block_merge_next
+ 2139 00e2 0146     		mov	r1, r0
+ 2140 00e4 3046     		mov	r0, r6
+ 2141 00e6 FFF7FEFF 		bl	block_insert
+ 2142 00ea A046     		mov	r8, r4
+ 2143 00ec 4046     		mov	r0, r8
+ 2144 00ee 03B0     		add	sp, sp, #12
+ 2145              		@ sp needed
+ 2146 00f0 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2147              	.L488:
+ 2148 00f4 1146     		mov	r1, r2
+ 2149 00f6 03B0     		add	sp, sp, #12
+ 2150              		@ sp needed
+ 2151 00f8 BDE8F04F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 2152 00fc FFF7FEBF 		b	tlsf_malloc
+ 2153              	.L503:
+ 2154 0100 274A     		ldr	r2, .L536
+ 2155 0102 1168     		ldr	r1, [r2]
+ 2156 0104 41B3     		cbz	r1, .L533
+ 2157 0106 4FF00009 		mov	r9, #0
+ 2158              	.L505:
+ 2159 010a 2648     		ldr	r0, .L536+4
+ 2160 010c CDE90032 		strd	r3, r2, [sp]
+ 2161 0110 8847     		blx	r1
+ 2162 0112 DDE90032 		ldrd	r3, r2, [sp]
+ 2163 0116 03E0     		b	.L494
+ 2164              	.L531:
+ 2165 0118 214A     		ldr	r2, .L536
+ 2166 011a 1168     		ldr	r1, [r2]
+ 2167 011c 0029     		cmp	r1, #0
+ 2168 011e F4D1     		bne	.L505
+ 2169              	.L494:
+ 2170 0120 4F45     		cmp	r7, r9
+ 2171 0122 36D2     		bcs	.L534
+ 2172 0124 DAF80420 		ldr	r2, [r10, #4]
+ 2173 0128 D207     		lsls	r2, r2, #31
+ 2174 012a A8D4     		bmi	.L535
+ 2175              	.L497:
+ 2176 012c 2946     		mov	r1, r5
+ 2177 012e 3046     		mov	r0, r6
+ 2178 0130 FFF7FEFF 		bl	tlsf_malloc
+ 2179 0134 8046     		mov	r8, r0
+ 2180 0136 0028     		cmp	r0, #0
+ 2181 0138 8AD0     		beq	.L487
+ 2182 013a BD42     		cmp	r5, r7
+ 2183 013c 2A46     		mov	r2, r5
+ 2184 013e 2146     		mov	r1, r4
+ 2185 0140 28BF     		it	cs
+ 2186 0142 3A46     		movcs	r2, r7
+ 2187 0144 FFF7FEFF 		bl	memcpy
+ 2188 0148 3046     		mov	r0, r6
+ 2189 014a 2146     		mov	r1, r4
+ 2190 014c FFF7FEFF 		bl	tlsf_free
+ 2191 0150 4046     		mov	r0, r8
+ 2192 0152 03B0     		add	sp, sp, #12
+ 2193              		@ sp needed
+ 2194 0154 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ARM GAS  /tmp/ccTGJ6oL.s 			page 43
+
+
+ 2195              	.L533:
+ 2196 0158 8946     		mov	r9, r1
+ 2197 015a 1025     		movs	r5, #16
+ 2198              	.L500:
+ 2199 015c 1368     		ldr	r3, [r2]
+ 2200 015e 002B     		cmp	r3, #0
+ 2201 0160 AFD0     		beq	.L526
+ 2202 0162 1148     		ldr	r0, .L536+8
+ 2203 0164 9847     		blx	r3
+ 2204 0166 54F8047C 		ldr	r7, [r4, #-4]
+ 2205 016a 27F00307 		bic	r7, r7, #3
+ 2206 016e 6CE7     		b	.L501
+ 2207              	.L527:
+ 2208 0170 FFF7FEFF 		bl	tlsf_free
+ 2209 0174 A846     		mov	r8, r5
+ 2210 0176 4046     		mov	r0, r8
+ 2211 0178 03B0     		add	sp, sp, #12
+ 2212              		@ sp needed
+ 2213 017a BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2214              	.L528:
+ 2215 017e 0B48     		ldr	r0, .L536+12
+ 2216 0180 9847     		blx	r3
+ 2217 0182 54F8040C 		ldr	r0, [r4, #-4]
+ 2218 0186 20F00307 		bic	r7, r0, #3
+ 2219 018a 53E7     		b	.L491
+ 2220              	.L532:
+ 2221 018c 0748     		ldr	r0, .L536+12
+ 2222 018e 9847     		blx	r3
+ 2223 0190 89E7     		b	.L499
+ 2224              	.L534:
+ 2225 0192 54F8040C 		ldr	r0, [r4, #-4]
+ 2226 0196 C107     		lsls	r1, r0, #31
+ 2227 0198 09F11005 		add	r5, r9, #16
+ 2228 019c DED4     		bmi	.L500
+ 2229 019e 90E7     		b	.L526
+ 2230              	.L537:
+ 2231              		.align	2
+ 2232              	.L536:
+ 2233 01a0 00000000 		.word	.LANCHOR0
+ 2234 01a4 00000000 		.word	.LC31
+ 2235 01a8 00000000 		.word	.LC34
+ 2236 01ac 38000000 		.word	.LC7
+ 2237              		.size	tlsf_realloc, .-tlsf_realloc
+ 2238              		.section	.bss.error_cb,"aw",%nobits
+ 2239              		.align	2
+ 2240              		.set	.LANCHOR0,. + 0
+ 2241              		.type	error_cb, %object
+ 2242              		.size	error_cb, 4
+ 2243              	error_cb:
+ 2244 0000 00000000 		.space	4
+ 2245              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccTGJ6oL.s 			page 44
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 tlsf.c
+     /tmp/ccTGJ6oL.s:15     .rodata.remove_free_block.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:22     .text.remove_free_block:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:30     .text.remove_free_block:0000000000000000 remove_free_block
+     /tmp/ccTGJ6oL.s:97     .text.remove_free_block:0000000000000084 $d
+     /tmp/ccTGJ6oL.s:102    .rodata.block_insert.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:110    .text.block_insert:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:117    .text.block_insert:0000000000000000 block_insert
+     /tmp/ccTGJ6oL.s:191    .text.block_insert:00000000000000a8 $d
+     /tmp/ccTGJ6oL.s:196    .rodata.block_locate_free.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:204    .text.block_locate_free:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:211    .text.block_locate_free:0000000000000000 block_locate_free
+     /tmp/ccTGJ6oL.s:314    .text.block_locate_free:00000000000000e4 $d
+     /tmp/ccTGJ6oL.s:319    .rodata.block_absorb.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:327    .text.block_absorb:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:334    .text.block_absorb:0000000000000000 block_absorb
+     /tmp/ccTGJ6oL.s:378    .text.block_absorb:000000000000004c $d
+     /tmp/ccTGJ6oL.s:383    .rodata.block_merge_next.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:391    .text.block_merge_next:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:398    .text.block_merge_next:0000000000000000 block_merge_next
+     /tmp/ccTGJ6oL.s:467    .text.block_merge_next:0000000000000084 $d
+     /tmp/ccTGJ6oL.s:473    .rodata.block_split.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:487    .text.block_split:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:494    .text.block_split:0000000000000000 block_split
+     /tmp/ccTGJ6oL.s:576    .text.block_split:00000000000000ac $d
+     /tmp/ccTGJ6oL.s:583    .rodata.block_trim_free.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:587    .text.block_trim_free:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:594    .text.block_trim_free:0000000000000000 block_trim_free
+     /tmp/ccTGJ6oL.s:654    .text.block_trim_free:0000000000000070 $d
+     /tmp/ccTGJ6oL.s:659    .rodata.tlsf_check.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:694    .text.tlsf_check:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:702    .text.tlsf_check:0000000000000000 tlsf_check
+     /tmp/ccTGJ6oL.s:1005   .text.tlsf_check:000000000000026c $d
+     /tmp/ccTGJ6oL.s:1018   .text.tlsf_walk_pool:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1026   .text.tlsf_walk_pool:0000000000000000 tlsf_walk_pool
+     /tmp/ccTGJ6oL.s:1070   .text.tlsf_walk_pool:0000000000000054 $d
+     /tmp/ccTGJ6oL.s:1074   .text.tlsf_block_size:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1082   .text.tlsf_block_size:0000000000000000 tlsf_block_size
+     /tmp/ccTGJ6oL.s:1093   .rodata.tlsf_check_pool.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:1098   .text.tlsf_check_pool:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1106   .text.tlsf_check_pool:0000000000000000 tlsf_check_pool
+     /tmp/ccTGJ6oL.s:1162   .text.tlsf_check_pool:000000000000006c $d
+     /tmp/ccTGJ6oL.s:1167   .text.tlsf_size:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1175   .text.tlsf_size:0000000000000000 tlsf_size
+     /tmp/ccTGJ6oL.s:1183   .text.tlsf_align_size:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1191   .text.tlsf_align_size:0000000000000000 tlsf_align_size
+     /tmp/ccTGJ6oL.s:1199   .text.tlsf_block_size_min:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1207   .text.tlsf_block_size_min:0000000000000000 tlsf_block_size_min
+     /tmp/ccTGJ6oL.s:1215   .text.tlsf_block_size_max:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1223   .text.tlsf_block_size_max:0000000000000000 tlsf_block_size_max
+     /tmp/ccTGJ6oL.s:1231   .text.tlsf_pool_overhead:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1239   .text.tlsf_pool_overhead:0000000000000000 tlsf_pool_overhead
+     /tmp/ccTGJ6oL.s:1247   .text.tlsf_alloc_overhead:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1255   .text.tlsf_alloc_overhead:0000000000000000 tlsf_alloc_overhead
+     /tmp/ccTGJ6oL.s:1263   .rodata.tlsf_add_pool.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:1272   .text.tlsf_add_pool:0000000000000000 $t
+ARM GAS  /tmp/ccTGJ6oL.s 			page 45
+
+
+     /tmp/ccTGJ6oL.s:1280   .text.tlsf_add_pool:0000000000000000 tlsf_add_pool
+     /tmp/ccTGJ6oL.s:1343   .text.tlsf_add_pool:0000000000000078 $d
+     /tmp/ccTGJ6oL.s:1349   .rodata.tlsf_remove_pool.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:1358   .text.tlsf_remove_pool:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1366   .text.tlsf_remove_pool:0000000000000000 tlsf_remove_pool
+     /tmp/ccTGJ6oL.s:1480   .text.tlsf_remove_pool:00000000000000d8 $d
+     /tmp/ccTGJ6oL.s:1487   .rodata.tlsf_create.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:1492   .text.tlsf_create:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1500   .text.tlsf_create:0000000000000000 tlsf_create
+     /tmp/ccTGJ6oL.s:1540   .text.tlsf_create:000000000000004c $d
+     /tmp/ccTGJ6oL.s:1544   .text.tlsf_create_with_pool:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1552   .text.tlsf_create_with_pool:0000000000000000 tlsf_create_with_pool
+     /tmp/ccTGJ6oL.s:1568   .text.tlsf_destroy:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1576   .text.tlsf_destroy:0000000000000000 tlsf_destroy
+     /tmp/ccTGJ6oL.s:1583   .text.tlsf_get_pool:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1591   .text.tlsf_get_pool:0000000000000000 tlsf_get_pool
+     /tmp/ccTGJ6oL.s:1599   .text.tlsf_malloc:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1607   .text.tlsf_malloc:0000000000000000 tlsf_malloc
+     /tmp/ccTGJ6oL.s:1676   .text.tlsf_malloc:0000000000000084 $d
+     /tmp/ccTGJ6oL.s:1680   .rodata.tlsf_memalign.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:1688   .text.tlsf_memalign:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1696   .text.tlsf_memalign:0000000000000000 tlsf_memalign
+     /tmp/ccTGJ6oL.s:1883   .text.tlsf_memalign:0000000000000188 $d
+     /tmp/ccTGJ6oL.s:1889   .rodata.tlsf_free.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:1901   .text.tlsf_free:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:1909   .text.tlsf_free:0000000000000000 tlsf_free
+     /tmp/ccTGJ6oL.s:2025   .text.tlsf_free:00000000000000e8 $d
+     /tmp/ccTGJ6oL.s:2032   .rodata.tlsf_realloc.str1.4:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:2036   .text.tlsf_realloc:0000000000000000 $t
+     /tmp/ccTGJ6oL.s:2044   .text.tlsf_realloc:0000000000000000 tlsf_realloc
+     /tmp/ccTGJ6oL.s:2233   .text.tlsf_realloc:00000000000001a0 $d
+     /tmp/ccTGJ6oL.s:2239   .bss.error_cb:0000000000000000 $d
+     /tmp/ccTGJ6oL.s:2243   .bss.error_cb:0000000000000000 error_cb
+
+UNDEFINED SYMBOLS
+memset
+memcpy

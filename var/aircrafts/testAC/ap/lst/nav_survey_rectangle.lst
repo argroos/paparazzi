@@ -1,0 +1,1555 @@
+ARM GAS  /tmp/cclUB8sw.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"nav_survey_rectangle.c"
+  13              		.text
+  14              		.global	__aeabi_f2d
+  15              		.global	__aeabi_dmul
+  16              		.global	__aeabi_dadd
+  17              		.global	__aeabi_dcmpgt
+  18              		.global	__aeabi_dsub
+  19              		.global	__aeabi_dcmplt
+  20              		.global	__aeabi_d2f
+  21              		.section	.text.nav_survey_rectangle_init,"ax",%progbits
+  22              		.align	1
+  23              		.p2align 4,,15
+  24              		.global	nav_survey_rectangle_init
+  25              		.arch armv7e-m
+  26              		.syntax unified
+  27              		.thumb
+  28              		.thumb_func
+  29              		.fpu fpv4-sp-d16
+  30              		.type	nav_survey_rectangle_init, %function
+  31              	nav_survey_rectangle_init:
+  32              		@ args = 0, pretend = 0, frame = 8
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  35 0004 C94C     		ldr	r4, .L101
+  36 0006 CA4F     		ldr	r7, .L101+4
+  37 0008 CA4E     		ldr	r6, .L101+8
+  38 000a CB4D     		ldr	r5, .L101+12
+  39 000c 00EB4000 		add	r0, r0, r0, lsl #1
+  40 0010 01EB4101 		add	r1, r1, r1, lsl #1
+  41 0014 04EB8000 		add	r0, r4, r0, lsl #2
+  42 0018 04EB8104 		add	r4, r4, r1, lsl #2
+  43 001c 94ED007A 		vldr.32	s14, [r4]
+  44 0020 D4ED017A 		vldr.32	s15, [r4, #4]
+  45 0024 2DED048B 		vpush.64	{d8, d9}
+  46 0028 D0ED008A 		vldr.32	s17, [r0]
+  47 002c 90ED018A 		vldr.32	s16, [r0, #4]
+  48 0030 F4EEC78A 		vcmpe.f32	s17, s14
+  49 0034 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  50 0038 54BF     		ite	pl
+  51 003a 17EE109A 		vmovpl	r9, s14
+  52 003e 18EE909A 		vmovmi	r9, s17
+  53 0042 1446     		mov	r4, r2	@ float
+  54 0044 BD4A     		ldr	r2, .L101+16
+  55 0046 B4EEE78A 		vcmpe.f32	s16, s15
+  56 004a C2F80090 		str	r9, [r2]	@ float
+  57 004e BC4A     		ldr	r2, .L101+20
+ARM GAS  /tmp/cclUB8sw.s 			page 2
+
+
+  58 0050 D8BF     		it	le
+  59 0052 F0EE478A 		vmovle.f32	s17, s14
+  60 0056 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  61 005a 54BF     		ite	pl
+  62 005c 17EE908A 		vmovpl	r8, s15
+  63 0060 18EE108A 		vmovmi	r8, s16
+  64 0064 1370     		strb	r3, [r2]
+  65 0066 B74A     		ldr	r2, .L101+24
+  66 0068 C7ED008A 		vstr.32	s17, [r7]
+  67 006c D8BF     		it	le
+  68 006e B0EE678A 		vmovle.f32	s16, s15
+  69 0072 83B0     		sub	sp, sp, #12
+  70 0074 C2F80080 		str	r8, [r2]	@ float
+  71 0078 86ED008A 		vstr.32	s16, [r6]
+  72 007c 002B     		cmp	r3, #0
+  73 007e 61D1     		bne	.L6
+  74 0080 2B88     		ldrh	r3, [r5]
+  75 0082 C3F3C012 		ubfx	r2, r3, #7, #1
+  76 0086 1906     		lsls	r1, r3, #24
+  77 0088 0192     		str	r2, [sp, #4]
+  78 008a 40F1B480 		bpl	.L86
+  79 008e D5F80801 		ldr	r0, [r5, #264]	@ float
+  80 0092 FFF7FEFF 		bl	__aeabi_f2d
+  81 0096 41EC190B 		vmov	d9, r0, r1
+  82 009a 2046     		mov	r0, r4	@ float
+  83 009c FFF7FEFF 		bl	__aeabi_f2d
+  84 00a0 A94B     		ldr	r3, .L101+28
+  85 00a2 0022     		movs	r2, #0
+  86 00a4 FFF7FEFF 		bl	__aeabi_dmul
+  87 00a8 8246     		mov	r10, r0
+  88 00aa 8B46     		mov	fp, r1
+  89 00ac 4846     		mov	r0, r9	@ float
+  90 00ae FFF7FEFF 		bl	__aeabi_f2d
+  91 00b2 5246     		mov	r2, r10
+  92 00b4 5B46     		mov	r3, fp
+  93 00b6 FFF7FEFF 		bl	__aeabi_dadd
+  94 00ba 53EC192B 		vmov	r2, r3, d9
+  95 00be 0746     		mov	r7, r0
+  96 00c0 8846     		mov	r8, r1
+  97 00c2 FFF7FEFF 		bl	__aeabi_dcmplt
+  98 00c6 0028     		cmp	r0, #0
+  99 00c8 40F0FF80 		bne	.L87
+ 100 00cc 18EE900A 		vmov	r0, s17
+ 101 00d0 FFF7FEFF 		bl	__aeabi_f2d
+ 102 00d4 5246     		mov	r2, r10
+ 103 00d6 5B46     		mov	r3, fp
+ 104 00d8 FFF7FEFF 		bl	__aeabi_dsub
+ 105 00dc 0246     		mov	r2, r0
+ 106 00de 0B46     		mov	r3, r1
+ 107 00e0 3846     		mov	r0, r7
+ 108 00e2 4146     		mov	r1, r8
+ 109 00e4 9946     		mov	r9, r3
+ 110 00e6 9046     		mov	r8, r2
+ 111 00e8 FFF7FEFF 		bl	__aeabi_dcmplt
+ 112 00ec 0028     		cmp	r0, #0
+ 113 00ee 40F0FE80 		bne	.L11
+ 114              	.L83:
+ARM GAS  /tmp/cclUB8sw.s 			page 3
+
+
+ 115 00f2 4046     		mov	r0, r8
+ 116 00f4 4946     		mov	r1, r9
+ 117 00f6 FFF7FEFF 		bl	__aeabi_d2f
+ 118 00fa DFF85C92 		ldr	r9, .L101+44
+ 119 00fe DFF85C82 		ldr	r8, .L101+48
+ 120 0102 C9F80000 		str	r0, [r9]	@ float
+ 121 0106 C8F80000 		str	r0, [r8]	@ float
+ 122              	.L18:
+ 123 010a 95ED437A 		vldr.32	s14, [r5, #268]
+ 124 010e D6ED007A 		vldr.32	s15, [r6]
+ 125 0112 F4EEC77A 		vcmpe.f32	s15, s14
+ 126 0116 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 127 011a 40F1C780 		bpl	.L22
+ 128              	.L81:
+ 129 011e 894B     		ldr	r3, .L101+24
+ 130 0120 93ED008A 		vldr.32	s16, [r3]
+ 131              	.L21:
+ 132 0124 89ED018A 		vstr.32	s16, [r9, #4]
+ 133 0128 C8ED017A 		vstr.32	s15, [r8, #4]
+ 134              	.L30:
+ 135 012c 8748     		ldr	r0, .L101+32
+ 136 012e 8849     		ldr	r1, .L101+36
+ 137 0130 884B     		ldr	r3, .L101+40
+ 138 0132 0460     		str	r4, [r0]	@ float
+ 139 0134 0022     		movs	r2, #0
+ 140 0136 0C60     		str	r4, [r1]	@ float
+ 141 0138 1A70     		strb	r2, [r3]
+ 142 013a 03B0     		add	sp, sp, #12
+ 143              		@ sp needed
+ 144 013c BDEC048B 		vldm	sp!, {d8-d9}
+ 145 0140 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 146              	.L6:
+ 147 0144 2B88     		ldrh	r3, [r5]
+ 148 0146 C3F3C012 		ubfx	r2, r3, #7, #1
+ 149 014a 1B06     		lsls	r3, r3, #24
+ 150 014c 0192     		str	r2, [sp, #4]
+ 151 014e 40F13681 		bpl	.L88
+ 152 0152 D5F80C01 		ldr	r0, [r5, #268]	@ float
+ 153 0156 FFF7FEFF 		bl	__aeabi_f2d
+ 154 015a 41EC190B 		vmov	d9, r0, r1
+ 155 015e 2046     		mov	r0, r4	@ float
+ 156 0160 FFF7FEFF 		bl	__aeabi_f2d
+ 157 0164 784B     		ldr	r3, .L101+28
+ 158 0166 0022     		movs	r2, #0
+ 159 0168 FFF7FEFF 		bl	__aeabi_dmul
+ 160 016c 8246     		mov	r10, r0
+ 161 016e 8B46     		mov	fp, r1
+ 162 0170 4046     		mov	r0, r8	@ float
+ 163 0172 FFF7FEFF 		bl	__aeabi_f2d
+ 164 0176 5246     		mov	r2, r10
+ 165 0178 5B46     		mov	r3, fp
+ 166 017a FFF7FEFF 		bl	__aeabi_dadd
+ 167 017e 8046     		mov	r8, r0
+ 168 0180 8946     		mov	r9, r1
+ 169 0182 4246     		mov	r2, r8
+ 170 0184 51EC190B 		vmov	r0, r1, d9
+ 171 0188 4B46     		mov	r3, r9
+ARM GAS  /tmp/cclUB8sw.s 			page 4
+
+
+ 172 018a FFF7FEFF 		bl	__aeabi_dcmpgt
+ 173 018e 0028     		cmp	r0, #0
+ 174 0190 40F0E680 		bne	.L89
+ 175 0194 18EE100A 		vmov	r0, s16
+ 176 0198 FFF7FEFF 		bl	__aeabi_f2d
+ 177 019c 5246     		mov	r2, r10
+ 178 019e 5B46     		mov	r3, fp
+ 179 01a0 FFF7FEFF 		bl	__aeabi_dsub
+ 180 01a4 0246     		mov	r2, r0
+ 181 01a6 0B46     		mov	r3, r1
+ 182 01a8 4046     		mov	r0, r8
+ 183 01aa 4946     		mov	r1, r9
+ 184 01ac 9046     		mov	r8, r2
+ 185 01ae 9946     		mov	r9, r3
+ 186 01b0 FFF7FEFF 		bl	__aeabi_dcmplt
+ 187 01b4 0028     		cmp	r0, #0
+ 188 01b6 40F0E380 		bne	.L35
+ 189              	.L84:
+ 190 01ba 4046     		mov	r0, r8
+ 191 01bc 4946     		mov	r1, r9
+ 192 01be FFF7FEFF 		bl	__aeabi_d2f
+ 193 01c2 DFF89491 		ldr	r9, .L101+44
+ 194 01c6 DFF89481 		ldr	r8, .L101+48
+ 195 01ca C9F80400 		str	r0, [r9, #4]	@ float
+ 196 01ce C8F80400 		str	r0, [r8, #4]	@ float
+ 197              	.L42:
+ 198 01d2 95ED427A 		vldr.32	s14, [r5, #264]
+ 199 01d6 D7ED007A 		vldr.32	s15, [r7]
+ 200 01da B4EEE77A 		vcmpe.f32	s14, s15
+ 201 01de F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 202 01e2 40F34781 		ble	.L46
+ 203              	.L82:
+ 204 01e6 554B     		ldr	r3, .L101+16
+ 205 01e8 93ED008A 		vldr.32	s16, [r3]
+ 206              	.L45:
+ 207 01ec 89ED008A 		vstr.32	s16, [r9]
+ 208 01f0 C8ED007A 		vstr.32	s15, [r8]
+ 209 01f4 9AE7     		b	.L30
+ 210              	.L86:
+ 211 01f6 FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 212 01fa D5F80801 		ldr	r0, [r5, #264]	@ float
+ 213 01fe FFF7FEFF 		bl	__aeabi_f2d
+ 214 0202 8046     		mov	r8, r0
+ 215 0204 2046     		mov	r0, r4	@ float
+ 216 0206 8946     		mov	r9, r1
+ 217 0208 FFF7FEFF 		bl	__aeabi_f2d
+ 218 020c 0022     		movs	r2, #0
+ 219 020e 4E4B     		ldr	r3, .L101+28
+ 220 0210 FFF7FEFF 		bl	__aeabi_dmul
+ 221 0214 494B     		ldr	r3, .L101+16
+ 222 0216 8246     		mov	r10, r0
+ 223 0218 8B46     		mov	fp, r1
+ 224 021a 1868     		ldr	r0, [r3]	@ float
+ 225 021c FFF7FEFF 		bl	__aeabi_f2d
+ 226 0220 5246     		mov	r2, r10
+ 227 0222 5B46     		mov	r3, fp
+ 228 0224 FFF7FEFF 		bl	__aeabi_dadd
+ARM GAS  /tmp/cclUB8sw.s 			page 5
+
+
+ 229 0228 0246     		mov	r2, r0
+ 230 022a 0B46     		mov	r3, r1
+ 231 022c 4046     		mov	r0, r8
+ 232 022e 4946     		mov	r1, r9
+ 233 0230 43EC182B 		vmov	d8, r2, r3
+ 234 0234 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 235 0238 0028     		cmp	r0, #0
+ 236 023a 40F06081 		bne	.L8
+ 237 023e 2B88     		ldrh	r3, [r5]
+ 238 0240 3868     		ldr	r0, [r7]	@ float
+ 239 0242 C3F3C013 		ubfx	r3, r3, #7, #1
+ 240 0246 0193     		str	r3, [sp, #4]
+ 241              	.L9:
+ 242 0248 FFF7FEFF 		bl	__aeabi_f2d
+ 243 024c 5246     		mov	r2, r10
+ 244 024e 5B46     		mov	r3, fp
+ 245 0250 FFF7FEFF 		bl	__aeabi_dsub
+ 246 0254 53EC182B 		vmov	r2, r3, d8
+ 247 0258 8046     		mov	r8, r0
+ 248 025a 8946     		mov	r9, r1
+ 249 025c FFF7FEFF 		bl	__aeabi_dcmpgt
+ 250 0260 0028     		cmp	r0, #0
+ 251 0262 40F02881 		bne	.L90
+ 252              	.L12:
+ 253 0266 4046     		mov	r0, r8
+ 254 0268 4946     		mov	r1, r9
+ 255 026a FFF7FEFF 		bl	__aeabi_d2f
+ 256              	.L17:
+ 257 026e DFF8E890 		ldr	r9, .L101+44
+ 258 0272 DFF8E880 		ldr	r8, .L101+48
+ 259 0276 019B     		ldr	r3, [sp, #4]
+ 260 0278 C9F80000 		str	r0, [r9]	@ float
+ 261 027c C8F80000 		str	r0, [r8]	@ float
+ 262 0280 002B     		cmp	r3, #0
+ 263 0282 7FF442AF 		bne	.L18
+ 264 0286 FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 265 028a 95ED437A 		vldr.32	s14, [r5, #268]
+ 266 028e D6ED007A 		vldr.32	s15, [r6]
+ 267 0292 B4EEE77A 		vcmpe.f32	s14, s15
+ 268 0296 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 269 029a 3FF740AF 		bgt	.L81
+ 270 029e 2B88     		ldrh	r3, [r5]
+ 271 02a0 1806     		lsls	r0, r3, #24
+ 272 02a2 03D4     		bmi	.L22
+ 273 02a4 FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 274 02a8 95ED437A 		vldr.32	s14, [r5, #268]
+ 275              	.L22:
+ 276 02ac 254B     		ldr	r3, .L101+24
+ 277 02ae 93ED008A 		vldr.32	s16, [r3]
+ 278 02b2 B4EEC78A 		vcmpe.f32	s16, s14
+ 279 02b6 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 280 02ba 00F13781 		bmi	.L91
+ 281              	.L23:
+ 282 02be 3368     		ldr	r3, [r6]	@ float
+ 283 02c0 88ED018A 		vstr.32	s16, [r8, #4]
+ 284 02c4 C9F80430 		str	r3, [r9, #4]	@ float
+ 285 02c8 30E7     		b	.L30
+ARM GAS  /tmp/cclUB8sw.s 			page 6
+
+
+ 286              	.L87:
+ 287 02ca 18EE900A 		vmov	r0, s17
+ 288 02ce FFF7FEFF 		bl	__aeabi_f2d
+ 289 02d2 5246     		mov	r2, r10
+ 290 02d4 5B46     		mov	r3, fp
+ 291 02d6 FFF7FEFF 		bl	__aeabi_dsub
+ 292 02da 8046     		mov	r8, r0
+ 293 02dc 8946     		mov	r9, r1
+ 294 02de 4246     		mov	r2, r8
+ 295 02e0 51EC190B 		vmov	r0, r1, d9
+ 296 02e4 4B46     		mov	r3, r9
+ 297 02e6 FFF7FEFF 		bl	__aeabi_dcmplt
+ 298 02ea 0028     		cmp	r0, #0
+ 299 02ec BBD0     		beq	.L12
+ 300              	.L11:
+ 301 02ee 134B     		ldr	r3, .L101+16
+ 302 02f0 1868     		ldr	r0, [r3]	@ float
+ 303 02f2 FFF7FEFF 		bl	__aeabi_f2d
+ 304 02f6 5246     		mov	r2, r10
+ 305 02f8 5B46     		mov	r3, fp
+ 306 02fa FFF7FEFF 		bl	__aeabi_dadd
+ 307 02fe D5F80871 		ldr	r7, [r5, #264]	@ float
+ 308 0302 8046     		mov	r8, r0
+ 309 0304 8946     		mov	r9, r1
+ 310 0306 3846     		mov	r0, r7	@ float
+ 311 0308 FFF7FEFF 		bl	__aeabi_f2d
+ 312 030c 4246     		mov	r2, r8
+ 313 030e 4B46     		mov	r3, r9
+ 314 0310 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 315 0314 0028     		cmp	r0, #0
+ 316 0316 3FF4ECAE 		beq	.L83
+ 317              	.L16:
+ 318 031a DFF83C90 		ldr	r9, .L101+44
+ 319 031e DFF83C80 		ldr	r8, .L101+48
+ 320 0322 C9F80070 		str	r7, [r9]	@ float
+ 321 0326 C8F80070 		str	r7, [r8]	@ float
+ 322 032a EEE6     		b	.L18
+ 323              	.L102:
+ 324              		.align	2
+ 325              	.L101:
+ 326 032c 00000000 		.word	waypoints
+ 327 0330 00000000 		.word	nav_survey_east
+ 328 0334 00000000 		.word	nav_survey_north
+ 329 0338 00000000 		.word	state
+ 330 033c 00000000 		.word	nav_survey_west
+ 331 0340 00000000 		.word	.LANCHOR0
+ 332 0344 00000000 		.word	nav_survey_south
+ 333 0348 0000E03F 		.word	1071644672
+ 334 034c 00000000 		.word	nav_survey_shift
+ 335 0350 00000000 		.word	.LANCHOR3
+ 336 0354 00000000 		.word	.LANCHOR4
+ 337 0358 00000000 		.word	.LANCHOR1
+ 338 035c 00000000 		.word	.LANCHOR2
+ 339              	.L89:
+ 340 0360 18EE100A 		vmov	r0, s16
+ 341 0364 FFF7FEFF 		bl	__aeabi_f2d
+ 342 0368 5246     		mov	r2, r10
+ARM GAS  /tmp/cclUB8sw.s 			page 7
+
+
+ 343 036a 5B46     		mov	r3, fp
+ 344 036c FFF7FEFF 		bl	__aeabi_dsub
+ 345 0370 53EC192B 		vmov	r2, r3, d9
+ 346 0374 8046     		mov	r8, r0
+ 347 0376 8946     		mov	r9, r1
+ 348 0378 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 349 037c 0028     		cmp	r0, #0
+ 350 037e 56D0     		beq	.L36
+ 351              	.L35:
+ 352 0380 C74B     		ldr	r3, .L103+24
+ 353 0382 1868     		ldr	r0, [r3]	@ float
+ 354 0384 FFF7FEFF 		bl	__aeabi_f2d
+ 355 0388 5246     		mov	r2, r10
+ 356 038a 5B46     		mov	r3, fp
+ 357 038c FFF7FEFF 		bl	__aeabi_dadd
+ 358 0390 D5F80C61 		ldr	r6, [r5, #268]	@ float
+ 359 0394 8046     		mov	r8, r0
+ 360 0396 8946     		mov	r9, r1
+ 361 0398 3046     		mov	r0, r6	@ float
+ 362 039a FFF7FEFF 		bl	__aeabi_f2d
+ 363 039e 4246     		mov	r2, r8
+ 364 03a0 4B46     		mov	r3, r9
+ 365 03a2 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 366 03a6 0028     		cmp	r0, #0
+ 367 03a8 3FF407AF 		beq	.L84
+ 368              	.L40:
+ 369 03ac DFF8FC92 		ldr	r9, .L103+36
+ 370 03b0 DFF8FC82 		ldr	r8, .L103+40
+ 371 03b4 C9F80460 		str	r6, [r9, #4]	@ float
+ 372 03b8 C8F80460 		str	r6, [r8, #4]	@ float
+ 373 03bc 09E7     		b	.L42
+ 374              	.L88:
+ 375 03be FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 376 03c2 D5F80C01 		ldr	r0, [r5, #268]	@ float
+ 377 03c6 FFF7FEFF 		bl	__aeabi_f2d
+ 378 03ca 8046     		mov	r8, r0
+ 379 03cc 2046     		mov	r0, r4	@ float
+ 380 03ce 8946     		mov	r9, r1
+ 381 03d0 FFF7FEFF 		bl	__aeabi_f2d
+ 382 03d4 0022     		movs	r2, #0
+ 383 03d6 B34B     		ldr	r3, .L103+28
+ 384 03d8 FFF7FEFF 		bl	__aeabi_dmul
+ 385 03dc B04B     		ldr	r3, .L103+24
+ 386 03de 8246     		mov	r10, r0
+ 387 03e0 8B46     		mov	fp, r1
+ 388 03e2 1868     		ldr	r0, [r3]	@ float
+ 389 03e4 FFF7FEFF 		bl	__aeabi_f2d
+ 390 03e8 5246     		mov	r2, r10
+ 391 03ea 5B46     		mov	r3, fp
+ 392 03ec FFF7FEFF 		bl	__aeabi_dadd
+ 393 03f0 0246     		mov	r2, r0
+ 394 03f2 0B46     		mov	r3, r1
+ 395 03f4 4046     		mov	r0, r8
+ 396 03f6 4946     		mov	r1, r9
+ 397 03f8 43EC182B 		vmov	d8, r2, r3
+ 398 03fc FFF7FEFF 		bl	__aeabi_dcmpgt
+ 399 0400 0028     		cmp	r0, #0
+ARM GAS  /tmp/cclUB8sw.s 			page 8
+
+
+ 400 0402 40F0D580 		bne	.L32
+ 401 0406 2B88     		ldrh	r3, [r5]
+ 402 0408 3068     		ldr	r0, [r6]	@ float
+ 403 040a C3F3C013 		ubfx	r3, r3, #7, #1
+ 404 040e 0193     		str	r3, [sp, #4]
+ 405              	.L33:
+ 406 0410 FFF7FEFF 		bl	__aeabi_f2d
+ 407 0414 5246     		mov	r2, r10
+ 408 0416 5B46     		mov	r3, fp
+ 409 0418 FFF7FEFF 		bl	__aeabi_dsub
+ 410 041c 53EC182B 		vmov	r2, r3, d8
+ 411 0420 8046     		mov	r8, r0
+ 412 0422 8946     		mov	r9, r1
+ 413 0424 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 414 0428 0028     		cmp	r0, #0
+ 415 042a 40F09E80 		bne	.L92
+ 416              	.L36:
+ 417 042e 4046     		mov	r0, r8
+ 418 0430 4946     		mov	r1, r9
+ 419 0432 FFF7FEFF 		bl	__aeabi_d2f
+ 420              	.L41:
+ 421 0436 DFF87492 		ldr	r9, .L103+36
+ 422 043a DFF87482 		ldr	r8, .L103+40
+ 423 043e 019B     		ldr	r3, [sp, #4]
+ 424 0440 C9F80400 		str	r0, [r9, #4]	@ float
+ 425 0444 C8F80400 		str	r0, [r8, #4]	@ float
+ 426 0448 002B     		cmp	r3, #0
+ 427 044a 7FF4C2AE 		bne	.L42
+ 428 044e FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 429 0452 95ED427A 		vldr.32	s14, [r5, #264]
+ 430 0456 D7ED007A 		vldr.32	s15, [r7]
+ 431 045a B4EEE77A 		vcmpe.f32	s14, s15
+ 432 045e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 433 0462 3FF7C0AE 		bgt	.L82
+ 434 0466 2B88     		ldrh	r3, [r5]
+ 435 0468 1A06     		lsls	r2, r3, #24
+ 436 046a 03D4     		bmi	.L46
+ 437 046c FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 438 0470 95ED427A 		vldr.32	s14, [r5, #264]
+ 439              	.L46:
+ 440 0474 8C4B     		ldr	r3, .L103+32
+ 441 0476 93ED008A 		vldr.32	s16, [r3]
+ 442 047a B4EEC78A 		vcmpe.f32	s16, s14
+ 443 047e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 444 0482 05D4     		bmi	.L93
+ 445              	.L47:
+ 446 0484 3B68     		ldr	r3, [r7]	@ float
+ 447 0486 88ED008A 		vstr.32	s16, [r8]
+ 448 048a C9F80030 		str	r3, [r9]	@ float
+ 449 048e 4DE6     		b	.L30
+ 450              	.L93:
+ 451 0490 B5F81431 		ldrh	r3, [r5, #276]
+ 452 0494 9B05     		lsls	r3, r3, #22
+ 453 0496 40F1A180 		bpl	.L94
+ 454              	.L49:
+ 455 049a D5F86C01 		ldr	r0, [r5, #364]	@ float
+ 456 049e FFF7FEFF 		bl	__aeabi_f2d
+ARM GAS  /tmp/cclUB8sw.s 			page 9
+
+
+ 457 04a2 79A3     		adr	r3, .L103
+ 458 04a4 D3E90023 		ldrd	r2, [r3]
+ 459 04a8 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 460 04ac 0028     		cmp	r0, #0
+ 461 04ae E9D0     		beq	.L47
+ 462 04b0 D7ED007A 		vldr.32	s15, [r7]
+ 463 04b4 9AE6     		b	.L45
+ 464              	.L90:
+ 465 04b6 019B     		ldr	r3, [sp, #4]
+ 466 04b8 002B     		cmp	r3, #0
+ 467 04ba 7FF418AF 		bne	.L11
+ 468 04be FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 469 04c2 794B     		ldr	r3, .L103+32
+ 470 04c4 1868     		ldr	r0, [r3]	@ float
+ 471 04c6 FFF7FEFF 		bl	__aeabi_f2d
+ 472 04ca 5246     		mov	r2, r10
+ 473 04cc 5B46     		mov	r3, fp
+ 474 04ce FFF7FEFF 		bl	__aeabi_dadd
+ 475 04d2 D5F80871 		ldr	r7, [r5, #264]	@ float
+ 476 04d6 8046     		mov	r8, r0
+ 477 04d8 8946     		mov	r9, r1
+ 478 04da 3846     		mov	r0, r7	@ float
+ 479 04dc FFF7FEFF 		bl	__aeabi_f2d
+ 480 04e0 4246     		mov	r2, r8
+ 481 04e2 4B46     		mov	r3, r9
+ 482 04e4 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 483 04e8 0028     		cmp	r0, #0
+ 484 04ea 7DD1     		bne	.L95
+ 485 04ec 2B88     		ldrh	r3, [r5]
+ 486 04ee 4046     		mov	r0, r8
+ 487 04f0 C3F3C013 		ubfx	r3, r3, #7, #1
+ 488 04f4 4946     		mov	r1, r9
+ 489 04f6 0193     		str	r3, [sp, #4]
+ 490 04f8 FFF7FEFF 		bl	__aeabi_d2f
+ 491 04fc B7E6     		b	.L17
+ 492              	.L8:
+ 493 04fe 2B88     		ldrh	r3, [r5]
+ 494 0500 C3F3C012 		ubfx	r2, r3, #7, #1
+ 495 0504 0192     		str	r2, [sp, #4]
+ 496 0506 1A06     		lsls	r2, r3, #24
+ 497 0508 00F1AA80 		bmi	.L96
+ 498 050c FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 499 0510 D5F80801 		ldr	r0, [r5, #264]	@ float
+ 500 0514 FFF7FEFF 		bl	__aeabi_f2d
+ 501 0518 0246     		mov	r2, r0
+ 502 051a 0B46     		mov	r3, r1
+ 503 051c 43EC182B 		vmov	d8, r2, r3
+ 504 0520 2B88     		ldrh	r3, [r5]
+ 505 0522 3868     		ldr	r0, [r7]	@ float
+ 506 0524 C3F3C013 		ubfx	r3, r3, #7, #1
+ 507 0528 0193     		str	r3, [sp, #4]
+ 508 052a 8DE6     		b	.L9
+ 509              	.L91:
+ 510 052c B5F81431 		ldrh	r3, [r5, #276]
+ 511 0530 9905     		lsls	r1, r3, #22
+ 512 0532 73D5     		bpl	.L97
+ 513 0534 D5F86C01 		ldr	r0, [r5, #364]	@ float
+ARM GAS  /tmp/cclUB8sw.s 			page 10
+
+
+ 514 0538 FFF7FEFF 		bl	__aeabi_f2d
+ 515 053c 54A3     		adr	r3, .L103+8
+ 516 053e D3E90023 		ldrd	r2, [r3]
+ 517 0542 8246     		mov	r10, r0
+ 518 0544 8B46     		mov	fp, r1
+ 519 0546 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 520 054a 0028     		cmp	r0, #0
+ 521 054c 3FF4B7AE 		beq	.L23
+ 522              	.L28:
+ 523 0550 51A3     		adr	r3, .L103+16
+ 524 0552 D3E90023 		ldrd	r2, [r3]
+ 525 0556 5046     		mov	r0, r10
+ 526 0558 5946     		mov	r1, fp
+ 527 055a FFF7FEFF 		bl	__aeabi_dcmplt
+ 528 055e 0028     		cmp	r0, #0
+ 529 0560 3FF4ADAE 		beq	.L23
+ 530 0564 D6ED007A 		vldr.32	s15, [r6]
+ 531 0568 DCE5     		b	.L21
+ 532              	.L92:
+ 533 056a 019B     		ldr	r3, [sp, #4]
+ 534 056c 002B     		cmp	r3, #0
+ 535 056e 7FF407AF 		bne	.L35
+ 536 0572 FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 537 0576 4A4B     		ldr	r3, .L103+24
+ 538 0578 1868     		ldr	r0, [r3]	@ float
+ 539 057a FFF7FEFF 		bl	__aeabi_f2d
+ 540 057e 5246     		mov	r2, r10
+ 541 0580 5B46     		mov	r3, fp
+ 542 0582 FFF7FEFF 		bl	__aeabi_dadd
+ 543 0586 D5F80C61 		ldr	r6, [r5, #268]	@ float
+ 544 058a 8046     		mov	r8, r0
+ 545 058c 8946     		mov	r9, r1
+ 546 058e 3046     		mov	r0, r6	@ float
+ 547 0590 FFF7FEFF 		bl	__aeabi_f2d
+ 548 0594 4246     		mov	r2, r8
+ 549 0596 4B46     		mov	r3, r9
+ 550 0598 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 551 059c 88BB     		cbnz	r0, .L98
+ 552 059e 2B88     		ldrh	r3, [r5]
+ 553 05a0 4046     		mov	r0, r8
+ 554 05a2 C3F3C013 		ubfx	r3, r3, #7, #1
+ 555 05a6 4946     		mov	r1, r9
+ 556 05a8 0193     		str	r3, [sp, #4]
+ 557 05aa FFF7FEFF 		bl	__aeabi_d2f
+ 558 05ae 42E7     		b	.L41
+ 559              	.L32:
+ 560 05b0 2B88     		ldrh	r3, [r5]
+ 561 05b2 C3F3C012 		ubfx	r2, r3, #7, #1
+ 562 05b6 1806     		lsls	r0, r3, #24
+ 563 05b8 0192     		str	r2, [sp, #4]
+ 564 05ba 7BD4     		bmi	.L99
+ 565 05bc FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 566 05c0 D5F80C01 		ldr	r0, [r5, #268]	@ float
+ 567 05c4 FFF7FEFF 		bl	__aeabi_f2d
+ 568 05c8 0246     		mov	r2, r0
+ 569 05ca 0B46     		mov	r3, r1
+ 570 05cc 43EC182B 		vmov	d8, r2, r3
+ARM GAS  /tmp/cclUB8sw.s 			page 11
+
+
+ 571 05d0 2B88     		ldrh	r3, [r5]
+ 572 05d2 3068     		ldr	r0, [r6]	@ float
+ 573 05d4 C3F3C013 		ubfx	r3, r3, #7, #1
+ 574 05d8 0193     		str	r3, [sp, #4]
+ 575 05da 19E7     		b	.L33
+ 576              	.L94:
+ 577 05dc FFF7FEFF 		bl	stateCalcHorizontalSpeedDir_f
+ 578 05e0 314B     		ldr	r3, .L103+32
+ 579 05e2 93ED008A 		vldr.32	s16, [r3]
+ 580 05e6 58E7     		b	.L49
+ 581              	.L95:
+ 582 05e8 2B88     		ldrh	r3, [r5]
+ 583 05ea 1B06     		lsls	r3, r3, #24
+ 584 05ec 3FF595AE 		bmi	.L16
+ 585 05f0 FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 586 05f4 2B88     		ldrh	r3, [r5]
+ 587 05f6 D5F80801 		ldr	r0, [r5, #264]	@ float
+ 588 05fa C3F3C013 		ubfx	r3, r3, #7, #1
+ 589 05fe 0193     		str	r3, [sp, #4]
+ 590 0600 35E6     		b	.L17
+ 591              	.L98:
+ 592 0602 2B88     		ldrh	r3, [r5]
+ 593 0604 1906     		lsls	r1, r3, #24
+ 594 0606 3FF5D1AE 		bmi	.L40
+ 595 060a FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 596 060e 2B88     		ldrh	r3, [r5]
+ 597 0610 D5F80C01 		ldr	r0, [r5, #268]	@ float
+ 598 0614 C3F3C013 		ubfx	r3, r3, #7, #1
+ 599 0618 0193     		str	r3, [sp, #4]
+ 600 061a 0CE7     		b	.L41
+ 601              	.L97:
+ 602 061c FFF7FEFF 		bl	stateCalcHorizontalSpeedDir_f
+ 603 0620 D5F86C01 		ldr	r0, [r5, #364]	@ float
+ 604 0624 FFF7FEFF 		bl	__aeabi_f2d
+ 605 0628 19A3     		adr	r3, .L103+8
+ 606 062a D3E90023 		ldrd	r2, [r3]
+ 607 062e 8246     		mov	r10, r0
+ 608 0630 8B46     		mov	fp, r1
+ 609 0632 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 610 0636 18B9     		cbnz	r0, .L26
+ 611 0638 194B     		ldr	r3, .L103+24
+ 612 063a 93ED008A 		vldr.32	s16, [r3]
+ 613 063e 3EE6     		b	.L23
+ 614              	.L26:
+ 615 0640 B5F81431 		ldrh	r3, [r5, #276]
+ 616 0644 9A05     		lsls	r2, r3, #22
+ 617 0646 48D4     		bmi	.L100
+ 618 0648 FFF7FEFF 		bl	stateCalcHorizontalSpeedDir_f
+ 619 064c 144B     		ldr	r3, .L103+24
+ 620 064e D5F86C01 		ldr	r0, [r5, #364]	@ float
+ 621 0652 93ED008A 		vldr.32	s16, [r3]
+ 622 0656 FFF7FEFF 		bl	__aeabi_f2d
+ 623 065a 8246     		mov	r10, r0
+ 624 065c 8B46     		mov	fp, r1
+ 625 065e 77E7     		b	.L28
+ 626              	.L96:
+ 627 0660 3868     		ldr	r0, [r7]	@ float
+ARM GAS  /tmp/cclUB8sw.s 			page 12
+
+
+ 628 0662 FFF7FEFF 		bl	__aeabi_f2d
+ 629 0666 5246     		mov	r2, r10
+ 630 0668 5B46     		mov	r3, fp
+ 631 066a FFF7FEFF 		bl	__aeabi_dsub
+ 632 066e 0246     		mov	r2, r0
+ 633 0670 0B46     		mov	r3, r1
+ 634 0672 4046     		mov	r0, r8
+ 635 0674 4946     		mov	r1, r9
+ 636 0676 9046     		mov	r8, r2
+ 637 0678 9946     		mov	r9, r3
+ 638 067a FFF7FEFF 		bl	__aeabi_dcmplt
+ 639 067e 0028     		cmp	r0, #0
+ 640 0680 3FF4F1AD 		beq	.L12
+ 641 0684 33E6     		b	.L11
+ 642              	.L104:
+ 643 0686 00BF     		.align	3
+ 644              	.L103:
+ 645 0688 182D4454 		.word	1413754136
+ 646 068c FB210940 		.word	1074340347
+ 647 0690 182D4454 		.word	1413754136
+ 648 0694 FB21F93F 		.word	1073291771
+ 649 0698 D221337F 		.word	2134057426
+ 650 069c 7CD91240 		.word	1074977148
+ 651 06a0 00000000 		.word	nav_survey_south
+ 652 06a4 0000E03F 		.word	1071644672
+ 653 06a8 00000000 		.word	nav_survey_west
+ 654 06ac 00000000 		.word	.LANCHOR1
+ 655 06b0 00000000 		.word	.LANCHOR2
+ 656              	.L99:
+ 657 06b4 3068     		ldr	r0, [r6]	@ float
+ 658 06b6 FFF7FEFF 		bl	__aeabi_f2d
+ 659 06ba 5246     		mov	r2, r10
+ 660 06bc 5B46     		mov	r3, fp
+ 661 06be FFF7FEFF 		bl	__aeabi_dsub
+ 662 06c2 0246     		mov	r2, r0
+ 663 06c4 0B46     		mov	r3, r1
+ 664 06c6 4046     		mov	r0, r8
+ 665 06c8 4946     		mov	r1, r9
+ 666 06ca 9046     		mov	r8, r2
+ 667 06cc 9946     		mov	r9, r3
+ 668 06ce FFF7FEFF 		bl	__aeabi_dcmplt
+ 669 06d2 0028     		cmp	r0, #0
+ 670 06d4 3FF4ABAE 		beq	.L36
+ 671 06d8 52E6     		b	.L35
+ 672              	.L100:
+ 673 06da 024B     		ldr	r3, .L105
+ 674 06dc 93ED008A 		vldr.32	s16, [r3]
+ 675 06e0 36E7     		b	.L28
+ 676              	.L106:
+ 677 06e2 00BF     		.align	2
+ 678              	.L105:
+ 679 06e4 00000000 		.word	nav_survey_south
+ 680              		.size	nav_survey_rectangle_init, .-nav_survey_rectangle_init
+ 681              		.section	.text.nav_survey_rectangle,"ax",%progbits
+ 682              		.align	1
+ 683              		.p2align 4,,15
+ 684              		.global	nav_survey_rectangle
+ARM GAS  /tmp/cclUB8sw.s 			page 13
+
+
+ 685              		.syntax unified
+ 686              		.thumb
+ 687              		.thumb_func
+ 688              		.fpu fpv4-sp-d16
+ 689              		.type	nav_survey_rectangle, %function
+ 690              	nav_survey_rectangle:
+ 691              		@ args = 0, pretend = 0, frame = 8
+ 692              		@ frame_needed = 0, uses_anonymous_args = 0
+ 693 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 694 0004 9E4D     		ldr	r5, .L261+16
+ 695 0006 DFF8BCB2 		ldr	fp, .L261+84
+ 696 000a 9E4A     		ldr	r2, .L261+20
+ 697 000c 9BF800C0 		ldrb	ip, [fp]	@ zero_extendqisi2
+ 698 0010 00EB4003 		add	r3, r0, r0, lsl #1
+ 699 0014 01EB4101 		add	r1, r1, r1, lsl #1
+ 700 0018 05EB8303 		add	r3, r5, r3, lsl #2
+ 701 001c 05EB8101 		add	r1, r5, r1, lsl #2
+ 702 0020 91ED006A 		vldr.32	s12, [r1]
+ 703 0024 93ED007A 		vldr.32	s14, [r3]
+ 704 0028 D1ED016A 		vldr.32	s13, [r1, #4]
+ 705 002c D3ED017A 		vldr.32	s15, [r3, #4]
+ 706 0030 954B     		ldr	r3, .L261+24
+ 707 0032 B4EEC67A 		vcmpe.f32	s14, s12
+ 708 0036 2DED048B 		vpush.64	{d8, d9}
+ 709 003a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 710 003e 4FF00101 		mov	r1, #1
+ 711 0042 0446     		mov	r4, r0
+ 712 0044 F4EEE67A 		vcmpe.f32	s15, s13
+ 713 0048 54BF     		ite	pl
+ 714 004a F0EE465A 		vmovpl.f32	s11, s12
+ 715 004e F0EE475A 		vmovmi.f32	s11, s14
+ 716 0052 1970     		strb	r1, [r3]
+ 717 0054 D8BF     		it	le
+ 718 0056 B0EE467A 		vmovle.f32	s14, s12
+ 719 005a 8C48     		ldr	r0, .L261+28
+ 720 005c 8C4B     		ldr	r3, .L261+32
+ 721 005e 82ED007A 		vstr.32	s14, [r2]
+ 722 0062 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 723 0066 04FA01F9 		lsl	r9, r4, r1
+ 724 006a 8A49     		ldr	r1, .L261+36
+ 725 006c 54BF     		ite	pl
+ 726 006e B0EE666A 		vmovpl.f32	s12, s13
+ 727 0072 B0EE676A 		vmovmi.f32	s12, s15
+ 728 0076 D8BF     		it	le
+ 729 0078 F0EE667A 		vmovle.f32	s15, s13
+ 730 007c 83B0     		sub	sp, sp, #12
+ 731 007e C0ED007A 		vstr.32	s15, [r0]
+ 732 0082 C1ED005A 		vstr.32	s11, [r1]
+ 733 0086 83ED006A 		vstr.32	s12, [r3]
+ 734 008a BCF1000F 		cmp	ip, #0
+ 735 008e 72D0     		beq	.L244
+ 736 0090 BCF1010F 		cmp	ip, #1
+ 737 0094 0FD1     		bne	.L118
+ 738 0096 804F     		ldr	r7, .L261+40
+ 739 0098 804E     		ldr	r6, .L261+44
+ 740 009a 97ED006A 		vldr.32	s12, [r7]
+ 741 009e D6ED006A 		vldr.32	s13, [r6]
+ARM GAS  /tmp/cclUB8sw.s 			page 14
+
+
+ 742 00a2 B4EEE66A 		vcmpe.f32	s12, s13
+ 743 00a6 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 744 00aa 40F35C82 		ble	.L232
+ 745 00ae 87ED007A 		vstr.32	s14, [r7]
+ 746 00b2 C6ED005A 		vstr.32	s11, [r6]
+ 747              	.L118:
+ 748 00b6 DFF81082 		ldr	r8, .L261+88
+ 749 00ba 98F80060 		ldrb	r6, [r8]	@ zero_extendqisi2
+ 750 00be 002E     		cmp	r6, #0
+ 751 00c0 00F08E83 		beq	.L245
+ 752              	.L164:
+ 753 00c4 BCF1010F 		cmp	ip, #1
+ 754 00c8 7BD1     		bne	.L183
+ 755 00ca 734F     		ldr	r7, .L261+40
+ 756 00cc 734E     		ldr	r6, .L261+44
+ 757 00ce 97ED007A 		vldr.32	s14, [r7]
+ 758 00d2 D6ED007A 		vldr.32	s15, [r6]
+ 759 00d6 B4EEE77A 		vcmpe.f32	s14, s15
+ 760 00da F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 761 00de 00F3F782 		bgt	.L246
+ 762              	.L174:
+ 763 00e2 B4EEE77A 		vcmpe.f32	s14, s15
+ 764 00e6 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 765 00ea 6AD5     		bpl	.L183
+ 766 00ec DFF8DCA1 		ldr	r10, .L261+92
+ 767 00f0 BAF81431 		ldrh	r3, [r10, #276]
+ 768 00f4 9B05     		lsls	r3, r3, #22
+ 769 00f6 40F17C83 		bpl	.L247
+ 770              	.L185:
+ 771 00fa DAF86C01 		ldr	r0, [r10, #364]	@ float
+ 772 00fe FFF7FEFF 		bl	__aeabi_f2d
+ 773 0102 5BA3     		adr	r3, .L261
+ 774 0104 D3E90023 		ldrd	r2, [r3]
+ 775 0108 FFF7FEFF 		bl	__aeabi_dmul
+ 776 010c 0246     		mov	r2, r0
+ 777 010e 0B46     		mov	r3, r1
+ 778 0110 59A1     		adr	r1, .L261+8
+ 779 0112 D1E90001 		ldrd	r0, [r1]
+ 780 0116 FFF7FEFF 		bl	__aeabi_dsub
+ 781 011a FFF7FEFF 		bl	__aeabi_d2f
+ 782 011e 07EE900A 		vmov	s15, r0
+ 783 0122 F5EEC07A 		vcmpe.f32	s15, #0
+ 784 0126 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 785 012a 08D5     		bpl	.L186
+ 786 012c 9FED5C7A 		vldr.32	s14, .L261+48
+ 787              	.L188:
+ 788 0130 77EE877A 		vadd.f32	s15, s15, s14
+ 789 0134 F5EEC07A 		vcmpe.f32	s15, #0
+ 790 0138 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 791 013c F8D4     		bmi	.L188
+ 792              	.L186:
+ 793 013e 9FED587A 		vldr.32	s14, .L261+48
+ 794 0142 F4EEC77A 		vcmpe.f32	s15, s14
+ 795 0146 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 796 014a 06DB     		blt	.L189
+ 797              	.L191:
+ 798 014c 77EEC77A 		vsub.f32	s15, s15, s14
+ARM GAS  /tmp/cclUB8sw.s 			page 15
+
+
+ 799 0150 F4EEC77A 		vcmpe.f32	s15, s14
+ 800 0154 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 801 0158 F8DA     		bge	.L191
+ 802              	.L189:
+ 803 015a 9FED527A 		vldr.32	s14, .L261+52
+ 804 015e F4EEC77A 		vcmpe.f32	s15, s14
+ 805 0162 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 806 0166 40F31883 		ble	.L248
+ 807              	.L163:
+ 808 016a 4F4A     		ldr	r2, .L261+56
+ 809 016c 0023     		movs	r3, #0
+ 810 016e 88F80030 		strb	r3, [r8]
+ 811 0172 1370     		strb	r3, [r2]
+ 812 0174 2BE0     		b	.L142
+ 813              	.L244:
+ 814 0176 484F     		ldr	r7, .L261+40
+ 815 0178 484E     		ldr	r6, .L261+44
+ 816 017a D7ED016A 		vldr.32	s13, [r7, #4]
+ 817 017e 96ED017A 		vldr.32	s14, [r6, #4]
+ 818 0182 F4EEC76A 		vcmpe.f32	s13, s14
+ 819 0186 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 820 018a 36DD     		ble	.L230
+ 821 018c C7ED017A 		vstr.32	s15, [r7, #4]
+ 822 0190 86ED016A 		vstr.32	s12, [r6, #4]
+ 823              	.L231:
+ 824 0194 DFF83081 		ldr	r8, .L261+88
+ 825 0198 98F800C0 		ldrb	ip, [r8]	@ zero_extendqisi2
+ 826 019c BCF1000F 		cmp	ip, #0
+ 827 01a0 37D0     		beq	.L193
+ 828              	.L251:
+ 829 01a2 97ED017A 		vldr.32	s14, [r7, #4]
+ 830 01a6 D6ED017A 		vldr.32	s15, [r6, #4]
+ 831 01aa B4EEE77A 		vcmpe.f32	s14, s15
+ 832 01ae F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 833 01b2 00F3DF81 		bgt	.L249
+ 834              	.L196:
+ 835 01b6 B4EEE77A 		vcmpe.f32	s14, s15
+ 836 01ba F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 837 01be 00F11A81 		bmi	.L250
+ 838              	.L183:
+ 839 01c2 3A4B     		ldr	r3, .L261+60
+ 840 01c4 6968     		ldr	r1, [r5, #4]	@ float
+ 841 01c6 1A68     		ldr	r2, [r3]	@ float
+ 842 01c8 2868     		ldr	r0, [r5]	@ float
+ 843 01ca FFF7FEFF 		bl	nav_circle_XY
+ 844              	.L142:
+ 845 01ce 4C44     		add	r4, r4, r9
+ 846 01d0 05EB8405 		add	r5, r5, r4, lsl #2
+ 847 01d4 364A     		ldr	r2, .L261+64
+ 848 01d6 A868     		ldr	r0, [r5, #8]	@ float
+ 849 01d8 364C     		ldr	r4, .L261+68
+ 850 01da 3749     		ldr	r1, .L261+72
+ 851 01dc 0025     		movs	r5, #0
+ 852 01de 1570     		strb	r5, [r2]
+ 853 01e0 364A     		ldr	r2, .L261+76
+ 854 01e2 1060     		str	r0, [r2]	@ float
+ 855 01e4 364A     		ldr	r2, .L261+80
+ARM GAS  /tmp/cclUB8sw.s 			page 16
+
+
+ 856 01e6 0023     		movs	r3, #0
+ 857 01e8 0320     		movs	r0, #3
+ 858 01ea 2360     		str	r3, [r4]	@ float
+ 859 01ec 0870     		strb	r0, [r1]
+ 860 01ee 1360     		str	r3, [r2]	@ float
+ 861 01f0 03B0     		add	sp, sp, #12
+ 862              		@ sp needed
+ 863 01f2 BDEC048B 		vldm	sp!, {d8-d9}
+ 864 01f6 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 865              	.L230:
+ 866 01fa CBD5     		bpl	.L231
+ 867 01fc DFF8C880 		ldr	r8, .L261+88
+ 868 0200 87ED016A 		vstr.32	s12, [r7, #4]
+ 869 0204 98F800C0 		ldrb	ip, [r8]	@ zero_extendqisi2
+ 870 0208 C6ED017A 		vstr.32	s15, [r6, #4]
+ 871 020c BCF1000F 		cmp	ip, #0
+ 872 0210 C7D1     		bne	.L251
+ 873              	.L193:
+ 874 0212 DFF8B8A0 		ldr	r10, .L261+92
+ 875 0216 BAF800C0 		ldrh	ip, [r10]
+ 876 021a 1CF0800F 		tst	ip, #128
+ 877 021e 00F0FA81 		beq	.L252
+ 878              	.L122:
+ 879 0222 9AED437A 		vldr.32	s14, [r10, #268]
+ 880 0226 B4EEE77A 		vcmpe.f32	s14, s15
+ 881 022a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 882 022e 4FD5     		bpl	.L123
+ 883 0230 9BF800C0 		ldrb	ip, [fp]	@ zero_extendqisi2
+ 884 0234 BCF1000F 		cmp	ip, #0
+ 885 0238 4AD1     		bne	.L123
+ 886 023a D7ED016A 		vldr.32	s13, [r7, #4]
+ 887 023e D6ED017A 		vldr.32	s15, [r6, #4]
+ 888 0242 F4EEE76A 		vcmpe.f32	s13, s15
+ 889 0246 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 890 024a 41DD     		ble	.L123
+ 891              	.L240:
+ 892 024c 96ED007A 		vldr.32	s14, [r6]
+ 893 0250 8DED017A 		vstr.32	s14, [sp, #4]
+ 894 0254 97ED007A 		vldr.32	s14, [r7]
+ 895 0258 8DED007A 		vstr.32	s14, [sp]
+ 896              	.L126:
+ 897 025c 009A     		ldr	r2, [sp]	@ float
+ 898 025e 0198     		ldr	r0, [sp, #4]	@ float
+ 899 0260 16EE903A 		vmov	r3, s13
+ 900 0264 17EE901A 		vmov	r1, s15
+ 901 0268 FFF7FEFF 		bl	nav_route_xy
+ 902 026c AFE7     		b	.L142
+ 903              	.L262:
+ 904 026e 00BF     		.align	3
+ 905              	.L261:
+ 906 0270 F8C1631A 		.word	442745336
+ 907 0274 DCA54C40 		.word	1078765020
+ 908 0278 00000000 		.word	0
+ 909 027c 00E07040 		.word	1081139200
+ 910 0280 00000000 		.word	waypoints
+ 911 0284 00000000 		.word	nav_survey_east
+ 912 0288 00000000 		.word	nav_survey_active
+ARM GAS  /tmp/cclUB8sw.s 			page 17
+
+
+ 913 028c 00000000 		.word	nav_survey_north
+ 914 0290 00000000 		.word	nav_survey_south
+ 915 0294 00000000 		.word	nav_survey_west
+ 916 0298 00000000 		.word	.LANCHOR1
+ 917 029c 00000000 		.word	.LANCHOR2
+ 918 02a0 0000B443 		.word	1135869952
+ 919 02a4 0000AF43 		.word	1135542272
+ 920 02a8 00000000 		.word	nav_in_circle
+ 921 02ac 00000000 		.word	.LANCHOR5
+ 922 02b0 00000000 		.word	v_ctl_climb_mode
+ 923 02b4 00000000 		.word	nav_pitch
+ 924 02b8 00000000 		.word	v_ctl_mode
+ 925 02bc 00000000 		.word	nav_altitude
+ 926 02c0 00000000 		.word	v_ctl_altitude_pre_climb
+ 927 02c4 00000000 		.word	.LANCHOR0
+ 928 02c8 00000000 		.word	.LANCHOR4
+ 929 02cc 00000000 		.word	state
+ 930              	.L123:
+ 931 02d0 BAF800C0 		ldrh	ip, [r10]
+ 932 02d4 1CF0800F 		tst	ip, #128
+ 933 02d8 00F0D680 		beq	.L253
+ 934 02dc D3ED007A 		vldr.32	s15, [r3]
+ 935 02e0 B4EEE77A 		vcmpe.f32	s14, s15
+ 936 02e4 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 937 02e8 13DD     		ble	.L131
+ 938              	.L199:
+ 939 02ea 9BF800C0 		ldrb	ip, [fp]	@ zero_extendqisi2
+ 940 02ee BCF1000F 		cmp	ip, #0
+ 941 02f2 08D1     		bne	.L128
+ 942 02f4 D7ED016A 		vldr.32	s13, [r7, #4]
+ 943 02f8 D6ED017A 		vldr.32	s15, [r6, #4]
+ 944 02fc F4EEE76A 		vcmpe.f32	s13, s15
+ 945 0300 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 946 0304 A2D4     		bmi	.L240
+ 947              	.L128:
+ 948 0306 BAF800C0 		ldrh	ip, [r10]
+ 949 030a 1CF0800F 		tst	ip, #128
+ 950 030e 00F08B81 		beq	.L254
+ 951              	.L131:
+ 952 0312 DAED427A 		vldr.32	s15, [r10, #264]
+ 953 0316 92ED007A 		vldr.32	s14, [r2]
+ 954 031a F4EEC77A 		vcmpe.f32	s15, s14
+ 955 031e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 956 0322 07D5     		bpl	.L136
+ 957 0324 9BF800C0 		ldrb	ip, [fp]	@ zero_extendqisi2
+ 958 0328 BCF1010F 		cmp	ip, #1
+ 959 032c 00F09F81 		beq	.L197
+ 960              	.L198:
+ 961 0330 DAED427A 		vldr.32	s15, [r10, #264]
+ 962              	.L136:
+ 963 0334 91ED007A 		vldr.32	s14, [r1]
+ 964 0338 9BF800A0 		ldrb	r10, [fp]	@ zero_extendqisi2
+ 965 033c B4EEE77A 		vcmpe.f32	s14, s15
+ 966 0340 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 967 0344 03D5     		bpl	.L139
+ 968 0346 BAF1010F 		cmp	r10, #1
+ 969 034a 00F02F82 		beq	.L255
+ARM GAS  /tmp/cclUB8sw.s 			page 18
+
+
+ 970              	.L139:
+ 971 034e BAF1000F 		cmp	r10, #0
+ 972 0352 40F0AA80 		bne	.L143
+ 973 0356 D24B     		ldr	r3, .L263+8
+ 974 0358 96ED006A 		vldr.32	s12, [r6]
+ 975 035c D3ED006A 		vldr.32	s13, [r3]
+ 976 0360 76EE867A 		vadd.f32	s15, s13, s12
+ 977 0364 B4EEE77A 		vcmpe.f32	s14, s15
+ 978 0368 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 979 036c 40F30A82 		ble	.L256
+ 980              	.L144:
+ 981 0370 F6EE007A 		vmov.f32	s15, #5.0e-1
+ 982 0374 A6EEA76A 		vfma.f32	s12, s13, s15
+ 983 0378 B1EE668A 		vneg.f32	s16, s13
+ 984 037c 76EE667A 		vsub.f32	s15, s12, s13
+ 985 0380 83ED008A 		vstr.32	s16, [r3]
+ 986              	.L145:
+ 987 0384 D7ED018A 		vldr.32	s17, [r7, #4]
+ 988 0388 96ED019A 		vldr.32	s18, [r6, #4]
+ 989 038c C7ED007A 		vstr.32	s15, [r7]
+ 990 0390 C6ED007A 		vstr.32	s15, [r6]
+ 991 0394 17EE900A 		vmov	r0, s15
+ 992 0398 87ED019A 		vstr.32	s18, [r7, #4]
+ 993 039c C6ED018A 		vstr.32	s17, [r6, #4]
+ 994 03a0 FFF7FEFF 		bl	__aeabi_f2d
+ 995 03a4 0646     		mov	r6, r0
+ 996 03a6 18EE100A 		vmov	r0, s16
+ 997 03aa 0F46     		mov	r7, r1
+ 998 03ac FFF7FEFF 		bl	__aeabi_f2d
+ 999 03b0 BC4B     		ldr	r3, .L263+12
+ 1000 03b2 0022     		movs	r2, #0
+ 1001 03b4 FFF7FEFF 		bl	__aeabi_dmul
+ 1002 03b8 0B46     		mov	r3, r1
+ 1003 03ba 0246     		mov	r2, r0
+ 1004 03bc 3946     		mov	r1, r7
+ 1005 03be 3046     		mov	r0, r6
+ 1006 03c0 FFF7FEFF 		bl	__aeabi_dsub
+ 1007 03c4 FFF7FEFF 		bl	__aeabi_d2f
+ 1008 03c8 F4EEC98A 		vcmpe.f32	s17, s18
+ 1009 03cc F6EE007A 		vmov.f32	s15, #5.0e-1
+ 1010 03d0 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1011 03d4 28EE278A 		vmul.f32	s16, s16, s15
+ 1012 03d8 B34B     		ldr	r3, .L263+16
+ 1013 03da 2860     		str	r0, [r5]	@ float
+ 1014 03dc C5ED018A 		vstr.32	s17, [r5, #4]
+ 1015 03e0 00F1BE80 		bmi	.L243
+ 1016              	.L242:
+ 1017 03e4 83ED008A 		vstr.32	s16, [r3]
+ 1018              	.L148:
+ 1019 03e8 B04B     		ldr	r3, .L263+20
+ 1020 03ea 0022     		movs	r2, #0
+ 1021 03ec 1A70     		strb	r2, [r3]
+ 1022 03ee 0123     		movs	r3, #1
+ 1023 03f0 88F80030 		strb	r3, [r8]
+ 1024 03f4 EBE6     		b	.L142
+ 1025              	.L250:
+ 1026 03f6 DFF8D4A2 		ldr	r10, .L263+52
+ARM GAS  /tmp/cclUB8sw.s 			page 19
+
+
+ 1027 03fa BAF81431 		ldrh	r3, [r10, #276]
+ 1028 03fe 9905     		lsls	r1, r3, #22
+ 1029 0400 40F1F481 		bpl	.L257
+ 1030              	.L167:
+ 1031 0404 DAF86C01 		ldr	r0, [r10, #364]	@ float
+ 1032 0408 FFF7FEFF 		bl	__aeabi_f2d
+ 1033 040c A2A3     		adr	r3, .L263
+ 1034 040e D3E90023 		ldrd	r2, [r3]
+ 1035 0412 FFF7FEFF 		bl	__aeabi_dmul
+ 1036 0416 0246     		mov	r2, r0
+ 1037 0418 0B46     		mov	r3, r1
+ 1038 041a 0020     		movs	r0, #0
+ 1039 041c A449     		ldr	r1, .L263+24
+ 1040 041e FFF7FEFF 		bl	__aeabi_dsub
+ 1041 0422 FFF7FEFF 		bl	__aeabi_d2f
+ 1042 0426 07EE900A 		vmov	s15, r0
+ 1043 042a F5EEC07A 		vcmpe.f32	s15, #0
+ 1044 042e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1045 0432 08D5     		bpl	.L168
+ 1046 0434 9FED9F7A 		vldr.32	s14, .L263+28
+ 1047              	.L170:
+ 1048 0438 77EE877A 		vadd.f32	s15, s15, s14
+ 1049 043c F5EEC07A 		vcmpe.f32	s15, #0
+ 1050 0440 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1051 0444 F8D4     		bmi	.L170
+ 1052              	.L168:
+ 1053 0446 9FED9B7A 		vldr.32	s14, .L263+28
+ 1054 044a F4EEC77A 		vcmpe.f32	s15, s14
+ 1055 044e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1056 0452 06DB     		blt	.L171
+ 1057              	.L173:
+ 1058 0454 77EEC77A 		vsub.f32	s15, s15, s14
+ 1059 0458 F4EEC77A 		vcmpe.f32	s15, s14
+ 1060 045c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1061 0460 F8DA     		bge	.L173
+ 1062              	.L171:
+ 1063 0462 9FED957A 		vldr.32	s14, .L263+32
+ 1064 0466 F4EEC77A 		vcmpe.f32	s15, s14
+ 1065 046a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1066 046e 3FF77CAE 		bgt	.L163
+ 1067 0472 B2EE047A 		vmov.f32	s14, #1.0e+1
+ 1068 0476 F4EEC77A 		vcmpe.f32	s15, s14
+ 1069 047a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1070 047e 3FF574AE 		bmi	.L163
+ 1071 0482 9BF800C0 		ldrb	ip, [fp]	@ zero_extendqisi2
+ 1072 0486 1DE6     		b	.L164
+ 1073              	.L253:
+ 1074 0488 FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 1075 048c 8B4B     		ldr	r3, .L263+36
+ 1076 048e DAED437A 		vldr.32	s15, [r10, #268]
+ 1077 0492 93ED007A 		vldr.32	s14, [r3]
+ 1078 0496 8A49     		ldr	r1, .L263+40
+ 1079 0498 8A4A     		ldr	r2, .L263+44
+ 1080 049a 8B48     		ldr	r0, .L263+48
+ 1081 049c B4EEE77A 		vcmpe.f32	s14, s15
+ 1082 04a0 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1083 04a4 3FF521AF 		bmi	.L199
+ARM GAS  /tmp/cclUB8sw.s 			page 20
+
+
+ 1084 04a8 2DE7     		b	.L128
+ 1085              	.L143:
+ 1086 04aa D7ED007A 		vldr.32	s15, [r7]
+ 1087 04ae CDED007A 		vstr.32	s15, [sp]
+ 1088 04b2 D6ED007A 		vldr.32	s15, [r6]
+ 1089 04b6 CDED017A 		vstr.32	s15, [sp, #4]
+ 1090              	.L140:
+ 1091 04ba 93ED006A 		vldr.32	s12, [r3]
+ 1092 04be 784B     		ldr	r3, .L263+8
+ 1093 04c0 D6ED016A 		vldr.32	s13, [r6, #4]
+ 1094 04c4 93ED007A 		vldr.32	s14, [r3]
+ 1095 04c8 77EE267A 		vadd.f32	s15, s14, s13
+ 1096 04cc F4EEC67A 		vcmpe.f32	s15, s12
+ 1097 04d0 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1098 04d4 40F14B81 		bpl	.L258
+ 1099              	.L149:
+ 1100 04d8 F6EE007A 		vmov.f32	s15, #5.0e-1
+ 1101 04dc E7EE276A 		vfma.f32	s13, s14, s15
+ 1102 04e0 B1EE478A 		vneg.f32	s16, s14
+ 1103 04e4 76EEC77A 		vsub.f32	s15, s13, s14
+ 1104 04e8 83ED008A 		vstr.32	s16, [r3]
+ 1105              	.L150:
+ 1106 04ec 9DED017A 		vldr.32	s14, [sp, #4]
+ 1107 04f0 C7ED017A 		vstr.32	s15, [r7, #4]
+ 1108 04f4 87ED007A 		vstr.32	s14, [r7]
+ 1109 04f8 9DED007A 		vldr.32	s14, [sp]
+ 1110 04fc C6ED017A 		vstr.32	s15, [r6, #4]
+ 1111 0500 86ED007A 		vstr.32	s14, [r6]
+ 1112 0504 17EE900A 		vmov	r0, s15
+ 1113 0508 85ED007A 		vstr.32	s14, [r5]
+ 1114 050c FFF7FEFF 		bl	__aeabi_f2d
+ 1115 0510 0646     		mov	r6, r0
+ 1116 0512 18EE100A 		vmov	r0, s16
+ 1117 0516 0F46     		mov	r7, r1
+ 1118 0518 FFF7FEFF 		bl	__aeabi_f2d
+ 1119 051c 614B     		ldr	r3, .L263+12
+ 1120 051e 0022     		movs	r2, #0
+ 1121 0520 FFF7FEFF 		bl	__aeabi_dmul
+ 1122 0524 0B46     		mov	r3, r1
+ 1123 0526 0246     		mov	r2, r0
+ 1124 0528 3946     		mov	r1, r7
+ 1125 052a 3046     		mov	r0, r6
+ 1126 052c FFF7FEFF 		bl	__aeabi_dsub
+ 1127 0530 FFF7FEFF 		bl	__aeabi_d2f
+ 1128 0534 F6EE007A 		vmov.f32	s15, #5.0e-1
+ 1129 0538 28EE278A 		vmul.f32	s16, s16, s15
+ 1130 053c 5A4B     		ldr	r3, .L263+16
+ 1131 053e 6860     		str	r0, [r5, #4]	@ float
+ 1132 0540 BAF1010F 		cmp	r10, #1
+ 1133 0544 83ED008A 		vstr.32	s16, [r3]
+ 1134 0548 7FF44EAF 		bne	.L148
+ 1135 054c DDED007A 		vldr.32	s15, [sp]
+ 1136 0550 9DED017A 		vldr.32	s14, [sp, #4]
+ 1137 0554 F4EEC77A 		vcmpe.f32	s15, s14
+ 1138 0558 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1139 055c 7FF744AF 		ble	.L148
+ 1140              	.L243:
+ARM GAS  /tmp/cclUB8sw.s 			page 21
+
+
+ 1141 0560 B1EE488A 		vneg.f32	s16, s16
+ 1142 0564 3EE7     		b	.L242
+ 1143              	.L232:
+ 1144 0566 7FF5A6AD 		bpl	.L118
+ 1145 056a C7ED005A 		vstr.32	s11, [r7]
+ 1146 056e 86ED007A 		vstr.32	s14, [r6]
+ 1147 0572 A0E5     		b	.L118
+ 1148              	.L249:
+ 1149 0574 DFF854A1 		ldr	r10, .L263+52
+ 1150 0578 BAF81431 		ldrh	r3, [r10, #276]
+ 1151 057c 9805     		lsls	r0, r3, #22
+ 1152 057e 40F13281 		bpl	.L259
+ 1153              	.L154:
+ 1154 0582 DAF86C01 		ldr	r0, [r10, #364]	@ float
+ 1155 0586 FFF7FEFF 		bl	__aeabi_f2d
+ 1156 058a 43A3     		adr	r3, .L263
+ 1157 058c D3E90023 		ldrd	r2, [r3]
+ 1158 0590 FFF7FEFF 		bl	__aeabi_dmul
+ 1159 0594 0246     		mov	r2, r0
+ 1160 0596 0B46     		mov	r3, r1
+ 1161 0598 0020     		movs	r0, #0
+ 1162 059a 0021     		movs	r1, #0
+ 1163 059c FFF7FEFF 		bl	__aeabi_dsub
+ 1164 05a0 FFF7FEFF 		bl	__aeabi_d2f
+ 1165 05a4 07EE900A 		vmov	s15, r0
+ 1166 05a8 F5EEC07A 		vcmpe.f32	s15, #0
+ 1167 05ac F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1168 05b0 08D5     		bpl	.L155
+ 1169 05b2 9FED407A 		vldr.32	s14, .L263+28
+ 1170              	.L157:
+ 1171 05b6 77EE877A 		vadd.f32	s15, s15, s14
+ 1172 05ba F5EEC07A 		vcmpe.f32	s15, #0
+ 1173 05be F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1174 05c2 F8D4     		bmi	.L157
+ 1175              	.L155:
+ 1176 05c4 9FED3B7A 		vldr.32	s14, .L263+28
+ 1177 05c8 F4EEC77A 		vcmpe.f32	s15, s14
+ 1178 05cc F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1179 05d0 06DB     		blt	.L158
+ 1180              	.L160:
+ 1181 05d2 77EEC77A 		vsub.f32	s15, s15, s14
+ 1182 05d6 F4EEC77A 		vcmpe.f32	s15, s14
+ 1183 05da F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1184 05de F8DA     		bge	.L160
+ 1185              	.L158:
+ 1186 05e0 9FED357A 		vldr.32	s14, .L263+32
+ 1187 05e4 F4EEC77A 		vcmpe.f32	s15, s14
+ 1188 05e8 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1189 05ec 3FF7BDAD 		bgt	.L163
+ 1190 05f0 B2EE047A 		vmov.f32	s14, #1.0e+1
+ 1191 05f4 F4EEC77A 		vcmpe.f32	s15, s14
+ 1192 05f8 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1193 05fc 3FF5B5AD 		bmi	.L163
+ 1194 0600 9BF800C0 		ldrb	ip, [fp]	@ zero_extendqisi2
+ 1195 0604 BCF1000F 		cmp	ip, #0
+ 1196 0608 7FF45CAD 		bne	.L164
+ 1197 060c 97ED017A 		vldr.32	s14, [r7, #4]
+ARM GAS  /tmp/cclUB8sw.s 			page 22
+
+
+ 1198 0610 D6ED017A 		vldr.32	s15, [r6, #4]
+ 1199 0614 CFE5     		b	.L196
+ 1200              	.L252:
+ 1201 0616 FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 1202 061a 2B48     		ldr	r0, .L263+48
+ 1203 061c 274B     		ldr	r3, .L263+36
+ 1204 061e D0ED007A 		vldr.32	s15, [r0]
+ 1205 0622 284A     		ldr	r2, .L263+44
+ 1206 0624 2649     		ldr	r1, .L263+40
+ 1207 0626 FCE5     		b	.L122
+ 1208              	.L254:
+ 1209 0628 FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 1210 062c 254A     		ldr	r2, .L263+44
+ 1211 062e 9AED427A 		vldr.32	s14, [r10, #264]
+ 1212 0632 D2ED007A 		vldr.32	s15, [r2]
+ 1213 0636 2249     		ldr	r1, .L263+40
+ 1214 0638 204B     		ldr	r3, .L263+36
+ 1215 063a 2348     		ldr	r0, .L263+48
+ 1216 063c B4EEE77A 		vcmpe.f32	s14, s15
+ 1217 0640 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1218 0644 04D5     		bpl	.L132
+ 1219 0646 9BF800C0 		ldrb	ip, [fp]	@ zero_extendqisi2
+ 1220 064a BCF1010F 		cmp	ip, #1
+ 1221 064e 0ED0     		beq	.L197
+ 1222              	.L132:
+ 1223 0650 BAF800C0 		ldrh	ip, [r10]
+ 1224 0654 1CF0800F 		tst	ip, #128
+ 1225 0658 7FF46AAE 		bne	.L198
+ 1226 065c FFF7FEFF 		bl	stateCalcPositionEnu_f
+ 1227 0660 DAED427A 		vldr.32	s15, [r10, #264]
+ 1228 0664 1848     		ldr	r0, .L263+48
+ 1229 0666 154B     		ldr	r3, .L263+36
+ 1230 0668 164A     		ldr	r2, .L263+44
+ 1231 066a 1549     		ldr	r1, .L263+40
+ 1232 066c 62E6     		b	.L136
+ 1233              	.L197:
+ 1234 066e D7ED007A 		vldr.32	s15, [r7]
+ 1235 0672 CDED007A 		vstr.32	s15, [sp]
+ 1236 0676 D6ED007A 		vldr.32	s15, [r6]
+ 1237 067a CDED017A 		vstr.32	s15, [sp, #4]
+ 1238 067e 9DED017A 		vldr.32	s14, [sp, #4]
+ 1239 0682 DDED007A 		vldr.32	s15, [sp]
+ 1240 0686 F4EEC77A 		vcmpe.f32	s15, s14
+ 1241 068a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1242 068e DFDD     		ble	.L132
+ 1243 0690 9EE0     		b	.L241
+ 1244              	.L264:
+ 1245 0692 00BFAFF3 		.align	3
+ 1245      0080
+ 1246              	.L263:
+ 1247 0698 F8C1631A 		.word	442745336
+ 1248 069c DCA54C40 		.word	1078765020
+ 1249 06a0 00000000 		.word	nav_survey_shift
+ 1250 06a4 0000E03F 		.word	1071644672
+ 1251 06a8 00000000 		.word	.LANCHOR5
+ 1252 06ac 00000000 		.word	nav_in_segment
+ 1253 06b0 00806640 		.word	1080459264
+ARM GAS  /tmp/cclUB8sw.s 			page 23
+
+
+ 1254 06b4 0000B443 		.word	1135869952
+ 1255 06b8 0000AF43 		.word	1135542272
+ 1256 06bc 00000000 		.word	nav_survey_south
+ 1257 06c0 00000000 		.word	nav_survey_west
+ 1258 06c4 00000000 		.word	nav_survey_east
+ 1259 06c8 00000000 		.word	nav_survey_north
+ 1260 06cc 00000000 		.word	state
+ 1261              	.L246:
+ 1262 06d0 DFF840A1 		ldr	r10, .L265+28
+ 1263 06d4 BAF81431 		ldrh	r3, [r10, #276]
+ 1264 06d8 9A05     		lsls	r2, r3, #22
+ 1265 06da 7ED5     		bpl	.L260
+ 1266              	.L176:
+ 1267 06dc DAF86C01 		ldr	r0, [r10, #364]	@ float
+ 1268 06e0 FFF7FEFF 		bl	__aeabi_f2d
+ 1269 06e4 49A3     		adr	r3, .L265+20
+ 1270 06e6 D3E90023 		ldrd	r2, [r3]
+ 1271 06ea FFF7FEFF 		bl	__aeabi_dmul
+ 1272 06ee 0246     		mov	r2, r0
+ 1273 06f0 0B46     		mov	r3, r1
+ 1274 06f2 0020     		movs	r0, #0
+ 1275 06f4 4049     		ldr	r1, .L265
+ 1276 06f6 FFF7FEFF 		bl	__aeabi_dsub
+ 1277 06fa FFF7FEFF 		bl	__aeabi_d2f
+ 1278 06fe 07EE900A 		vmov	s15, r0
+ 1279 0702 F5EEC07A 		vcmpe.f32	s15, #0
+ 1280 0706 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1281 070a 08D5     		bpl	.L177
+ 1282 070c 9FED3B7A 		vldr.32	s14, .L265+4
+ 1283              	.L179:
+ 1284 0710 77EE877A 		vadd.f32	s15, s15, s14
+ 1285 0714 F5EEC07A 		vcmpe.f32	s15, #0
+ 1286 0718 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1287 071c F8D4     		bmi	.L179
+ 1288              	.L177:
+ 1289 071e 9FED377A 		vldr.32	s14, .L265+4
+ 1290 0722 F4EEC77A 		vcmpe.f32	s15, s14
+ 1291 0726 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1292 072a 06DB     		blt	.L180
+ 1293              	.L182:
+ 1294 072c 77EEC77A 		vsub.f32	s15, s15, s14
+ 1295 0730 F4EEC77A 		vcmpe.f32	s15, s14
+ 1296 0734 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1297 0738 F8DA     		bge	.L182
+ 1298              	.L180:
+ 1299 073a 9FED317A 		vldr.32	s14, .L265+8
+ 1300 073e F4EEC77A 		vcmpe.f32	s15, s14
+ 1301 0742 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1302 0746 3FF710AD 		bgt	.L163
+ 1303 074a B2EE047A 		vmov.f32	s14, #1.0e+1
+ 1304 074e F4EEC77A 		vcmpe.f32	s15, s14
+ 1305 0752 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1306 0756 3FF508AD 		bmi	.L163
+ 1307 075a 9BF80030 		ldrb	r3, [fp]	@ zero_extendqisi2
+ 1308 075e 012B     		cmp	r3, #1
+ 1309 0760 7FF42FAD 		bne	.L183
+ 1310 0764 97ED007A 		vldr.32	s14, [r7]
+ARM GAS  /tmp/cclUB8sw.s 			page 24
+
+
+ 1311 0768 D6ED007A 		vldr.32	s15, [r6]
+ 1312 076c B9E4     		b	.L174
+ 1313              	.L258:
+ 1314 076e 90ED006A 		vldr.32	s12, [r0]
+ 1315 0772 F4EEC67A 		vcmpe.f32	s15, s12
+ 1316 0776 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1317 077a 3FF7ADAE 		bgt	.L149
+ 1318 077e B0EE478A 		vmov.f32	s16, s14
+ 1319 0782 B3E6     		b	.L150
+ 1320              	.L256:
+ 1321 0784 92ED007A 		vldr.32	s14, [r2]
+ 1322 0788 F4EEC77A 		vcmpe.f32	s15, s14
+ 1323 078c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1324 0790 3FF7EEAD 		bgt	.L144
+ 1325 0794 B0EE668A 		vmov.f32	s16, s13
+ 1326 0798 F4E5     		b	.L145
+ 1327              	.L248:
+ 1328 079a B2EE047A 		vmov.f32	s14, #1.0e+1
+ 1329 079e F4EEC77A 		vcmpe.f32	s15, s14
+ 1330 07a2 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1331 07a6 3FF5E0AC 		bmi	.L163
+ 1332 07aa 0AE5     		b	.L183
+ 1333              	.L255:
+ 1334 07ac D7ED007A 		vldr.32	s15, [r7]
+ 1335 07b0 CDED007A 		vstr.32	s15, [sp]
+ 1336 07b4 D6ED007A 		vldr.32	s15, [r6]
+ 1337 07b8 CDED017A 		vstr.32	s15, [sp, #4]
+ 1338 07bc 9DED017A 		vldr.32	s14, [sp, #4]
+ 1339 07c0 DDED007A 		vldr.32	s15, [sp]
+ 1340 07c4 F4EEC77A 		vcmpe.f32	s15, s14
+ 1341 07c8 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1342 07cc 7FF575AE 		bpl	.L140
+ 1343              	.L241:
+ 1344 07d0 D6ED017A 		vldr.32	s15, [r6, #4]
+ 1345 07d4 D7ED016A 		vldr.32	s13, [r7, #4]
+ 1346 07d8 40E5     		b	.L126
+ 1347              	.L260:
+ 1348 07da FFF7FEFF 		bl	stateCalcHorizontalSpeedDir_f
+ 1349 07de 7DE7     		b	.L176
+ 1350              	.L245:
+ 1351 07e0 084F     		ldr	r7, .L265+12
+ 1352 07e2 094E     		ldr	r6, .L265+16
+ 1353 07e4 15E5     		b	.L193
+ 1354              	.L259:
+ 1355 07e6 FFF7FEFF 		bl	stateCalcHorizontalSpeedDir_f
+ 1356 07ea CAE6     		b	.L154
+ 1357              	.L257:
+ 1358 07ec FFF7FEFF 		bl	stateCalcHorizontalSpeedDir_f
+ 1359 07f0 08E6     		b	.L167
+ 1360              	.L247:
+ 1361 07f2 FFF7FEFF 		bl	stateCalcHorizontalSpeedDir_f
+ 1362 07f6 80E4     		b	.L185
+ 1363              	.L266:
+ 1364              		.align	3
+ 1365              	.L265:
+ 1366 07f8 00805640 		.word	1079410688
+ 1367 07fc 0000B443 		.word	1135869952
+ARM GAS  /tmp/cclUB8sw.s 			page 25
+
+
+ 1368 0800 0000AF43 		.word	1135542272
+ 1369 0804 00000000 		.word	.LANCHOR1
+ 1370 0808 00000000 		.word	.LANCHOR2
+ 1371 080c F8C1631A 		.word	442745336
+ 1372 0810 DCA54C40 		.word	1078765020
+ 1373 0814 00000000 		.word	state
+ 1374              		.size	nav_survey_rectangle, .-nav_survey_rectangle
+ 1375              		.global	nav_survey_sweep
+ 1376              		.section	.bss.nav_survey_sweep,"aw",%nobits
+ 1377              		.align	2
+ 1378              		.set	.LANCHOR3,. + 0
+ 1379              		.type	nav_survey_sweep, %object
+ 1380              		.size	nav_survey_sweep, 4
+ 1381              	nav_survey_sweep:
+ 1382 0000 00000000 		.space	4
+ 1383              		.section	.bss.survey_from,"aw",%nobits
+ 1384              		.align	2
+ 1385              		.set	.LANCHOR2,. + 0
+ 1386              		.type	survey_from, %object
+ 1387              		.size	survey_from, 12
+ 1388              	survey_from:
+ 1389 0000 00000000 		.space	12
+ 1389      00000000 
+ 1389      00000000 
+ 1390              		.section	.bss.survey_orientation,"aw",%nobits
+ 1391              		.set	.LANCHOR0,. + 0
+ 1392              		.type	survey_orientation, %object
+ 1393              		.size	survey_orientation, 1
+ 1394              	survey_orientation:
+ 1395 0000 00       		.space	1
+ 1396              		.section	.bss.survey_radius.0,"aw",%nobits
+ 1397              		.align	2
+ 1398              		.set	.LANCHOR5,. + 0
+ 1399              		.type	survey_radius.0, %object
+ 1400              		.size	survey_radius.0, 4
+ 1401              	survey_radius.0:
+ 1402 0000 00000000 		.space	4
+ 1403              		.section	.bss.survey_to,"aw",%nobits
+ 1404              		.align	2
+ 1405              		.set	.LANCHOR1,. + 0
+ 1406              		.type	survey_to, %object
+ 1407              		.size	survey_to, 12
+ 1408              	survey_to:
+ 1409 0000 00000000 		.space	12
+ 1409      00000000 
+ 1409      00000000 
+ 1410              		.section	.bss.survey_uturn,"aw",%nobits
+ 1411              		.set	.LANCHOR4,. + 0
+ 1412              		.type	survey_uturn, %object
+ 1413              		.size	survey_uturn, 1
+ 1414              	survey_uturn:
+ 1415 0000 00       		.space	1
+ 1416              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cclUB8sw.s 			page 26
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 nav_survey_rectangle.c
+     /tmp/cclUB8sw.s:22     .text.nav_survey_rectangle_init:0000000000000000 $t
+     /tmp/cclUB8sw.s:31     .text.nav_survey_rectangle_init:0000000000000000 nav_survey_rectangle_init
+     /tmp/cclUB8sw.s:326    .text.nav_survey_rectangle_init:000000000000032c $d
+     /tmp/cclUB8sw.s:340    .text.nav_survey_rectangle_init:0000000000000360 $t
+     /tmp/cclUB8sw.s:645    .text.nav_survey_rectangle_init:0000000000000688 $d
+     /tmp/cclUB8sw.s:657    .text.nav_survey_rectangle_init:00000000000006b4 $t
+     /tmp/cclUB8sw.s:679    .text.nav_survey_rectangle_init:00000000000006e4 $d
+     /tmp/cclUB8sw.s:682    .text.nav_survey_rectangle:0000000000000000 $t
+     /tmp/cclUB8sw.s:690    .text.nav_survey_rectangle:0000000000000000 nav_survey_rectangle
+     /tmp/cclUB8sw.s:906    .text.nav_survey_rectangle:0000000000000270 $d
+     /tmp/cclUB8sw.s:931    .text.nav_survey_rectangle:00000000000002d0 $t
+     /tmp/cclUB8sw.s:1247   .text.nav_survey_rectangle:0000000000000698 $d
+     /tmp/cclUB8sw.s:1262   .text.nav_survey_rectangle:00000000000006d0 $t
+     /tmp/cclUB8sw.s:1366   .text.nav_survey_rectangle:00000000000007f8 $d
+     /tmp/cclUB8sw.s:1381   .bss.nav_survey_sweep:0000000000000000 nav_survey_sweep
+     /tmp/cclUB8sw.s:1377   .bss.nav_survey_sweep:0000000000000000 $d
+     /tmp/cclUB8sw.s:1384   .bss.survey_from:0000000000000000 $d
+     /tmp/cclUB8sw.s:1388   .bss.survey_from:0000000000000000 survey_from
+     /tmp/cclUB8sw.s:1394   .bss.survey_orientation:0000000000000000 survey_orientation
+     /tmp/cclUB8sw.s:1395   .bss.survey_orientation:0000000000000000 $d
+     /tmp/cclUB8sw.s:1397   .bss.survey_radius.0:0000000000000000 $d
+     /tmp/cclUB8sw.s:1401   .bss.survey_radius.0:0000000000000000 survey_radius.0
+     /tmp/cclUB8sw.s:1404   .bss.survey_to:0000000000000000 $d
+     /tmp/cclUB8sw.s:1408   .bss.survey_to:0000000000000000 survey_to
+     /tmp/cclUB8sw.s:1414   .bss.survey_uturn:0000000000000000 survey_uturn
+     /tmp/cclUB8sw.s:1415   .bss.survey_uturn:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_dadd
+__aeabi_dcmpgt
+__aeabi_dsub
+__aeabi_dcmplt
+__aeabi_d2f
+stateCalcPositionEnu_f
+waypoints
+nav_survey_east
+nav_survey_north
+state
+nav_survey_west
+nav_survey_south
+nav_survey_shift
+stateCalcHorizontalSpeedDir_f
+nav_circle_XY
+nav_route_xy
+nav_survey_active
+nav_in_circle
+v_ctl_climb_mode
+nav_pitch
+v_ctl_mode
+nav_altitude
+v_ctl_altitude_pre_climb
+nav_in_segment

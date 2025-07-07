@@ -1,0 +1,12 @@
+input2ivy.cmo : \
+    /home/argroos/paparazzi/sw/lib/ocaml/fp_proc.cmi \
+    /home/argroos/paparazzi/sw/lib/ocaml/extXml.cmi \
+    /home/argroos/paparazzi/sw/lib/ocaml/expr_syntax.cmi \
+    /home/argroos/paparazzi/sw/lib/ocaml/env.cmi \
+    /home/argroos/paparazzi/sw/lib/ocaml/defivybus.cmi
+input2ivy.cmx : \
+    /home/argroos/paparazzi/sw/lib/ocaml/fp_proc.cmx \
+    /home/argroos/paparazzi/sw/lib/ocaml/extXml.cmx \
+    /home/argroos/paparazzi/sw/lib/ocaml/expr_syntax.cmx \
+    /home/argroos/paparazzi/sw/lib/ocaml/env.cmx \
+    /home/argroos/paparazzi/sw/lib/ocaml/defivybus.cmx

@@ -1,0 +1,1580 @@
+ARM GAS  /tmp/cclZL8jt.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"settings.c"
+  13              		.text
+  14              		.section	.rodata.pprzlink_msg_v2_send_DL_VALUE.constprop.0.str1.4,"aMS",%progbits,1
+  15              		.align	2
+  16              	.LC0:
+  17 0000 444C5F56 		.ascii	"DL_VALUE\000"
+  17      414C5545 
+  17      00
+  18              		.section	.text.pprzlink_msg_v2_send_DL_VALUE.constprop.0,"ax",%progbits
+  19              		.align	1
+  20              		.p2align 4,,15
+  21              		.arch armv7e-m
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  25              		.fpu fpv4-sp-d16
+  26              		.type	pprzlink_msg_v2_send_DL_VALUE.constprop.0, %function
+  27              	pprzlink_msg_v2_send_DL_VALUE.constprop.0:
+  28              		@ args = 0, pretend = 0, frame = 8
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  31 0004 4368     		ldr	r3, [r0, #4]
+  32 0006 85B0     		sub	sp, sp, #20
+  33 0008 0025     		movs	r5, #0
+  34 000a 0446     		mov	r4, r0
+  35 000c 1B68     		ldr	r3, [r3]
+  36 000e 0395     		str	r5, [sp, #12]
+  37 0010 8846     		mov	r8, r1
+  38 0012 0921     		movs	r1, #9
+  39 0014 1746     		mov	r7, r2
+  40 0016 9847     		blx	r3
+  41 0018 6368     		ldr	r3, [r4, #4]
+  42 001a 0646     		mov	r6, r0
+  43 001c 82B2     		uxth	r2, r0
+  44 001e 5B68     		ldr	r3, [r3, #4]
+  45 0020 03A9     		add	r1, sp, #12
+  46 0022 2046     		mov	r0, r4
+  47 0024 9847     		blx	r3
+  48 0026 0028     		cmp	r0, #0
+  49 0028 55D0     		beq	.L2
+  50 002a 6368     		ldr	r3, [r4, #4]
+  51 002c 3146     		mov	r1, r6
+  52 002e 2046     		mov	r0, r4
+  53 0030 DB69     		ldr	r3, [r3, #28]
+  54 0032 9847     		blx	r3
+  55 0034 6368     		ldr	r3, [r4, #4]
+ARM GAS  /tmp/cclZL8jt.s 			page 2
+
+
+  56 0036 0399     		ldr	r1, [sp, #12]
+  57 0038 1B69     		ldr	r3, [r3, #16]
+  58 003a 2046     		mov	r0, r4
+  59 003c 0922     		movs	r2, #9
+  60 003e 9847     		blx	r3
+  61 0040 0126     		movs	r6, #1
+  62 0042 6368     		ldr	r3, [r4, #4]
+  63 0044 0196     		str	r6, [sp, #4]
+  64 0046 0094     		str	r4, [sp]
+  65 0048 D3F80890 		ldr	r9, [r3, #8]
+  66 004c 0399     		ldr	r1, [sp, #12]
+  67 004e 2B46     		mov	r3, r5
+  68 0050 2046     		mov	r0, r4
+  69 0052 0222     		movs	r2, #2
+  70 0054 C847     		blx	r9
+  71 0056 0195     		str	r5, [sp, #4]
+  72 0058 6368     		ldr	r3, [r4, #4]
+  73 005a 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+  74 005c 0092     		str	r2, [sp]
+  75 005e D3F80C90 		ldr	r9, [r3, #12]
+  76 0062 0399     		ldr	r1, [sp, #12]
+  77 0064 2B46     		mov	r3, r5
+  78 0066 2046     		mov	r0, r4
+  79 0068 0222     		movs	r2, #2
+  80 006a C847     		blx	r9
+  81 006c 0195     		str	r5, [sp, #4]
+  82 006e A378     		ldrb	r3, [r4, #2]	@ zero_extendqisi2
+  83 0070 0399     		ldr	r1, [sp, #12]
+  84 0072 1B01     		lsls	r3, r3, #4
+  85 0074 3343     		orrs	r3, r3, r6
+  86 0076 DBB2     		uxtb	r3, r3
+  87 0078 0093     		str	r3, [sp]
+  88 007a 6368     		ldr	r3, [r4, #4]
+  89 007c 2046     		mov	r0, r4
+  90 007e D3F80C90 		ldr	r9, [r3, #12]
+  91 0082 0222     		movs	r2, #2
+  92 0084 2B46     		mov	r3, r5
+  93 0086 C847     		blx	r9
+  94 0088 164A     		ldr	r2, .L6
+  95 008a 6368     		ldr	r3, [r4, #4]
+  96 008c 0192     		str	r2, [sp, #4]
+  97 008e 1F22     		movs	r2, #31
+  98 0090 0092     		str	r2, [sp]
+  99 0092 D3F80C90 		ldr	r9, [r3, #12]
+ 100 0096 0399     		ldr	r1, [sp, #12]
+ 101 0098 2B46     		mov	r3, r5
+ 102 009a 2046     		mov	r0, r4
+ 103 009c 0222     		movs	r2, #2
+ 104 009e C847     		blx	r9
+ 105 00a0 CDE90086 		strd	r8, r6, [sp]
+ 106 00a4 6168     		ldr	r1, [r4, #4]
+ 107 00a6 2B46     		mov	r3, r5
+ 108 00a8 8E68     		ldr	r6, [r1, #8]
+ 109 00aa 0399     		ldr	r1, [sp, #12]
+ 110 00ac 2046     		mov	r0, r4
+ 111 00ae 0222     		movs	r2, #2
+ 112 00b0 B047     		blx	r6
+ARM GAS  /tmp/cclZL8jt.s 			page 3
+
+
+ 113 00b2 0422     		movs	r2, #4
+ 114 00b4 6368     		ldr	r3, [r4, #4]
+ 115 00b6 0399     		ldr	r1, [sp, #12]
+ 116 00b8 CDE90072 		strd	r7, r2, [sp]
+ 117 00bc 2046     		mov	r0, r4
+ 118 00be 9E68     		ldr	r6, [r3, #8]
+ 119 00c0 0A22     		movs	r2, #10
+ 120 00c2 2B46     		mov	r3, r5
+ 121 00c4 B047     		blx	r6
+ 122 00c6 6368     		ldr	r3, [r4, #4]
+ 123 00c8 0399     		ldr	r1, [sp, #12]
+ 124 00ca 5B69     		ldr	r3, [r3, #20]
+ 125 00cc 2046     		mov	r0, r4
+ 126 00ce 9847     		blx	r3
+ 127 00d0 05B0     		add	sp, sp, #20
+ 128              		@ sp needed
+ 129 00d2 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 130              	.L2:
+ 131 00d6 6368     		ldr	r3, [r4, #4]
+ 132 00d8 2046     		mov	r0, r4
+ 133 00da 9B69     		ldr	r3, [r3, #24]
+ 134 00dc 9847     		blx	r3
+ 135 00de 05B0     		add	sp, sp, #20
+ 136              		@ sp needed
+ 137 00e0 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 138              	.L7:
+ 139              		.align	2
+ 140              	.L6:
+ 141 00e4 00000000 		.word	.LC0
+ 142              		.size	pprzlink_msg_v2_send_DL_VALUE.constprop.0, .-pprzlink_msg_v2_send_DL_VALUE.constprop.0
+ 143              		.section	.text.settings_init,"ax",%progbits
+ 144              		.align	1
+ 145              		.p2align 4,,15
+ 146              		.global	settings_init
+ 147              		.syntax unified
+ 148              		.thumb
+ 149              		.thumb_func
+ 150              		.fpu fpv4-sp-d16
+ 151              		.type	settings_init, %function
+ 152              	settings_init:
+ 153              		@ args = 0, pretend = 0, frame = 0
+ 154              		@ frame_needed = 0, uses_anonymous_args = 0
+ 155              		@ link register save eliminated.
+ 156 0000 7047     		bx	lr
+ 157              		.size	settings_init, .-settings_init
+ 158 0002 00BF     		.section	.text.settings_store,"ax",%progbits
+ 159              		.align	1
+ 160              		.p2align 4,,15
+ 161              		.global	settings_store
+ 162              		.syntax unified
+ 163              		.thumb
+ 164              		.thumb_func
+ 165              		.fpu fpv4-sp-d16
+ 166              		.type	settings_store, %function
+ 167              	settings_store:
+ 168              		@ args = 0, pretend = 0, frame = 0
+ 169              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/cclZL8jt.s 			page 4
+
+
+ 170              		@ link register save eliminated.
+ 171 0000 024B     		ldr	r3, .L10
+ 172 0002 0022     		movs	r2, #0
+ 173 0004 1A70     		strb	r2, [r3]
+ 174 0006 4FF0FF30 		mov	r0, #-1
+ 175 000a 7047     		bx	lr
+ 176              	.L11:
+ 177              		.align	2
+ 178              	.L10:
+ 179 000c 00000000 		.word	.LANCHOR0
+ 180              		.size	settings_store, .-settings_store
+ 181              		.section	.text.settings_clear,"ax",%progbits
+ 182              		.align	1
+ 183              		.p2align 4,,15
+ 184              		.global	settings_clear
+ 185              		.syntax unified
+ 186              		.thumb
+ 187              		.thumb_func
+ 188              		.fpu fpv4-sp-d16
+ 189              		.type	settings_clear, %function
+ 190              	settings_clear:
+ 191              		@ args = 0, pretend = 0, frame = 0
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193              		@ link register save eliminated.
+ 194 0000 024B     		ldr	r3, .L13
+ 195 0002 0022     		movs	r2, #0
+ 196 0004 1A70     		strb	r2, [r3]
+ 197 0006 4FF0FF30 		mov	r0, #-1
+ 198 000a 7047     		bx	lr
+ 199              	.L14:
+ 200              		.align	2
+ 201              	.L13:
+ 202 000c 00000000 		.word	.LANCHOR1
+ 203              		.size	settings_clear, .-settings_clear
+ 204              		.section	.text.settings_parse_msg_SETTING,"ax",%progbits
+ 205              		.align	1
+ 206              		.p2align 4,,15
+ 207              		.global	settings_parse_msg_SETTING
+ 208              		.syntax unified
+ 209              		.thumb
+ 210              		.thumb_func
+ 211              		.fpu fpv4-sp-d16
+ 212              		.type	settings_parse_msg_SETTING, %function
+ 213              	settings_parse_msg_SETTING:
+ 214              		@ args = 0, pretend = 0, frame = 32
+ 215              		@ frame_needed = 0, uses_anonymous_args = 0
+ 216 0000 5379     		ldrb	r3, [r2, #5]	@ zero_extendqisi2
+ 217 0002 032B     		cmp	r3, #3
+ 218 0004 7BD1     		bne	.L104
+ 219 0006 30B5     		push	{r4, r5, lr}
+ 220 0008 89B0     		sub	sp, sp, #36
+ 221 000a 1379     		ldrb	r3, [r2, #4]	@ zero_extendqisi2
+ 222 000c 1578     		ldrb	r5, [r2]	@ zero_extendqisi2
+ 223 000e 8DF80F30 		strb	r3, [sp, #15]
+ 224 0012 0446     		mov	r4, r0
+ 225 0014 D2F80600 		ldr	r0, [r2, #6]	@ unaligned
+ 226 0018 0490     		str	r0, [sp, #16]	@ float
+ARM GAS  /tmp/cclZL8jt.s 			page 5
+
+
+ 227 001a 482B     		cmp	r3, #72
+ 228 001c 5DD8     		bhi	.L18
+ 229 001e DFE813F0 		tbh	[pc, r3, lsl #1]
+ 230              	.L20:
+ 231 0022 7001     		.2byte	(.L91-.L20)/2
+ 232 0024 6701     		.2byte	(.L90-.L20)/2
+ 233 0026 5E01     		.2byte	(.L89-.L20)/2
+ 234 0028 5501     		.2byte	(.L88-.L20)/2
+ 235 002a 4C01     		.2byte	(.L87-.L20)/2
+ 236 002c 4301     		.2byte	(.L86-.L20)/2
+ 237 002e 3A01     		.2byte	(.L85-.L20)/2
+ 238 0030 7C02     		.2byte	(.L84-.L20)/2
+ 239 0032 7302     		.2byte	(.L83-.L20)/2
+ 240 0034 6702     		.2byte	(.L82-.L20)/2
+ 241 0036 5102     		.2byte	(.L81-.L20)/2
+ 242 0038 B802     		.2byte	(.L80-.L20)/2
+ 243 003a 6F00     		.2byte	(.L74-.L20)/2
+ 244 003c 4900     		.2byte	(.L68-.L20)/2
+ 245 003e 8902     		.2byte	(.L78-.L20)/2
+ 246 0040 4302     		.2byte	(.L77-.L20)/2
+ 247 0042 2D02     		.2byte	(.L76-.L20)/2
+ 248 0044 2A02     		.2byte	(.L75-.L20)/2
+ 249 0046 6F00     		.2byte	(.L74-.L20)/2
+ 250 0048 2202     		.2byte	(.L73-.L20)/2
+ 251 004a 1F02     		.2byte	(.L72-.L20)/2
+ 252 004c 1C02     		.2byte	(.L71-.L20)/2
+ 253 004e 1902     		.2byte	(.L70-.L20)/2
+ 254 0050 1602     		.2byte	(.L69-.L20)/2
+ 255 0052 4900     		.2byte	(.L68-.L20)/2
+ 256 0054 A102     		.2byte	(.L67-.L20)/2
+ 257 0056 9E02     		.2byte	(.L66-.L20)/2
+ 258 0058 B502     		.2byte	(.L65-.L20)/2
+ 259 005a B202     		.2byte	(.L64-.L20)/2
+ 260 005c A902     		.2byte	(.L63-.L20)/2
+ 261 005e A402     		.2byte	(.L62-.L20)/2
+ 262 0060 1501     		.2byte	(.L61-.L20)/2
+ 263 0062 1201     		.2byte	(.L60-.L20)/2
+ 264 0064 0F01     		.2byte	(.L59-.L20)/2
+ 265 0066 0C01     		.2byte	(.L58-.L20)/2
+ 266 0068 0901     		.2byte	(.L57-.L20)/2
+ 267 006a 0601     		.2byte	(.L56-.L20)/2
+ 268 006c 0301     		.2byte	(.L55-.L20)/2
+ 269 006e 0001     		.2byte	(.L54-.L20)/2
+ 270 0070 FD00     		.2byte	(.L53-.L20)/2
+ 271 0072 FA00     		.2byte	(.L52-.L20)/2
+ 272 0074 F200     		.2byte	(.L51-.L20)/2
+ 273 0076 EA00     		.2byte	(.L50-.L20)/2
+ 274 0078 E200     		.2byte	(.L49-.L20)/2
+ 275 007a D400     		.2byte	(.L48-.L20)/2
+ 276 007c CA00     		.2byte	(.L47-.L20)/2
+ 277 007e C000     		.2byte	(.L46-.L20)/2
+ 278 0080 B600     		.2byte	(.L45-.L20)/2
+ 279 0082 AE00     		.2byte	(.L44-.L20)/2
+ 280 0084 A500     		.2byte	(.L43-.L20)/2
+ 281 0086 9C00     		.2byte	(.L42-.L20)/2
+ 282 0088 9300     		.2byte	(.L41-.L20)/2
+ 283 008a 9000     		.2byte	(.L40-.L20)/2
+ARM GAS  /tmp/cclZL8jt.s 			page 6
+
+
+ 284 008c 8D00     		.2byte	(.L39-.L20)/2
+ 285 008e 8A00     		.2byte	(.L38-.L20)/2
+ 286 0090 8700     		.2byte	(.L37-.L20)/2
+ 287 0092 8400     		.2byte	(.L36-.L20)/2
+ 288 0094 8100     		.2byte	(.L35-.L20)/2
+ 289 0096 7E00     		.2byte	(.L34-.L20)/2
+ 290 0098 7B00     		.2byte	(.L33-.L20)/2
+ 291 009a 7800     		.2byte	(.L32-.L20)/2
+ 292 009c 7500     		.2byte	(.L31-.L20)/2
+ 293 009e 7200     		.2byte	(.L30-.L20)/2
+ 294 00a0 1302     		.2byte	(.L29-.L20)/2
+ 295 00a2 0902     		.2byte	(.L28-.L20)/2
+ 296 00a4 AD01     		.2byte	(.L27-.L20)/2
+ 297 00a6 A501     		.2byte	(.L26-.L20)/2
+ 298 00a8 9C01     		.2byte	(.L25-.L20)/2
+ 299 00aa 9301     		.2byte	(.L24-.L20)/2
+ 300 00ac 8A01     		.2byte	(.L23-.L20)/2
+ 301 00ae 8101     		.2byte	(.L22-.L20)/2
+ 302 00b0 7901     		.2byte	(.L21-.L20)/2
+ 303 00b2 9602     		.2byte	(.L19-.L20)/2
+ 304              		.p2align 1
+ 305              	.L68:
+ 306 00b4 07EE900A 		vmov	s15, r0
+ 307 00b8 F5EE407A 		vcmp.f32	s15, #0
+ 308 00bc F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 309 00c0 00F06A82 		beq	.L101
+ 310 00c4 AF4B     		ldr	r3, .L110
+ 311 00c6 07EE100A 		vmov	s14, r0
+ 312 00ca D3ED007A 		vldr.32	s15, [r3]
+ 313 00ce 77EE277A 		vadd.f32	s15, s14, s15
+ 314              	.L96:
+ 315 00d2 C3ED007A 		vstr.32	s15, [r3]
+ 316 00d6 CDED047A 		vstr.32	s15, [sp, #16]
+ 317              	.L18:
+ 318 00da 0320     		movs	r0, #3
+ 319 00dc CDE90614 		strd	r1, r4, [sp, #24]
+ 320 00e0 0023     		movs	r3, #0
+ 321 00e2 8DF81400 		strb	r0, [sp, #20]
+ 322 00e6 04AA     		add	r2, sp, #16
+ 323 00e8 0DF10F01 		add	r1, sp, #15
+ 324 00ec 05A8     		add	r0, sp, #20
+ 325 00ee 8DF81550 		strb	r5, [sp, #21]
+ 326 00f2 8DF81630 		strb	r3, [sp, #22]
+ 327 00f6 FFF7FEFF 		bl	pprzlink_msg_v2_send_DL_VALUE.constprop.0
+ 328 00fa 09B0     		add	sp, sp, #36
+ 329              		@ sp needed
+ 330 00fc 30BD     		pop	{r4, r5, pc}
+ 331              	.L104:
+ 332 00fe 7047     		bx	lr
+ 333              	.L74:
+ 334 0100 A14B     		ldr	r3, .L110+4
+ 335 0102 1860     		str	r0, [r3]	@ float
+ 336 0104 E9E7     		b	.L18
+ 337              	.L30:
+ 338 0106 A14B     		ldr	r3, .L110+8
+ 339 0108 1860     		str	r0, [r3]	@ float
+ 340 010a E6E7     		b	.L18
+ARM GAS  /tmp/cclZL8jt.s 			page 7
+
+
+ 341              	.L31:
+ 342 010c A04B     		ldr	r3, .L110+12
+ 343 010e 1860     		str	r0, [r3]	@ float
+ 344 0110 E3E7     		b	.L18
+ 345              	.L32:
+ 346 0112 A04B     		ldr	r3, .L110+16
+ 347 0114 1860     		str	r0, [r3]	@ float
+ 348 0116 E0E7     		b	.L18
+ 349              	.L33:
+ 350 0118 9F4B     		ldr	r3, .L110+20
+ 351 011a 1860     		str	r0, [r3]	@ float
+ 352 011c DDE7     		b	.L18
+ 353              	.L34:
+ 354 011e 9F4B     		ldr	r3, .L110+24
+ 355 0120 1860     		str	r0, [r3]	@ float
+ 356 0122 DAE7     		b	.L18
+ 357              	.L35:
+ 358 0124 9E4B     		ldr	r3, .L110+28
+ 359 0126 1860     		str	r0, [r3]	@ float
+ 360 0128 D7E7     		b	.L18
+ 361              	.L36:
+ 362 012a 9E4B     		ldr	r3, .L110+32
+ 363 012c 1860     		str	r0, [r3]	@ float
+ 364 012e D4E7     		b	.L18
+ 365              	.L37:
+ 366 0130 9D4B     		ldr	r3, .L110+36
+ 367 0132 1860     		str	r0, [r3]	@ float
+ 368 0134 D1E7     		b	.L18
+ 369              	.L38:
+ 370 0136 9D4B     		ldr	r3, .L110+40
+ 371 0138 1860     		str	r0, [r3]	@ float
+ 372 013a CEE7     		b	.L18
+ 373              	.L39:
+ 374 013c 9C4B     		ldr	r3, .L110+44
+ 375 013e 1860     		str	r0, [r3]	@ float
+ 376 0140 CBE7     		b	.L18
+ 377              	.L40:
+ 378 0142 9C4B     		ldr	r3, .L110+48
+ 379 0144 1860     		str	r0, [r3]	@ float
+ 380 0146 C8E7     		b	.L18
+ 381              	.L41:
+ 382 0148 07EE900A 		vmov	s15, r0
+ 383 014c FDEEE77A 		vcvt.s32.f32	s15, s15
+ 384 0150 994B     		ldr	r3, .L110+52
+ 385 0152 17EE900A 		vmov	r0, s15	@ int
+ 386 0156 1880     		strh	r0, [r3]	@ movhi
+ 387 0158 BFE7     		b	.L18
+ 388              	.L42:
+ 389 015a 07EE900A 		vmov	s15, r0
+ 390 015e FDEEE77A 		vcvt.s32.f32	s15, s15
+ 391 0162 964B     		ldr	r3, .L110+56
+ 392 0164 17EE900A 		vmov	r0, s15	@ int
+ 393 0168 1880     		strh	r0, [r3]	@ movhi
+ 394 016a B6E7     		b	.L18
+ 395              	.L43:
+ 396 016c 07EE900A 		vmov	s15, r0
+ 397 0170 FDEEE77A 		vcvt.s32.f32	s15, s15
+ARM GAS  /tmp/cclZL8jt.s 			page 8
+
+
+ 398 0174 924B     		ldr	r3, .L110+60
+ 399 0176 17EE900A 		vmov	r0, s15	@ int
+ 400 017a 1880     		strh	r0, [r3]	@ movhi
+ 401 017c ADE7     		b	.L18
+ 402              	.L44:
+ 403 017e 0091     		str	r1, [sp]
+ 404 0180 FFF7FEFF 		bl	usbStorage_enable_usb_storage
+ 405 0184 8F4B     		ldr	r3, .L110+64
+ 406 0186 0099     		ldr	r1, [sp]
+ 407 0188 1B68     		ldr	r3, [r3]	@ float
+ 408 018a 0493     		str	r3, [sp, #16]	@ float
+ 409 018c A5E7     		b	.L18
+ 410              	.L45:
+ 411 018e 07EE900A 		vmov	s15, r0
+ 412 0192 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 413 0196 8C4B     		ldr	r3, .L110+68
+ 414 0198 17EE900A 		vmov	r0, s15	@ int
+ 415 019c 83F80A09 		strb	r0, [r3, #2314]
+ 416 01a0 9BE7     		b	.L18
+ 417              	.L46:
+ 418 01a2 07EE900A 		vmov	s15, r0
+ 419 01a6 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 420 01aa 874B     		ldr	r3, .L110+68
+ 421 01ac 17EE900A 		vmov	r0, s15	@ int
+ 422 01b0 83F80909 		strb	r0, [r3, #2313]
+ 423 01b4 91E7     		b	.L18
+ 424              	.L47:
+ 425 01b6 07EE900A 		vmov	s15, r0
+ 426 01ba FCEEE77A 		vcvt.u32.f32	s15, s15
+ 427 01be 824B     		ldr	r3, .L110+68
+ 428 01c0 17EE900A 		vmov	r0, s15	@ int
+ 429 01c4 83F80809 		strb	r0, [r3, #2312]
+ 430 01c8 87E7     		b	.L18
+ 431              	.L48:
+ 432 01ca 0091     		str	r1, [sp]
+ 433 01cc FFF7FEFF 		bl	imu_SetBodyToImuCurrent
+ 434 01d0 7D4B     		ldr	r3, .L110+68
+ 435 01d2 0099     		ldr	r1, [sp]
+ 436 01d4 93F80B39 		ldrb	r3, [r3, #2315]	@ zero_extendqisi2
+ 437 01d8 07EE903A 		vmov	s15, r3	@ int
+ 438 01dc F8EE677A 		vcvt.f32.u32	s15, s15
+ 439 01e0 CDED047A 		vstr.32	s15, [sp, #16]
+ 440 01e4 79E7     		b	.L18
+ 441              	.L49:
+ 442 01e6 0091     		str	r1, [sp]
+ 443 01e8 FFF7FEFF 		bl	imu_SetBodyToImuPsi
+ 444 01ec 774B     		ldr	r3, .L110+72
+ 445 01ee 0099     		ldr	r1, [sp]
+ 446 01f0 1B68     		ldr	r3, [r3]	@ float
+ 447 01f2 0493     		str	r3, [sp, #16]	@ float
+ 448 01f4 71E7     		b	.L18
+ 449              	.L50:
+ 450 01f6 0091     		str	r1, [sp]
+ 451 01f8 FFF7FEFF 		bl	imu_SetBodyToImuTheta
+ 452 01fc 744B     		ldr	r3, .L110+76
+ 453 01fe 0099     		ldr	r1, [sp]
+ 454 0200 1B68     		ldr	r3, [r3]	@ float
+ARM GAS  /tmp/cclZL8jt.s 			page 9
+
+
+ 455 0202 0493     		str	r3, [sp, #16]	@ float
+ 456 0204 69E7     		b	.L18
+ 457              	.L51:
+ 458 0206 0091     		str	r1, [sp]
+ 459 0208 FFF7FEFF 		bl	imu_SetBodyToImuPhi
+ 460 020c 714B     		ldr	r3, .L110+80
+ 461 020e 0099     		ldr	r1, [sp]
+ 462 0210 1B68     		ldr	r3, [r3]	@ float
+ 463 0212 0493     		str	r3, [sp, #16]	@ float
+ 464 0214 61E7     		b	.L18
+ 465              	.L52:
+ 466 0216 704B     		ldr	r3, .L110+84
+ 467 0218 1860     		str	r0, [r3]	@ float
+ 468 021a 5EE7     		b	.L18
+ 469              	.L53:
+ 470 021c 6F4B     		ldr	r3, .L110+88
+ 471 021e 1860     		str	r0, [r3]	@ float
+ 472 0220 5BE7     		b	.L18
+ 473              	.L54:
+ 474 0222 6F4B     		ldr	r3, .L110+92
+ 475 0224 1860     		str	r0, [r3]	@ float
+ 476 0226 58E7     		b	.L18
+ 477              	.L55:
+ 478 0228 6E4B     		ldr	r3, .L110+96
+ 479 022a 1860     		str	r0, [r3]	@ float
+ 480 022c 55E7     		b	.L18
+ 481              	.L56:
+ 482 022e 6E4B     		ldr	r3, .L110+100
+ 483 0230 1860     		str	r0, [r3]	@ float
+ 484 0232 52E7     		b	.L18
+ 485              	.L57:
+ 486 0234 6D4B     		ldr	r3, .L110+104
+ 487 0236 1860     		str	r0, [r3]	@ float
+ 488 0238 4FE7     		b	.L18
+ 489              	.L58:
+ 490 023a 6D4B     		ldr	r3, .L110+108
+ 491 023c 1860     		str	r0, [r3]	@ float
+ 492 023e 4CE7     		b	.L18
+ 493              	.L59:
+ 494 0240 6C4B     		ldr	r3, .L110+112
+ 495 0242 1860     		str	r0, [r3]	@ float
+ 496 0244 49E7     		b	.L18
+ 497              	.L60:
+ 498 0246 6C4B     		ldr	r3, .L110+116
+ 499 0248 1860     		str	r0, [r3]	@ float
+ 500 024a 46E7     		b	.L18
+ 501              	.L61:
+ 502 024c 07EE900A 		vmov	s15, r0
+ 503 0250 F5EE407A 		vcmp.f32	s15, #0
+ 504 0254 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 505 0258 08BF     		it	eq
+ 506 025a 684B     		ldreq	r3, .L110+120
+ 507 025c 684A     		ldr	r2, .L110+124
+ 508 025e 08BF     		it	eq
+ 509 0260 1868     		ldreq	r0, [r3]	@ float
+ 510 0262 D2ED007A 		vldr.32	s15, [r2]
+ 511 0266 674B     		ldr	r3, .L110+128
+ARM GAS  /tmp/cclZL8jt.s 			page 10
+
+
+ 512 0268 07EE100A 		vmov	s14, r0
+ 513 026c F4EEC77A 		vcmpe.f32	s15, s14
+ 514 0270 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 515 0274 1860     		str	r0, [r3]	@ float
+ 516 0276 40F19381 		bpl	.L107
+ 517 027a 634A     		ldr	r2, .L110+132
+ 518 027c D2ED007A 		vldr.32	s15, [r2]
+ 519 0280 F4EEC77A 		vcmpe.f32	s15, s14
+ 520 0284 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 521 0288 40F38A81 		ble	.L107
+ 522 028c 07EE900A 		vmov	s15, r0
+ 523              	.L99:
+ 524 0290 CDED047A 		vstr.32	s15, [sp, #16]
+ 525 0294 21E7     		b	.L18
+ 526              	.L85:
+ 527 0296 07EE900A 		vmov	s15, r0
+ 528 029a FCEEE77A 		vcvt.u32.f32	s15, s15
+ 529 029e 5B4B     		ldr	r3, .L110+136
+ 530 02a0 17EE900A 		vmov	r0, s15	@ int
+ 531 02a4 1870     		strb	r0, [r3]
+ 532 02a6 18E7     		b	.L18
+ 533              	.L86:
+ 534 02a8 07EE900A 		vmov	s15, r0
+ 535 02ac FCEEE77A 		vcvt.u32.f32	s15, s15
+ 536 02b0 574B     		ldr	r3, .L110+140
+ 537 02b2 17EE900A 		vmov	r0, s15	@ int
+ 538 02b6 1870     		strb	r0, [r3]
+ 539 02b8 0FE7     		b	.L18
+ 540              	.L87:
+ 541 02ba 07EE900A 		vmov	s15, r0
+ 542 02be FCEEE77A 		vcvt.u32.f32	s15, s15
+ 543 02c2 544B     		ldr	r3, .L110+144
+ 544 02c4 17EE900A 		vmov	r0, s15	@ int
+ 545 02c8 1870     		strb	r0, [r3]
+ 546 02ca 06E7     		b	.L18
+ 547              	.L88:
+ 548 02cc 07EE900A 		vmov	s15, r0
+ 549 02d0 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 550 02d4 504B     		ldr	r3, .L110+148
+ 551 02d6 17EE900A 		vmov	r0, s15	@ int
+ 552 02da 1870     		strb	r0, [r3]
+ 553 02dc FDE6     		b	.L18
+ 554              	.L89:
+ 555 02de 07EE900A 		vmov	s15, r0
+ 556 02e2 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 557 02e6 4D4B     		ldr	r3, .L110+152
+ 558 02e8 17EE900A 		vmov	r0, s15	@ int
+ 559 02ec 1870     		strb	r0, [r3]
+ 560 02ee F4E6     		b	.L18
+ 561              	.L90:
+ 562 02f0 07EE900A 		vmov	s15, r0
+ 563 02f4 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 564 02f8 494B     		ldr	r3, .L110+156
+ 565 02fa 17EE900A 		vmov	r0, s15	@ int
+ 566 02fe 1870     		strb	r0, [r3]
+ 567 0300 EBE6     		b	.L18
+ 568              	.L91:
+ARM GAS  /tmp/cclZL8jt.s 			page 11
+
+
+ 569 0302 07EE900A 		vmov	s15, r0
+ 570 0306 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 571 030a 464B     		ldr	r3, .L110+160
+ 572 030c 17EE900A 		vmov	r0, s15	@ int
+ 573 0310 1870     		strb	r0, [r3]
+ 574 0312 E2E6     		b	.L18
+ 575              	.L21:
+ 576 0314 07EE900A 		vmov	s15, r0
+ 577 0318 434B     		ldr	r3, .L110+164
+ 578 031a FCEEE77A 		vcvt.u32.f32	s15, s15
+ 579 031e C3ED017A 		vstr.32	s15, [r3, #4]	@ int
+ 580 0322 DAE6     		b	.L18
+ 581              	.L22:
+ 582 0324 07EE900A 		vmov	s15, r0
+ 583 0328 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 584 032c 3E4B     		ldr	r3, .L110+164
+ 585 032e 17EE900A 		vmov	r0, s15	@ int
+ 586 0332 9882     		strh	r0, [r3, #20]	@ movhi
+ 587 0334 D1E6     		b	.L18
+ 588              	.L23:
+ 589 0336 07EE900A 		vmov	s15, r0
+ 590 033a FCEEE77A 		vcvt.u32.f32	s15, s15
+ 591 033e 3A4B     		ldr	r3, .L110+164
+ 592 0340 17EE900A 		vmov	r0, s15	@ int
+ 593 0344 5882     		strh	r0, [r3, #18]	@ movhi
+ 594 0346 C8E6     		b	.L18
+ 595              	.L24:
+ 596 0348 07EE900A 		vmov	s15, r0
+ 597 034c FCEEE77A 		vcvt.u32.f32	s15, s15
+ 598 0350 354B     		ldr	r3, .L110+164
+ 599 0352 17EE900A 		vmov	r0, s15	@ int
+ 600 0356 5874     		strb	r0, [r3, #17]
+ 601 0358 BFE6     		b	.L18
+ 602              	.L25:
+ 603 035a 07EE900A 		vmov	s15, r0
+ 604 035e FCEEE77A 		vcvt.u32.f32	s15, s15
+ 605 0362 314B     		ldr	r3, .L110+164
+ 606 0364 17EE900A 		vmov	r0, s15	@ int
+ 607 0368 1874     		strb	r0, [r3, #16]
+ 608 036a B6E6     		b	.L18
+ 609              	.L26:
+ 610 036c 07EE900A 		vmov	s15, r0
+ 611 0370 2E4B     		ldr	r3, .L110+168
+ 612 0372 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 613 0376 C3ED007A 		vstr.32	s15, [r3]	@ int
+ 614 037a AEE6     		b	.L18
+ 615              	.L27:
+ 616 037c 2C4B     		ldr	r3, .L110+172
+ 617 037e 1860     		str	r0, [r3]	@ float
+ 618 0380 ABE6     		b	.L18
+ 619              	.L111:
+ 620 0382 00BF     		.align	2
+ 621              	.L110:
+ 622 0384 00000000 		.word	nav_shift
+ 623 0388 00000000 		.word	nav_course
+ 624 038c 00000000 		.word	h_ctl_course_pre_bank_correction
+ 625 0390 00000000 		.word	h_ctl_course_dgain
+ARM GAS  /tmp/cclZL8jt.s 			page 12
+
+
+ 626 0394 00000000 		.word	h_ctl_course_pgain
+ 627 0398 00000000 		.word	h_ctl_roll_rate_gain
+ 628 039c 00000000 		.word	h_ctl_roll_attitude_gain
+ 629 03a0 00000000 		.word	h_ctl_aileron_of_throttle
+ 630 03a4 00000000 		.word	h_ctl_elevator_of_roll
+ 631 03a8 00000000 		.word	h_ctl_pitch_dgain
+ 632 03ac 00000000 		.word	h_ctl_pitch_pgain
+ 633 03b0 00000000 		.word	h_ctl_roll_max_setpoint
+ 634 03b4 00000000 		.word	h_ctl_roll_pgain
+ 635 03b8 00000000 		.word	command_yaw_trim
+ 636 03bc 00000000 		.word	command_pitch_trim
+ 637 03c0 00000000 		.word	command_roll_trim
+ 638 03c4 00000000 		.word	usb_storage_status
+ 639 03c8 00000000 		.word	imu
+ 640 03cc E0080000 		.word	imu+2272
+ 641 03d0 DC080000 		.word	imu+2268
+ 642 03d4 D8080000 		.word	imu+2264
+ 643 03d8 00000000 		.word	v_ctl_auto_pitch_igain
+ 644 03dc 00000000 		.word	v_ctl_auto_pitch_pgain
+ 645 03e0 00000000 		.word	v_ctl_auto_throttle_pitch_of_vz_dgain
+ 646 03e4 00000000 		.word	v_ctl_auto_throttle_pitch_of_vz_pgain
+ 647 03e8 00000000 		.word	v_ctl_auto_throttle_climb_throttle_increment
+ 648 03ec 00000000 		.word	v_ctl_auto_throttle_dgain
+ 649 03f0 00000000 		.word	v_ctl_auto_throttle_igain
+ 650 03f4 00000000 		.word	v_ctl_auto_throttle_pgain
+ 651 03f8 00000000 		.word	v_ctl_pitch_trim
+ 652 03fc 00000000 		.word	v_ctl_auto_throttle_nominal_cruise_throttle
+ 653 0400 00000000 		.word	v_ctl_auto_throttle_min_cruise_throttle
+ 654 0404 00000000 		.word	v_ctl_auto_throttle_cruise_throttle
+ 655 0408 00000000 		.word	v_ctl_auto_throttle_max_cruise_throttle
+ 656 040c 00000000 		.word	mag_lis3mdl_mag_lis3mdl_report_status
+ 657 0410 00000000 		.word	gps_ubx_ucenter_gps_ubx_ucenter_periodic_status
+ 658 0414 00000000 		.word	flight_recorder_flight_recorder_periodic_status
+ 659 0418 00000000 		.word	gps_ublox_gps_ubx_periodic_check_status
+ 660 041c 00000000 		.word	trisonica_trisonica_report_status
+ 661 0420 00000000 		.word	telemetry_mode_Fbw
+ 662 0424 00000000 		.word	telemetry_mode_Ap
+ 663 0428 00000000 		.word	gps_ubx_ucenter
+ 664 042c 00000000 		.word	renorm_sqrt_count
+ 665 0430 00000000 		.word	imu_health
+ 666              	.L28:
+ 667 0434 07EE900A 		vmov	s15, r0
+ 668 0438 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 669 043c 5F4B     		ldr	r3, .L112
+ 670 043e 17EE900A 		vmov	r0, s15	@ int
+ 671 0442 83F81602 		strb	r0, [r3, #534]
+ 672 0446 48E6     		b	.L18
+ 673              	.L29:
+ 674 0448 5D4B     		ldr	r3, .L112+4
+ 675 044a 1860     		str	r0, [r3]	@ float
+ 676 044c 45E6     		b	.L18
+ 677              	.L69:
+ 678 044e 5D4B     		ldr	r3, .L112+8
+ 679 0450 1860     		str	r0, [r3]	@ float
+ 680 0452 42E6     		b	.L18
+ 681              	.L70:
+ 682 0454 5C4B     		ldr	r3, .L112+12
+ARM GAS  /tmp/cclZL8jt.s 			page 13
+
+
+ 683 0456 1860     		str	r0, [r3]	@ float
+ 684 0458 3FE6     		b	.L18
+ 685              	.L71:
+ 686 045a 5C4B     		ldr	r3, .L112+16
+ 687 045c 1860     		str	r0, [r3]	@ float
+ 688 045e 3CE6     		b	.L18
+ 689              	.L72:
+ 690 0460 5B4B     		ldr	r3, .L112+20
+ 691 0462 1860     		str	r0, [r3]	@ float
+ 692 0464 39E6     		b	.L18
+ 693              	.L73:
+ 694 0466 07EE900A 		vmov	s15, r0
+ 695 046a 5A4B     		ldr	r3, .L112+24
+ 696 046c FDEEE77A 		vcvt.s32.f32	s15, s15
+ 697 0470 C3ED007A 		vstr.32	s15, [r3]	@ int
+ 698 0474 31E6     		b	.L18
+ 699              	.L75:
+ 700 0476 584B     		ldr	r3, .L112+28
+ 701 0478 1860     		str	r0, [r3]	@ float
+ 702 047a 2EE6     		b	.L18
+ 703              	.L76:
+ 704 047c 07EE900A 		vmov	s15, r0
+ 705 0480 F5EE407A 		vcmp.f32	s15, #0
+ 706 0484 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 707 0488 14BF     		ite	ne
+ 708 048a 0120     		movne	r0, #1
+ 709 048c 0020     		moveq	r0, #0
+ 710 048e 0091     		str	r1, [sp]
+ 711 0490 FFF7FEFF 		bl	power_switch_set
+ 712 0494 514B     		ldr	r3, .L112+32
+ 713 0496 0099     		ldr	r1, [sp]
+ 714 0498 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 715 049a 07EE903A 		vmov	s15, r3	@ int
+ 716 049e F8EE677A 		vcvt.f32.u32	s15, s15
+ 717 04a2 CDED047A 		vstr.32	s15, [sp, #16]
+ 718 04a6 18E6     		b	.L18
+ 719              	.L77:
+ 720 04a8 07EE100A 		vmov	s14, r0
+ 721 04ac F7EE007A 		vmov.f32	s15, #1.0e+0
+ 722 04b0 B4EE677A 		vcmp.f32	s14, s15
+ 723 04b4 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 724 04b8 75D1     		bne	.L93
+ 725 04ba 474B     		ldr	r3, .L112+28
+ 726 04bc 4848     		ldr	r0, .L112+36
+ 727 04be 1860     		str	r0, [r3]	@ float
+ 728              	.L94:
+ 729 04c0 0490     		str	r0, [sp, #16]	@ float
+ 730 04c2 0AE6     		b	.L18
+ 731              	.L81:
+ 732 04c4 07EE900A 		vmov	s15, r0
+ 733 04c8 F5EE407A 		vcmp.f32	s15, #0
+ 734 04cc F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 735 04d0 14BF     		ite	ne
+ 736 04d2 0120     		movne	r0, #1
+ 737 04d4 0020     		moveq	r0, #0
+ 738 04d6 0091     		str	r1, [sp]
+ 739 04d8 FFF7FEFF 		bl	autopilot_set_kill_throttle
+ARM GAS  /tmp/cclZL8jt.s 			page 14
+
+
+ 740 04dc 414B     		ldr	r3, .L112+40
+ 741 04de 0099     		ldr	r1, [sp]
+ 742 04e0 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 743 04e2 07EE903A 		vmov	s15, r3	@ int
+ 744 04e6 F8EE677A 		vcvt.f32.u32	s15, s15
+ 745 04ea CDED047A 		vstr.32	s15, [sp, #16]
+ 746 04ee F4E5     		b	.L18
+ 747              	.L82:
+ 748 04f0 07EE900A 		vmov	s15, r0
+ 749 04f4 F5EE407A 		vcmp.f32	s15, #0
+ 750 04f8 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 751 04fc 394B     		ldr	r3, .L112+40
+ 752 04fe 14BF     		ite	ne
+ 753 0500 0122     		movne	r2, #1
+ 754 0502 0022     		moveq	r2, #0
+ 755 0504 9A72     		strb	r2, [r3, #10]
+ 756 0506 E8E5     		b	.L18
+ 757              	.L83:
+ 758 0508 07EE900A 		vmov	s15, r0
+ 759 050c FCEEE77A 		vcvt.u32.f32	s15, s15
+ 760 0510 344B     		ldr	r3, .L112+40
+ 761 0512 17EE900A 		vmov	r0, s15	@ int
+ 762 0516 1870     		strb	r0, [r3]
+ 763 0518 DFE5     		b	.L18
+ 764              	.L84:
+ 765 051a 07EE900A 		vmov	s15, r0
+ 766 051e FCEEE77A 		vcvt.u32.f32	s15, s15
+ 767 0522 0191     		str	r1, [sp, #4]
+ 768 0524 CDED007A 		vstr.32	s15, [sp]	@ int
+ 769 0528 9DF80000 		ldrb	r0, [sp]	@ zero_extendqisi2
+ 770 052c FFF7FEFF 		bl	mcu_reboot
+ 771 0530 0199     		ldr	r1, [sp, #4]
+ 772 0532 D2E5     		b	.L18
+ 773              	.L78:
+ 774 0534 0091     		str	r1, [sp]
+ 775 0536 FFF7FEFF 		bl	autopilot_reset_flight_time
+ 776 053a 2A4B     		ldr	r3, .L112+40
+ 777 053c 0099     		ldr	r1, [sp]
+ 778 053e 5B88     		ldrh	r3, [r3, #2]
+ 779 0540 07EE903A 		vmov	s15, r3	@ int
+ 780 0544 F8EE677A 		vcvt.f32.u32	s15, s15
+ 781 0548 CDED047A 		vstr.32	s15, [sp, #16]
+ 782 054c C5E5     		b	.L18
+ 783              	.L19:
+ 784 054e 07EE900A 		vmov	s15, r0
+ 785 0552 254B     		ldr	r3, .L112+44
+ 786 0554 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 787 0558 C3ED027A 		vstr.32	s15, [r3, #8]	@ int
+ 788 055c BDE5     		b	.L18
+ 789              	.L66:
+ 790 055e 234B     		ldr	r3, .L112+48
+ 791 0560 1860     		str	r0, [r3]	@ float
+ 792 0562 BAE5     		b	.L18
+ 793              	.L67:
+ 794 0564 224B     		ldr	r3, .L112+52
+ 795 0566 1860     		str	r0, [r3]	@ float
+ 796 0568 B7E5     		b	.L18
+ARM GAS  /tmp/cclZL8jt.s 			page 15
+
+
+ 797              	.L62:
+ 798 056a 0091     		str	r1, [sp]
+ 799 056c FFF7FEFF 		bl	electrical_avg_reset
+ 800 0570 0099     		ldr	r1, [sp]
+ 801 0572 B2E5     		b	.L18
+ 802              	.L63:
+ 803 0574 07EE900A 		vmov	s15, r0
+ 804 0578 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 805 057c 1D4B     		ldr	r3, .L112+56
+ 806 057e 17EE900A 		vmov	r0, s15	@ int
+ 807 0582 1870     		strb	r0, [r3]
+ 808 0584 A9E5     		b	.L18
+ 809              	.L64:
+ 810 0586 1C4B     		ldr	r3, .L112+60
+ 811 0588 1860     		str	r0, [r3]	@ float
+ 812 058a A6E5     		b	.L18
+ 813              	.L65:
+ 814 058c 1B4B     		ldr	r3, .L112+64
+ 815 058e 1860     		str	r0, [r3]	@ float
+ 816 0590 A3E5     		b	.L18
+ 817              	.L80:
+ 818 0592 1B4B     		ldr	r3, .L112+68
+ 819 0594 1860     		str	r0, [r3]	@ float
+ 820 0596 A0E5     		b	.L18
+ 821              	.L101:
+ 822 0598 DFED1A7A 		vldr.32	s15, .L112+72
+ 823 059c 1A4B     		ldr	r3, .L112+76
+ 824 059e 98E5     		b	.L96
+ 825              	.L107:
+ 826 05a0 C3ED007A 		vstr.32	s15, [r3]
+ 827 05a4 74E6     		b	.L99
+ 828              	.L93:
+ 829 05a6 FFEE007A 		vmov.f32	s15, #-1.0e+0
+ 830 05aa B4EE677A 		vcmp.f32	s14, s15
+ 831 05ae 0A4B     		ldr	r3, .L112+28
+ 832 05b0 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 833 05b4 08BF     		it	eq
+ 834 05b6 1548     		ldreq	r0, .L112+80
+ 835 05b8 1860     		str	r0, [r3]	@ float
+ 836 05ba 81E7     		b	.L94
+ 837              	.L113:
+ 838              		.align	2
+ 839              	.L112:
+ 840 05bc 00000000 		.word	gps_ubx
+ 841 05c0 00000000 		.word	h_ctl_roll_slew
+ 842 05c4 00000000 		.word	fp_climb
+ 843 05c8 00000000 		.word	fp_throttle
+ 844 05cc 00000000 		.word	fp_pitch
+ 845 05d0 00000000 		.word	nav_climb
+ 846 05d4 00000000 		.word	nav_mode
+ 847 05d8 00000000 		.word	nav_radius
+ 848 05dc 00000000 		.word	power_switch_status
+ 849 05e0 00008C42 		.word	1116471296
+ 850 05e4 00000000 		.word	autopilot
+ 851 05e8 00000000 		.word	gps_ubx_ucenter
+ 852 05ec 00000000 		.word	nav_ground_speed_pgain
+ 853 05f0 00000000 		.word	nav_ground_speed_setpoint
+ARM GAS  /tmp/cclZL8jt.s 			page 16
+
+
+ 854 05f4 00000000 		.word	multi_gps_mode
+ 855 05f8 00000000 		.word	nav_survey_sweep
+ 856 05fc 00000000 		.word	nav_survey_shift
+ 857 0600 00000000 		.word	flight_altitude
+ 858 0604 00000000 		.word	0
+ 859 0608 00000000 		.word	nav_shift
+ 860 060c 00008CC2 		.word	-1031012352
+ 861              		.size	settings_parse_msg_SETTING, .-settings_parse_msg_SETTING
+ 862              		.section	.text.settings_parse_msg_GET_SETTING,"ax",%progbits
+ 863              		.align	1
+ 864              		.p2align 4,,15
+ 865              		.global	settings_parse_msg_GET_SETTING
+ 866              		.syntax unified
+ 867              		.thumb
+ 868              		.thumb_func
+ 869              		.fpu fpv4-sp-d16
+ 870              		.type	settings_parse_msg_GET_SETTING, %function
+ 871              	settings_parse_msg_GET_SETTING:
+ 872              		@ args = 0, pretend = 0, frame = 24
+ 873              		@ frame_needed = 0, uses_anonymous_args = 0
+ 874 0000 5379     		ldrb	r3, [r2, #5]	@ zero_extendqisi2
+ 875 0002 032B     		cmp	r3, #3
+ 876 0004 00D0     		beq	.L192
+ 877 0006 7047     		bx	lr
+ 878              	.L192:
+ 879 0008 00B5     		push	{lr}
+ 880 000a 1379     		ldrb	r3, [r2, #4]	@ zero_extendqisi2
+ 881 000c 92F800C0 		ldrb	ip, [r2]	@ zero_extendqisi2
+ 882 0010 87B0     		sub	sp, sp, #28
+ 883 0012 8DF80730 		strb	r3, [sp, #7]
+ 884 0016 482B     		cmp	r3, #72
+ 885 0018 00F2AE80 		bhi	.L187
+ 886 001c DFE813F0 		tbh	[pc, r3, lsl #1]
+ 887              	.L119:
+ 888 0020 AF00     		.2byte	(.L186-.L119)/2
+ 889 0022 B600     		.2byte	(.L185-.L119)/2
+ 890 0024 BD00     		.2byte	(.L184-.L119)/2
+ 891 0026 C400     		.2byte	(.L183-.L119)/2
+ 892 0028 CB00     		.2byte	(.L182-.L119)/2
+ 893 002a D200     		.2byte	(.L181-.L119)/2
+ 894 002c 8A00     		.2byte	(.L180-.L119)/2
+ 895 002e AC00     		.2byte	(.L187-.L119)/2
+ 896 0030 9100     		.2byte	(.L179-.L119)/2
+ 897 0032 9800     		.2byte	(.L178-.L119)/2
+ 898 0034 9F00     		.2byte	(.L177-.L119)/2
+ 899 0036 6A00     		.2byte	(.L176-.L119)/2
+ 900 0038 6200     		.2byte	(.L172-.L119)/2
+ 901 003a 6600     		.2byte	(.L166-.L119)/2
+ 902 003c 6E00     		.2byte	(.L175-.L119)/2
+ 903 003e 4900     		.2byte	(.L173-.L119)/2
+ 904 0040 7500     		.2byte	(.L174-.L119)/2
+ 905 0042 4900     		.2byte	(.L173-.L119)/2
+ 906 0044 6200     		.2byte	(.L172-.L119)/2
+ 907 0046 7C00     		.2byte	(.L171-.L119)/2
+ 908 0048 8200     		.2byte	(.L170-.L119)/2
+ 909 004a 8600     		.2byte	(.L169-.L119)/2
+ 910 004c 2D01     		.2byte	(.L168-.L119)/2
+ARM GAS  /tmp/cclZL8jt.s 			page 17
+
+
+ 911 004e 3101     		.2byte	(.L167-.L119)/2
+ 912 0050 6600     		.2byte	(.L166-.L119)/2
+ 913 0052 3501     		.2byte	(.L165-.L119)/2
+ 914 0054 3901     		.2byte	(.L164-.L119)/2
+ 915 0056 3D01     		.2byte	(.L163-.L119)/2
+ 916 0058 4101     		.2byte	(.L162-.L119)/2
+ 917 005a 4501     		.2byte	(.L161-.L119)/2
+ 918 005c AC00     		.2byte	(.L187-.L119)/2
+ 919 005e 4C01     		.2byte	(.L160-.L119)/2
+ 920 0060 5001     		.2byte	(.L159-.L119)/2
+ 921 0062 5401     		.2byte	(.L158-.L119)/2
+ 922 0064 5801     		.2byte	(.L157-.L119)/2
+ 923 0066 5C01     		.2byte	(.L156-.L119)/2
+ 924 0068 6001     		.2byte	(.L155-.L119)/2
+ 925 006a 6401     		.2byte	(.L154-.L119)/2
+ 926 006c 6801     		.2byte	(.L153-.L119)/2
+ 927 006e 6C01     		.2byte	(.L152-.L119)/2
+ 928 0070 7001     		.2byte	(.L151-.L119)/2
+ 929 0072 7401     		.2byte	(.L150-.L119)/2
+ 930 0074 7801     		.2byte	(.L149-.L119)/2
+ 931 0076 7C01     		.2byte	(.L148-.L119)/2
+ 932 0078 8001     		.2byte	(.L147-.L119)/2
+ 933 007a 8801     		.2byte	(.L146-.L119)/2
+ 934 007c 9001     		.2byte	(.L145-.L119)/2
+ 935 007e 9801     		.2byte	(.L144-.L119)/2
+ 936 0080 A001     		.2byte	(.L143-.L119)/2
+ 937 0082 A401     		.2byte	(.L142-.L119)/2
+ 938 0084 1402     		.2byte	(.L141-.L119)/2
+ 939 0086 1C02     		.2byte	(.L140-.L119)/2
+ 940 0088 2402     		.2byte	(.L139-.L119)/2
+ 941 008a 2802     		.2byte	(.L138-.L119)/2
+ 942 008c 2C02     		.2byte	(.L137-.L119)/2
+ 943 008e 3002     		.2byte	(.L136-.L119)/2
+ 944 0090 D900     		.2byte	(.L135-.L119)/2
+ 945 0092 DD00     		.2byte	(.L134-.L119)/2
+ 946 0094 E100     		.2byte	(.L133-.L119)/2
+ 947 0096 E500     		.2byte	(.L132-.L119)/2
+ 948 0098 E900     		.2byte	(.L131-.L119)/2
+ 949 009a ED00     		.2byte	(.L130-.L119)/2
+ 950 009c F100     		.2byte	(.L129-.L119)/2
+ 951 009e F500     		.2byte	(.L128-.L119)/2
+ 952 00a0 F900     		.2byte	(.L127-.L119)/2
+ 953 00a2 0101     		.2byte	(.L126-.L119)/2
+ 954 00a4 0501     		.2byte	(.L125-.L119)/2
+ 955 00a6 0B01     		.2byte	(.L124-.L119)/2
+ 956 00a8 1201     		.2byte	(.L123-.L119)/2
+ 957 00aa 1901     		.2byte	(.L122-.L119)/2
+ 958 00ac 2001     		.2byte	(.L121-.L119)/2
+ 959 00ae 2701     		.2byte	(.L120-.L119)/2
+ 960 00b0 A600     		.2byte	(.L118-.L119)/2
+ 961              		.p2align 1
+ 962              	.L173:
+ 963 00b2 B14B     		ldr	r3, .L193
+ 964 00b4 D3ED007A 		vldr.32	s15, [r3]
+ 965              	.L117:
+ 966 00b8 0491     		str	r1, [sp, #16]
+ 967 00ba 4FF0030E 		mov	lr, #3
+ARM GAS  /tmp/cclZL8jt.s 			page 18
+
+
+ 968 00be 0023     		movs	r3, #0
+ 969 00c0 0590     		str	r0, [sp, #20]
+ 970 00c2 02AA     		add	r2, sp, #8
+ 971 00c4 0DF10701 		add	r1, sp, #7
+ 972 00c8 03A8     		add	r0, sp, #12
+ 973 00ca CDED027A 		vstr.32	s15, [sp, #8]
+ 974 00ce 8DF80CE0 		strb	lr, [sp, #12]
+ 975 00d2 8DF80DC0 		strb	ip, [sp, #13]
+ 976 00d6 8DF80E30 		strb	r3, [sp, #14]
+ 977 00da FFF7FEFF 		bl	pprzlink_msg_v2_send_DL_VALUE.constprop.0
+ 978 00de 07B0     		add	sp, sp, #28
+ 979              		@ sp needed
+ 980 00e0 5DF804FB 		ldr	pc, [sp], #4
+ 981              	.L172:
+ 982 00e4 A54B     		ldr	r3, .L193+4
+ 983 00e6 D3ED007A 		vldr.32	s15, [r3]
+ 984 00ea E5E7     		b	.L117
+ 985              	.L166:
+ 986 00ec A44B     		ldr	r3, .L193+8
+ 987 00ee D3ED007A 		vldr.32	s15, [r3]
+ 988 00f2 E1E7     		b	.L117
+ 989              	.L176:
+ 990 00f4 A34B     		ldr	r3, .L193+12
+ 991 00f6 D3ED007A 		vldr.32	s15, [r3]
+ 992 00fa DDE7     		b	.L117
+ 993              	.L175:
+ 994 00fc A24B     		ldr	r3, .L193+16
+ 995 00fe 5B88     		ldrh	r3, [r3, #2]
+ 996 0100 07EE903A 		vmov	s15, r3	@ int
+ 997 0104 F8EE677A 		vcvt.f32.u32	s15, s15
+ 998 0108 D6E7     		b	.L117
+ 999              	.L174:
+ 1000 010a A04B     		ldr	r3, .L193+20
+ 1001 010c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1002 010e 07EE903A 		vmov	s15, r3	@ int
+ 1003 0112 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1004 0116 CFE7     		b	.L117
+ 1005              	.L171:
+ 1006 0118 9D4B     		ldr	r3, .L193+24
+ 1007 011a D3ED007A 		vldr.32	s15, [r3]	@ int
+ 1008 011e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1009 0122 C9E7     		b	.L117
+ 1010              	.L170:
+ 1011 0124 9B4B     		ldr	r3, .L193+28
+ 1012 0126 D3ED007A 		vldr.32	s15, [r3]
+ 1013 012a C5E7     		b	.L117
+ 1014              	.L169:
+ 1015 012c 9A4B     		ldr	r3, .L193+32
+ 1016 012e D3ED007A 		vldr.32	s15, [r3]
+ 1017 0132 C1E7     		b	.L117
+ 1018              	.L180:
+ 1019 0134 994B     		ldr	r3, .L193+36
+ 1020 0136 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1021 0138 07EE903A 		vmov	s15, r3	@ int
+ 1022 013c F8EE677A 		vcvt.f32.u32	s15, s15
+ 1023 0140 BAE7     		b	.L117
+ 1024              	.L179:
+ARM GAS  /tmp/cclZL8jt.s 			page 19
+
+
+ 1025 0142 914B     		ldr	r3, .L193+16
+ 1026 0144 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1027 0146 07EE903A 		vmov	s15, r3	@ int
+ 1028 014a F8EE677A 		vcvt.f32.u32	s15, s15
+ 1029 014e B3E7     		b	.L117
+ 1030              	.L178:
+ 1031 0150 8D4B     		ldr	r3, .L193+16
+ 1032 0152 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 1033 0154 07EE903A 		vmov	s15, r3	@ int
+ 1034 0158 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1035 015c ACE7     		b	.L117
+ 1036              	.L177:
+ 1037 015e 8A4B     		ldr	r3, .L193+16
+ 1038 0160 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 1039 0162 07EE903A 		vmov	s15, r3	@ int
+ 1040 0166 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1041 016a A5E7     		b	.L117
+ 1042              	.L118:
+ 1043 016c 8C4B     		ldr	r3, .L193+40
+ 1044 016e D3ED027A 		vldr.32	s15, [r3, #8]	@ int
+ 1045 0172 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1046 0176 9FE7     		b	.L117
+ 1047              	.L187:
+ 1048 0178 DFED8A7A 		vldr.32	s15, .L193+44
+ 1049 017c 9CE7     		b	.L117
+ 1050              	.L186:
+ 1051 017e 8A4B     		ldr	r3, .L193+48
+ 1052 0180 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1053 0182 07EE903A 		vmov	s15, r3	@ int
+ 1054 0186 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1055 018a 95E7     		b	.L117
+ 1056              	.L185:
+ 1057 018c 874B     		ldr	r3, .L193+52
+ 1058 018e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1059 0190 07EE903A 		vmov	s15, r3	@ int
+ 1060 0194 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1061 0198 8EE7     		b	.L117
+ 1062              	.L184:
+ 1063 019a 854B     		ldr	r3, .L193+56
+ 1064 019c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1065 019e 07EE903A 		vmov	s15, r3	@ int
+ 1066 01a2 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1067 01a6 87E7     		b	.L117
+ 1068              	.L183:
+ 1069 01a8 824B     		ldr	r3, .L193+60
+ 1070 01aa 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1071 01ac 07EE903A 		vmov	s15, r3	@ int
+ 1072 01b0 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1073 01b4 80E7     		b	.L117
+ 1074              	.L182:
+ 1075 01b6 804B     		ldr	r3, .L193+64
+ 1076 01b8 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1077 01ba 07EE903A 		vmov	s15, r3	@ int
+ 1078 01be F8EE677A 		vcvt.f32.u32	s15, s15
+ 1079 01c2 79E7     		b	.L117
+ 1080              	.L181:
+ 1081 01c4 7D4B     		ldr	r3, .L193+68
+ARM GAS  /tmp/cclZL8jt.s 			page 20
+
+
+ 1082 01c6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1083 01c8 07EE903A 		vmov	s15, r3	@ int
+ 1084 01cc F8EE677A 		vcvt.f32.u32	s15, s15
+ 1085 01d0 72E7     		b	.L117
+ 1086              	.L135:
+ 1087 01d2 7B4B     		ldr	r3, .L193+72
+ 1088 01d4 D3ED007A 		vldr.32	s15, [r3]
+ 1089 01d8 6EE7     		b	.L117
+ 1090              	.L134:
+ 1091 01da 7A4B     		ldr	r3, .L193+76
+ 1092 01dc D3ED007A 		vldr.32	s15, [r3]
+ 1093 01e0 6AE7     		b	.L117
+ 1094              	.L133:
+ 1095 01e2 794B     		ldr	r3, .L193+80
+ 1096 01e4 D3ED007A 		vldr.32	s15, [r3]
+ 1097 01e8 66E7     		b	.L117
+ 1098              	.L132:
+ 1099 01ea 784B     		ldr	r3, .L193+84
+ 1100 01ec D3ED007A 		vldr.32	s15, [r3]
+ 1101 01f0 62E7     		b	.L117
+ 1102              	.L131:
+ 1103 01f2 774B     		ldr	r3, .L193+88
+ 1104 01f4 D3ED007A 		vldr.32	s15, [r3]
+ 1105 01f8 5EE7     		b	.L117
+ 1106              	.L130:
+ 1107 01fa 764B     		ldr	r3, .L193+92
+ 1108 01fc D3ED007A 		vldr.32	s15, [r3]
+ 1109 0200 5AE7     		b	.L117
+ 1110              	.L129:
+ 1111 0202 754B     		ldr	r3, .L193+96
+ 1112 0204 D3ED007A 		vldr.32	s15, [r3]
+ 1113 0208 56E7     		b	.L117
+ 1114              	.L128:
+ 1115 020a 744B     		ldr	r3, .L193+100
+ 1116 020c D3ED007A 		vldr.32	s15, [r3]
+ 1117 0210 52E7     		b	.L117
+ 1118              	.L127:
+ 1119 0212 734B     		ldr	r3, .L193+104
+ 1120 0214 93F81632 		ldrb	r3, [r3, #534]	@ zero_extendqisi2
+ 1121 0218 07EE903A 		vmov	s15, r3	@ int
+ 1122 021c F8EE677A 		vcvt.f32.u32	s15, s15
+ 1123 0220 4AE7     		b	.L117
+ 1124              	.L126:
+ 1125 0222 704B     		ldr	r3, .L193+108
+ 1126 0224 D3ED007A 		vldr.32	s15, [r3]
+ 1127 0228 46E7     		b	.L117
+ 1128              	.L125:
+ 1129 022a 6F4B     		ldr	r3, .L193+112
+ 1130 022c D3ED007A 		vldr.32	s15, [r3]	@ int
+ 1131 0230 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1132 0234 40E7     		b	.L117
+ 1133              	.L124:
+ 1134 0236 5A4B     		ldr	r3, .L193+40
+ 1135 0238 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
+ 1136 023a 07EE903A 		vmov	s15, r3	@ int
+ 1137 023e F8EE677A 		vcvt.f32.u32	s15, s15
+ 1138 0242 39E7     		b	.L117
+ARM GAS  /tmp/cclZL8jt.s 			page 21
+
+
+ 1139              	.L123:
+ 1140 0244 564B     		ldr	r3, .L193+40
+ 1141 0246 5B7C     		ldrb	r3, [r3, #17]	@ zero_extendqisi2
+ 1142 0248 07EE903A 		vmov	s15, r3	@ int
+ 1143 024c F8EE677A 		vcvt.f32.u32	s15, s15
+ 1144 0250 32E7     		b	.L117
+ 1145              	.L122:
+ 1146 0252 534B     		ldr	r3, .L193+40
+ 1147 0254 5B8A     		ldrh	r3, [r3, #18]
+ 1148 0256 07EE903A 		vmov	s15, r3	@ int
+ 1149 025a F8EE677A 		vcvt.f32.u32	s15, s15
+ 1150 025e 2BE7     		b	.L117
+ 1151              	.L121:
+ 1152 0260 4F4B     		ldr	r3, .L193+40
+ 1153 0262 9B8A     		ldrh	r3, [r3, #20]
+ 1154 0264 07EE903A 		vmov	s15, r3	@ int
+ 1155 0268 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1156 026c 24E7     		b	.L117
+ 1157              	.L120:
+ 1158 026e 4C4B     		ldr	r3, .L193+40
+ 1159 0270 D3ED017A 		vldr.32	s15, [r3, #4]	@ int
+ 1160 0274 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1161 0278 1EE7     		b	.L117
+ 1162              	.L168:
+ 1163 027a 5C4B     		ldr	r3, .L193+116
+ 1164 027c D3ED007A 		vldr.32	s15, [r3]
+ 1165 0280 1AE7     		b	.L117
+ 1166              	.L167:
+ 1167 0282 5B4B     		ldr	r3, .L193+120
+ 1168 0284 D3ED007A 		vldr.32	s15, [r3]
+ 1169 0288 16E7     		b	.L117
+ 1170              	.L165:
+ 1171 028a 5A4B     		ldr	r3, .L193+124
+ 1172 028c D3ED007A 		vldr.32	s15, [r3]
+ 1173 0290 12E7     		b	.L117
+ 1174              	.L164:
+ 1175 0292 594B     		ldr	r3, .L193+128
+ 1176 0294 D3ED007A 		vldr.32	s15, [r3]
+ 1177 0298 0EE7     		b	.L117
+ 1178              	.L163:
+ 1179 029a 584B     		ldr	r3, .L193+132
+ 1180 029c D3ED007A 		vldr.32	s15, [r3]
+ 1181 02a0 0AE7     		b	.L117
+ 1182              	.L162:
+ 1183 02a2 574B     		ldr	r3, .L193+136
+ 1184 02a4 D3ED007A 		vldr.32	s15, [r3]
+ 1185 02a8 06E7     		b	.L117
+ 1186              	.L161:
+ 1187 02aa 564B     		ldr	r3, .L193+140
+ 1188 02ac 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1189 02ae 07EE903A 		vmov	s15, r3	@ int
+ 1190 02b2 F8EE677A 		vcvt.f32.u32	s15, s15
+ 1191 02b6 FFE6     		b	.L117
+ 1192              	.L160:
+ 1193 02b8 534B     		ldr	r3, .L193+144
+ 1194 02ba D3ED007A 		vldr.32	s15, [r3]
+ 1195 02be FBE6     		b	.L117
+ARM GAS  /tmp/cclZL8jt.s 			page 22
+
+
+ 1196              	.L159:
+ 1197 02c0 524B     		ldr	r3, .L193+148
+ 1198 02c2 D3ED007A 		vldr.32	s15, [r3]
+ 1199 02c6 F7E6     		b	.L117
+ 1200              	.L158:
+ 1201 02c8 514B     		ldr	r3, .L193+152
+ 1202 02ca D3ED007A 		vldr.32	s15, [r3]
+ 1203 02ce F3E6     		b	.L117
+ 1204              	.L157:
+ 1205 02d0 504B     		ldr	r3, .L193+156
+ 1206 02d2 D3ED007A 		vldr.32	s15, [r3]
+ 1207 02d6 EFE6     		b	.L117
+ 1208              	.L156:
+ 1209 02d8 4F4B     		ldr	r3, .L193+160
+ 1210 02da D3ED007A 		vldr.32	s15, [r3]
+ 1211 02de EBE6     		b	.L117
+ 1212              	.L155:
+ 1213 02e0 4E4B     		ldr	r3, .L193+164
+ 1214 02e2 D3ED007A 		vldr.32	s15, [r3]
+ 1215 02e6 E7E6     		b	.L117
+ 1216              	.L154:
+ 1217 02e8 4D4B     		ldr	r3, .L193+168
+ 1218 02ea D3ED007A 		vldr.32	s15, [r3]
+ 1219 02ee E3E6     		b	.L117
+ 1220              	.L153:
+ 1221 02f0 4C4B     		ldr	r3, .L193+172
+ 1222 02f2 D3ED007A 		vldr.32	s15, [r3]
+ 1223 02f6 DFE6     		b	.L117
+ 1224              	.L152:
+ 1225 02f8 4B4B     		ldr	r3, .L193+176
+ 1226 02fa D3ED007A 		vldr.32	s15, [r3]
+ 1227 02fe DBE6     		b	.L117
+ 1228              	.L151:
+ 1229 0300 4A4B     		ldr	r3, .L193+180
+ 1230 0302 D3ED007A 		vldr.32	s15, [r3]
+ 1231 0306 D7E6     		b	.L117
+ 1232              	.L150:
+ 1233 0308 494B     		ldr	r3, .L193+184
+ 1234 030a D3ED007A 		vldr.32	s15, [r3]
+ 1235 030e D3E6     		b	.L117
+ 1236              	.L149:
+ 1237 0310 484B     		ldr	r3, .L193+188
+ 1238 0312 D3ED007A 		vldr.32	s15, [r3]
+ 1239 0316 CFE6     		b	.L117
+ 1240              	.L148:
+ 1241 0318 474B     		ldr	r3, .L193+192
+ 1242 031a D3ED007A 		vldr.32	s15, [r3]
+ 1243 031e CBE6     		b	.L117
+ 1244              	.L147:
+ 1245 0320 464B     		ldr	r3, .L193+196
+ 1246 0322 93F80B39 		ldrb	r3, [r3, #2315]	@ zero_extendqisi2
+ 1247 0326 07EE903A 		vmov	s15, r3	@ int
+ 1248 032a F8EE677A 		vcvt.f32.u32	s15, s15
+ 1249 032e C3E6     		b	.L117
+ 1250              	.L146:
+ 1251 0330 424B     		ldr	r3, .L193+196
+ 1252 0332 93F80839 		ldrb	r3, [r3, #2312]	@ zero_extendqisi2
+ARM GAS  /tmp/cclZL8jt.s 			page 23
+
+
+ 1253 0336 07EE903A 		vmov	s15, r3	@ int
+ 1254 033a F8EE677A 		vcvt.f32.u32	s15, s15
+ 1255 033e BBE6     		b	.L117
+ 1256              	.L145:
+ 1257 0340 3E4B     		ldr	r3, .L193+196
+ 1258 0342 93F80939 		ldrb	r3, [r3, #2313]	@ zero_extendqisi2
+ 1259 0346 07EE903A 		vmov	s15, r3	@ int
+ 1260 034a F8EE677A 		vcvt.f32.u32	s15, s15
+ 1261 034e B3E6     		b	.L117
+ 1262              	.L144:
+ 1263 0350 3A4B     		ldr	r3, .L193+196
+ 1264 0352 93F80A39 		ldrb	r3, [r3, #2314]	@ zero_extendqisi2
+ 1265 0356 07EE903A 		vmov	s15, r3	@ int
+ 1266 035a F8EE677A 		vcvt.f32.u32	s15, s15
+ 1267 035e ABE6     		b	.L117
+ 1268              	.L143:
+ 1269 0360 374B     		ldr	r3, .L193+200
+ 1270 0362 D3ED007A 		vldr.32	s15, [r3]
+ 1271 0366 A7E6     		b	.L117
+ 1272              	.L142:
+ 1273 0368 364B     		ldr	r3, .L193+204
+ 1274 036a B3F90030 		ldrsh	r3, [r3]
+ 1275 036e 07EE903A 		vmov	s15, r3	@ int
+ 1276 0372 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1277 0376 9FE6     		b	.L117
+ 1278              	.L194:
+ 1279              		.align	2
+ 1280              	.L193:
+ 1281 0378 00000000 		.word	nav_radius
+ 1282 037c 00000000 		.word	nav_course
+ 1283 0380 00000000 		.word	nav_shift
+ 1284 0384 00000000 		.word	flight_altitude
+ 1285 0388 00000000 		.word	autopilot
+ 1286 038c 00000000 		.word	power_switch_status
+ 1287 0390 00000000 		.word	nav_mode
+ 1288 0394 00000000 		.word	nav_climb
+ 1289 0398 00000000 		.word	fp_pitch
+ 1290 039c 00000000 		.word	mag_lis3mdl_mag_lis3mdl_report_status
+ 1291 03a0 00000000 		.word	gps_ubx_ucenter
+ 1292 03a4 00000000 		.word	0
+ 1293 03a8 00000000 		.word	telemetry_mode_Ap
+ 1294 03ac 00000000 		.word	telemetry_mode_Fbw
+ 1295 03b0 00000000 		.word	trisonica_trisonica_report_status
+ 1296 03b4 00000000 		.word	gps_ublox_gps_ubx_periodic_check_status
+ 1297 03b8 00000000 		.word	flight_recorder_flight_recorder_periodic_status
+ 1298 03bc 00000000 		.word	gps_ubx_ucenter_gps_ubx_ucenter_periodic_status
+ 1299 03c0 00000000 		.word	h_ctl_elevator_of_roll
+ 1300 03c4 00000000 		.word	h_ctl_aileron_of_throttle
+ 1301 03c8 00000000 		.word	h_ctl_roll_attitude_gain
+ 1302 03cc 00000000 		.word	h_ctl_roll_rate_gain
+ 1303 03d0 00000000 		.word	h_ctl_course_pgain
+ 1304 03d4 00000000 		.word	h_ctl_course_dgain
+ 1305 03d8 00000000 		.word	h_ctl_course_pre_bank_correction
+ 1306 03dc 00000000 		.word	h_ctl_roll_slew
+ 1307 03e0 00000000 		.word	gps_ubx
+ 1308 03e4 00000000 		.word	imu_health
+ 1309 03e8 00000000 		.word	renorm_sqrt_count
+ARM GAS  /tmp/cclZL8jt.s 			page 24
+
+
+ 1310 03ec 00000000 		.word	fp_throttle
+ 1311 03f0 00000000 		.word	fp_climb
+ 1312 03f4 00000000 		.word	nav_ground_speed_setpoint
+ 1313 03f8 00000000 		.word	nav_ground_speed_pgain
+ 1314 03fc 00000000 		.word	nav_survey_shift
+ 1315 0400 00000000 		.word	nav_survey_sweep
+ 1316 0404 00000000 		.word	multi_gps_mode
+ 1317 0408 00000000 		.word	v_ctl_auto_throttle_cruise_throttle
+ 1318 040c 00000000 		.word	v_ctl_pitch_trim
+ 1319 0410 00000000 		.word	v_ctl_auto_throttle_pgain
+ 1320 0414 00000000 		.word	v_ctl_auto_throttle_igain
+ 1321 0418 00000000 		.word	v_ctl_auto_throttle_dgain
+ 1322 041c 00000000 		.word	v_ctl_auto_throttle_climb_throttle_increment
+ 1323 0420 00000000 		.word	v_ctl_auto_throttle_pitch_of_vz_pgain
+ 1324 0424 00000000 		.word	v_ctl_auto_throttle_pitch_of_vz_dgain
+ 1325 0428 00000000 		.word	v_ctl_auto_pitch_pgain
+ 1326 042c 00000000 		.word	v_ctl_auto_pitch_igain
+ 1327 0430 D8080000 		.word	imu+2264
+ 1328 0434 DC080000 		.word	imu+2268
+ 1329 0438 E0080000 		.word	imu+2272
+ 1330 043c 00000000 		.word	imu
+ 1331 0440 00000000 		.word	usb_storage_status
+ 1332 0444 00000000 		.word	command_roll_trim
+ 1333              	.L141:
+ 1334 0448 0F4B     		ldr	r3, .L195
+ 1335 044a B3F90030 		ldrsh	r3, [r3]
+ 1336 044e 07EE903A 		vmov	s15, r3	@ int
+ 1337 0452 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1338 0456 2FE6     		b	.L117
+ 1339              	.L140:
+ 1340 0458 0C4B     		ldr	r3, .L195+4
+ 1341 045a B3F90030 		ldrsh	r3, [r3]
+ 1342 045e 07EE903A 		vmov	s15, r3	@ int
+ 1343 0462 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1344 0466 27E6     		b	.L117
+ 1345              	.L139:
+ 1346 0468 094B     		ldr	r3, .L195+8
+ 1347 046a D3ED007A 		vldr.32	s15, [r3]
+ 1348 046e 23E6     		b	.L117
+ 1349              	.L138:
+ 1350 0470 084B     		ldr	r3, .L195+12
+ 1351 0472 D3ED007A 		vldr.32	s15, [r3]
+ 1352 0476 1FE6     		b	.L117
+ 1353              	.L137:
+ 1354 0478 074B     		ldr	r3, .L195+16
+ 1355 047a D3ED007A 		vldr.32	s15, [r3]
+ 1356 047e 1BE6     		b	.L117
+ 1357              	.L136:
+ 1358 0480 064B     		ldr	r3, .L195+20
+ 1359 0482 D3ED007A 		vldr.32	s15, [r3]
+ 1360 0486 17E6     		b	.L117
+ 1361              	.L196:
+ 1362              		.align	2
+ 1363              	.L195:
+ 1364 0488 00000000 		.word	command_pitch_trim
+ 1365 048c 00000000 		.word	command_yaw_trim
+ 1366 0490 00000000 		.word	h_ctl_roll_pgain
+ARM GAS  /tmp/cclZL8jt.s 			page 25
+
+
+ 1367 0494 00000000 		.word	h_ctl_roll_max_setpoint
+ 1368 0498 00000000 		.word	h_ctl_pitch_pgain
+ 1369 049c 00000000 		.word	h_ctl_pitch_dgain
+ 1370              		.size	settings_parse_msg_GET_SETTING, .-settings_parse_msg_GET_SETTING
+ 1371              		.global	settings_clear_flag
+ 1372              		.global	settings_store_flag
+ 1373              		.global	pers_settings
+ 1374              		.section	.bss.pers_settings,"aw",%nobits
+ 1375              		.align	2
+ 1376              		.type	pers_settings, %object
+ 1377              		.size	pers_settings, 12
+ 1378              	pers_settings:
+ 1379 0000 00000000 		.space	12
+ 1379      00000000 
+ 1379      00000000 
+ 1380              		.section	.bss.settings_clear_flag,"aw",%nobits
+ 1381              		.set	.LANCHOR1,. + 0
+ 1382              		.type	settings_clear_flag, %object
+ 1383              		.size	settings_clear_flag, 1
+ 1384              	settings_clear_flag:
+ 1385 0000 00       		.space	1
+ 1386              		.section	.bss.settings_store_flag,"aw",%nobits
+ 1387              		.set	.LANCHOR0,. + 0
+ 1388              		.type	settings_store_flag, %object
+ 1389              		.size	settings_store_flag, 1
+ 1390              	settings_store_flag:
+ 1391 0000 00       		.space	1
+ 1392              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cclZL8jt.s 			page 26
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 settings.c
+     /tmp/cclZL8jt.s:15     .rodata.pprzlink_msg_v2_send_DL_VALUE.constprop.0.str1.4:0000000000000000 $d
+     /tmp/cclZL8jt.s:19     .text.pprzlink_msg_v2_send_DL_VALUE.constprop.0:0000000000000000 $t
+     /tmp/cclZL8jt.s:27     .text.pprzlink_msg_v2_send_DL_VALUE.constprop.0:0000000000000000 pprzlink_msg_v2_send_DL_VALUE.constprop.0
+     /tmp/cclZL8jt.s:141    .text.pprzlink_msg_v2_send_DL_VALUE.constprop.0:00000000000000e4 $d
+     /tmp/cclZL8jt.s:144    .text.settings_init:0000000000000000 $t
+     /tmp/cclZL8jt.s:152    .text.settings_init:0000000000000000 settings_init
+     /tmp/cclZL8jt.s:159    .text.settings_store:0000000000000000 $t
+     /tmp/cclZL8jt.s:167    .text.settings_store:0000000000000000 settings_store
+     /tmp/cclZL8jt.s:179    .text.settings_store:000000000000000c $d
+     /tmp/cclZL8jt.s:182    .text.settings_clear:0000000000000000 $t
+     /tmp/cclZL8jt.s:190    .text.settings_clear:0000000000000000 settings_clear
+     /tmp/cclZL8jt.s:202    .text.settings_clear:000000000000000c $d
+     /tmp/cclZL8jt.s:205    .text.settings_parse_msg_SETTING:0000000000000000 $t
+     /tmp/cclZL8jt.s:213    .text.settings_parse_msg_SETTING:0000000000000000 settings_parse_msg_SETTING
+     /tmp/cclZL8jt.s:231    .text.settings_parse_msg_SETTING:0000000000000022 $d
+     /tmp/cclZL8jt.s:304    .text.settings_parse_msg_SETTING:00000000000000b4 $t
+     /tmp/cclZL8jt.s:622    .text.settings_parse_msg_SETTING:0000000000000384 $d
+     /tmp/cclZL8jt.s:667    .text.settings_parse_msg_SETTING:0000000000000434 $t
+     /tmp/cclZL8jt.s:840    .text.settings_parse_msg_SETTING:00000000000005bc $d
+     /tmp/cclZL8jt.s:863    .text.settings_parse_msg_GET_SETTING:0000000000000000 $t
+     /tmp/cclZL8jt.s:871    .text.settings_parse_msg_GET_SETTING:0000000000000000 settings_parse_msg_GET_SETTING
+     /tmp/cclZL8jt.s:888    .text.settings_parse_msg_GET_SETTING:0000000000000020 $d
+     /tmp/cclZL8jt.s:961    .text.settings_parse_msg_GET_SETTING:00000000000000b2 $t
+     /tmp/cclZL8jt.s:1281   .text.settings_parse_msg_GET_SETTING:0000000000000378 $d
+     /tmp/cclZL8jt.s:1334   .text.settings_parse_msg_GET_SETTING:0000000000000448 $t
+     /tmp/cclZL8jt.s:1364   .text.settings_parse_msg_GET_SETTING:0000000000000488 $d
+     /tmp/cclZL8jt.s:1384   .bss.settings_clear_flag:0000000000000000 settings_clear_flag
+     /tmp/cclZL8jt.s:1390   .bss.settings_store_flag:0000000000000000 settings_store_flag
+     /tmp/cclZL8jt.s:1378   .bss.pers_settings:0000000000000000 pers_settings
+     /tmp/cclZL8jt.s:1375   .bss.pers_settings:0000000000000000 $d
+     /tmp/cclZL8jt.s:1385   .bss.settings_clear_flag:0000000000000000 $d
+     /tmp/cclZL8jt.s:1391   .bss.settings_store_flag:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+usbStorage_enable_usb_storage
+imu_SetBodyToImuCurrent
+imu_SetBodyToImuPsi
+imu_SetBodyToImuTheta
+imu_SetBodyToImuPhi
+nav_shift
+nav_course
+h_ctl_course_pre_bank_correction
+h_ctl_course_dgain
+h_ctl_course_pgain
+h_ctl_roll_rate_gain
+h_ctl_roll_attitude_gain
+h_ctl_aileron_of_throttle
+h_ctl_elevator_of_roll
+h_ctl_pitch_dgain
+h_ctl_pitch_pgain
+h_ctl_roll_max_setpoint
+h_ctl_roll_pgain
+command_yaw_trim
+command_pitch_trim
+command_roll_trim
+ARM GAS  /tmp/cclZL8jt.s 			page 27
+
+
+usb_storage_status
+imu
+v_ctl_auto_pitch_igain
+v_ctl_auto_pitch_pgain
+v_ctl_auto_throttle_pitch_of_vz_dgain
+v_ctl_auto_throttle_pitch_of_vz_pgain
+v_ctl_auto_throttle_climb_throttle_increment
+v_ctl_auto_throttle_dgain
+v_ctl_auto_throttle_igain
+v_ctl_auto_throttle_pgain
+v_ctl_pitch_trim
+v_ctl_auto_throttle_nominal_cruise_throttle
+v_ctl_auto_throttle_min_cruise_throttle
+v_ctl_auto_throttle_cruise_throttle
+v_ctl_auto_throttle_max_cruise_throttle
+mag_lis3mdl_mag_lis3mdl_report_status
+gps_ubx_ucenter_gps_ubx_ucenter_periodic_status
+flight_recorder_flight_recorder_periodic_status
+gps_ublox_gps_ubx_periodic_check_status
+trisonica_trisonica_report_status
+telemetry_mode_Fbw
+telemetry_mode_Ap
+gps_ubx_ucenter
+renorm_sqrt_count
+imu_health
+power_switch_set
+autopilot_set_kill_throttle
+mcu_reboot
+autopilot_reset_flight_time
+electrical_avg_reset
+gps_ubx
+h_ctl_roll_slew
+fp_climb
+fp_throttle
+fp_pitch
+nav_climb
+nav_mode
+nav_radius
+power_switch_status
+autopilot
+nav_ground_speed_pgain
+nav_ground_speed_setpoint
+multi_gps_mode
+nav_survey_sweep
+nav_survey_shift
+flight_altitude

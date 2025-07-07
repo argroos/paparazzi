@@ -1,0 +1,1166 @@
+ARM GAS  /tmp/ccgrnHIx.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"sdlog_chibios.c"
+  13              		.text
+  14              		.section	.text.null_function,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	null_function, %function
+  23              	null_function:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 0020     		movs	r0, #0
+  28 0002 7047     		bx	lr
+  29              		.size	null_function, .-null_function
+  30              		.section	.text.null_byte_function,"ax",%progbits
+  31              		.align	1
+  32              		.p2align 4,,15
+  33              		.syntax unified
+  34              		.thumb
+  35              		.thumb_func
+  36              		.fpu fpv4-sp-d16
+  37              		.type	null_byte_function, %function
+  38              	null_byte_function:
+  39              		@ args = 0, pretend = 0, frame = 0
+  40              		@ frame_needed = 0, uses_anonymous_args = 0
+  41              		@ link register save eliminated.
+  42 0000 0020     		movs	r0, #0
+  43 0002 7047     		bx	lr
+  44              		.size	null_byte_function, .-null_byte_function
+  45              		.section	.text.sdlog_send,"ax",%progbits
+  46              		.align	1
+  47              		.p2align 4,,15
+  48              		.syntax unified
+  49              		.thumb
+  50              		.thumb_func
+  51              		.fpu fpv4-sp-d16
+  52              		.type	sdlog_send, %function
+  53              	sdlog_send:
+  54              		@ args = 0, pretend = 0, frame = 0
+  55              		@ frame_needed = 0, uses_anonymous_args = 0
+  56              		@ link register save eliminated.
+  57 0000 0368     		ldr	r3, [r0]
+ARM GAS  /tmp/ccgrnHIx.s 			page 2
+
+
+  58 0002 93F90000 		ldrsb	r0, [r3]
+  59 0006 FFF7FEBF 		b	sdLogWriteSDB
+  60              		.size	sdlog_send, .-sdlog_send
+  61 000a 00BF     		.section	.text.sdlog_transmit_buffer,"ax",%progbits
+  62              		.align	1
+  63              		.p2align 4,,15
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  67              		.fpu fpv4-sp-d16
+  68              		.type	sdlog_transmit_buffer, %function
+  69              	sdlog_transmit_buffer:
+  70              		@ args = 0, pretend = 0, frame = 8
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72 0000 30B5     		push	{r4, r5, lr}
+  73 0002 83B0     		sub	sp, sp, #12
+  74 0004 1D46     		mov	r5, r3
+  75 0006 0846     		mov	r0, r1
+  76 0008 0C46     		mov	r4, r1
+  77 000a 0192     		str	r2, [sp, #4]
+  78 000c FFF7FEFF 		bl	sdLogGetBufferFromSDB
+  79 0010 0199     		ldr	r1, [sp, #4]
+  80 0012 2A46     		mov	r2, r5
+  81 0014 FFF7FEFF 		bl	memcpy
+  82 0018 2946     		mov	r1, r5
+  83 001a 2046     		mov	r0, r4
+  84 001c 03B0     		add	sp, sp, #12
+  85              		@ sp needed
+  86 001e BDE83040 		pop	{r4, r5, lr}
+  87 0022 FFF7FEBF 		b	sdLogSeekBufferFromSDB
+  88              		.size	sdlog_transmit_buffer, .-sdlog_transmit_buffer
+  89 0026 00BF     		.section	.text.sdlog_transmit,"ax",%progbits
+  90              		.align	1
+  91              		.p2align 4,,15
+  92              		.syntax unified
+  93              		.thumb
+  94              		.thumb_func
+  95              		.fpu fpv4-sp-d16
+  96              		.type	sdlog_transmit, %function
+  97              	sdlog_transmit:
+  98              		@ args = 0, pretend = 0, frame = 0
+  99              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100 0000 38B5     		push	{r3, r4, r5, lr}
+ 101 0002 0846     		mov	r0, r1
+ 102 0004 0C46     		mov	r4, r1
+ 103 0006 1546     		mov	r5, r2
+ 104 0008 FFF7FEFF 		bl	sdLogGetBufferFromSDB
+ 105 000c 0570     		strb	r5, [r0]
+ 106 000e 0121     		movs	r1, #1
+ 107 0010 2046     		mov	r0, r4
+ 108 0012 BDE83840 		pop	{r3, r4, r5, lr}
+ 109 0016 FFF7FEBF 		b	sdLogSeekBufferFromSDB
+ 110              		.size	sdlog_transmit, .-sdlog_transmit
+ 111 001a 00BF     		.section	.text.sdlog_check_free_space,"ax",%progbits
+ 112              		.align	1
+ 113              		.p2align 4,,15
+ 114              		.syntax unified
+ARM GAS  /tmp/ccgrnHIx.s 			page 3
+
+
+ 115              		.thumb
+ 116              		.thumb_func
+ 117              		.fpu fpv4-sp-d16
+ 118              		.type	sdlog_check_free_space, %function
+ 119              	sdlog_check_free_space:
+ 120              		@ args = 0, pretend = 0, frame = 8
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122 0000 10B5     		push	{r4, lr}
+ 123 0002 82B0     		sub	sp, sp, #8
+ 124 0004 0C46     		mov	r4, r1
+ 125 0006 01A8     		add	r0, sp, #4
+ 126 0008 1146     		mov	r1, r2
+ 127 000a FFF7FEFF 		bl	sdLogAllocSDB
+ 128 000e 20B9     		cbnz	r0, .L11
+ 129 0010 019B     		ldr	r3, [sp, #4]
+ 130 0012 2360     		str	r3, [r4]
+ 131 0014 0120     		movs	r0, #1
+ 132 0016 02B0     		add	sp, sp, #8
+ 133              		@ sp needed
+ 134 0018 10BD     		pop	{r4, pc}
+ 135              	.L11:
+ 136 001a 0020     		movs	r0, #0
+ 137 001c 02B0     		add	sp, sp, #8
+ 138              		@ sp needed
+ 139 001e 10BD     		pop	{r4, pc}
+ 140              		.size	sdlog_check_free_space, .-sdlog_check_free_space
+ 141              		.section	.text.powerOutageIsr,"ax",%progbits
+ 142              		.align	1
+ 143              		.p2align 4,,15
+ 144              		.syntax unified
+ 145              		.thumb
+ 146              		.thumb_func
+ 147              		.fpu fpv4-sp-d16
+ 148              		.type	powerOutageIsr, %function
+ 149              	powerOutageIsr:
+ 150              		@ args = 0, pretend = 0, frame = 0
+ 151              		@ frame_needed = 0, uses_anonymous_args = 0
+ 152              		@ link register save eliminated.
+ 153 0000 0148     		ldr	r0, .L14
+ 154 0002 0021     		movs	r1, #0
+ 155 0004 FFF7FEBF 		b	chEvtBroadcastFlagsI
+ 156              	.L15:
+ 157              		.align	2
+ 158              	.L14:
+ 159 0008 00000000 		.word	.LANCHOR0
+ 160              		.size	powerOutageIsr, .-powerOutageIsr
+ 161              		.section	.rodata.send_sdlog_status.str1.4,"aMS",%progbits,1
+ 162              		.align	2
+ 163              	.LC0:
+ 164 0000 4C4F4747 		.ascii	"LOGGER_STATUS\000"
+ 164      45525F53 
+ 164      54415455 
+ 164      5300
+ 165              		.section	.text.send_sdlog_status,"ax",%progbits
+ 166              		.align	1
+ 167              		.p2align 4,,15
+ 168              		.syntax unified
+ARM GAS  /tmp/ccgrnHIx.s 			page 4
+
+
+ 169              		.thumb
+ 170              		.thumb_func
+ 171              		.fpu fpv4-sp-d16
+ 172              		.type	send_sdlog_status, %function
+ 173              	send_sdlog_status:
+ 174              		@ args = 0, pretend = 0, frame = 24
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 177 0002 5B4B     		ldr	r3, .L22
+ 178 0004 89B0     		sub	sp, sp, #36
+ 179 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 180 0008 8DF80930 		strb	r3, [sp, #9]
+ 181 000c 0F46     		mov	r7, r1
+ 182 000e 0546     		mov	r5, r0
+ 183 0010 FFF7FEFF 		bl	sdLogGetStorageStatus
+ 184 0014 8DF80A00 		strb	r0, [sp, #10]
+ 185 0018 FFF7FEFF 		bl	sdLogGetNbBytesWrittenToStorage
+ 186 001c 0346     		mov	r3, r0
+ 187 001e 5548     		ldr	r0, .L22+4
+ 188 0020 0393     		str	r3, [sp, #12]
+ 189 0022 FFF7FEFF 		bl	strlen
+ 190 0026 0028     		cmp	r0, #0
+ 191 0028 00F09780 		beq	.L17
+ 192 002c 514E     		ldr	r6, .L22+4
+ 193 002e C2B2     		uxtb	r2, r0
+ 194              	.L18:
+ 195 0030 02F10B01 		add	r1, r2, #11
+ 196 0034 0024     		movs	r4, #0
+ 197 0036 0323     		movs	r3, #3
+ 198 0038 ADF81430 		strh	r3, [sp, #20]	@ movhi
+ 199 003c 0695     		str	r5, [sp, #24]
+ 200 003e 2B68     		ldr	r3, [r5]
+ 201 0040 8DF80B20 		strb	r2, [sp, #11]
+ 202 0044 C9B2     		uxtb	r1, r1
+ 203 0046 0797     		str	r7, [sp, #28]
+ 204 0048 8DF81640 		strb	r4, [sp, #22]
+ 205 004c 0494     		str	r4, [sp, #16]
+ 206 004e 05A8     		add	r0, sp, #20
+ 207 0050 9847     		blx	r3
+ 208 0052 069B     		ldr	r3, [sp, #24]
+ 209 0054 82B2     		uxth	r2, r0
+ 210 0056 5B68     		ldr	r3, [r3, #4]
+ 211 0058 0546     		mov	r5, r0
+ 212 005a 04A9     		add	r1, sp, #16
+ 213 005c 05A8     		add	r0, sp, #20
+ 214 005e 9847     		blx	r3
+ 215 0060 069B     		ldr	r3, [sp, #24]
+ 216 0062 0028     		cmp	r0, #0
+ 217 0064 7FD0     		beq	.L19
+ 218 0066 2946     		mov	r1, r5
+ 219 0068 05A8     		add	r0, sp, #20
+ 220 006a DB69     		ldr	r3, [r3, #28]
+ 221 006c 9847     		blx	r3
+ 222 006e 9DF80B20 		ldrb	r2, [sp, #11]	@ zero_extendqisi2
+ 223 0072 069B     		ldr	r3, [sp, #24]
+ 224 0074 0499     		ldr	r1, [sp, #16]
+ 225 0076 1B69     		ldr	r3, [r3, #16]
+ARM GAS  /tmp/ccgrnHIx.s 			page 5
+
+
+ 226 0078 0B32     		adds	r2, r2, #11
+ 227 007a 05A8     		add	r0, sp, #20
+ 228 007c D2B2     		uxtb	r2, r2
+ 229 007e 9847     		blx	r3
+ 230 0080 0125     		movs	r5, #1
+ 231 0082 069B     		ldr	r3, [sp, #24]
+ 232 0084 0195     		str	r5, [sp, #4]
+ 233 0086 05AA     		add	r2, sp, #20
+ 234 0088 0092     		str	r2, [sp]
+ 235 008a 9F68     		ldr	r7, [r3, #8]
+ 236 008c 0499     		ldr	r1, [sp, #16]
+ 237 008e 2346     		mov	r3, r4
+ 238 0090 1046     		mov	r0, r2
+ 239 0092 0222     		movs	r2, #2
+ 240 0094 B847     		blx	r7
+ 241 0096 069B     		ldr	r3, [sp, #24]
+ 242 0098 9DF81520 		ldrb	r2, [sp, #21]	@ zero_extendqisi2
+ 243 009c 0194     		str	r4, [sp, #4]
+ 244 009e 0092     		str	r2, [sp]
+ 245 00a0 DF68     		ldr	r7, [r3, #12]
+ 246 00a2 0499     		ldr	r1, [sp, #16]
+ 247 00a4 2346     		mov	r3, r4
+ 248 00a6 05A8     		add	r0, sp, #20
+ 249 00a8 0222     		movs	r2, #2
+ 250 00aa B847     		blx	r7
+ 251 00ac 9DF81630 		ldrb	r3, [sp, #22]	@ zero_extendqisi2
+ 252 00b0 069A     		ldr	r2, [sp, #24]
+ 253 00b2 0194     		str	r4, [sp, #4]
+ 254 00b4 1B01     		lsls	r3, r3, #4
+ 255 00b6 2B43     		orrs	r3, r3, r5
+ 256 00b8 DBB2     		uxtb	r3, r3
+ 257 00ba 0093     		str	r3, [sp]
+ 258 00bc D768     		ldr	r7, [r2, #12]
+ 259 00be 0499     		ldr	r1, [sp, #16]
+ 260 00c0 2346     		mov	r3, r4
+ 261 00c2 05A8     		add	r0, sp, #20
+ 262 00c4 0222     		movs	r2, #2
+ 263 00c6 B847     		blx	r7
+ 264 00c8 2B4A     		ldr	r2, .L22+8
+ 265 00ca 069B     		ldr	r3, [sp, #24]
+ 266 00cc 0192     		str	r2, [sp, #4]
+ 267 00ce 5C22     		movs	r2, #92
+ 268 00d0 0092     		str	r2, [sp]
+ 269 00d2 DF68     		ldr	r7, [r3, #12]
+ 270 00d4 0499     		ldr	r1, [sp, #16]
+ 271 00d6 2346     		mov	r3, r4
+ 272 00d8 05A8     		add	r0, sp, #20
+ 273 00da 0222     		movs	r2, #2
+ 274 00dc B847     		blx	r7
+ 275 00de 069B     		ldr	r3, [sp, #24]
+ 276 00e0 0195     		str	r5, [sp, #4]
+ 277 00e2 0DF10902 		add	r2, sp, #9
+ 278 00e6 0092     		str	r2, [sp]
+ 279 00e8 9F68     		ldr	r7, [r3, #8]
+ 280 00ea 0499     		ldr	r1, [sp, #16]
+ 281 00ec 2346     		mov	r3, r4
+ 282 00ee 05A8     		add	r0, sp, #20
+ARM GAS  /tmp/ccgrnHIx.s 			page 6
+
+
+ 283 00f0 0222     		movs	r2, #2
+ 284 00f2 B847     		blx	r7
+ 285 00f4 069B     		ldr	r3, [sp, #24]
+ 286 00f6 0195     		str	r5, [sp, #4]
+ 287 00f8 0DF10A02 		add	r2, sp, #10
+ 288 00fc 0092     		str	r2, [sp]
+ 289 00fe 9F68     		ldr	r7, [r3, #8]
+ 290 0100 0499     		ldr	r1, [sp, #16]
+ 291 0102 2346     		mov	r3, r4
+ 292 0104 05A8     		add	r0, sp, #20
+ 293 0106 0222     		movs	r2, #2
+ 294 0108 B847     		blx	r7
+ 295 010a 0422     		movs	r2, #4
+ 296 010c 069B     		ldr	r3, [sp, #24]
+ 297 010e 0192     		str	r2, [sp, #4]
+ 298 0110 03AA     		add	r2, sp, #12
+ 299 0112 0092     		str	r2, [sp]
+ 300 0114 9F68     		ldr	r7, [r3, #8]
+ 301 0116 0499     		ldr	r1, [sp, #16]
+ 302 0118 2346     		mov	r3, r4
+ 303 011a 05A8     		add	r0, sp, #20
+ 304 011c 0622     		movs	r2, #6
+ 305 011e B847     		blx	r7
+ 306 0120 069B     		ldr	r3, [sp, #24]
+ 307 0122 0195     		str	r5, [sp, #4]
+ 308 0124 0DF10B02 		add	r2, sp, #11
+ 309 0128 0092     		str	r2, [sp]
+ 310 012a 9F68     		ldr	r7, [r3, #8]
+ 311 012c 0499     		ldr	r1, [sp, #16]
+ 312 012e 2346     		mov	r3, r4
+ 313 0130 2246     		mov	r2, r4
+ 314 0132 05A8     		add	r0, sp, #20
+ 315 0134 B847     		blx	r7
+ 316 0136 9DF80B20 		ldrb	r2, [sp, #11]	@ zero_extendqisi2
+ 317 013a 069B     		ldr	r3, [sp, #24]
+ 318 013c 0499     		ldr	r1, [sp, #16]
+ 319 013e CDE90062 		strd	r6, r2, [sp]
+ 320 0142 05A8     		add	r0, sp, #20
+ 321 0144 9C68     		ldr	r4, [r3, #8]
+ 322 0146 2A46     		mov	r2, r5
+ 323 0148 2B46     		mov	r3, r5
+ 324 014a A047     		blx	r4
+ 325 014c 069B     		ldr	r3, [sp, #24]
+ 326 014e 0499     		ldr	r1, [sp, #16]
+ 327 0150 5B69     		ldr	r3, [r3, #20]
+ 328 0152 05A8     		add	r0, sp, #20
+ 329 0154 9847     		blx	r3
+ 330 0156 09B0     		add	sp, sp, #36
+ 331              		@ sp needed
+ 332 0158 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 333              	.L17:
+ 334 015a 0848     		ldr	r0, .L22+12
+ 335 015c 074E     		ldr	r6, .L22+12
+ 336 015e FFF7FEFF 		bl	strlen
+ 337 0162 C2B2     		uxtb	r2, r0
+ 338 0164 64E7     		b	.L18
+ 339              	.L19:
+ARM GAS  /tmp/ccgrnHIx.s 			page 7
+
+
+ 340 0166 9B69     		ldr	r3, [r3, #24]
+ 341 0168 05A8     		add	r0, sp, #20
+ 342 016a 9847     		blx	r3
+ 343 016c 09B0     		add	sp, sp, #36
+ 344              		@ sp needed
+ 345 016e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 346              	.L23:
+ 347              		.align	2
+ 348              	.L22:
+ 349 0170 00000000 		.word	.LANCHOR3
+ 350 0174 00000000 		.word	.LANCHOR2
+ 351 0178 00000000 		.word	.LC0
+ 352 017c 00000000 		.word	.LANCHOR1
+ 353              		.size	send_sdlog_status, .-send_sdlog_status
+ 354              		.section	.rodata.thd_startlog.str1.4,"aMS",%progbits,1
+ 355              		.align	2
+ 356              	.LC1:
+ 357 0000 73746172 		.ascii	"start log\000"
+ 357      74206C6F 
+ 357      6700
+ 358 000a 0000     		.align	2
+ 359              	.LC2:
+ 360 000c 257300   		.ascii	"%s\000"
+ 361 000f 00       		.align	2
+ 362              	.LC3:
+ 363 0010 25732C25 		.ascii	"%s,%s\000"
+ 363      7300
+ 364              		.section	.text.thd_startlog,"ax",%progbits
+ 365              		.align	1
+ 366              		.p2align 4,,15
+ 367              		.syntax unified
+ 368              		.thumb
+ 369              		.thumb_func
+ 370              		.fpu fpv4-sp-d16
+ 371              		.type	thd_startlog, %function
+ 372              	thd_startlog:
+ 373              		@ Volatile: function does not return.
+ 374              		@ args = 0, pretend = 0, frame = 88
+ 375              		@ frame_needed = 0, uses_anonymous_args = 0
+ 376 0000 2DE98048 		push	{r7, fp, lr}
+ 377 0004 6E4B     		ldr	r3, .L56
+ 378 0006 6F4A     		ldr	r2, .L56+4
+ 379 0008 DB68     		ldr	r3, [r3, #12]
+ 380 000a 6F48     		ldr	r0, .L56+8
+ 381 000c DA61     		str	r2, [r3, #28]
+ 382 000e 9DB0     		sub	sp, sp, #116
+ 383 0010 FFF7FEFF 		bl	chThdSleep
+ 384 0014 FFF7FEFF 		bl	usbStorageIsItRunning
+ 385 0018 0028     		cmp	r0, #0
+ 386 001a 7DD1     		bne	.L53
+ 387              	.L25:
+ 388 001c 6B4B     		ldr	r3, .L56+12
+ 389 001e 6C4A     		ldr	r2, .L56+16
+ 390 0020 5A60     		str	r2, [r3, #4]
+ 391 0022 6C4A     		ldr	r2, .L56+20
+ 392 0024 9A60     		str	r2, [r3, #8]
+ 393 0026 6C4A     		ldr	r2, .L56+24
+ARM GAS  /tmp/ccgrnHIx.s 			page 8
+
+
+ 394 0028 DA60     		str	r2, [r3, #12]
+ 395 002a 6C4A     		ldr	r2, .L56+28
+ 396 002c 1A61     		str	r2, [r3, #16]
+ 397 002e 6C4A     		ldr	r2, .L56+32
+ 398 0030 5A61     		str	r2, [r3, #20]
+ 399 0032 6C4C     		ldr	r4, .L56+36
+ 400 0034 6C4A     		ldr	r2, .L56+40
+ 401 0036 DFF8FC81 		ldr	r8, .L56+116
+ 402 003a C3F80080 		str	r8, [r3]
+ 403 003e 1B62     		str	r3, [r3, #32]
+ 404 0040 9A61     		str	r2, [r3, #24]
+ 405 0042 0020     		movs	r0, #0
+ 406 0044 0123     		movs	r3, #1
+ 407 0046 2370     		strb	r3, [r4]
+ 408 0048 FFF7FEFF 		bl	sdLogInit
+ 409 004c 0546     		mov	r5, r0
+ 410 004e 0028     		cmp	r0, #0
+ 411 0050 66D0     		beq	.L26
+ 412 0052 0023     		movs	r3, #0
+ 413 0054 2370     		strb	r3, [r4]
+ 414              	.L27:
+ 415 0056 DFF8E0A1 		ldr	r10, .L56+120
+ 416 005a 0223     		movs	r3, #2
+ 417 005c 8AF80030 		strb	r3, [r10]
+ 418 0060 0023     		movs	r3, #0
+ 419              	.L31:
+ 420 0062 624F     		ldr	r7, .L56+44
+ 421 0064 0025     		movs	r5, #0
+ 422              	.L30:
+ 423 0066 42F21079 		movw	r9, #10000
+ 424              	.L38:
+ 425 006a 4FF00108 		mov	r8, #1
+ 426 006e 15E0     		b	.L36
+ 427              	.L54:
+ 428 0070 8AF80030 		strb	r3, [r10]
+ 429 0074 2570     		strb	r5, [r4]
+ 430              	.L34:
+ 431 0076 4FF0300B 		mov	fp, #48
+ 432              		.syntax unified
+ 433              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 434 007a 8BF31188 		MSR basepri, fp
+ 435              	@ 0 "" 2
+ 436              		.thumb
+ 437              		.syntax unified
+ 438 007e FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 439 0082 4F4B     		ldr	r3, .L56
+ 440 0084 DE69     		ldr	r6, [r3, #28]
+ 441 0086 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 442              		.syntax unified
+ 443              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 444 008a 85F31188 		MSR basepri, r5
+ 445              	@ 0 "" 2
+ 446              		.thumb
+ 447              		.syntax unified
+ 448 008e 3A68     		ldr	r2, [r7]
+ 449 0090 4CF25033 		movw	r3, #50000
+ 450 0094 B61A     		subs	r6, r6, r2
+ARM GAS  /tmp/ccgrnHIx.s 			page 9
+
+
+ 451 0096 9E42     		cmp	r6, r3
+ 452 0098 11D8     		bhi	.L35
+ 453 009a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 454              	.L36:
+ 455 009c 002B     		cmp	r3, #0
+ 456 009e 14BF     		ite	ne
+ 457 00a0 4846     		movne	r0, r9
+ 458 00a2 4FF4FA60 		moveq	r0, #2000
+ 459 00a6 FFF7FEFF 		bl	chThdSleep
+ 460 00aa FFF7FEFF 		bl	sdLogGetStorageStatus
+ 461 00ae 0223     		movs	r3, #2
+ 462 00b0 0028     		cmp	r0, #0
+ 463 00b2 DDD1     		bne	.L54
+ 464 00b4 8AF80080 		strb	r8, [r10]
+ 465 00b8 84F80080 		strb	r8, [r4]
+ 466 00bc DBE7     		b	.L34
+ 467              	.L35:
+ 468              		.syntax unified
+ 469              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 470 00be 8BF31188 		MSR basepri, fp
+ 471              	@ 0 "" 2
+ 472              		.thumb
+ 473              		.syntax unified
+ 474 00c2 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 475 00c6 3E4B     		ldr	r3, .L56
+ 476 00c8 DE69     		ldr	r6, [r3, #28]
+ 477 00ca FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 478              		.syntax unified
+ 479              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 480 00ce 85F31188 		MSR basepri, r5
+ 481              	@ 0 "" 2
+ 482              		.thumb
+ 483              		.syntax unified
+ 484 00d2 474B     		ldr	r3, .L56+48
+ 485 00d4 3E60     		str	r6, [r7]
+ 486 00d6 DB6E     		ldr	r3, [r3, #108]
+ 487 00d8 0BB9     		cbnz	r3, .L37
+ 488 00da 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 489 00dc C5E7     		b	.L38
+ 490              	.L37:
+ 491 00de 454A     		ldr	r2, .L56+52
+ 492 00e0 4549     		ldr	r1, .L56+56
+ 493 00e2 4648     		ldr	r0, .L56+60
+ 494 00e4 0795     		str	r5, [sp, #28]
+ 495 00e6 A2FB0323 		umull	r2, r3, r2, r3
+ 496 00ea 414A     		ldr	r2, .L56+48
+ 497 00ec B2F86820 		ldrh	r2, [r2, #104]
+ 498 00f0 00FB0212 		mla	r2, r0, r2, r1
+ 499 00f4 02EB9313 		add	r3, r2, r3, lsr #6
+ 500 00f8 13A9     		add	r1, sp, #76
+ 501 00fa 06A8     		add	r0, sp, #24
+ 502 00fc 0693     		str	r3, [sp, #24]
+ 503 00fe FFF7FEFF 		bl	gmtime_r
+ 504 0102 09AA     		add	r2, sp, #36
+ 505 0104 13A8     		add	r0, sp, #76
+ 506 0106 0021     		movs	r1, #0
+ 507 0108 FFF7FEFF 		bl	rtcConvertStructTmToDateTime
+ARM GAS  /tmp/ccgrnHIx.s 			page 10
+
+
+ 508 010c 3C48     		ldr	r0, .L56+64
+ 509 010e 09A9     		add	r1, sp, #36
+ 510 0110 FFF7FEFF 		bl	rtcSetTime
+ 511 0114 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 512 0116 A6E7     		b	.L30
+ 513              	.L53:
+ 514 0118 3A48     		ldr	r0, .L56+68
+ 515 011a FFF7FEFF 		bl	chThdSleep
+ 516 011e 7DE7     		b	.L25
+ 517              	.L26:
+ 518 0120 3949     		ldr	r1, .L56+72
+ 519 0122 3A48     		ldr	r0, .L56+76
+ 520 0124 3222     		movs	r2, #50
+ 521 0126 FFF7FEFF 		bl	removeEmptyLogs
+ 522 012a 2023     		movs	r3, #32
+ 523 012c 0493     		str	r3, [sp, #16]
+ 524 012e 0BAF     		add	r7, sp, #44
+ 525 0130 3223     		movs	r3, #50
+ 526 0132 0193     		str	r3, [sp, #4]
+ 527 0134 CDE90257 		strd	r5, r7, [sp, #8]
+ 528 0138 334A     		ldr	r2, .L56+72
+ 529 013a 3449     		ldr	r1, .L56+76
+ 530 013c 0095     		str	r5, [sp]
+ 531 013e 4046     		mov	r0, r8
+ 532 0140 0A23     		movs	r3, #10
+ 533 0142 FFF7FEFF 		bl	sdLogOpenLog
+ 534 0146 00B1     		cbz	r0, .L28
+ 535 0148 2570     		strb	r5, [r4]
+ 536              	.L28:
+ 537 014a 3B46     		mov	r3, r7
+ 538 014c 304A     		ldr	r2, .L56+80
+ 539 014e 3148     		ldr	r0, .L56+84
+ 540 0150 4421     		movs	r1, #68
+ 541 0152 FFF7FEFF 		bl	chsnprintf
+ 542 0156 3049     		ldr	r1, .L56+88
+ 543 0158 3048     		ldr	r0, .L56+92
+ 544 015a 3222     		movs	r2, #50
+ 545 015c FFF7FEFF 		bl	removeEmptyLogs
+ 546 0160 2023     		movs	r3, #32
+ 547 0162 0025     		movs	r5, #0
+ 548 0164 0493     		str	r3, [sp, #16]
+ 549 0166 3223     		movs	r3, #50
+ 550 0168 CDE90053 		strd	r5, r3, [sp]
+ 551 016c CDE90257 		strd	r5, r7, [sp, #8]
+ 552 0170 294A     		ldr	r2, .L56+88
+ 553 0172 2A49     		ldr	r1, .L56+92
+ 554 0174 2A48     		ldr	r0, .L56+96
+ 555 0176 0A23     		movs	r3, #10
+ 556 0178 FFF7FEFF 		bl	sdLogOpenLog
+ 557 017c E8B9     		cbnz	r0, .L55
+ 558              	.L29:
+ 559 017e 254B     		ldr	r3, .L56+84
+ 560 0180 284A     		ldr	r2, .L56+100
+ 561 0182 0097     		str	r7, [sp]
+ 562 0184 1846     		mov	r0, r3
+ 563 0186 4421     		movs	r1, #68
+ 564 0188 FFF7FEFF 		bl	chsnprintf
+ARM GAS  /tmp/ccgrnHIx.s 			page 11
+
+
+ 565 018c 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 566 018e 002B     		cmp	r3, #0
+ 567 0190 3FF461AF 		beq	.L27
+ 568 0194 2448     		ldr	r0, .L56+104
+ 569 0196 DFF8A0A0 		ldr	r10, .L56+120
+ 570 019a FFF7FEFF 		bl	chEvtObjectInit
+ 571 019e 0022     		movs	r2, #0
+ 572 01a0 224B     		ldr	r3, .L56+108
+ 573 01a2 0092     		str	r2, [sp]
+ 574 01a4 2248     		ldr	r0, .L56+112
+ 575 01a6 8222     		movs	r2, #130
+ 576 01a8 4FF4BB61 		mov	r1, #1496
+ 577 01ac FFF7FEFF 		bl	chThdCreateStatic
+ 578 01b0 0122     		movs	r2, #1
+ 579 01b2 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 580 01b4 8AF80020 		strb	r2, [r10]
+ 581 01b8 53E7     		b	.L31
+ 582              	.L55:
+ 583 01ba 2570     		strb	r5, [r4]
+ 584 01bc DFE7     		b	.L29
+ 585              	.L57:
+ 586 01be 00BF     		.align	2
+ 587              	.L56:
+ 588 01c0 00000000 		.word	ch0
+ 589 01c4 00000000 		.word	.LC1
+ 590 01c8 E0930400 		.word	300000
+ 591 01cc 00000000 		.word	.LANCHOR4
+ 592 01d0 00000000 		.word	sdlog_check_free_space
+ 593 01d4 00000000 		.word	sdlog_transmit
+ 594 01d8 00000000 		.word	sdlog_transmit_buffer
+ 595 01dc 00000000 		.word	sdlog_send
+ 596 01e0 00000000 		.word	null_function
+ 597 01e4 00000000 		.word	.LANCHOR6
+ 598 01e8 00000000 		.word	null_byte_function
+ 599 01ec 00000000 		.word	.LANCHOR13
+ 600 01f0 00000000 		.word	gps
+ 601 01f4 D34D6210 		.word	274877907
+ 602 01f8 803DD512 		.word	315964800
+ 603 01fc 803A0900 		.word	604800
+ 604 0200 00000000 		.word	RTCD1
+ 605 0204 00C2EB0B 		.word	200000000
+ 606 0208 00000000 		.word	.LANCHOR7
+ 607 020c 00000000 		.word	.LANCHOR8
+ 608 0210 0C000000 		.word	.LC2
+ 609 0214 00000000 		.word	.LANCHOR2
+ 610 0218 00000000 		.word	.LANCHOR9
+ 611 021c 00000000 		.word	.LANCHOR10
+ 612 0220 00000000 		.word	.LANCHOR11
+ 613 0224 10000000 		.word	.LC3
+ 614 0228 00000000 		.word	.LANCHOR0
+ 615 022c 00000000 		.word	thd_bat_survey
+ 616 0230 00000000 		.word	.LANCHOR12
+ 617 0234 00000000 		.word	.LANCHOR5
+ 618 0238 00000000 		.word	.LANCHOR3
+ 619              		.size	thd_startlog, .-thd_startlog
+ 620              		.section	.text.chibios_sdlog_init,"ax",%progbits
+ 621              		.align	1
+ARM GAS  /tmp/ccgrnHIx.s 			page 12
+
+
+ 622              		.p2align 4,,15
+ 623              		.global	chibios_sdlog_init
+ 624              		.syntax unified
+ 625              		.thumb
+ 626              		.thumb_func
+ 627              		.fpu fpv4-sp-d16
+ 628              		.type	chibios_sdlog_init, %function
+ 629              	chibios_sdlog_init:
+ 630              		@ args = 0, pretend = 0, frame = 0
+ 631              		@ frame_needed = 0, uses_anonymous_args = 0
+ 632              		@ link register save eliminated.
+ 633 0000 10B4     		push	{r4}
+ 634 0002 084A     		ldr	r2, .L60
+ 635 0004 084C     		ldr	r4, .L60+4
+ 636 0006 094B     		ldr	r3, .L60+8
+ 637 0008 0160     		str	r1, [r0]
+ 638 000a 4260     		str	r2, [r0, #4]
+ 639 000c 0849     		ldr	r1, .L60+12
+ 640 000e 094A     		ldr	r2, .L60+16
+ 641 0010 0062     		str	r0, [r0, #32]
+ 642 0012 C0E90243 		strd	r4, r3, [r0, #8]
+ 643 0016 084B     		ldr	r3, .L60+20
+ 644 0018 5DF8044B 		ldr	r4, [sp], #4
+ 645 001c 8361     		str	r3, [r0, #24]
+ 646 001e C0E90412 		strd	r1, r2, [r0, #16]
+ 647 0022 7047     		bx	lr
+ 648              	.L61:
+ 649              		.align	2
+ 650              	.L60:
+ 651 0024 00000000 		.word	sdlog_check_free_space
+ 652 0028 00000000 		.word	sdlog_transmit
+ 653 002c 00000000 		.word	sdlog_transmit_buffer
+ 654 0030 00000000 		.word	sdlog_send
+ 655 0034 00000000 		.word	null_function
+ 656 0038 00000000 		.word	null_byte_function
+ 657              		.size	chibios_sdlog_init, .-chibios_sdlog_init
+ 658              		.section	.text.sdlog_chibios_init,"ax",%progbits
+ 659              		.align	1
+ 660              		.p2align 4,,15
+ 661              		.global	sdlog_chibios_init
+ 662              		.syntax unified
+ 663              		.thumb
+ 664              		.thumb_func
+ 665              		.fpu fpv4-sp-d16
+ 666              		.type	sdlog_chibios_init, %function
+ 667              	sdlog_chibios_init:
+ 668              		@ args = 0, pretend = 0, frame = 0
+ 669              		@ frame_needed = 0, uses_anonymous_args = 0
+ 670 0000 10B5     		push	{r4, lr}
+ 671 0002 0A4B     		ldr	r3, .L64
+ 672 0004 0A4A     		ldr	r2, .L64+4
+ 673 0006 0B48     		ldr	r0, .L64+8
+ 674 0008 82B0     		sub	sp, sp, #8
+ 675 000a 5C21     		movs	r1, #92
+ 676 000c 0024     		movs	r4, #0
+ 677 000e 1C70     		strb	r4, [r3]
+ 678 0010 FFF7FEFF 		bl	register_periodic_telemetry
+ARM GAS  /tmp/ccgrnHIx.s 			page 13
+
+
+ 679 0014 FFF7FEFF 		bl	usbStorageStartPolling
+ 680 0018 074B     		ldr	r3, .L64+12
+ 681 001a 0094     		str	r4, [sp]
+ 682 001c 8222     		movs	r2, #130
+ 683 001e 41F2D811 		movw	r1, #4568
+ 684 0022 0648     		ldr	r0, .L64+16
+ 685 0024 FFF7FEFF 		bl	chThdCreateStatic
+ 686 0028 02B0     		add	sp, sp, #8
+ 687              		@ sp needed
+ 688 002a 10BD     		pop	{r4, pc}
+ 689              	.L65:
+ 690              		.align	2
+ 691              	.L64:
+ 692 002c 00000000 		.word	.LANCHOR3
+ 693 0030 00000000 		.word	send_sdlog_status
+ 694 0034 00000000 		.word	pprz_telemetry
+ 695 0038 00000000 		.word	thd_startlog
+ 696 003c 00000000 		.word	wa_thd_startlog
+ 697              		.size	sdlog_chibios_init, .-sdlog_chibios_init
+ 698              		.section	.text.sdlog_chibios_finish,"ax",%progbits
+ 699              		.align	1
+ 700              		.p2align 4,,15
+ 701              		.global	sdlog_chibios_finish
+ 702              		.syntax unified
+ 703              		.thumb
+ 704              		.thumb_func
+ 705              		.fpu fpv4-sp-d16
+ 706              		.type	sdlog_chibios_finish, %function
+ 707              	sdlog_chibios_finish:
+ 708              		@ args = 0, pretend = 0, frame = 0
+ 709              		@ frame_needed = 0, uses_anonymous_args = 0
+ 710 0000 10B5     		push	{r4, lr}
+ 711 0002 084C     		ldr	r4, .L72
+ 712 0004 94F90030 		ldrsb	r3, [r4]
+ 713 0008 0133     		adds	r3, r3, #1
+ 714 000a 07D0     		beq	.L67
+ 715 000c FFF7FEFF 		bl	sdLogCloseAllLogs
+ 716 0010 FFF7FEFF 		bl	sdLogFinish
+ 717 0014 044A     		ldr	r2, .L72+4
+ 718 0016 FF23     		movs	r3, #255
+ 719 0018 2370     		strb	r3, [r4]
+ 720 001a 1370     		strb	r3, [r2]
+ 721              	.L67:
+ 722 001c 034B     		ldr	r3, .L72+8
+ 723 001e 0022     		movs	r2, #0
+ 724 0020 1A70     		strb	r2, [r3]
+ 725 0022 10BD     		pop	{r4, pc}
+ 726              	.L73:
+ 727              		.align	2
+ 728              	.L72:
+ 729 0024 00000000 		.word	.LANCHOR5
+ 730 0028 00000000 		.word	.LANCHOR11
+ 731 002c 00000000 		.word	.LANCHOR3
+ 732              		.size	sdlog_chibios_finish, .-sdlog_chibios_finish
+ 733              		.section	.rodata.thd_bat_survey.str1.4,"aMS",%progbits,1
+ 734              		.align	2
+ 735              	.LC4:
+ARM GAS  /tmp/ccgrnHIx.s 			page 14
+
+
+ 736 0000 62617474 		.ascii	"battery survey\000"
+ 736      65727920 
+ 736      73757276 
+ 736      657900
+ 737              		.section	.text.thd_bat_survey,"ax",%progbits
+ 738              		.align	1
+ 739              		.p2align 4,,15
+ 740              		.syntax unified
+ 741              		.thumb
+ 742              		.thumb_func
+ 743              		.fpu fpv4-sp-d16
+ 744              		.type	thd_bat_survey, %function
+ 745              	thd_bat_survey:
+ 746              		@ Volatile: function does not return.
+ 747              		@ args = 0, pretend = 0, frame = 0
+ 748              		@ frame_needed = 0, uses_anonymous_args = 0
+ 749 0000 08B5     		push	{r3, lr}
+ 750 0002 174B     		ldr	r3, .L81
+ 751 0004 174C     		ldr	r4, .L81+4
+ 752 0006 D868     		ldr	r0, [r3, #12]
+ 753 0008 1749     		ldr	r1, .L81+8
+ 754 000a C461     		str	r4, [r0, #28]
+ 755 000c 4FF0FF33 		mov	r3, #-1
+ 756 0010 0222     		movs	r2, #2
+ 757 0012 1648     		ldr	r0, .L81+12
+ 758 0014 FFF7FEFF 		bl	chEvtRegisterMaskWithFlags
+ 759 0018 44F62060 		movw	r0, #20000
+ 760 001c FFF7FEFF 		bl	chThdSleep
+ 761 0020 134B     		ldr	r3, .L81+16
+ 762 0022 1448     		ldr	r0, .L81+20
+ 763 0024 40F27932 		movw	r2, #889
+ 764 0028 0421     		movs	r1, #4
+ 765 002a FFF7FEFF 		bl	register_adc_watchdog
+ 766 002e 0220     		movs	r0, #2
+ 767 0030 FFF7FEFF 		bl	chEvtWaitOne
+ 768 0034 104B     		ldr	r3, .L81+24
+ 769 0036 1B69     		ldr	r3, [r3, #16]
+ 770 0038 9A05     		lsls	r2, r3, #22
+ 771 003a 0AD5     		bpl	.L79
+ 772              	.L75:
+ 773 003c 0020     		movs	r0, #0
+ 774 003e FFF7FEFF 		bl	sdlog_chibios_finish
+ 775 0042 0D4B     		ldr	r3, .L81+24
+ 776 0044 1B69     		ldr	r3, [r3, #16]
+ 777 0046 9B05     		lsls	r3, r3, #22
+ 778 0048 06D5     		bpl	.L80
+ 779              	.L76:
+ 780 004a 0020     		movs	r0, #0
+ 781 004c FFF7FEFF 		bl	chThdExit
+ 782              	.L77:
+ 783 0050 FEE7     		b	.L77
+ 784              	.L79:
+ 785 0052 FFF7FEFF 		bl	mcu_energy_save
+ 786 0056 F1E7     		b	.L75
+ 787              	.L80:
+ 788 0058 0120     		movs	r0, #1
+ 789 005a FFF7FEFF 		bl	mcu_reboot
+ARM GAS  /tmp/ccgrnHIx.s 			page 15
+
+
+ 790 005e F4E7     		b	.L76
+ 791              	.L82:
+ 792              		.align	2
+ 793              	.L81:
+ 794 0060 00000000 		.word	ch0
+ 795 0064 00000000 		.word	.LC4
+ 796 0068 00000000 		.word	.LANCHOR14
+ 797 006c 00000000 		.word	.LANCHOR0
+ 798 0070 00000000 		.word	powerOutageIsr
+ 799 0074 00000000 		.word	ADCD1
+ 800 0078 00000240 		.word	1073872896
+ 801              		.size	thd_bat_survey, .-thd_bat_survey
+ 802              		.section	.text.logger_log_msg_up,"ax",%progbits
+ 803              		.align	1
+ 804              		.p2align 4,,15
+ 805              		.global	logger_log_msg_up
+ 806              		.syntax unified
+ 807              		.thumb
+ 808              		.thumb_func
+ 809              		.fpu fpv4-sp-d16
+ 810              		.type	logger_log_msg_up, %function
+ 811              	logger_log_msg_up:
+ 812              		@ args = 0, pretend = 0, frame = 0
+ 813              		@ frame_needed = 0, uses_anonymous_args = 0
+ 814 0000 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 815 0002 032B     		cmp	r3, #3
+ 816 0004 02D0     		beq	.L84
+ 817 0006 FF2B     		cmp	r3, #255
+ 818 0008 00D0     		beq	.L84
+ 819 000a 7047     		bx	lr
+ 820              	.L84:
+ 821 000c 10B5     		push	{r4, lr}
+ 822 000e 0B4C     		ldr	r4, .L96
+ 823 0010 94F90030 		ldrsb	r3, [r4]
+ 824 0014 5A1C     		adds	r2, r3, #1
+ 825 0016 03D0     		beq	.L83
+ 826 0018 4279     		ldrb	r2, [r0, #5]	@ zero_extendqisi2
+ 827 001a 12F0FD0F 		tst	r2, #253
+ 828 001e 00D0     		beq	.L95
+ 829              	.L83:
+ 830 0020 10BD     		pop	{r4, pc}
+ 831              	.L95:
+ 832 0022 C11D     		adds	r1, r0, #7
+ 833 0024 8279     		ldrb	r2, [r0, #6]	@ zero_extendqisi2
+ 834 0026 1846     		mov	r0, r3
+ 835 0028 FFF7FEFF 		bl	sdLogWriteRaw
+ 836 002c 94F90000 		ldrsb	r0, [r4]
+ 837 0030 0A21     		movs	r1, #10
+ 838 0032 BDE81040 		pop	{r4, lr}
+ 839 0036 FFF7FEBF 		b	sdLogWriteByte
+ 840              	.L97:
+ 841 003a 00BF     		.align	2
+ 842              	.L96:
+ 843 003c 00000000 		.word	.LANCHOR5
+ 844              		.size	logger_log_msg_up, .-logger_log_msg_up
+ 845              		.global	flightRecorderLogFile
+ 846              		.global	chibios_sdlog
+ARM GAS  /tmp/ccgrnHIx.s 			page 16
+
+
+ 847              		.global	pprzLogFile
+ 848              		.global	sdOk
+ 849              		.global	powerOutageListener
+ 850              		.global	powerOutageSource
+ 851              		.section	.bss.chibios_sdlog,"aw",%nobits
+ 852              		.align	2
+ 853              		.set	.LANCHOR4,. + 0
+ 854              		.type	chibios_sdlog, %object
+ 855              		.size	chibios_sdlog, 44
+ 856              	chibios_sdlog:
+ 857 0000 00000000 		.space	44
+ 857      00000000 
+ 857      00000000 
+ 857      00000000 
+ 857      00000000 
+ 858              		.section	.bss.chibios_sdlog_filenames,"aw",%nobits
+ 859              		.align	2
+ 860              		.set	.LANCHOR2,. + 0
+ 861              		.type	chibios_sdlog_filenames, %object
+ 862              		.size	chibios_sdlog_filenames, 68
+ 863              	chibios_sdlog_filenames:
+ 864 0000 00000000 		.space	68
+ 864      00000000 
+ 864      00000000 
+ 864      00000000 
+ 864      00000000 
+ 865              		.section	.bss.chibios_sdlog_status,"aw",%nobits
+ 866              		.set	.LANCHOR3,. + 0
+ 867              		.type	chibios_sdlog_status, %object
+ 868              		.size	chibios_sdlog_status, 1
+ 869              	chibios_sdlog_status:
+ 870 0000 00       		.space	1
+ 871              		.section	.bss.powerOutageListener,"aw",%nobits
+ 872              		.align	2
+ 873              		.set	.LANCHOR14,. + 0
+ 874              		.type	powerOutageListener, %object
+ 875              		.size	powerOutageListener, 20
+ 876              	powerOutageListener:
+ 877 0000 00000000 		.space	20
+ 877      00000000 
+ 877      00000000 
+ 877      00000000 
+ 877      00000000 
+ 878              		.section	.bss.powerOutageSource,"aw",%nobits
+ 879              		.align	2
+ 880              		.set	.LANCHOR0,. + 0
+ 881              		.type	powerOutageSource, %object
+ 882              		.size	powerOutageSource, 4
+ 883              	powerOutageSource:
+ 884 0000 00000000 		.space	4
+ 885              		.section	.bss.sdOk,"aw",%nobits
+ 886              		.set	.LANCHOR6,. + 0
+ 887              		.type	sdOk, %object
+ 888              		.size	sdOk, 1
+ 889              	sdOk:
+ 890 0000 00       		.space	1
+ 891              		.section	.bss.timestamp.0,"aw",%nobits
+ARM GAS  /tmp/ccgrnHIx.s 			page 17
+
+
+ 892              		.align	2
+ 893              		.set	.LANCHOR13,. + 0
+ 894              		.type	timestamp.0, %object
+ 895              		.size	timestamp.0, 4
+ 896              	timestamp.0:
+ 897 0000 00000000 		.space	4
+ 898              		.section	.bss.wa_thd_bat_survey,"aw",%nobits
+ 899              		.align	3
+ 900              		.set	.LANCHOR12,. + 0
+ 901              		.type	wa_thd_bat_survey, %object
+ 902              		.size	wa_thd_bat_survey, 1496
+ 903              	wa_thd_bat_survey:
+ 904 0000 00000000 		.space	1496
+ 904      00000000 
+ 904      00000000 
+ 904      00000000 
+ 904      00000000 
+ 905              		.section	.data.NO_FILE_NAME,"aw"
+ 906              		.align	2
+ 907              		.set	.LANCHOR1,. + 0
+ 908              		.type	NO_FILE_NAME, %object
+ 909              		.size	NO_FILE_NAME, 5
+ 910              	NO_FILE_NAME:
+ 911 0000 6E6F6E65 		.ascii	"none\000"
+ 911      00
+ 912              		.section	.data.flightRecorderLogFile,"aw"
+ 913              		.set	.LANCHOR11,. + 0
+ 914              		.type	flightRecorderLogFile, %object
+ 915              		.size	flightRecorderLogFile, 1
+ 916              	flightRecorderLogFile:
+ 917 0000 FF       		.byte	-1
+ 918              		.section	.data.pprzLogFile,"aw"
+ 919              		.set	.LANCHOR5,. + 0
+ 920              		.type	pprzLogFile, %object
+ 921              		.size	pprzLogFile, 1
+ 922              	pprzLogFile:
+ 923 0000 FF       		.byte	-1
+ 924              		.section	.ram0_init,"aw"
+ 925              		.align	3
+ 926              		.type	wa_thd_startlog, %object
+ 927              		.size	wa_thd_startlog, 4568
+ 928              	wa_thd_startlog:
+ 929 0000 00000000 		.space	4568
+ 929      00000000 
+ 929      00000000 
+ 929      00000000 
+ 929      00000000 
+ 930              		.section	.rodata.FLIGHTRECORDER_LOG_NAME,"a"
+ 931              		.align	2
+ 932              		.set	.LANCHOR9,. + 0
+ 933              		.type	FLIGHTRECORDER_LOG_NAME, %object
+ 934              		.size	FLIGHTRECORDER_LOG_NAME, 4
+ 935              	FLIGHTRECORDER_LOG_NAME:
+ 936 0000 66725F00 		.ascii	"fr_\000"
+ 937              		.section	.rodata.FR_LOG_DIR,"a"
+ 938              		.align	2
+ 939              		.set	.LANCHOR10,. + 0
+ARM GAS  /tmp/ccgrnHIx.s 			page 18
+
+
+ 940              		.type	FR_LOG_DIR, %object
+ 941              		.size	FR_LOG_DIR, 16
+ 942              	FR_LOG_DIR:
+ 943 0000 464C4947 		.ascii	"FLIGHT_RECORDER\000"
+ 943      48545F52 
+ 943      45434F52 
+ 943      44455200 
+ 944              		.section	.rodata.PPRZ_LOG_DIR,"a"
+ 945              		.align	2
+ 946              		.set	.LANCHOR8,. + 0
+ 947              		.type	PPRZ_LOG_DIR, %object
+ 948              		.size	PPRZ_LOG_DIR, 5
+ 949              	PPRZ_LOG_DIR:
+ 950 0000 5050525A 		.ascii	"PPRZ\000"
+ 950      00
+ 951              		.section	.rodata.PPRZ_LOG_NAME,"a"
+ 952              		.align	2
+ 953              		.set	.LANCHOR7,. + 0
+ 954              		.type	PPRZ_LOG_NAME, %object
+ 955              		.size	PPRZ_LOG_NAME, 9
+ 956              	PPRZ_LOG_NAME:
+ 957 0000 7070727A 		.ascii	"pprzlog_\000"
+ 957      6C6F675F 
+ 957      00
+ 958              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccgrnHIx.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sdlog_chibios.c
+     /tmp/ccgrnHIx.s:15     .text.null_function:0000000000000000 $t
+     /tmp/ccgrnHIx.s:23     .text.null_function:0000000000000000 null_function
+     /tmp/ccgrnHIx.s:31     .text.null_byte_function:0000000000000000 $t
+     /tmp/ccgrnHIx.s:38     .text.null_byte_function:0000000000000000 null_byte_function
+     /tmp/ccgrnHIx.s:46     .text.sdlog_send:0000000000000000 $t
+     /tmp/ccgrnHIx.s:53     .text.sdlog_send:0000000000000000 sdlog_send
+     /tmp/ccgrnHIx.s:62     .text.sdlog_transmit_buffer:0000000000000000 $t
+     /tmp/ccgrnHIx.s:69     .text.sdlog_transmit_buffer:0000000000000000 sdlog_transmit_buffer
+     /tmp/ccgrnHIx.s:90     .text.sdlog_transmit:0000000000000000 $t
+     /tmp/ccgrnHIx.s:97     .text.sdlog_transmit:0000000000000000 sdlog_transmit
+     /tmp/ccgrnHIx.s:112    .text.sdlog_check_free_space:0000000000000000 $t
+     /tmp/ccgrnHIx.s:119    .text.sdlog_check_free_space:0000000000000000 sdlog_check_free_space
+     /tmp/ccgrnHIx.s:142    .text.powerOutageIsr:0000000000000000 $t
+     /tmp/ccgrnHIx.s:149    .text.powerOutageIsr:0000000000000000 powerOutageIsr
+     /tmp/ccgrnHIx.s:159    .text.powerOutageIsr:0000000000000008 $d
+     /tmp/ccgrnHIx.s:162    .rodata.send_sdlog_status.str1.4:0000000000000000 $d
+     /tmp/ccgrnHIx.s:166    .text.send_sdlog_status:0000000000000000 $t
+     /tmp/ccgrnHIx.s:173    .text.send_sdlog_status:0000000000000000 send_sdlog_status
+     /tmp/ccgrnHIx.s:349    .text.send_sdlog_status:0000000000000170 $d
+     /tmp/ccgrnHIx.s:355    .rodata.thd_startlog.str1.4:0000000000000000 $d
+     /tmp/ccgrnHIx.s:365    .text.thd_startlog:0000000000000000 $t
+     /tmp/ccgrnHIx.s:372    .text.thd_startlog:0000000000000000 thd_startlog
+     /tmp/ccgrnHIx.s:588    .text.thd_startlog:00000000000001c0 $d
+     /tmp/ccgrnHIx.s:745    .text.thd_bat_survey:0000000000000000 thd_bat_survey
+     /tmp/ccgrnHIx.s:621    .text.chibios_sdlog_init:0000000000000000 $t
+     /tmp/ccgrnHIx.s:629    .text.chibios_sdlog_init:0000000000000000 chibios_sdlog_init
+     /tmp/ccgrnHIx.s:651    .text.chibios_sdlog_init:0000000000000024 $d
+     /tmp/ccgrnHIx.s:659    .text.sdlog_chibios_init:0000000000000000 $t
+     /tmp/ccgrnHIx.s:667    .text.sdlog_chibios_init:0000000000000000 sdlog_chibios_init
+     /tmp/ccgrnHIx.s:692    .text.sdlog_chibios_init:000000000000002c $d
+     /tmp/ccgrnHIx.s:928    .ram0_init:0000000000000000 wa_thd_startlog
+     /tmp/ccgrnHIx.s:699    .text.sdlog_chibios_finish:0000000000000000 $t
+     /tmp/ccgrnHIx.s:707    .text.sdlog_chibios_finish:0000000000000000 sdlog_chibios_finish
+     /tmp/ccgrnHIx.s:729    .text.sdlog_chibios_finish:0000000000000024 $d
+     /tmp/ccgrnHIx.s:734    .rodata.thd_bat_survey.str1.4:0000000000000000 $d
+     /tmp/ccgrnHIx.s:738    .text.thd_bat_survey:0000000000000000 $t
+     /tmp/ccgrnHIx.s:794    .text.thd_bat_survey:0000000000000060 $d
+     /tmp/ccgrnHIx.s:803    .text.logger_log_msg_up:0000000000000000 $t
+     /tmp/ccgrnHIx.s:811    .text.logger_log_msg_up:0000000000000000 logger_log_msg_up
+     /tmp/ccgrnHIx.s:843    .text.logger_log_msg_up:000000000000003c $d
+     /tmp/ccgrnHIx.s:916    .data.flightRecorderLogFile:0000000000000000 flightRecorderLogFile
+     /tmp/ccgrnHIx.s:856    .bss.chibios_sdlog:0000000000000000 chibios_sdlog
+     /tmp/ccgrnHIx.s:922    .data.pprzLogFile:0000000000000000 pprzLogFile
+     /tmp/ccgrnHIx.s:889    .bss.sdOk:0000000000000000 sdOk
+     /tmp/ccgrnHIx.s:876    .bss.powerOutageListener:0000000000000000 powerOutageListener
+     /tmp/ccgrnHIx.s:883    .bss.powerOutageSource:0000000000000000 powerOutageSource
+     /tmp/ccgrnHIx.s:852    .bss.chibios_sdlog:0000000000000000 $d
+     /tmp/ccgrnHIx.s:859    .bss.chibios_sdlog_filenames:0000000000000000 $d
+     /tmp/ccgrnHIx.s:863    .bss.chibios_sdlog_filenames:0000000000000000 chibios_sdlog_filenames
+     /tmp/ccgrnHIx.s:869    .bss.chibios_sdlog_status:0000000000000000 chibios_sdlog_status
+     /tmp/ccgrnHIx.s:870    .bss.chibios_sdlog_status:0000000000000000 $d
+     /tmp/ccgrnHIx.s:872    .bss.powerOutageListener:0000000000000000 $d
+     /tmp/ccgrnHIx.s:879    .bss.powerOutageSource:0000000000000000 $d
+     /tmp/ccgrnHIx.s:890    .bss.sdOk:0000000000000000 $d
+     /tmp/ccgrnHIx.s:892    .bss.timestamp.0:0000000000000000 $d
+ARM GAS  /tmp/ccgrnHIx.s 			page 20
+
+
+     /tmp/ccgrnHIx.s:896    .bss.timestamp.0:0000000000000000 timestamp.0
+     /tmp/ccgrnHIx.s:899    .bss.wa_thd_bat_survey:0000000000000000 $d
+     /tmp/ccgrnHIx.s:903    .bss.wa_thd_bat_survey:0000000000000000 wa_thd_bat_survey
+     /tmp/ccgrnHIx.s:906    .data.NO_FILE_NAME:0000000000000000 $d
+     /tmp/ccgrnHIx.s:910    .data.NO_FILE_NAME:0000000000000000 NO_FILE_NAME
+     /tmp/ccgrnHIx.s:925    .ram0_init:0000000000000000 $d
+     /tmp/ccgrnHIx.s:931    .rodata.FLIGHTRECORDER_LOG_NAME:0000000000000000 $d
+     /tmp/ccgrnHIx.s:935    .rodata.FLIGHTRECORDER_LOG_NAME:0000000000000000 FLIGHTRECORDER_LOG_NAME
+     /tmp/ccgrnHIx.s:938    .rodata.FR_LOG_DIR:0000000000000000 $d
+     /tmp/ccgrnHIx.s:942    .rodata.FR_LOG_DIR:0000000000000000 FR_LOG_DIR
+     /tmp/ccgrnHIx.s:945    .rodata.PPRZ_LOG_DIR:0000000000000000 $d
+     /tmp/ccgrnHIx.s:949    .rodata.PPRZ_LOG_DIR:0000000000000000 PPRZ_LOG_DIR
+     /tmp/ccgrnHIx.s:952    .rodata.PPRZ_LOG_NAME:0000000000000000 $d
+     /tmp/ccgrnHIx.s:956    .rodata.PPRZ_LOG_NAME:0000000000000000 PPRZ_LOG_NAME
+
+UNDEFINED SYMBOLS
+sdLogWriteSDB
+sdLogGetBufferFromSDB
+memcpy
+sdLogSeekBufferFromSDB
+sdLogAllocSDB
+chEvtBroadcastFlagsI
+sdLogGetStorageStatus
+sdLogGetNbBytesWrittenToStorage
+strlen
+chThdSleep
+usbStorageIsItRunning
+sdLogInit
+__stats_start_measure_crit_thd
+__stats_stop_measure_crit_thd
+gmtime_r
+rtcConvertStructTmToDateTime
+rtcSetTime
+removeEmptyLogs
+sdLogOpenLog
+chsnprintf
+chEvtObjectInit
+chThdCreateStatic
+ch0
+gps
+RTCD1
+register_periodic_telemetry
+usbStorageStartPolling
+pprz_telemetry
+sdLogCloseAllLogs
+sdLogFinish
+chEvtRegisterMaskWithFlags
+register_adc_watchdog
+chEvtWaitOne
+chThdExit
+mcu_energy_save
+mcu_reboot
+ADCD1
+sdLogWriteRaw
+sdLogWriteByte

@@ -1,0 +1,6 @@
+find_free_msg_id.cmo : \
+    /home/argroos/paparazzi/sw/lib/ocaml/extXml.cmi \
+    /home/argroos/paparazzi/sw/lib/ocaml/env.cmi
+find_free_msg_id.cmx : \
+    /home/argroos/paparazzi/sw/lib/ocaml/extXml.cmx \
+    /home/argroos/paparazzi/sw/lib/ocaml/env.cmx

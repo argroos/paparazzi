@@ -1,0 +1,952 @@
+ARM GAS  /tmp/ccwsPTWR.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"hal_sdc.c"
+  13              		.text
+  14              		.section	.text.sdcGetInfo,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	sdcGetInfo
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	sdcGetInfo, %function
+  24              	sdcGetInfo:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+  29 0002 052B     		cmp	r3, #5
+  30 0004 06D1     		bne	.L3
+  31 0006 826A     		ldr	r2, [r0, #40]
+  32 0008 4FF40073 		mov	r3, #512
+  33 000c C1E90032 		strd	r3, r2, [r1]
+  34 0010 0020     		movs	r0, #0
+  35 0012 7047     		bx	lr
+  36              	.L3:
+  37 0014 0120     		movs	r0, #1
+  38 0016 7047     		bx	lr
+  39              		.size	sdcGetInfo, .-sdcGetInfo
+  40              		.section	.text.sdcConnect,"ax",%progbits
+  41              		.align	1
+  42              		.p2align 4,,15
+  43              		.global	sdcConnect
+  44              		.syntax unified
+  45              		.thumb
+  46              		.thumb_func
+  47              		.fpu fpv4-sp-d16
+  48              		.type	sdcConnect, %function
+  49              	sdcConnect:
+  50              		@ args = 0, pretend = 0, frame = 16
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  53 0004 0323     		movs	r3, #3
+  54 0006 86B0     		sub	sp, sp, #24
+  55 0008 0371     		strb	r3, [r0, #4]
+  56 000a 0446     		mov	r4, r0
+  57 000c FFF7FEFF 		bl	sdc_lld_start_clk
+ARM GAS  /tmp/ccwsPTWR.s 			page 2
+
+
+  58 0010 0022     		movs	r2, #0
+  59 0012 1146     		mov	r1, r2
+  60 0014 2046     		mov	r0, r4
+  61 0016 FFF7FEFF 		bl	sdc_lld_send_cmd_none
+  62 001a 05AB     		add	r3, sp, #20
+  63 001c 4FF4D572 		mov	r2, #426
+  64 0020 0821     		movs	r1, #8
+  65 0022 2046     		mov	r0, r4
+  66 0024 FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+  67 0028 E8B9     		cbnz	r0, .L6
+  68 002a 059B     		ldr	r3, [sp, #20]
+  69 002c 0122     		movs	r2, #1
+  70 002e C3F30323 		ubfx	r3, r3, #8, #4
+  71 0032 9342     		cmp	r3, r2
+  72 0034 2263     		str	r2, [r4, #48]
+  73 0036 09D0     		beq	.L80
+  74              	.L8:
+  75 0038 2046     		mov	r0, r4
+  76 003a FFF7FEFF 		bl	sdc_lld_stop_clk
+  77 003e 0223     		movs	r3, #2
+  78 0040 2371     		strb	r3, [r4, #4]
+  79 0042 0125     		movs	r5, #1
+  80              	.L44:
+  81 0044 2846     		mov	r0, r5
+  82 0046 06B0     		add	sp, sp, #24
+  83              		@ sp needed
+  84 0048 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+  85              	.L80:
+  86 004c 0246     		mov	r2, r0
+  87 004e 05AB     		add	r3, sp, #20
+  88 0050 3721     		movs	r1, #55
+  89 0052 2046     		mov	r0, r4
+  90 0054 FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+  91 0058 0028     		cmp	r0, #0
+  92 005a EDD1     		bne	.L8
+  93 005c 059A     		ldr	r2, [sp, #20]
+  94 005e A64B     		ldr	r3, .L87
+  95 0060 1340     		ands	r3, r3, r2
+  96 0062 8BB1     		cbz	r3, .L14
+  97 0064 E8E7     		b	.L8
+  98              	.L6:
+  99 0066 05AB     		add	r3, sp, #20
+ 100 0068 0022     		movs	r2, #0
+ 101 006a 3721     		movs	r1, #55
+ 102 006c 2046     		mov	r0, r4
+ 103 006e FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 104 0072 0028     		cmp	r0, #0
+ 105 0074 35D1     		bne	.L11
+ 106 0076 059B     		ldr	r3, [sp, #20]
+ 107 0078 9F4A     		ldr	r2, .L87
+ 108 007a 1A40     		ands	r2, r2, r3
+ 109 007c 8ABB     		cbnz	r2, .L11
+ 110 007e 2263     		str	r2, [r4, #48]
+ 111 0080 1146     		mov	r1, r2
+ 112 0082 2046     		mov	r0, r4
+ 113 0084 FFF7FEFF 		bl	sdc_lld_send_cmd_none
+ 114              	.L14:
+ARM GAS  /tmp/ccwsPTWR.s 			page 3
+
+
+ 115 0088 236B     		ldr	r3, [r4, #48]
+ 116 008a 03F00F03 		and	r3, r3, #15
+ 117 008e 022B     		cmp	r3, #2
+ 118 0090 29D0     		beq	.L13
+ 119 0092 9A4F     		ldr	r7, .L87+4
+ 120 0094 9A4A     		ldr	r2, .L87+8
+ 121 0096 DFF86082 		ldr	r8, .L87
+ 122 009a 012B     		cmp	r3, #1
+ 123 009c 18BF     		it	ne
+ 124 009e 1746     		movne	r7, r2
+ 125 00a0 6425     		movs	r5, #100
+ 126 00a2 10E0     		b	.L25
+ 127              	.L81:
+ 128 00a4 059E     		ldr	r6, [sp, #20]
+ 129 00a6 16EA080F 		tst	r6, r8
+ 130 00aa C5D1     		bne	.L8
+ 131 00ac FFF7FEFF 		bl	sdc_lld_send_cmd_short
+ 132 00b0 0346     		mov	r3, r0
+ 133 00b2 6420     		movs	r0, #100
+ 134 00b4 002B     		cmp	r3, #0
+ 135 00b6 BFD1     		bne	.L8
+ 136 00b8 059B     		ldr	r3, [sp, #20]
+ 137 00ba 002B     		cmp	r3, #0
+ 138 00bc 28DB     		blt	.L79
+ 139 00be 013D     		subs	r5, r5, #1
+ 140 00c0 BAD0     		beq	.L8
+ 141 00c2 FFF7FEFF 		bl	chThdSleep
+ 142              	.L25:
+ 143 00c6 05AB     		add	r3, sp, #20
+ 144 00c8 0022     		movs	r2, #0
+ 145 00ca 3721     		movs	r1, #55
+ 146 00cc 2046     		mov	r0, r4
+ 147 00ce FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 148 00d2 0646     		mov	r6, r0
+ 149 00d4 05AB     		add	r3, sp, #20
+ 150 00d6 3A46     		mov	r2, r7
+ 151 00d8 2921     		movs	r1, #41
+ 152 00da 2046     		mov	r0, r4
+ 153 00dc 002E     		cmp	r6, #0
+ 154 00de E1D0     		beq	.L81
+ 155 00e0 AAE7     		b	.L8
+ 156              	.L11:
+ 157 00e2 0223     		movs	r3, #2
+ 158 00e4 2363     		str	r3, [r4, #48]
+ 159              	.L13:
+ 160 00e6 874E     		ldr	r6, .L87+12
+ 161 00e8 6425     		movs	r5, #100
+ 162 00ea 06E0     		b	.L20
+ 163              	.L82:
+ 164 00ec 059B     		ldr	r3, [sp, #20]
+ 165 00ee 002B     		cmp	r3, #0
+ 166 00f0 0EDB     		blt	.L79
+ 167 00f2 013D     		subs	r5, r5, #1
+ 168 00f4 A0D0     		beq	.L8
+ 169 00f6 FFF7FEFF 		bl	chThdSleep
+ 170              	.L20:
+ 171 00fa 05AB     		add	r3, sp, #20
+ARM GAS  /tmp/ccwsPTWR.s 			page 4
+
+
+ 172 00fc 3246     		mov	r2, r6
+ 173 00fe 0121     		movs	r1, #1
+ 174 0100 2046     		mov	r0, r4
+ 175 0102 FFF7FEFF 		bl	sdc_lld_send_cmd_short
+ 176 0106 0346     		mov	r3, r0
+ 177 0108 6420     		movs	r0, #100
+ 178 010a 002B     		cmp	r3, #0
+ 179 010c EED0     		beq	.L82
+ 180 010e 93E7     		b	.L8
+ 181              	.L79:
+ 182 0110 5B00     		lsls	r3, r3, #1
+ 183 0112 03D5     		bpl	.L19
+ 184 0114 236B     		ldr	r3, [r4, #48]
+ 185 0116 43F01003 		orr	r3, r3, #16
+ 186 011a 2363     		str	r3, [r4, #48]
+ 187              	.L19:
+ 188 011c 04F10803 		add	r3, r4, #8
+ 189 0120 0022     		movs	r2, #0
+ 190 0122 0221     		movs	r1, #2
+ 191 0124 2046     		mov	r0, r4
+ 192 0126 FFF7FEFF 		bl	sdc_lld_send_cmd_long_crc
+ 193 012a 0028     		cmp	r0, #0
+ 194 012c 84D1     		bne	.L8
+ 195 012e 0246     		mov	r2, r0
+ 196 0130 04F13803 		add	r3, r4, #56
+ 197 0134 0321     		movs	r1, #3
+ 198 0136 2046     		mov	r0, r4
+ 199 0138 FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 200 013c 0028     		cmp	r0, #0
+ 201 013e 7FF47BAF 		bne	.L8
+ 202 0142 04F11806 		add	r6, r4, #24
+ 203 0146 A26B     		ldr	r2, [r4, #56]
+ 204 0148 3346     		mov	r3, r6
+ 205 014a 0921     		movs	r1, #9
+ 206 014c 2046     		mov	r0, r4
+ 207 014e FFF7FEFF 		bl	sdc_lld_send_cmd_long_crc
+ 208 0152 0028     		cmp	r0, #0
+ 209 0154 7FF470AF 		bne	.L8
+ 210 0158 A26B     		ldr	r2, [r4, #56]
+ 211 015a 04AB     		add	r3, sp, #16
+ 212 015c 0721     		movs	r1, #7
+ 213 015e 2046     		mov	r0, r4
+ 214 0160 FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 215 0164 0546     		mov	r5, r0
+ 216 0166 0028     		cmp	r0, #0
+ 217 0168 7FF466AF 		bne	.L8
+ 218 016c 236B     		ldr	r3, [r4, #48]
+ 219 016e 03F00F03 		and	r3, r3, #15
+ 220 0172 022B     		cmp	r3, #2
+ 221 0174 62D0     		beq	.L83
+ 222 0176 7E22     		movs	r2, #126
+ 223 0178 7F21     		movs	r1, #127
+ 224 017a 3046     		mov	r0, r6
+ 225 017c FFF7FEFF 		bl	_mmcsd_get_slice
+ 226 0180 98B1     		cbz	r0, .L31
+ 227 0182 04F14C01 		add	r1, r4, #76
+ 228 0186 0095     		str	r5, [sp]
+ARM GAS  /tmp/ccwsPTWR.s 			page 5
+
+
+ 229 0188 0623     		movs	r3, #6
+ 230 018a 4022     		movs	r2, #64
+ 231 018c 2046     		mov	r0, r4
+ 232 018e 0391     		str	r1, [sp, #12]
+ 233 0190 FFF7FEFF 		bl	sdc_lld_read_special
+ 234 0194 0028     		cmp	r0, #0
+ 235 0196 7FF44FAF 		bne	.L8
+ 236 019a B4F85830 		ldrh	r3, [r4, #88]	@ unaligned
+ 237 019e 0399     		ldr	r1, [sp, #12]
+ 238 01a0 5BBA     		rev16	r3, r3
+ 239 01a2 13F0020F 		tst	r3, #2
+ 240 01a6 40F09080 		bne	.L84
+ 241              	.L31:
+ 242 01aa 0021     		movs	r1, #0
+ 243              	.L29:
+ 244 01ac 2046     		mov	r0, r4
+ 245 01ae FFF7FEFF 		bl	sdc_lld_set_data_clk
+ 246 01b2 236B     		ldr	r3, [r4, #48]
+ 247 01b4 03F00F03 		and	r3, r3, #15
+ 248 01b8 022B     		cmp	r3, #2
+ 249 01ba 6CD0     		beq	.L85
+ 250              	.L32:
+ 251 01bc 3046     		mov	r0, r6
+ 252 01be FFF7FEFF 		bl	_mmcsd_get_capacity
+ 253 01c2 A062     		str	r0, [r4, #40]
+ 254              	.L34:
+ 255 01c4 04AB     		add	r3, sp, #16
+ 256 01c6 4FF40072 		mov	r2, #512
+ 257 01ca 1021     		movs	r1, #16
+ 258 01cc 2046     		mov	r0, r4
+ 259 01ce FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 260 01d2 0546     		mov	r5, r0
+ 261 01d4 0028     		cmp	r0, #0
+ 262 01d6 7FF42FAF 		bne	.L8
+ 263 01da 049B     		ldr	r3, [sp, #16]
+ 264 01dc 464E     		ldr	r6, .L87
+ 265 01de 3342     		tst	r3, r6
+ 266 01e0 7FF42AAF 		bne	.L8
+ 267 01e4 236B     		ldr	r3, [r4, #48]
+ 268 01e6 13F00E0F 		tst	r3, #14
+ 269 01ea 03F00F02 		and	r2, r3, #15
+ 270 01ee 34D1     		bne	.L86
+ 271 01f0 E36A     		ldr	r3, [r4, #44]
+ 272 01f2 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 273 01f4 F9B1     		cbz	r1, .L39
+ 274 01f6 0129     		cmp	r1, #1
+ 275 01f8 7FF41EAF 		bne	.L8
+ 276 01fc 2046     		mov	r0, r4
+ 277 01fe FFF7FEFF 		bl	sdc_lld_set_bus_mode
+ 278 0202 A26B     		ldr	r2, [r4, #56]
+ 279 0204 05AB     		add	r3, sp, #20
+ 280 0206 3721     		movs	r1, #55
+ 281 0208 2046     		mov	r0, r4
+ 282 020a FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 283 020e 0028     		cmp	r0, #0
+ 284 0210 7FF412AF 		bne	.L8
+ 285 0214 059B     		ldr	r3, [sp, #20]
+ARM GAS  /tmp/ccwsPTWR.s 			page 6
+
+
+ 286 0216 3342     		tst	r3, r6
+ 287 0218 7FF40EAF 		bne	.L8
+ 288 021c 05AB     		add	r3, sp, #20
+ 289 021e 0222     		movs	r2, #2
+ 290 0220 0621     		movs	r1, #6
+ 291 0222 2046     		mov	r0, r4
+ 292 0224 FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 293 0228 0028     		cmp	r0, #0
+ 294 022a 7FF405AF 		bne	.L8
+ 295 022e 059B     		ldr	r3, [sp, #20]
+ 296 0230 3342     		tst	r3, r6
+ 297 0232 7FF401AF 		bne	.L8
+ 298              	.L39:
+ 299 0236 0523     		movs	r3, #5
+ 300 0238 2371     		strb	r3, [r4, #4]
+ 301 023a 03E7     		b	.L44
+ 302              	.L83:
+ 303 023c 324A     		ldr	r2, .L87+16
+ 304 023e 05AB     		add	r3, sp, #20
+ 305 0240 0621     		movs	r1, #6
+ 306 0242 2046     		mov	r0, r4
+ 307 0244 FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 308 0248 0028     		cmp	r0, #0
+ 309 024a AED1     		bne	.L31
+ 310 024c 059B     		ldr	r3, [sp, #20]
+ 311 024e 2A49     		ldr	r1, .L87
+ 312 0250 1940     		ands	r1, r1, r3
+ 313 0252 B1FA81F1 		clz	r1, r1
+ 314 0256 4909     		lsrs	r1, r1, #5
+ 315 0258 A8E7     		b	.L29
+ 316              	.L86:
+ 317 025a 022A     		cmp	r2, #2
+ 318 025c 7FF4ECAE 		bne	.L8
+ 319 0260 E36A     		ldr	r3, [r4, #44]
+ 320 0262 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 321 0264 0129     		cmp	r1, #1
+ 322 0266 44D0     		beq	.L47
+ 323 0268 0229     		cmp	r1, #2
+ 324 026a 40D0     		beq	.L48
+ 325 026c 0029     		cmp	r1, #0
+ 326 026e E2D0     		beq	.L39
+ 327 0270 264E     		ldr	r6, .L87+20
+ 328              	.L40:
+ 329 0272 2046     		mov	r0, r4
+ 330 0274 FFF7FEFF 		bl	sdc_lld_set_bus_mode
+ 331 0278 05AB     		add	r3, sp, #20
+ 332 027a 3246     		mov	r2, r6
+ 333 027c 0621     		movs	r1, #6
+ 334 027e 2046     		mov	r0, r4
+ 335 0280 FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 336 0284 0028     		cmp	r0, #0
+ 337 0286 7FF4D7AE 		bne	.L8
+ 338 028a 059A     		ldr	r2, [sp, #20]
+ 339 028c 1A4B     		ldr	r3, .L87
+ 340 028e 1340     		ands	r3, r3, r2
+ 341 0290 002B     		cmp	r3, #0
+ 342 0292 D0D0     		beq	.L39
+ARM GAS  /tmp/ccwsPTWR.s 			page 7
+
+
+ 343 0294 D0E6     		b	.L8
+ 344              	.L85:
+ 345 0296 7E22     		movs	r2, #126
+ 346 0298 7F21     		movs	r1, #127
+ 347 029a 3046     		mov	r0, r6
+ 348 029c FFF7FEFF 		bl	_mmcsd_get_slice
+ 349 02a0 0128     		cmp	r0, #1
+ 350 02a2 8BD9     		bls	.L32
+ 351 02a4 0023     		movs	r3, #0
+ 352 02a6 04F14C05 		add	r5, r4, #76
+ 353 02aa 0093     		str	r3, [sp]
+ 354 02ac 4FF40072 		mov	r2, #512
+ 355 02b0 0823     		movs	r3, #8
+ 356 02b2 2946     		mov	r1, r5
+ 357 02b4 2046     		mov	r0, r4
+ 358 02b6 FFF7FEFF 		bl	sdc_lld_read_special
+ 359 02ba 0028     		cmp	r0, #0
+ 360 02bc 7FF4BCAE 		bne	.L8
+ 361 02c0 2846     		mov	r0, r5
+ 362 02c2 FFF7FEFF 		bl	_mmcsd_get_capacity_ext
+ 363 02c6 A062     		str	r0, [r4, #40]
+ 364 02c8 7CE7     		b	.L34
+ 365              	.L84:
+ 366 02ca 114B     		ldr	r3, .L87+24
+ 367 02cc 0093     		str	r3, [sp]
+ 368 02ce 4022     		movs	r2, #64
+ 369 02d0 0623     		movs	r3, #6
+ 370 02d2 2046     		mov	r0, r4
+ 371 02d4 FFF7FEFF 		bl	sdc_lld_read_special
+ 372 02d8 0028     		cmp	r0, #0
+ 373 02da 7FF4ADAE 		bne	.L8
+ 374 02de 94F85C10 		ldrb	r1, [r4, #92]	@ zero_extendqisi2
+ 375 02e2 01F00F01 		and	r1, r1, #15
+ 376 02e6 0F39     		subs	r1, r1, #15
+ 377 02e8 18BF     		it	ne
+ 378 02ea 0121     		movne	r1, #1
+ 379 02ec 5EE7     		b	.L29
+ 380              	.L48:
+ 381 02ee 094E     		ldr	r6, .L87+28
+ 382 02f0 BFE7     		b	.L40
+ 383              	.L47:
+ 384 02f2 094E     		ldr	r6, .L87+32
+ 385 02f4 BDE7     		b	.L40
+ 386              	.L88:
+ 387 02f6 00BF     		.align	2
+ 388              	.L87:
+ 389 02f8 08E0FFFD 		.word	-33562616
+ 390 02fc 0080FF50 		.word	1358921728
+ 391 0300 00001080 		.word	-2146435072
+ 392 0304 0080FFC0 		.word	-1056997376
+ 393 0308 0001B903 		.word	62456064
+ 394 030c 0000B703 		.word	62324736
+ 395 0310 F1FFFF80 		.word	-2130706447
+ 396 0314 0002B703 		.word	62325248
+ 397 0318 0001B703 		.word	62324992
+ 398              		.size	sdcConnect, .-sdcConnect
+ 399              		.section	.text.sdcRead,"ax",%progbits
+ARM GAS  /tmp/ccwsPTWR.s 			page 8
+
+
+ 400              		.align	1
+ 401              		.p2align 4,,15
+ 402              		.global	sdcRead
+ 403              		.syntax unified
+ 404              		.thumb
+ 405              		.thumb_func
+ 406              		.fpu fpv4-sp-d16
+ 407              		.type	sdcRead, %function
+ 408              	sdcRead:
+ 409              		@ args = 0, pretend = 0, frame = 0
+ 410              		@ frame_needed = 0, uses_anonymous_args = 0
+ 411 0000 38B5     		push	{r3, r4, r5, lr}
+ 412 0002 03F1FF3C 		add	ip, r3, #-1
+ 413 0006 856A     		ldr	r5, [r0, #40]
+ 414 0008 8C44     		add	ip, ip, r1
+ 415 000a AC45     		cmp	ip, r5
+ 416 000c 0446     		mov	r4, r0
+ 417 000e 05D9     		bls	.L90
+ 418 0010 436B     		ldr	r3, [r0, #52]
+ 419 0012 43F08003 		orr	r3, r3, #128
+ 420 0016 0120     		movs	r0, #1
+ 421 0018 6363     		str	r3, [r4, #52]
+ 422 001a 38BD     		pop	{r3, r4, r5, pc}
+ 423              	.L90:
+ 424 001c 4FF0060C 		mov	ip, #6
+ 425 0020 80F804C0 		strb	ip, [r0, #4]
+ 426 0024 FFF7FEFF 		bl	sdc_lld_read
+ 427 0028 0523     		movs	r3, #5
+ 428 002a 2371     		strb	r3, [r4, #4]
+ 429 002c 38BD     		pop	{r3, r4, r5, pc}
+ 430              		.size	sdcRead, .-sdcRead
+ 431 002e 00BF     		.section	.text.sdcWrite,"ax",%progbits
+ 432              		.align	1
+ 433              		.p2align 4,,15
+ 434              		.global	sdcWrite
+ 435              		.syntax unified
+ 436              		.thumb
+ 437              		.thumb_func
+ 438              		.fpu fpv4-sp-d16
+ 439              		.type	sdcWrite, %function
+ 440              	sdcWrite:
+ 441              		@ args = 0, pretend = 0, frame = 0
+ 442              		@ frame_needed = 0, uses_anonymous_args = 0
+ 443 0000 38B5     		push	{r3, r4, r5, lr}
+ 444 0002 03F1FF3C 		add	ip, r3, #-1
+ 445 0006 856A     		ldr	r5, [r0, #40]
+ 446 0008 8C44     		add	ip, ip, r1
+ 447 000a AC45     		cmp	ip, r5
+ 448 000c 0446     		mov	r4, r0
+ 449 000e 05D9     		bls	.L94
+ 450 0010 436B     		ldr	r3, [r0, #52]
+ 451 0012 43F08003 		orr	r3, r3, #128
+ 452 0016 0120     		movs	r0, #1
+ 453 0018 6363     		str	r3, [r4, #52]
+ 454 001a 38BD     		pop	{r3, r4, r5, pc}
+ 455              	.L94:
+ 456 001c 4FF0070C 		mov	ip, #7
+ARM GAS  /tmp/ccwsPTWR.s 			page 9
+
+
+ 457 0020 80F804C0 		strb	ip, [r0, #4]
+ 458 0024 FFF7FEFF 		bl	sdc_lld_write
+ 459 0028 0523     		movs	r3, #5
+ 460 002a 2371     		strb	r3, [r4, #4]
+ 461 002c 38BD     		pop	{r3, r4, r5, pc}
+ 462              		.size	sdcWrite, .-sdcWrite
+ 463 002e 00BF     		.section	.text.sdcSync,"ax",%progbits
+ 464              		.align	1
+ 465              		.p2align 4,,15
+ 466              		.global	sdcSync
+ 467              		.syntax unified
+ 468              		.thumb
+ 469              		.thumb_func
+ 470              		.fpu fpv4-sp-d16
+ 471              		.type	sdcSync, %function
+ 472              	sdcSync:
+ 473              		@ args = 0, pretend = 0, frame = 0
+ 474              		@ frame_needed = 0, uses_anonymous_args = 0
+ 475 0000 38B5     		push	{r3, r4, r5, lr}
+ 476 0002 0579     		ldrb	r5, [r0, #4]	@ zero_extendqisi2
+ 477 0004 052D     		cmp	r5, #5
+ 478 0006 01D0     		beq	.L101
+ 479 0008 0120     		movs	r0, #1
+ 480 000a 38BD     		pop	{r3, r4, r5, pc}
+ 481              	.L101:
+ 482 000c 0446     		mov	r4, r0
+ 483 000e 0823     		movs	r3, #8
+ 484 0010 0371     		strb	r3, [r0, #4]
+ 485 0012 FFF7FEFF 		bl	sdc_lld_sync
+ 486 0016 2571     		strb	r5, [r4, #4]
+ 487 0018 38BD     		pop	{r3, r4, r5, pc}
+ 488              		.size	sdcSync, .-sdcSync
+ 489 001a 00BF     		.section	.text._sdc_wait_for_transfer_state,"ax",%progbits
+ 490              		.align	1
+ 491              		.p2align 4,,15
+ 492              		.global	_sdc_wait_for_transfer_state
+ 493              		.syntax unified
+ 494              		.thumb
+ 495              		.thumb_func
+ 496              		.fpu fpv4-sp-d16
+ 497              		.type	_sdc_wait_for_transfer_state, %function
+ 498              	_sdc_wait_for_transfer_state:
+ 499              		@ args = 0, pretend = 0, frame = 8
+ 500              		@ frame_needed = 0, uses_anonymous_args = 0
+ 501 0000 30B5     		push	{r4, r5, lr}
+ 502 0002 114D     		ldr	r5, .L112
+ 503 0004 83B0     		sub	sp, sp, #12
+ 504 0006 0446     		mov	r4, r0
+ 505 0008 04E0     		b	.L104
+ 506              	.L111:
+ 507 000a BCF1020F 		cmp	ip, #2
+ 508 000e 16D8     		bhi	.L106
+ 509 0010 FFF7FEFF 		bl	chThdSleep
+ 510              	.L104:
+ 511 0014 01AB     		add	r3, sp, #4
+ 512 0016 A26B     		ldr	r2, [r4, #56]
+ 513 0018 0D21     		movs	r1, #13
+ARM GAS  /tmp/ccwsPTWR.s 			page 10
+
+
+ 514 001a 2046     		mov	r0, r4
+ 515 001c FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 516 0020 0346     		mov	r3, r0
+ 517 0022 0A20     		movs	r0, #10
+ 518 0024 43B9     		cbnz	r3, .L103
+ 519 0026 019A     		ldr	r2, [sp, #4]
+ 520 0028 C2F34321 		ubfx	r1, r2, #9, #4
+ 521 002c 2A42     		tst	r2, r5
+ 522 002e A1F1050C 		sub	ip, r1, #5
+ 523 0032 04D1     		bne	.L106
+ 524 0034 0429     		cmp	r1, #4
+ 525 0036 E8D1     		bne	.L111
+ 526              	.L103:
+ 527 0038 1846     		mov	r0, r3
+ 528 003a 03B0     		add	sp, sp, #12
+ 529              		@ sp needed
+ 530 003c 30BD     		pop	{r4, r5, pc}
+ 531              	.L106:
+ 532 003e 0123     		movs	r3, #1
+ 533 0040 1846     		mov	r0, r3
+ 534 0042 03B0     		add	sp, sp, #12
+ 535              		@ sp needed
+ 536 0044 30BD     		pop	{r4, r5, pc}
+ 537              	.L113:
+ 538 0046 00BF     		.align	2
+ 539              	.L112:
+ 540 0048 08E0FFFD 		.word	-33562616
+ 541              		.size	_sdc_wait_for_transfer_state, .-_sdc_wait_for_transfer_state
+ 542              		.section	.text.sdcDisconnect,"ax",%progbits
+ 543              		.align	1
+ 544              		.p2align 4,,15
+ 545              		.global	sdcDisconnect
+ 546              		.syntax unified
+ 547              		.thumb
+ 548              		.thumb_func
+ 549              		.fpu fpv4-sp-d16
+ 550              		.type	sdcDisconnect, %function
+ 551              	sdcDisconnect:
+ 552              		@ args = 0, pretend = 0, frame = 0
+ 553              		@ frame_needed = 0, uses_anonymous_args = 0
+ 554 0000 38B5     		push	{r3, r4, r5, lr}
+ 555 0002 0446     		mov	r4, r0
+ 556 0004 3023     		movs	r3, #48
+ 557              		.syntax unified
+ 558              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 559 0006 83F31188 		MSR basepri, r3
+ 560              	@ 0 "" 2
+ 561              		.thumb
+ 562              		.syntax unified
+ 563 000a FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 564 000e 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 565 0010 022B     		cmp	r3, #2
+ 566 0012 11D0     		beq	.L119
+ 567 0014 0423     		movs	r3, #4
+ 568 0016 2371     		strb	r3, [r4, #4]
+ 569 0018 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 570 001c 0023     		movs	r3, #0
+ARM GAS  /tmp/ccwsPTWR.s 			page 11
+
+
+ 571              		.syntax unified
+ 572              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 573 001e 83F31188 		MSR basepri, r3
+ 574              	@ 0 "" 2
+ 575              		.thumb
+ 576              		.syntax unified
+ 577 0022 2046     		mov	r0, r4
+ 578 0024 FFF7FEFF 		bl	_sdc_wait_for_transfer_state
+ 579 0028 0546     		mov	r5, r0
+ 580 002a 2046     		mov	r0, r4
+ 581 002c FFF7FEFF 		bl	sdc_lld_stop_clk
+ 582 0030 0223     		movs	r3, #2
+ 583 0032 2371     		strb	r3, [r4, #4]
+ 584 0034 2846     		mov	r0, r5
+ 585 0036 38BD     		pop	{r3, r4, r5, pc}
+ 586              	.L119:
+ 587 0038 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 588 003c 0025     		movs	r5, #0
+ 589              		.syntax unified
+ 590              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 591 003e 85F31188 		MSR basepri, r5
+ 592              	@ 0 "" 2
+ 593              		.thumb
+ 594              		.syntax unified
+ 595 0042 2846     		mov	r0, r5
+ 596 0044 38BD     		pop	{r3, r4, r5, pc}
+ 597              		.size	sdcDisconnect, .-sdcDisconnect
+ 598 0046 00BF     		.section	.text.sdcInit,"ax",%progbits
+ 599              		.align	1
+ 600              		.p2align 4,,15
+ 601              		.global	sdcInit
+ 602              		.syntax unified
+ 603              		.thumb
+ 604              		.thumb_func
+ 605              		.fpu fpv4-sp-d16
+ 606              		.type	sdcInit, %function
+ 607              	sdcInit:
+ 608              		@ args = 0, pretend = 0, frame = 0
+ 609              		@ frame_needed = 0, uses_anonymous_args = 0
+ 610              		@ link register save eliminated.
+ 611 0000 FFF7FEBF 		b	sdc_lld_init
+ 612              		.size	sdcInit, .-sdcInit
+ 613              		.section	.text.sdcObjectInit,"ax",%progbits
+ 614              		.align	1
+ 615              		.p2align 4,,15
+ 616              		.global	sdcObjectInit
+ 617              		.syntax unified
+ 618              		.thumb
+ 619              		.thumb_func
+ 620              		.fpu fpv4-sp-d16
+ 621              		.type	sdcObjectInit, %function
+ 622              	sdcObjectInit:
+ 623              		@ args = 0, pretend = 0, frame = 0
+ 624              		@ frame_needed = 0, uses_anonymous_args = 0
+ 625              		@ link register save eliminated.
+ 626 0000 0023     		movs	r3, #0
+ 627 0002 0449     		ldr	r1, .L122
+ARM GAS  /tmp/ccwsPTWR.s 			page 12
+
+
+ 628 0004 0160     		str	r1, [r0]
+ 629 0006 0122     		movs	r2, #1
+ 630 0008 C0E90A33 		strd	r3, r3, [r0, #40]
+ 631 000c 0271     		strb	r2, [r0, #4]
+ 632 000e 4363     		str	r3, [r0, #52]
+ 633 0010 7047     		bx	lr
+ 634              	.L123:
+ 635 0012 00BF     		.align	2
+ 636              	.L122:
+ 637 0014 00000000 		.word	.LANCHOR0
+ 638              		.size	sdcObjectInit, .-sdcObjectInit
+ 639              		.section	.text.sdcStart,"ax",%progbits
+ 640              		.align	1
+ 641              		.p2align 4,,15
+ 642              		.global	sdcStart
+ 643              		.syntax unified
+ 644              		.thumb
+ 645              		.thumb_func
+ 646              		.fpu fpv4-sp-d16
+ 647              		.type	sdcStart, %function
+ 648              	sdcStart:
+ 649              		@ args = 0, pretend = 0, frame = 0
+ 650              		@ frame_needed = 0, uses_anonymous_args = 0
+ 651 0000 38B5     		push	{r3, r4, r5, lr}
+ 652 0002 0446     		mov	r4, r0
+ 653 0004 0D46     		mov	r5, r1
+ 654 0006 3023     		movs	r3, #48
+ 655              		.syntax unified
+ 656              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 657 0008 83F31188 		MSR basepri, r3
+ 658              	@ 0 "" 2
+ 659              		.thumb
+ 660              		.syntax unified
+ 661 000c FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 662 0010 2046     		mov	r0, r4
+ 663 0012 E562     		str	r5, [r4, #44]
+ 664 0014 FFF7FEFF 		bl	sdc_lld_start
+ 665 0018 0223     		movs	r3, #2
+ 666 001a 2371     		strb	r3, [r4, #4]
+ 667 001c FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 668 0020 0020     		movs	r0, #0
+ 669              		.syntax unified
+ 670              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 671 0022 80F31188 		MSR basepri, r0
+ 672              	@ 0 "" 2
+ 673              		.thumb
+ 674              		.syntax unified
+ 675 0026 38BD     		pop	{r3, r4, r5, pc}
+ 676              		.size	sdcStart, .-sdcStart
+ 677              		.section	.text.sdcStop,"ax",%progbits
+ 678              		.align	1
+ 679              		.p2align 4,,15
+ 680              		.global	sdcStop
+ 681              		.syntax unified
+ 682              		.thumb
+ 683              		.thumb_func
+ 684              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccwsPTWR.s 			page 13
+
+
+ 685              		.type	sdcStop, %function
+ 686              	sdcStop:
+ 687              		@ args = 0, pretend = 0, frame = 0
+ 688              		@ frame_needed = 0, uses_anonymous_args = 0
+ 689 0000 38B5     		push	{r3, r4, r5, lr}
+ 690 0002 0446     		mov	r4, r0
+ 691 0004 3023     		movs	r3, #48
+ 692              		.syntax unified
+ 693              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 694 0006 83F31188 		MSR basepri, r3
+ 695              	@ 0 "" 2
+ 696              		.thumb
+ 697              		.syntax unified
+ 698 000a FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 699 000e 2046     		mov	r0, r4
+ 700 0010 FFF7FEFF 		bl	sdc_lld_stop
+ 701 0014 0025     		movs	r5, #0
+ 702 0016 0123     		movs	r3, #1
+ 703 0018 E562     		str	r5, [r4, #44]
+ 704 001a 2371     		strb	r3, [r4, #4]
+ 705 001c FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 706              		.syntax unified
+ 707              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 708 0020 85F31188 		MSR basepri, r5
+ 709              	@ 0 "" 2
+ 710              		.thumb
+ 711              		.syntax unified
+ 712 0024 38BD     		pop	{r3, r4, r5, pc}
+ 713              		.size	sdcStop, .-sdcStop
+ 714 0026 00BF     		.section	.text.sdcGetAndClearErrors,"ax",%progbits
+ 715              		.align	1
+ 716              		.p2align 4,,15
+ 717              		.global	sdcGetAndClearErrors
+ 718              		.syntax unified
+ 719              		.thumb
+ 720              		.thumb_func
+ 721              		.fpu fpv4-sp-d16
+ 722              		.type	sdcGetAndClearErrors, %function
+ 723              	sdcGetAndClearErrors:
+ 724              		@ args = 0, pretend = 0, frame = 8
+ 725              		@ frame_needed = 0, uses_anonymous_args = 0
+ 726 0000 30B5     		push	{r4, r5, lr}
+ 727 0002 3023     		movs	r3, #48
+ 728 0004 83B0     		sub	sp, sp, #12
+ 729 0006 0446     		mov	r4, r0
+ 730              		.syntax unified
+ 731              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 732 0008 83F31188 		MSR basepri, r3
+ 733              	@ 0 "" 2
+ 734              		.thumb
+ 735              		.syntax unified
+ 736 000c 0025     		movs	r5, #0
+ 737 000e FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 738 0012 606B     		ldr	r0, [r4, #52]
+ 739 0014 6563     		str	r5, [r4, #52]
+ 740 0016 0190     		str	r0, [sp, #4]
+ 741 0018 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ARM GAS  /tmp/ccwsPTWR.s 			page 14
+
+
+ 742              		.syntax unified
+ 743              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 744 001c 85F31188 		MSR basepri, r5
+ 745              	@ 0 "" 2
+ 746              		.thumb
+ 747              		.syntax unified
+ 748 0020 0198     		ldr	r0, [sp, #4]
+ 749 0022 03B0     		add	sp, sp, #12
+ 750              		@ sp needed
+ 751 0024 30BD     		pop	{r4, r5, pc}
+ 752              		.size	sdcGetAndClearErrors, .-sdcGetAndClearErrors
+ 753 0026 00BF     		.section	.text.sdcErase,"ax",%progbits
+ 754              		.align	1
+ 755              		.p2align 4,,15
+ 756              		.global	sdcErase
+ 757              		.syntax unified
+ 758              		.thumb
+ 759              		.thumb_func
+ 760              		.fpu fpv4-sp-d16
+ 761              		.type	sdcErase, %function
+ 762              	sdcErase:
+ 763              		@ args = 0, pretend = 0, frame = 8
+ 764              		@ frame_needed = 0, uses_anonymous_args = 0
+ 765 0000 70B5     		push	{r4, r5, r6, lr}
+ 766 0002 036B     		ldr	r3, [r0, #48]
+ 767 0004 0446     		mov	r4, r0
+ 768 0006 0720     		movs	r0, #7
+ 769 0008 DB06     		lsls	r3, r3, #27
+ 770 000a 82B0     		sub	sp, sp, #8
+ 771 000c 2071     		strb	r0, [r4, #4]
+ 772 000e 2046     		mov	r0, r4
+ 773 0010 0D46     		mov	r5, r1
+ 774 0012 1646     		mov	r6, r2
+ 775 0014 44BF     		itt	mi
+ 776 0016 4D02     		lslmi	r5, r1, #9
+ 777 0018 5602     		lslmi	r6, r2, #9
+ 778 001a FFF7FEFF 		bl	_sdc_wait_for_transfer_state
+ 779 001e 20B1     		cbz	r0, .L132
+ 780              	.L134:
+ 781 0020 0120     		movs	r0, #1
+ 782              	.L133:
+ 783 0022 0523     		movs	r3, #5
+ 784 0024 2371     		strb	r3, [r4, #4]
+ 785 0026 02B0     		add	sp, sp, #8
+ 786              		@ sp needed
+ 787 0028 70BD     		pop	{r4, r5, r6, pc}
+ 788              	.L132:
+ 789 002a 01AB     		add	r3, sp, #4
+ 790 002c 2A46     		mov	r2, r5
+ 791 002e 2021     		movs	r1, #32
+ 792 0030 2046     		mov	r0, r4
+ 793 0032 FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 794 0036 0028     		cmp	r0, #0
+ 795 0038 F2D1     		bne	.L134
+ 796 003a 019B     		ldr	r3, [sp, #4]
+ 797 003c 0D4D     		ldr	r5, .L139
+ 798 003e 2B42     		tst	r3, r5
+ARM GAS  /tmp/ccwsPTWR.s 			page 15
+
+
+ 799 0040 EED1     		bne	.L134
+ 800 0042 01AB     		add	r3, sp, #4
+ 801 0044 3246     		mov	r2, r6
+ 802 0046 2121     		movs	r1, #33
+ 803 0048 2046     		mov	r0, r4
+ 804 004a FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 805 004e 0028     		cmp	r0, #0
+ 806 0050 E6D1     		bne	.L134
+ 807 0052 019A     		ldr	r2, [sp, #4]
+ 808 0054 2A40     		ands	r2, r2, r5
+ 809 0056 E3D1     		bne	.L134
+ 810 0058 01AB     		add	r3, sp, #4
+ 811 005a 2621     		movs	r1, #38
+ 812 005c 2046     		mov	r0, r4
+ 813 005e FFF7FEFF 		bl	sdc_lld_send_cmd_short_crc
+ 814 0062 0028     		cmp	r0, #0
+ 815 0064 DCD1     		bne	.L134
+ 816 0066 019B     		ldr	r3, [sp, #4]
+ 817 0068 2B42     		tst	r3, r5
+ 818 006a D9D1     		bne	.L134
+ 819 006c 2046     		mov	r0, r4
+ 820 006e FFF7FEFF 		bl	_sdc_wait_for_transfer_state
+ 821 0072 D6E7     		b	.L133
+ 822              	.L140:
+ 823              		.align	2
+ 824              	.L139:
+ 825 0074 08E0FFFD 		.word	-33562616
+ 826              		.size	sdcErase, .-sdcErase
+ 827              		.section	.rodata.sdc_vmt,"a"
+ 828              		.align	2
+ 829              		.set	.LANCHOR0,. + 0
+ 830              		.type	sdc_vmt, %object
+ 831              		.size	sdc_vmt, 36
+ 832              	sdc_vmt:
+ 833 0000 00000000 		.word	0
+ 834 0004 00000000 		.word	sdc_lld_is_card_inserted
+ 835 0008 00000000 		.word	sdc_lld_is_write_protected
+ 836 000c 00000000 		.word	sdcConnect
+ 837 0010 00000000 		.word	sdcDisconnect
+ 838 0014 00000000 		.word	sdcRead
+ 839 0018 00000000 		.word	sdcWrite
+ 840 001c 00000000 		.word	sdcSync
+ 841 0020 00000000 		.word	sdcGetInfo
+ 842              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccwsPTWR.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_sdc.c
+     /tmp/ccwsPTWR.s:15     .text.sdcGetInfo:0000000000000000 $t
+     /tmp/ccwsPTWR.s:24     .text.sdcGetInfo:0000000000000000 sdcGetInfo
+     /tmp/ccwsPTWR.s:41     .text.sdcConnect:0000000000000000 $t
+     /tmp/ccwsPTWR.s:49     .text.sdcConnect:0000000000000000 sdcConnect
+     /tmp/ccwsPTWR.s:389    .text.sdcConnect:00000000000002f8 $d
+     /tmp/ccwsPTWR.s:400    .text.sdcRead:0000000000000000 $t
+     /tmp/ccwsPTWR.s:408    .text.sdcRead:0000000000000000 sdcRead
+     /tmp/ccwsPTWR.s:432    .text.sdcWrite:0000000000000000 $t
+     /tmp/ccwsPTWR.s:440    .text.sdcWrite:0000000000000000 sdcWrite
+     /tmp/ccwsPTWR.s:464    .text.sdcSync:0000000000000000 $t
+     /tmp/ccwsPTWR.s:472    .text.sdcSync:0000000000000000 sdcSync
+     /tmp/ccwsPTWR.s:490    .text._sdc_wait_for_transfer_state:0000000000000000 $t
+     /tmp/ccwsPTWR.s:498    .text._sdc_wait_for_transfer_state:0000000000000000 _sdc_wait_for_transfer_state
+     /tmp/ccwsPTWR.s:540    .text._sdc_wait_for_transfer_state:0000000000000048 $d
+     /tmp/ccwsPTWR.s:543    .text.sdcDisconnect:0000000000000000 $t
+     /tmp/ccwsPTWR.s:551    .text.sdcDisconnect:0000000000000000 sdcDisconnect
+     /tmp/ccwsPTWR.s:599    .text.sdcInit:0000000000000000 $t
+     /tmp/ccwsPTWR.s:607    .text.sdcInit:0000000000000000 sdcInit
+     /tmp/ccwsPTWR.s:614    .text.sdcObjectInit:0000000000000000 $t
+     /tmp/ccwsPTWR.s:622    .text.sdcObjectInit:0000000000000000 sdcObjectInit
+     /tmp/ccwsPTWR.s:637    .text.sdcObjectInit:0000000000000014 $d
+     /tmp/ccwsPTWR.s:640    .text.sdcStart:0000000000000000 $t
+     /tmp/ccwsPTWR.s:648    .text.sdcStart:0000000000000000 sdcStart
+     /tmp/ccwsPTWR.s:678    .text.sdcStop:0000000000000000 $t
+     /tmp/ccwsPTWR.s:686    .text.sdcStop:0000000000000000 sdcStop
+     /tmp/ccwsPTWR.s:715    .text.sdcGetAndClearErrors:0000000000000000 $t
+     /tmp/ccwsPTWR.s:723    .text.sdcGetAndClearErrors:0000000000000000 sdcGetAndClearErrors
+     /tmp/ccwsPTWR.s:754    .text.sdcErase:0000000000000000 $t
+     /tmp/ccwsPTWR.s:762    .text.sdcErase:0000000000000000 sdcErase
+     /tmp/ccwsPTWR.s:825    .text.sdcErase:0000000000000074 $d
+     /tmp/ccwsPTWR.s:828    .rodata.sdc_vmt:0000000000000000 $d
+     /tmp/ccwsPTWR.s:832    .rodata.sdc_vmt:0000000000000000 sdc_vmt
+
+UNDEFINED SYMBOLS
+sdc_lld_start_clk
+sdc_lld_send_cmd_none
+sdc_lld_send_cmd_short_crc
+sdc_lld_stop_clk
+sdc_lld_send_cmd_short
+chThdSleep
+sdc_lld_send_cmd_long_crc
+_mmcsd_get_slice
+sdc_lld_read_special
+sdc_lld_set_data_clk
+_mmcsd_get_capacity
+sdc_lld_set_bus_mode
+_mmcsd_get_capacity_ext
+sdc_lld_read
+sdc_lld_write
+sdc_lld_sync
+__stats_start_measure_crit_thd
+__stats_stop_measure_crit_thd
+sdc_lld_init
+sdc_lld_start
+sdc_lld_stop
+ARM GAS  /tmp/ccwsPTWR.s 			page 17
+
+
+sdc_lld_is_card_inserted
+sdc_lld_is_write_protected

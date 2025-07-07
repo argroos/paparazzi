@@ -1,0 +1,160 @@
+ARM GAS  /tmp/ccimahTS.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"sdio_arch.c"
+  13              		.text
+  14              		.section	.text.sdio_connect,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	sdio_connect
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	sdio_connect, %function
+  24              	sdio_connect:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  28 0002 0020     		movs	r0, #0
+  29 0004 FFF7FEFF 		bl	sdc_lld_is_card_inserted
+  30 0008 D0B1     		cbz	r0, .L2
+  31 000a 104F     		ldr	r7, .L16
+  32 000c 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+  33 000e 012B     		cmp	r3, #1
+  34 0010 0546     		mov	r5, r0
+  35 0012 16D0     		beq	.L3
+  36 0014 0E4E     		ldr	r6, .L16+4
+  37 0016 0324     		movs	r4, #3
+  38              	.L5:
+  39 0018 0021     		movs	r1, #0
+  40 001a 3046     		mov	r0, r6
+  41 001c FFF7FEFF 		bl	sdcStart
+  42 0020 3046     		mov	r0, r6
+  43 0022 FFF7FEFF 		bl	sdcConnect
+  44 0026 0346     		mov	r3, r0
+  45 0028 3046     		mov	r0, r6
+  46 002a 63B1     		cbz	r3, .L15
+  47 002c FFF7FEFF 		bl	sdcStop
+  48 0030 4FF47A70 		mov	r0, #1000
+  49 0034 FFF7FEFF 		bl	chThdSleep
+  50 0038 631E     		subs	r3, r4, #1
+  51 003a 13F0FF04 		ands	r4, r3, #255
+  52 003e EBD1     		bne	.L5
+  53              	.L2:
+  54 0040 0025     		movs	r5, #0
+  55              	.L3:
+  56 0042 2846     		mov	r0, r5
+  57 0044 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ARM GAS  /tmp/ccimahTS.s 			page 2
+
+
+  58              	.L15:
+  59 0046 0123     		movs	r3, #1
+  60 0048 3B70     		strb	r3, [r7]
+  61 004a FAE7     		b	.L3
+  62              	.L17:
+  63              		.align	2
+  64              	.L16:
+  65 004c 00000000 		.word	.LANCHOR0
+  66 0050 00000000 		.word	SDCD1
+  67              		.size	sdio_connect, .-sdio_connect
+  68              		.section	.text.sdio_disconnect,"ax",%progbits
+  69              		.align	1
+  70              		.p2align 4,,15
+  71              		.global	sdio_disconnect
+  72              		.syntax unified
+  73              		.thumb
+  74              		.thumb_func
+  75              		.fpu fpv4-sp-d16
+  76              		.type	sdio_disconnect, %function
+  77              	sdio_disconnect:
+  78              		@ args = 0, pretend = 0, frame = 0
+  79              		@ frame_needed = 0, uses_anonymous_args = 0
+  80 0000 38B5     		push	{r3, r4, r5, lr}
+  81 0002 094C     		ldr	r4, .L24
+  82 0004 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+  83 0006 0BB9     		cbnz	r3, .L23
+  84 0008 0120     		movs	r0, #1
+  85 000a 38BD     		pop	{r3, r4, r5, pc}
+  86              	.L23:
+  87 000c 0748     		ldr	r0, .L24+4
+  88 000e FFF7FEFF 		bl	sdcDisconnect
+  89 0012 0546     		mov	r5, r0
+  90 0014 28B9     		cbnz	r0, .L21
+  91 0016 0548     		ldr	r0, .L24+4
+  92 0018 FFF7FEFF 		bl	sdcStop
+  93 001c 2570     		strb	r5, [r4]
+  94 001e 0120     		movs	r0, #1
+  95 0020 38BD     		pop	{r3, r4, r5, pc}
+  96              	.L21:
+  97 0022 0020     		movs	r0, #0
+  98 0024 38BD     		pop	{r3, r4, r5, pc}
+  99              	.L25:
+ 100 0026 00BF     		.align	2
+ 101              	.L24:
+ 102 0028 00000000 		.word	.LANCHOR0
+ 103 002c 00000000 		.word	SDCD1
+ 104              		.size	sdio_disconnect, .-sdio_disconnect
+ 105              		.section	.text.is_card_inserted,"ax",%progbits
+ 106              		.align	1
+ 107              		.p2align 4,,15
+ 108              		.global	is_card_inserted
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 112              		.fpu fpv4-sp-d16
+ 113              		.type	is_card_inserted, %function
+ 114              	is_card_inserted:
+ARM GAS  /tmp/ccimahTS.s 			page 3
+
+
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              		@ link register save eliminated.
+ 118 0000 0020     		movs	r0, #0
+ 119 0002 FFF7FEBF 		b	sdc_lld_is_card_inserted
+ 120              		.size	is_card_inserted, .-is_card_inserted
+ 121 0006 00BF     		.section	.bss.cnxState,"aw",%nobits
+ 122              		.set	.LANCHOR0,. + 0
+ 123              		.type	cnxState, %object
+ 124              		.size	cnxState, 1
+ 125              	cnxState:
+ 126 0000 00       		.space	1
+ 127              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccimahTS.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sdio_arch.c
+     /tmp/ccimahTS.s:15     .text.sdio_connect:0000000000000000 $t
+     /tmp/ccimahTS.s:24     .text.sdio_connect:0000000000000000 sdio_connect
+     /tmp/ccimahTS.s:65     .text.sdio_connect:000000000000004c $d
+     /tmp/ccimahTS.s:69     .text.sdio_disconnect:0000000000000000 $t
+     /tmp/ccimahTS.s:77     .text.sdio_disconnect:0000000000000000 sdio_disconnect
+     /tmp/ccimahTS.s:102    .text.sdio_disconnect:0000000000000028 $d
+     /tmp/ccimahTS.s:106    .text.is_card_inserted:0000000000000000 $t
+     /tmp/ccimahTS.s:114    .text.is_card_inserted:0000000000000000 is_card_inserted
+     /tmp/ccimahTS.s:125    .bss.cnxState:0000000000000000 cnxState
+     /tmp/ccimahTS.s:126    .bss.cnxState:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+sdc_lld_is_card_inserted
+sdcStart
+sdcConnect
+sdcStop
+chThdSleep
+SDCD1
+sdcDisconnect

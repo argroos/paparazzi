@@ -1,0 +1,27 @@
+/home/argroos/paparazzi/var/aircrafts/Bixler/sim/firmwares/fixedwing/autopilot_utils.o: \
+ firmwares/fixedwing/autopilot_utils.c \
+ /home/argroos/paparazzi/sw/airborne/firmwares/fixedwing/autopilot_utils.h \
+ /home/argroos/paparazzi/sw/include/std.h \
+ /home/argroos/paparazzi/sw/include/message_pragmas.h \
+ /home/argroos/paparazzi/var/aircrafts/Bixler/sim/generated/airframe.h \
+ /home/argroos/paparazzi/sw/airborne/modules/actuators/actuators_default.h \
+ /home/argroos/paparazzi/sw/airborne/boards/pc_sim.h \
+ /home/argroos/paparazzi/sw/airborne/peripherals/video_device.h \
+ /home/argroos/paparazzi/sw/airborne/modules/computer_vision/lib/vision/image.h \
+ /home/argroos/paparazzi/sw/airborne/state.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_algebra_int.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_algebra.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_trig_int.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_algebra_float.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_algebra.h \
+ /home/argroos/paparazzi/sw/include/message_pragmas.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_geodetic_int.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_geodetic.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_algebra_int.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_geodetic_float.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_algebra_float.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_orientation_conversion.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_algebra_int.h \
+ /home/argroos/paparazzi/sw/airborne/math/pprz_algebra_float.h \
+ /home/argroos/paparazzi/sw/airborne/modules/actuators/actuators_pwm.h \
+ /home/argroos/paparazzi/sw/airborne/arch/sim/modules/actuators/actuators_pwm_arch.h

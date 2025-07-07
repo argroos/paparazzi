@@ -1,0 +1,558 @@
+ARM GAS  /tmp/ccUUWLcG.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"msg_queue.c"
+  13              		.text
+  14              		.section	.text.msgqueue_init,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	msgqueue_init
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	msgqueue_init, %function
+  24              	msgqueue_init:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  28 0002 1446     		mov	r4, r2
+  29 0004 1D46     		mov	r5, r3
+  30 0006 0646     		mov	r6, r0
+  31 0008 1A46     		mov	r2, r3
+  32 000a 0F46     		mov	r7, r1
+  33 000c 2146     		mov	r1, r4
+  34 000e FFF7FEFF 		bl	chMBObjectInit
+  35 0012 AA00     		lsls	r2, r5, #2
+  36 0014 0021     		movs	r1, #0
+  37 0016 2046     		mov	r0, r4
+  38 0018 FFF7FEFF 		bl	memset
+  39 001c B762     		str	r7, [r6, #40]
+  40 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  41              		.size	msgqueue_init, .-msgqueue_init
+  42              		.section	.text.msgqueue_is_full,"ax",%progbits
+  43              		.align	1
+  44              		.p2align 4,,15
+  45              		.global	msgqueue_is_full
+  46              		.syntax unified
+  47              		.thumb
+  48              		.thumb_func
+  49              		.fpu fpv4-sp-d16
+  50              		.type	msgqueue_is_full, %function
+  51              	msgqueue_is_full:
+  52              		@ args = 0, pretend = 0, frame = 8
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  54 0000 10B5     		push	{r4, lr}
+  55 0002 3023     		movs	r3, #48
+  56 0004 82B0     		sub	sp, sp, #8
+  57 0006 0446     		mov	r4, r0
+ARM GAS  /tmp/ccUUWLcG.s 			page 2
+
+
+  58              		.syntax unified
+  59              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  60 0008 83F31188 		MSR basepri, r3
+  61              	@ 0 "" 2
+  62              		.thumb
+  63              		.syntax unified
+  64 000c FFF7FEFF 		bl	__stats_start_measure_crit_thd
+  65 0010 D4E90013 		ldrd	r1, r3, [r4]
+  66 0014 2269     		ldr	r2, [r4, #16]
+  67 0016 5B1A     		subs	r3, r3, r1
+  68 0018 B2EBA30F 		cmp	r2, r3, asr #2
+  69 001c 0CBF     		ite	eq
+  70 001e 0120     		moveq	r0, #1
+  71 0020 0020     		movne	r0, #0
+  72 0022 0190     		str	r0, [sp, #4]
+  73 0024 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+  74 0028 0023     		movs	r3, #0
+  75              		.syntax unified
+  76              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  77 002a 83F31188 		MSR basepri, r3
+  78              	@ 0 "" 2
+  79              		.thumb
+  80              		.syntax unified
+  81 002e 0198     		ldr	r0, [sp, #4]
+  82 0030 02B0     		add	sp, sp, #8
+  83              		@ sp needed
+  84 0032 10BD     		pop	{r4, pc}
+  85              		.size	msgqueue_is_full, .-msgqueue_is_full
+  86              		.section	.text.msgqueue_is_empty,"ax",%progbits
+  87              		.align	1
+  88              		.p2align 4,,15
+  89              		.global	msgqueue_is_empty
+  90              		.syntax unified
+  91              		.thumb
+  92              		.thumb_func
+  93              		.fpu fpv4-sp-d16
+  94              		.type	msgqueue_is_empty, %function
+  95              	msgqueue_is_empty:
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98 0000 10B5     		push	{r4, lr}
+  99 0002 3023     		movs	r3, #48
+ 100 0004 0446     		mov	r4, r0
+ 101              		.syntax unified
+ 102              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 103 0006 83F31188 		MSR basepri, r3
+ 104              	@ 0 "" 2
+ 105              		.thumb
+ 106              		.syntax unified
+ 107 000a FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 108 000e 2469     		ldr	r4, [r4, #16]
+ 109 0010 B4FA84F4 		clz	r4, r4
+ 110 0014 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 111 0018 6409     		lsrs	r4, r4, #5
+ 112 001a 0023     		movs	r3, #0
+ 113              		.syntax unified
+ 114              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ARM GAS  /tmp/ccUUWLcG.s 			page 3
+
+
+ 115 001c 83F31188 		MSR basepri, r3
+ 116              	@ 0 "" 2
+ 117              		.thumb
+ 118              		.syntax unified
+ 119 0020 2046     		mov	r0, r4
+ 120 0022 10BD     		pop	{r4, pc}
+ 121              		.size	msgqueue_is_empty, .-msgqueue_is_empty
+ 122              		.section	.text.msgqueue_send,"ax",%progbits
+ 123              		.align	1
+ 124              		.p2align 4,,15
+ 125              		.global	msgqueue_send
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.fpu fpv4-sp-d16
+ 130              		.type	msgqueue_send, %function
+ 131              	msgqueue_send:
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 135 0002 0746     		mov	r7, r0
+ 136 0004 1048     		ldr	r0, .L17
+ 137 0006 0E46     		mov	r6, r1
+ 138 0008 1446     		mov	r4, r2
+ 139 000a 1D46     		mov	r5, r3
+ 140 000c FFF7FEFF 		bl	tlsf_get_heap_addr
+ 141 0010 0021     		movs	r1, #0
+ 142 0012 301A     		subs	r0, r6, r0
+ 143 0014 60F30F01 		bfi	r1, r0, #0, #16
+ 144 0018 64F31F41 		bfi	r1, r4, #16, #16
+ 145 001c 35B9     		cbnz	r5, .L9
+ 146 001e 2A46     		mov	r2, r5
+ 147 0020 3846     		mov	r0, r7
+ 148 0022 FFF7FEFF 		bl	chMBPostTimeout
+ 149 0026 38B9     		cbnz	r0, .L10
+ 150              	.L12:
+ 151 0028 2046     		mov	r0, r4
+ 152 002a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 153              	.L9:
+ 154 002c 0022     		movs	r2, #0
+ 155 002e 3846     		mov	r0, r7
+ 156 0030 FFF7FEFF 		bl	chMBPostAheadTimeout
+ 157 0034 0028     		cmp	r0, #0
+ 158 0036 F7D0     		beq	.L12
+ 159              	.L10:
+ 160 0038 B86A     		ldr	r0, [r7, #40]
+ 161 003a 3146     		mov	r1, r6
+ 162 003c FFF7FEFF 		bl	tlsf_free_r
+ 163 0040 6FF06300 		mvn	r0, #99
+ 164 0044 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 165              	.L18:
+ 166 0046 00BF     		.align	2
+ 167              	.L17:
+ 168 0048 00000000 		.word	ccmHeap
+ 169              		.size	msgqueue_send, .-msgqueue_send
+ 170              		.section	.text.msgqueue_send_timeout,"ax",%progbits
+ 171              		.align	1
+ARM GAS  /tmp/ccUUWLcG.s 			page 4
+
+
+ 172              		.p2align 4,,15
+ 173              		.global	msgqueue_send_timeout
+ 174              		.syntax unified
+ 175              		.thumb
+ 176              		.thumb_func
+ 177              		.fpu fpv4-sp-d16
+ 178              		.type	msgqueue_send_timeout, %function
+ 179              	msgqueue_send_timeout:
+ 180              		@ args = 4, pretend = 0, frame = 0
+ 181              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 183 0002 0646     		mov	r6, r0
+ 184 0004 0F48     		ldr	r0, .L28
+ 185 0006 0D46     		mov	r5, r1
+ 186 0008 1446     		mov	r4, r2
+ 187 000a 1F46     		mov	r7, r3
+ 188 000c FFF7FEFF 		bl	tlsf_get_heap_addr
+ 189 0010 0021     		movs	r1, #0
+ 190 0012 281A     		subs	r0, r5, r0
+ 191 0014 60F30F01 		bfi	r1, r0, #0, #16
+ 192 0018 069A     		ldr	r2, [sp, #24]
+ 193 001a 64F31F41 		bfi	r1, r4, #16, #16
+ 194 001e 3046     		mov	r0, r6
+ 195 0020 27B9     		cbnz	r7, .L20
+ 196 0022 FFF7FEFF 		bl	chMBPostTimeout
+ 197 0026 28B9     		cbnz	r0, .L21
+ 198              	.L23:
+ 199 0028 2046     		mov	r0, r4
+ 200 002a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 201              	.L20:
+ 202 002c FFF7FEFF 		bl	chMBPostAheadTimeout
+ 203 0030 0028     		cmp	r0, #0
+ 204 0032 F9D0     		beq	.L23
+ 205              	.L21:
+ 206 0034 B06A     		ldr	r0, [r6, #40]
+ 207 0036 2946     		mov	r1, r5
+ 208 0038 FFF7FEFF 		bl	tlsf_free_r
+ 209 003c 6FF06300 		mvn	r0, #99
+ 210 0040 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 211              	.L29:
+ 212 0042 00BF     		.align	2
+ 213              	.L28:
+ 214 0044 00000000 		.word	ccmHeap
+ 215              		.size	msgqueue_send_timeout, .-msgqueue_send_timeout
+ 216              		.section	.text.msgqueue_copy_send_timeout,"ax",%progbits
+ 217              		.align	1
+ 218              		.p2align 4,,15
+ 219              		.global	msgqueue_copy_send_timeout
+ 220              		.syntax unified
+ 221              		.thumb
+ 222              		.thumb_func
+ 223              		.fpu fpv4-sp-d16
+ 224              		.type	msgqueue_copy_send_timeout, %function
+ 225              	msgqueue_copy_send_timeout:
+ 226              		@ args = 4, pretend = 0, frame = 8
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 228 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ARM GAS  /tmp/ccUUWLcG.s 			page 5
+
+
+ 229 0004 82B0     		sub	sp, sp, #8
+ 230 0006 0546     		mov	r5, r0
+ 231 0008 8846     		mov	r8, r1
+ 232 000a 0E48     		ldr	r0, .L33
+ 233 000c 089F     		ldr	r7, [sp, #32]
+ 234 000e 0192     		str	r2, [sp, #4]
+ 235 0010 1146     		mov	r1, r2
+ 236 0012 1E46     		mov	r6, r3
+ 237 0014 FFF7FEFF 		bl	tlsf_malloc_r
+ 238 0018 70B1     		cbz	r0, .L31
+ 239 001a 019A     		ldr	r2, [sp, #4]
+ 240 001c 4146     		mov	r1, r8
+ 241 001e 0446     		mov	r4, r0
+ 242 0020 FFF7FEFF 		bl	memcpy
+ 243 0024 019A     		ldr	r2, [sp, #4]
+ 244 0026 0897     		str	r7, [sp, #32]
+ 245 0028 3346     		mov	r3, r6
+ 246 002a 2146     		mov	r1, r4
+ 247 002c 2846     		mov	r0, r5
+ 248 002e 02B0     		add	sp, sp, #8
+ 249              		@ sp needed
+ 250 0030 BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 251 0034 FFF7FEBF 		b	msgqueue_send_timeout
+ 252              	.L31:
+ 253 0038 6FF06300 		mvn	r0, #99
+ 254 003c 02B0     		add	sp, sp, #8
+ 255              		@ sp needed
+ 256 003e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 257              	.L34:
+ 258 0042 00BF     		.align	2
+ 259              	.L33:
+ 260 0044 00000000 		.word	ccmHeap
+ 261              		.size	msgqueue_copy_send_timeout, .-msgqueue_copy_send_timeout
+ 262              		.section	.text.msgqueue_copy_send,"ax",%progbits
+ 263              		.align	1
+ 264              		.p2align 4,,15
+ 265              		.global	msgqueue_copy_send
+ 266              		.syntax unified
+ 267              		.thumb
+ 268              		.thumb_func
+ 269              		.fpu fpv4-sp-d16
+ 270              		.type	msgqueue_copy_send, %function
+ 271              	msgqueue_copy_send:
+ 272              		@ args = 0, pretend = 0, frame = 8
+ 273              		@ frame_needed = 0, uses_anonymous_args = 0
+ 274 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 275 0002 85B0     		sub	sp, sp, #20
+ 276 0004 0E46     		mov	r6, r1
+ 277 0006 0746     		mov	r7, r0
+ 278 0008 1146     		mov	r1, r2
+ 279 000a 0C48     		ldr	r0, .L39
+ 280 000c 0392     		str	r2, [sp, #12]
+ 281 000e 1D46     		mov	r5, r3
+ 282 0010 FFF7FEFF 		bl	tlsf_malloc_r
+ 283 0014 70B1     		cbz	r0, .L37
+ 284 0016 039A     		ldr	r2, [sp, #12]
+ 285 0018 3146     		mov	r1, r6
+ARM GAS  /tmp/ccUUWLcG.s 			page 6
+
+
+ 286 001a 0446     		mov	r4, r0
+ 287 001c FFF7FEFF 		bl	memcpy
+ 288 0020 0023     		movs	r3, #0
+ 289 0022 0093     		str	r3, [sp]
+ 290 0024 039A     		ldr	r2, [sp, #12]
+ 291 0026 2B46     		mov	r3, r5
+ 292 0028 2146     		mov	r1, r4
+ 293 002a 3846     		mov	r0, r7
+ 294 002c FFF7FEFF 		bl	msgqueue_send_timeout
+ 295              	.L35:
+ 296 0030 05B0     		add	sp, sp, #20
+ 297              		@ sp needed
+ 298 0032 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 299              	.L37:
+ 300 0034 6FF06300 		mvn	r0, #99
+ 301 0038 FAE7     		b	.L35
+ 302              	.L40:
+ 303 003a 00BF     		.align	2
+ 304              	.L39:
+ 305 003c 00000000 		.word	ccmHeap
+ 306              		.size	msgqueue_copy_send, .-msgqueue_copy_send
+ 307              		.section	.text.msgqueue_pop,"ax",%progbits
+ 308              		.align	1
+ 309              		.p2align 4,,15
+ 310              		.global	msgqueue_pop
+ 311              		.syntax unified
+ 312              		.thumb
+ 313              		.thumb_func
+ 314              		.fpu fpv4-sp-d16
+ 315              		.type	msgqueue_pop, %function
+ 316              	msgqueue_pop:
+ 317              		@ args = 0, pretend = 0, frame = 8
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 319 0000 30B5     		push	{r4, r5, lr}
+ 320 0002 83B0     		sub	sp, sp, #12
+ 321 0004 0023     		movs	r3, #0
+ 322 0006 0446     		mov	r4, r0
+ 323 0008 0D46     		mov	r5, r1
+ 324 000a 0193     		str	r3, [sp, #4]
+ 325              	.L42:
+ 326 000c 4FF0FF32 		mov	r2, #-1
+ 327 0010 01A9     		add	r1, sp, #4
+ 328 0012 2046     		mov	r0, r4
+ 329 0014 FFF7FEFF 		bl	chMBFetchTimeout
+ 330 0018 831C     		adds	r3, r0, #2
+ 331 001a F7D0     		beq	.L42
+ 332 001c 50B9     		cbnz	r0, .L44
+ 333 001e 0748     		ldr	r0, .L48
+ 334 0020 BDF80440 		ldrh	r4, [sp, #4]
+ 335 0024 FFF7FEFF 		bl	tlsf_get_heap_addr
+ 336 0028 0444     		add	r4, r4, r0
+ 337 002a BDF80600 		ldrh	r0, [sp, #6]
+ 338 002e 2C60     		str	r4, [r5]
+ 339              	.L41:
+ 340 0030 03B0     		add	sp, sp, #12
+ 341              		@ sp needed
+ 342 0032 30BD     		pop	{r4, r5, pc}
+ARM GAS  /tmp/ccUUWLcG.s 			page 7
+
+
+ 343              	.L44:
+ 344 0034 6FF06100 		mvn	r0, #97
+ 345 0038 FAE7     		b	.L41
+ 346              	.L49:
+ 347 003a 00BF     		.align	2
+ 348              	.L48:
+ 349 003c 00000000 		.word	ccmHeap
+ 350              		.size	msgqueue_pop, .-msgqueue_pop
+ 351              		.section	.text.msgqueue_pop_timeout,"ax",%progbits
+ 352              		.align	1
+ 353              		.p2align 4,,15
+ 354              		.global	msgqueue_pop_timeout
+ 355              		.syntax unified
+ 356              		.thumb
+ 357              		.thumb_func
+ 358              		.fpu fpv4-sp-d16
+ 359              		.type	msgqueue_pop_timeout, %function
+ 360              	msgqueue_pop_timeout:
+ 361              		@ args = 0, pretend = 0, frame = 8
+ 362              		@ frame_needed = 0, uses_anonymous_args = 0
+ 363 0000 70B5     		push	{r4, r5, r6, lr}
+ 364 0002 82B0     		sub	sp, sp, #8
+ 365 0004 0023     		movs	r3, #0
+ 366 0006 0546     		mov	r5, r0
+ 367 0008 0E46     		mov	r6, r1
+ 368 000a 1446     		mov	r4, r2
+ 369 000c 0193     		str	r3, [sp, #4]
+ 370              	.L51:
+ 371 000e 2246     		mov	r2, r4
+ 372 0010 01A9     		add	r1, sp, #4
+ 373 0012 2846     		mov	r0, r5
+ 374 0014 FFF7FEFF 		bl	chMBFetchTimeout
+ 375 0018 831C     		adds	r3, r0, #2
+ 376 001a F8D0     		beq	.L51
+ 377 001c 50B9     		cbnz	r0, .L53
+ 378 001e 0748     		ldr	r0, .L57
+ 379 0020 BDF80440 		ldrh	r4, [sp, #4]
+ 380 0024 FFF7FEFF 		bl	tlsf_get_heap_addr
+ 381 0028 0444     		add	r4, r4, r0
+ 382 002a BDF80600 		ldrh	r0, [sp, #6]
+ 383 002e 3460     		str	r4, [r6]
+ 384              	.L50:
+ 385 0030 02B0     		add	sp, sp, #8
+ 386              		@ sp needed
+ 387 0032 70BD     		pop	{r4, r5, r6, pc}
+ 388              	.L53:
+ 389 0034 6FF06100 		mvn	r0, #97
+ 390 0038 FAE7     		b	.L50
+ 391              	.L58:
+ 392 003a 00BF     		.align	2
+ 393              	.L57:
+ 394 003c 00000000 		.word	ccmHeap
+ 395              		.size	msgqueue_pop_timeout, .-msgqueue_pop_timeout
+ 396              		.section	.text.msgqueue_strerror,"ax",%progbits
+ 397              		.align	1
+ 398              		.p2align 4,,15
+ 399              		.global	msgqueue_strerror
+ARM GAS  /tmp/ccUUWLcG.s 			page 8
+
+
+ 400              		.syntax unified
+ 401              		.thumb
+ 402              		.thumb_func
+ 403              		.fpu fpv4-sp-d16
+ 404              		.type	msgqueue_strerror, %function
+ 405              	msgqueue_strerror:
+ 406              		@ args = 0, pretend = 0, frame = 0
+ 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 408              		@ link register save eliminated.
+ 409 0000 6430     		adds	r0, r0, #100
+ 410 0002 0628     		cmp	r0, #6
+ 411 0004 024B     		ldr	r3, .L60
+ 412 0006 28BF     		it	cs
+ 413 0008 0620     		movcs	r0, #6
+ 414 000a 53F82000 		ldr	r0, [r3, r0, lsl #2]
+ 415 000e 7047     		bx	lr
+ 416              	.L61:
+ 417              		.align	2
+ 418              	.L60:
+ 419 0010 00000000 		.word	.LANCHOR0
+ 420              		.size	msgqueue_strerror, .-msgqueue_strerror
+ 421              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 422              		.align	2
+ 423              	.LC0:
+ 424 0000 4D736751 		.ascii	"MsgQueue_MAILBOX_FULL\000"
+ 424      75657565 
+ 424      5F4D4149 
+ 424      4C424F58 
+ 424      5F46554C 
+ 425 0016 0000     		.align	2
+ 426              	.LC1:
+ 427 0018 4D736751 		.ascii	"MsgQueue_MAILBOX_FAIL\000"
+ 427      75657565 
+ 427      5F4D4149 
+ 427      4C424F58 
+ 427      5F464149 
+ 428 002e 0000     		.align	2
+ 429              	.LC2:
+ 430 0030 4D736751 		.ascii	"MsgQueue_MAILBOX_TIMEOUT\000"
+ 430      75657565 
+ 430      5F4D4149 
+ 430      4C424F58 
+ 430      5F54494D 
+ 431 0049 000000   		.align	2
+ 432              	.LC3:
+ 433 004c 4D736751 		.ascii	"MsgQueue_MAILBOX_NOT_EMPTY\000"
+ 433      75657565 
+ 433      5F4D4149 
+ 433      4C424F58 
+ 433      5F4E4F54 
+ 434 0067 00       		.align	2
+ 435              	.LC4:
+ 436 0068 4D736751 		.ascii	"MsgQueue_OK\000"
+ 436      75657565 
+ 436      5F4F4B00 
+ 437              		.align	2
+ 438              	.LC5:
+ARM GAS  /tmp/ccUUWLcG.s 			page 9
+
+
+ 439 0074 4D736751 		.ascii	"MsgQueue_INVALID_PTR\000"
+ 439      75657565 
+ 439      5F494E56 
+ 439      414C4944 
+ 439      5F505452 
+ 440 0089 000000   		.align	2
+ 441              	.LC6:
+ 442 008c 4D736751 		.ascii	"MsgQueue_INVALID_ERRNO\000"
+ 442      75657565 
+ 442      5F494E56 
+ 442      414C4944 
+ 442      5F455252 
+ 443              		.section	.rodata._strerror,"a"
+ 444              		.align	2
+ 445              		.set	.LANCHOR0,. + 0
+ 446              		.type	_strerror, %object
+ 447              		.size	_strerror, 28
+ 448              	_strerror:
+ 449 0000 00000000 		.word	.LC0
+ 450 0004 18000000 		.word	.LC1
+ 451 0008 30000000 		.word	.LC2
+ 452 000c 4C000000 		.word	.LC3
+ 453 0010 68000000 		.word	.LC4
+ 454 0014 74000000 		.word	.LC5
+ 455 0018 8C000000 		.word	.LC6
+ 456              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccUUWLcG.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 msg_queue.c
+     /tmp/ccUUWLcG.s:15     .text.msgqueue_init:0000000000000000 $t
+     /tmp/ccUUWLcG.s:24     .text.msgqueue_init:0000000000000000 msgqueue_init
+     /tmp/ccUUWLcG.s:43     .text.msgqueue_is_full:0000000000000000 $t
+     /tmp/ccUUWLcG.s:51     .text.msgqueue_is_full:0000000000000000 msgqueue_is_full
+     /tmp/ccUUWLcG.s:87     .text.msgqueue_is_empty:0000000000000000 $t
+     /tmp/ccUUWLcG.s:95     .text.msgqueue_is_empty:0000000000000000 msgqueue_is_empty
+     /tmp/ccUUWLcG.s:123    .text.msgqueue_send:0000000000000000 $t
+     /tmp/ccUUWLcG.s:131    .text.msgqueue_send:0000000000000000 msgqueue_send
+     /tmp/ccUUWLcG.s:168    .text.msgqueue_send:0000000000000048 $d
+     /tmp/ccUUWLcG.s:171    .text.msgqueue_send_timeout:0000000000000000 $t
+     /tmp/ccUUWLcG.s:179    .text.msgqueue_send_timeout:0000000000000000 msgqueue_send_timeout
+     /tmp/ccUUWLcG.s:214    .text.msgqueue_send_timeout:0000000000000044 $d
+     /tmp/ccUUWLcG.s:217    .text.msgqueue_copy_send_timeout:0000000000000000 $t
+     /tmp/ccUUWLcG.s:225    .text.msgqueue_copy_send_timeout:0000000000000000 msgqueue_copy_send_timeout
+     /tmp/ccUUWLcG.s:260    .text.msgqueue_copy_send_timeout:0000000000000044 $d
+     /tmp/ccUUWLcG.s:263    .text.msgqueue_copy_send:0000000000000000 $t
+     /tmp/ccUUWLcG.s:271    .text.msgqueue_copy_send:0000000000000000 msgqueue_copy_send
+     /tmp/ccUUWLcG.s:305    .text.msgqueue_copy_send:000000000000003c $d
+     /tmp/ccUUWLcG.s:308    .text.msgqueue_pop:0000000000000000 $t
+     /tmp/ccUUWLcG.s:316    .text.msgqueue_pop:0000000000000000 msgqueue_pop
+     /tmp/ccUUWLcG.s:349    .text.msgqueue_pop:000000000000003c $d
+     /tmp/ccUUWLcG.s:352    .text.msgqueue_pop_timeout:0000000000000000 $t
+     /tmp/ccUUWLcG.s:360    .text.msgqueue_pop_timeout:0000000000000000 msgqueue_pop_timeout
+     /tmp/ccUUWLcG.s:394    .text.msgqueue_pop_timeout:000000000000003c $d
+     /tmp/ccUUWLcG.s:397    .text.msgqueue_strerror:0000000000000000 $t
+     /tmp/ccUUWLcG.s:405    .text.msgqueue_strerror:0000000000000000 msgqueue_strerror
+     /tmp/ccUUWLcG.s:419    .text.msgqueue_strerror:0000000000000010 $d
+     /tmp/ccUUWLcG.s:422    .rodata.str1.4:0000000000000000 $d
+     /tmp/ccUUWLcG.s:444    .rodata._strerror:0000000000000000 $d
+     /tmp/ccUUWLcG.s:448    .rodata._strerror:0000000000000000 _strerror
+
+UNDEFINED SYMBOLS
+chMBObjectInit
+memset
+__stats_start_measure_crit_thd
+__stats_stop_measure_crit_thd
+tlsf_get_heap_addr
+chMBPostTimeout
+chMBPostAheadTimeout
+tlsf_free_r
+ccmHeap
+tlsf_malloc_r
+memcpy
+chMBFetchTimeout

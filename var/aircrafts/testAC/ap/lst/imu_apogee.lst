@@ -1,0 +1,267 @@
+ARM GAS  /tmp/cci20fFA.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"imu_apogee.c"
+  13              		.text
+  14              		.section	.text.configure_baro_slave,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	configure_baro_slave
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	configure_baro_slave, %function
+  24              	configure_baro_slave:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 0120     		movs	r0, #1
+  29 0002 7047     		bx	lr
+  30              		.size	configure_baro_slave, .-configure_baro_slave
+  31              		.section	.text.imu_apogee_init,"ax",%progbits
+  32              		.align	1
+  33              		.p2align 4,,15
+  34              		.global	imu_apogee_init
+  35              		.syntax unified
+  36              		.thumb
+  37              		.thumb_func
+  38              		.fpu fpv4-sp-d16
+  39              		.type	imu_apogee_init, %function
+  40              	imu_apogee_init:
+  41              		@ args = 0, pretend = 0, frame = 0
+  42              		@ frame_needed = 0, uses_anonymous_args = 0
+  43 0000 70B5     		push	{r4, r5, r6, lr}
+  44 0002 134C     		ldr	r4, .L5
+  45 0004 1349     		ldr	r1, .L5+4
+  46 0006 2046     		mov	r0, r4
+  47 0008 D222     		movs	r2, #210
+  48 000a FFF7FEFF 		bl	mpu60x0_i2c_init
+  49 000e 1248     		ldr	r0, .L5+8
+  50 0010 E065     		str	r0, [r4, #92]
+  51 0012 0125     		movs	r5, #1
+  52 0014 0022     		movs	r2, #0
+  53 0016 0920     		movs	r0, #9
+  54 0018 4FF0030C 		mov	ip, #3
+  55 001c 1146     		mov	r1, r2
+  56 001e 84F84D00 		strb	r0, [r4, #77]
+  57 0022 84F84EC0 		strb	ip, [r4, #78]
+ARM GAS  /tmp/cci20fFA.s 			page 2
+
+
+  58 0026 2846     		mov	r0, r5
+  59 0028 0C4B     		ldr	r3, .L5+12
+  60 002a 84F85850 		strb	r5, [r4, #88]
+  61 002e 40F2022C 		movw	ip, #514
+  62 0032 84F85750 		strb	r5, [r4, #87]
+  63 0036 A4F850C0 		strh	ip, [r4, #80]	@ movhi
+  64 003a FFF7FEFF 		bl	imu_set_defaults_gyro
+  65 003e 0022     		movs	r2, #0
+  66 0040 2846     		mov	r0, r5
+  67 0042 074B     		ldr	r3, .L5+16
+  68 0044 BDE87040 		pop	{r4, r5, r6, lr}
+  69 0048 1146     		mov	r1, r2
+  70 004a FFF7FEBF 		b	imu_set_defaults_accel
+  71              	.L6:
+  72 004e 00BF     		.align	2
+  73              	.L5:
+  74 0050 00000000 		.word	.LANCHOR0
+  75 0054 00000000 		.word	i2c1
+  76 0058 00000000 		.word	configure_baro_slave
+  77 005c 30000000 		.word	MPU60X0_GYRO_SENS_FRAC+48
+  78 0060 30000000 		.word	MPU60X0_ACCEL_SENS_FRAC+48
+  79              		.size	imu_apogee_init, .-imu_apogee_init
+  80              		.section	.text.imu_apogee_periodic,"ax",%progbits
+  81              		.align	1
+  82              		.p2align 4,,15
+  83              		.global	imu_apogee_periodic
+  84              		.syntax unified
+  85              		.thumb
+  86              		.thumb_func
+  87              		.fpu fpv4-sp-d16
+  88              		.type	imu_apogee_periodic, %function
+  89              	imu_apogee_periodic:
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              		@ link register save eliminated.
+  93 0000 0348     		ldr	r0, .L9
+  94 0002 90F85630 		ldrb	r3, [r0, #86]	@ zero_extendqisi2
+  95 0006 0BB1     		cbz	r3, .L8
+  96 0008 FFF7FEBF 		b	mpu60x0_i2c_read
+  97              	.L8:
+  98 000c FFF7FEBF 		b	mpu60x0_i2c_start_configure
+  99              	.L10:
+ 100              		.align	2
+ 101              	.L9:
+ 102 0010 00000000 		.word	.LANCHOR0
+ 103              		.size	imu_apogee_periodic, .-imu_apogee_periodic
+ 104              		.section	.text.imu_apogee_event,"ax",%progbits
+ 105              		.align	1
+ 106              		.p2align 4,,15
+ 107              		.global	imu_apogee_event
+ 108              		.syntax unified
+ 109              		.thumb
+ 110              		.thumb_func
+ 111              		.fpu fpv4-sp-d16
+ 112              		.type	imu_apogee_event, %function
+ 113              	imu_apogee_event:
+ 114              		@ args = 0, pretend = 0, frame = 24
+ARM GAS  /tmp/cci20fFA.s 			page 3
+
+
+ 115              		@ frame_needed = 0, uses_anonymous_args = 0
+ 116 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 117 0004 88B0     		sub	sp, sp, #32
+ 118 0006 FFF7FEFF 		bl	get_sys_time_usec
+ 119 000a 324E     		ldr	r6, .L41
+ 120 000c 0546     		mov	r5, r0
+ 121 000e 3046     		mov	r0, r6
+ 122 0010 FFF7FEFF 		bl	mpu60x0_i2c_event
+ 123 0014 96F82A30 		ldrb	r3, [r6, #42]	@ zero_extendqisi2
+ 124 0018 13B9     		cbnz	r3, .L37
+ 125 001a 08B0     		add	sp, sp, #32
+ 126              		@ sp needed
+ 127 001c BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 128              	.L37:
+ 129 0020 DFF8B490 		ldr	r9, .L41+4
+ 130 0024 B6F93420 		ldrsh	r2, [r6, #52]
+ 131 0028 B6F93630 		ldrsh	r3, [r6, #54]
+ 132 002c D9F87C40 		ldr	r4, [r9, #124]
+ 133 0030 B6F93210 		ldrsh	r1, [r6, #50]
+ 134 0034 D6F838A0 		ldr	r10, [r6, #56]	@ float
+ 135 0038 0291     		str	r1, [sp, #8]
+ 136 003a 5242     		rsbs	r2, r2, #0
+ 137 003c 5B42     		rsbs	r3, r3, #0
+ 138 003e CDE90323 		strd	r2, r3, [sp, #12]
+ 139 0042 D4B1     		cbz	r4, .L13
+ 140 0044 DFF89480 		ldr	r8, .L41+8
+ 141 0048 03E0     		b	.L16
+ 142              	.L39:
+ 143 004a 9C45     		cmp	ip, r3
+ 144 004c 0AD0     		beq	.L14
+ 145 004e A468     		ldr	r4, [r4, #8]
+ 146 0050 8CB1     		cbz	r4, .L38
+ 147              	.L16:
+ 148 0052 94F800C0 		ldrb	ip, [r4]	@ zero_extendqisi2
+ 149 0056 0123     		movs	r3, #1
+ 150 0058 BCF1FF0F 		cmp	ip, #255
+ 151 005c 02AA     		add	r2, sp, #8
+ 152 005e 2946     		mov	r1, r5
+ 153 0060 1846     		mov	r0, r3
+ 154 0062 F2D1     		bne	.L39
+ 155              	.L14:
+ 156 0064 CDF804A0 		str	r10, [sp, #4]	@ float
+ 157 0068 CDF80080 		str	r8, [sp]	@ float
+ 158 006c 6768     		ldr	r7, [r4, #4]
+ 159 006e B847     		blx	r7
+ 160 0070 A468     		ldr	r4, [r4, #8]
+ 161 0072 002C     		cmp	r4, #0
+ 162 0074 EDD1     		bne	.L16
+ 163              	.L38:
+ 164 0076 D6F838A0 		ldr	r10, [r6, #56]	@ float
+ 165              	.L13:
+ 166 007a B6F92C30 		ldrsh	r3, [r6, #44]
+ 167 007e 0593     		str	r3, [sp, #20]
+ 168 0080 B6F92E30 		ldrsh	r3, [r6, #46]
+ 169 0084 D9F88040 		ldr	r4, [r9, #128]
+ 170 0088 5B42     		rsbs	r3, r3, #0
+ 171 008a 0693     		str	r3, [sp, #24]
+ARM GAS  /tmp/cci20fFA.s 			page 4
+
+
+ 172 008c B6F93030 		ldrsh	r3, [r6, #48]
+ 173 0090 5B42     		rsbs	r3, r3, #0
+ 174 0092 0793     		str	r3, [sp, #28]
+ 175 0094 C4B1     		cbz	r4, .L20
+ 176 0096 DFF84480 		ldr	r8, .L41+8
+ 177 009a 03E0     		b	.L17
+ 178              	.L40:
+ 179 009c 9C45     		cmp	ip, r3
+ 180 009e 0AD0     		beq	.L18
+ 181 00a0 A468     		ldr	r4, [r4, #8]
+ 182 00a2 8CB1     		cbz	r4, .L20
+ 183              	.L17:
+ 184 00a4 94F800C0 		ldrb	ip, [r4]	@ zero_extendqisi2
+ 185 00a8 0123     		movs	r3, #1
+ 186 00aa BCF1FF0F 		cmp	ip, #255
+ 187 00ae 05AA     		add	r2, sp, #20
+ 188 00b0 2946     		mov	r1, r5
+ 189 00b2 1846     		mov	r0, r3
+ 190 00b4 F2D1     		bne	.L40
+ 191              	.L18:
+ 192 00b6 CDF804A0 		str	r10, [sp, #4]	@ float
+ 193 00ba CDF80080 		str	r8, [sp]	@ float
+ 194 00be 6768     		ldr	r7, [r4, #4]
+ 195 00c0 B847     		blx	r7
+ 196 00c2 A468     		ldr	r4, [r4, #8]
+ 197 00c4 002C     		cmp	r4, #0
+ 198 00c6 EDD1     		bne	.L17
+ 199              	.L20:
+ 200 00c8 0023     		movs	r3, #0
+ 201 00ca 86F82A30 		strb	r3, [r6, #42]
+ 202 00ce 08B0     		add	sp, sp, #32
+ 203              		@ sp needed
+ 204 00d0 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 205              	.L42:
+ 206              		.align	2
+ 207              	.L41:
+ 208 00d4 00000000 		.word	.LANCHOR0
+ 209 00d8 00000000 		.word	abi_queues
+ 210 00dc 0000C842 		.word	1120403456
+ 211              		.size	imu_apogee_event, .-imu_apogee_event
+ 212              		.global	imu_apogee
+ 213              		.section	.bss.imu_apogee,"aw",%nobits
+ 214              		.align	2
+ 215              		.set	.LANCHOR0,. + 0
+ 216              		.type	imu_apogee, %object
+ 217              		.size	imu_apogee, 120
+ 218              	imu_apogee:
+ 219 0000 00000000 		.space	120
+ 219      00000000 
+ 219      00000000 
+ 219      00000000 
+ 219      00000000 
+ 220              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cci20fFA.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 imu_apogee.c
+     /tmp/cci20fFA.s:15     .text.configure_baro_slave:0000000000000000 $t
+     /tmp/cci20fFA.s:24     .text.configure_baro_slave:0000000000000000 configure_baro_slave
+     /tmp/cci20fFA.s:32     .text.imu_apogee_init:0000000000000000 $t
+     /tmp/cci20fFA.s:40     .text.imu_apogee_init:0000000000000000 imu_apogee_init
+     /tmp/cci20fFA.s:74     .text.imu_apogee_init:0000000000000050 $d
+     /tmp/cci20fFA.s:81     .text.imu_apogee_periodic:0000000000000000 $t
+     /tmp/cci20fFA.s:89     .text.imu_apogee_periodic:0000000000000000 imu_apogee_periodic
+     /tmp/cci20fFA.s:102    .text.imu_apogee_periodic:0000000000000010 $d
+     /tmp/cci20fFA.s:105    .text.imu_apogee_event:0000000000000000 $t
+     /tmp/cci20fFA.s:113    .text.imu_apogee_event:0000000000000000 imu_apogee_event
+     /tmp/cci20fFA.s:208    .text.imu_apogee_event:00000000000000d4 $d
+     /tmp/cci20fFA.s:218    .bss.imu_apogee:0000000000000000 imu_apogee
+     /tmp/cci20fFA.s:214    .bss.imu_apogee:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+mpu60x0_i2c_init
+imu_set_defaults_gyro
+imu_set_defaults_accel
+i2c1
+MPU60X0_GYRO_SENS_FRAC
+MPU60X0_ACCEL_SENS_FRAC
+mpu60x0_i2c_read
+mpu60x0_i2c_start_configure
+get_sys_time_usec
+mpu60x0_i2c_event
+abi_queues

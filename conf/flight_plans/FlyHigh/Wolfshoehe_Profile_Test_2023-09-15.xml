@@ -1,0 +1,71 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+
+<flight_plan alt="436" ground_alt="356" lat0="49.408029" lon0="10.954677" max_dist_from_home="400" name="Wolfshoehe_Profile_Test" security_height="50">
+
+  <header>
+#include "subsystems/datalink/datalink.h"
+</header>
+  
+  <waypoints>
+    <waypoint lat="49.408029" lon="10.954677" name="HOME"/>
+    <waypoint lat="49.407774" lon="10.954706" name="Profile"/>
+  </waypoints>
+
+  <exceptions>
+    <exception cond="10.5 > PowerVoltage()" deroute="Standby"/>
+  </exceptions>
+
+  <blocks>
+    
+    <block name="Wait GPS">
+      <set value="1" var="autopilot.kill_throttle"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+
+    <block name="Geo init">
+      <while cond="LessThan(NavBlockTime(), 10)"/>
+    </block>
+
+    <block name="Waiting for Remote Control">
+      <while cond="RCLost()"/>
+    </block>
+
+    <block name="Holding point">
+      <set value="1" var="autopilot.kill_throttle"/>
+      <attitude roll="0" throttle="0" vmode="throttle"/>
+    </block>
+
+    <block group="home" key="t" name="Takeoff" strip_button="Takeoff (wp CLIMB)" strip_icon="takeoff.png">
+      <set value="0" var="autopilot.kill_throttle"/>
+      <set value="0" var="autopilot.flight_time"/>
+      <set value="0" var="autopilot.kill_throttle"/>
+    </block>
+
+    <block name="Climb">
+      <circle pitch="30" radius="60" throttle="0.80" until="GetPosAlt() > ground_alt+100" vmode="throttle" wp="Profile"/>
+      <deroute block="Circle"/>
+    </block>
+
+    <block name="Circle">
+      <circle alt="GetAltRef() + 100" radius="60" throttle="0.50" until="stage_time > 60" vmode="alt" wp="Profile"/>
+      <exception cond="GetPosAlt() > GetAltRef() + 130" deroute="Down"/>
+      <deroute block="Descent"/>
+    </block>
+
+   <block name="Descent">
+      <circle pitch="-4" radius="60" throttle="0.50" until="GetAltRef() + 10 > GetPosAlt()" vmode="throttle" wp="Profile"/>
+      <exception cond="GetPosAlt() > GetAltRef() + 130" deroute="Down"/>
+      <deroute block="Standby"/>
+    </block>
+
+    <block name="Down">
+      <circle pitch="-15" radius="60" throttle="0.50" until="ground_alt+50 > GetPosAlt()" vmode="throttle" wp="Profile"/>
+      <deroute block="Standby"/>
+    </block>
+
+    <block group="home" key="Ctrl+a" name="Standby" strip_button="Standby" strip_icon="home.png">
+      <circle radius="60" wp="HOME"/>
+    </block>
+  </blocks>
+
+</flight_plan>

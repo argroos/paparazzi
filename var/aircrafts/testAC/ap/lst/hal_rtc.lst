@@ -1,0 +1,434 @@
+ARM GAS  /tmp/ccqnU3Wd.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"hal_rtc.c"
+  13              		.text
+  14              		.section	.text.rtcInit,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.global	rtcInit
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  23              		.type	rtcInit, %function
+  24              	rtcInit:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 FFF7FEBF 		b	rtc_lld_init
+  29              		.size	rtcInit, .-rtcInit
+  30              		.section	.text.rtcObjectInit,"ax",%progbits
+  31              		.align	1
+  32              		.p2align 4,,15
+  33              		.global	rtcObjectInit
+  34              		.syntax unified
+  35              		.thumb
+  36              		.thumb_func
+  37              		.fpu fpv4-sp-d16
+  38              		.type	rtcObjectInit, %function
+  39              	rtcObjectInit:
+  40              		@ args = 0, pretend = 0, frame = 0
+  41              		@ frame_needed = 0, uses_anonymous_args = 0
+  42              		@ link register save eliminated.
+  43 0000 014B     		ldr	r3, .L4
+  44 0002 0360     		str	r3, [r0]
+  45 0004 7047     		bx	lr
+  46              	.L5:
+  47 0006 00BF     		.align	2
+  48              	.L4:
+  49 0008 00000000 		.word	_rtc_lld_vmt
+  50              		.size	rtcObjectInit, .-rtcObjectInit
+  51              		.section	.text.rtcSetTime,"ax",%progbits
+  52              		.align	1
+  53              		.p2align 4,,15
+  54              		.global	rtcSetTime
+  55              		.syntax unified
+  56              		.thumb
+  57              		.thumb_func
+ARM GAS  /tmp/ccqnU3Wd.s 			page 2
+
+
+  58              		.fpu fpv4-sp-d16
+  59              		.type	rtcSetTime, %function
+  60              	rtcSetTime:
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  63              		@ link register save eliminated.
+  64 0000 FFF7FEBF 		b	rtc_lld_set_time
+  65              		.size	rtcSetTime, .-rtcSetTime
+  66              		.section	.text.rtcGetTime,"ax",%progbits
+  67              		.align	1
+  68              		.p2align 4,,15
+  69              		.global	rtcGetTime
+  70              		.syntax unified
+  71              		.thumb
+  72              		.thumb_func
+  73              		.fpu fpv4-sp-d16
+  74              		.type	rtcGetTime, %function
+  75              	rtcGetTime:
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+  79 0000 FFF7FEBF 		b	rtc_lld_get_time
+  80              		.size	rtcGetTime, .-rtcGetTime
+  81              		.section	.text.rtcSetAlarm,"ax",%progbits
+  82              		.align	1
+  83              		.p2align 4,,15
+  84              		.global	rtcSetAlarm
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  88              		.fpu fpv4-sp-d16
+  89              		.type	rtcSetAlarm, %function
+  90              	rtcSetAlarm:
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              		@ link register save eliminated.
+  94 0000 FFF7FEBF 		b	rtc_lld_set_alarm
+  95              		.size	rtcSetAlarm, .-rtcSetAlarm
+  96              		.section	.text.rtcGetAlarm,"ax",%progbits
+  97              		.align	1
+  98              		.p2align 4,,15
+  99              		.global	rtcGetAlarm
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 103              		.fpu fpv4-sp-d16
+ 104              		.type	rtcGetAlarm, %function
+ 105              	rtcGetAlarm:
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              		@ link register save eliminated.
+ 109 0000 FFF7FEBF 		b	rtc_lld_get_alarm
+ 110              		.size	rtcGetAlarm, .-rtcGetAlarm
+ 111              		.section	.text.rtcSetCallback,"ax",%progbits
+ 112              		.align	1
+ 113              		.p2align 4,,15
+ 114              		.global	rtcSetCallback
+ARM GAS  /tmp/ccqnU3Wd.s 			page 3
+
+
+ 115              		.syntax unified
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.fpu fpv4-sp-d16
+ 119              		.type	rtcSetCallback, %function
+ 120              	rtcSetCallback:
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123              		@ link register save eliminated.
+ 124 0000 FFF7FEBF 		b	rtc_lld_set_callback
+ 125              		.size	rtcSetCallback, .-rtcSetCallback
+ 126              		.section	.text.rtcConvertDateTimeToStructTm,"ax",%progbits
+ 127              		.align	1
+ 128              		.p2align 4,,15
+ 129              		.global	rtcConvertDateTimeToStructTm
+ 130              		.syntax unified
+ 131              		.thumb
+ 132              		.thumb_func
+ 133              		.fpu fpv4-sp-d16
+ 134              		.type	rtcConvertDateTimeToStructTm, %function
+ 135              	rtcConvertDateTimeToStructTm:
+ 136              		@ args = 0, pretend = 0, frame = 0
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 138 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 139 0004 0778     		ldrb	r7, [r0]	@ zero_extendqisi2
+ 140 0006 4668     		ldr	r6, [r0, #4]
+ 141 0008 2C4C     		ldr	r4, .L24
+ 142 000a 4578     		ldrb	r5, [r0, #1]	@ zero_extendqisi2
+ 143 000c 90F80190 		ldrb	r9, [r0, #1]	@ zero_extendqisi2
+ 144 0010 90F802A0 		ldrb	r10, [r0, #2]	@ zero_extendqisi2
+ 145 0014 07F15003 		add	r3, r7, #80
+ 146 0018 4B61     		str	r3, [r1, #20]
+ 147 001a 294B     		ldr	r3, .L24+4
+ 148 001c C6F31A06 		ubfx	r6, r6, #0, #27
+ 149 0020 A3FB063C 		umull	r3, ip, r3, r6
+ 150 0024 4FEA9C1C 		lsr	ip, ip, #6
+ 151 0028 A4FB0C34 		umull	r3, r4, r4, ip
+ 152 002c E40A     		lsrs	r4, r4, #11
+ 153 002e 254B     		ldr	r3, .L24+8
+ 154 0030 4FF4616E 		mov	lr, #3600
+ 155 0034 0EFB14CE 		mls	lr, lr, r4, ip
+ 156 0038 A3FB0E83 		umull	r8, r3, r3, lr
+ 157 003c 90F80180 		ldrb	r8, [r0, #1]	@ zero_extendqisi2
+ 158 0040 8C60     		str	r4, [r1, #8]
+ 159 0042 5B09     		lsrs	r3, r3, #5
+ 160 0044 05F00F05 		and	r5, r5, #15
+ 161 0048 4FEA5818 		lsr	r8, r8, #5
+ 162 004c 4B60     		str	r3, [r1, #4]
+ 163 004e C3EB0313 		rsb	r3, r3, r3, lsl #4
+ 164 0052 013D     		subs	r5, r5, #1
+ 165 0054 08F1FF38 		add	r8, r8, #-1
+ 166 0058 0AF01F00 		and	r0, r10, #31
+ 167 005c C9F30014 		ubfx	r4, r9, #4, #1
+ 168 0060 AEEB8303 		sub	r3, lr, r3, lsl #2
+ 169 0064 0D61     		str	r5, [r1, #16]
+ 170 0066 C1F81880 		str	r8, [r1, #24]
+ 171 006a 0C62     		str	r4, [r1, #32]
+ARM GAS  /tmp/ccqnU3Wd.s 			page 4
+
+
+ 172 006c C860     		str	r0, [r1, #12]
+ 173 006e 0B60     		str	r3, [r1]
+ 174 0070 22B1     		cbz	r2, .L12
+ 175 0072 4FF47A73 		mov	r3, #1000
+ 176 0076 03FB1C66 		mls	r6, r3, ip, r6
+ 177 007a 1660     		str	r6, [r2]
+ 178              	.L12:
+ 179 007c 124A     		ldr	r2, .L24+12
+ 180 007e 32F81520 		ldrh	r2, [r2, r5, lsl #1]
+ 181 0082 0138     		subs	r0, r0, #1
+ 182 0084 1044     		add	r0, r0, r2
+ 183 0086 BA07     		lsls	r2, r7, #30
+ 184 0088 07F2BC73 		addw	r3, r7, #1980
+ 185 008c 0CD1     		bne	.L13
+ 186 008e 0F4A     		ldr	r2, .L24+16
+ 187 0090 0F4C     		ldr	r4, .L24+20
+ 188 0092 03FB02F2 		mul	r2, r3, r2
+ 189 0096 B4EBB20F 		cmp	r4, r2, ror #2
+ 190 009a 05D2     		bcs	.L13
+ 191 009c 012D     		cmp	r5, #1
+ 192 009e 00DD     		ble	.L22
+ 193              	.L16:
+ 194 00a0 0130     		adds	r0, r0, #1
+ 195              	.L22:
+ 196 00a2 C861     		str	r0, [r1, #28]
+ 197 00a4 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 198              	.L13:
+ 199 00a8 084A     		ldr	r2, .L24+16
+ 200 00aa 02FB03F3 		mul	r3, r2, r3
+ 201 00ae 094A     		ldr	r2, .L24+24
+ 202 00b0 B2EB331F 		cmp	r2, r3, ror #4
+ 203 00b4 F5D3     		bcc	.L22
+ 204 00b6 012D     		cmp	r5, #1
+ 205 00b8 F2DC     		bgt	.L16
+ 206 00ba F2E7     		b	.L22
+ 207              	.L25:
+ 208              		.align	2
+ 209              	.L24:
+ 210 00bc C5B3A291 		.word	-1851608123
+ 211 00c0 D34D6210 		.word	274877907
+ 212 00c4 89888888 		.word	-2004318071
+ 213 00c8 00000000 		.word	.LANCHOR0
+ 214 00cc 295C8FC2 		.word	-1030792151
+ 215 00d0 285C8F02 		.word	42949672
+ 216 00d4 0AD7A300 		.word	10737418
+ 217              		.size	rtcConvertDateTimeToStructTm, .-rtcConvertDateTimeToStructTm
+ 218              		.section	.text.rtcConvertStructTmToDateTime,"ax",%progbits
+ 219              		.align	1
+ 220              		.p2align 4,,15
+ 221              		.global	rtcConvertStructTmToDateTime
+ 222              		.syntax unified
+ 223              		.thumb
+ 224              		.thumb_func
+ 225              		.fpu fpv4-sp-d16
+ 226              		.type	rtcConvertStructTmToDateTime, %function
+ 227              	rtcConvertStructTmToDateTime:
+ 228              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccqnU3Wd.s 			page 5
+
+
+ 229              		@ frame_needed = 0, uses_anonymous_args = 0
+ 230              		@ link register save eliminated.
+ 231 0000 30B4     		push	{r4, r5}
+ 232 0002 D0E90554 		ldrd	r5, r4, [r0, #20]
+ 233 0006 0369     		ldr	r3, [r0, #16]
+ 234 0008 A5F1500C 		sub	ip, r5, #80
+ 235 000c 0133     		adds	r3, r3, #1
+ 236 000e 82F800C0 		strb	ip, [r2]
+ 237 0012 03F00F03 		and	r3, r3, #15
+ 238 0016 04F1010C 		add	ip, r4, #1
+ 239 001a C468     		ldr	r4, [r0, #12]
+ 240 001c 0CF0070C 		and	ip, ip, #7
+ 241 0020 1B02     		lsls	r3, r3, #8
+ 242 0022 43EA4C33 		orr	r3, r3, ip, lsl #13
+ 243 0026 4FEA044C 		lsl	ip, r4, #16
+ 244 002a 1468     		ldr	r4, [r2]
+ 245 002c 0CF4F81C 		and	ip, ip, #2031616
+ 246 0030 43EA0C03 		orr	r3, r3, ip
+ 247 0034 24F4FF1C 		bic	ip, r4, #2088960
+ 248 0038 046A     		ldr	r4, [r0, #32]
+ 249 003a 2CF4706C 		bic	ip, ip, #3840
+ 250 003e 651C     		adds	r5, r4, #1
+ 251 0040 43EA0C03 		orr	r3, r3, ip
+ 252 0044 1360     		str	r3, [r2]
+ 253 0046 08BF     		it	eq
+ 254 0048 0024     		moveq	r4, #0
+ 255 004a C3F30723 		ubfx	r3, r3, #8, #8
+ 256 004e 64F30413 		bfi	r3, r4, #4, #1
+ 257 0052 8568     		ldr	r5, [r0, #8]
+ 258 0054 5370     		strb	r3, [r2, #1]
+ 259 0056 D0E90043 		ldrd	r4, r3, [r0]
+ 260 005a C3EB0313 		rsb	r3, r3, r3, lsl #4
+ 261 005e 4FF46160 		mov	r0, #3600
+ 262 0062 9B00     		lsls	r3, r3, #2
+ 263 0064 00FB0533 		mla	r3, r0, r5, r3
+ 264 0068 2344     		add	r3, r3, r4
+ 265 006a 5068     		ldr	r0, [r2, #4]
+ 266 006c 4FF47A74 		mov	r4, #1000
+ 267 0070 04FB0311 		mla	r1, r4, r3, r1
+ 268 0074 61F31A00 		bfi	r0, r1, #0, #27
+ 269 0078 30BC     		pop	{r4, r5}
+ 270 007a 5060     		str	r0, [r2, #4]
+ 271 007c 7047     		bx	lr
+ 272              		.size	rtcConvertStructTmToDateTime, .-rtcConvertStructTmToDateTime
+ 273 007e 00BF     		.section	.text.rtcConvertDateTimeToFAT,"ax",%progbits
+ 274              		.align	1
+ 275              		.p2align 4,,15
+ 276              		.global	rtcConvertDateTimeToFAT
+ 277              		.syntax unified
+ 278              		.thumb
+ 279              		.thumb_func
+ 280              		.fpu fpv4-sp-d16
+ 281              		.type	rtcConvertDateTimeToFAT, %function
+ 282              	rtcConvertDateTimeToFAT:
+ 283              		@ args = 0, pretend = 0, frame = 0
+ 284              		@ frame_needed = 0, uses_anonymous_args = 0
+ 285 0000 4368     		ldr	r3, [r0, #4]
+ARM GAS  /tmp/ccqnU3Wd.s 			page 6
+
+
+ 286 0002 2349     		ldr	r1, .L35
+ 287 0004 90F802C0 		ldrb	ip, [r0, #2]	@ zero_extendqisi2
+ 288 0008 30B5     		push	{r4, r5, lr}
+ 289 000a 224C     		ldr	r4, .L35+4
+ 290 000c 4578     		ldrb	r5, [r0, #1]	@ zero_extendqisi2
+ 291 000e C3F31A02 		ubfx	r2, r3, #0, #27
+ 292 0012 A4FB0232 		umull	r3, r2, r4, r2
+ 293 0016 9209     		lsrs	r2, r2, #6
+ 294 0018 A1FB0231 		umull	r3, r1, r1, r2
+ 295 001c 4FF46164 		mov	r4, #3600
+ 296 0020 1D4B     		ldr	r3, .L35+8
+ 297 0022 C90A     		lsrs	r1, r1, #11
+ 298 0024 04FB1122 		mls	r2, r4, r1, r2
+ 299 0028 A3FB0243 		umull	r4, r3, r3, r2
+ 300 002c 4FEA531E 		lsr	lr, r3, #5
+ 301 0030 CEEB0E13 		rsb	r3, lr, lr, lsl #4
+ 302 0034 A2EB8302 		sub	r2, r2, r3, lsl #2
+ 303 0038 EB06     		lsls	r3, r5, #27
+ 304 003a 0CF01F0C 		and	ip, ip, #31
+ 305 003e 05F00F04 		and	r4, r5, #15
+ 306 0042 0ED4     		bmi	.L30
+ 307 0044 C902     		lsls	r1, r1, #11
+ 308 0046 4FEA0C4C 		lsl	ip, ip, #16
+ 309              	.L31:
+ 310 004a 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 311 004c 5308     		lsrs	r3, r2, #1
+ 312 004e 43EA4E13 		orr	r3, r3, lr, lsl #5
+ 313 0052 43EA4063 		orr	r3, r3, r0, lsl #25
+ 314 0056 0B43     		orrs	r3, r3, r1
+ 315 0058 43EA0C03 		orr	r3, r3, ip
+ 316 005c 43EA4450 		orr	r0, r3, r4, lsl #21
+ 317 0060 30BD     		pop	{r4, r5, pc}
+ 318              	.L30:
+ 319 0062 1729     		cmp	r1, #23
+ 320 0064 01F10103 		add	r3, r1, #1
+ 321 0068 03D0     		beq	.L32
+ 322 006a D902     		lsls	r1, r3, #11
+ 323 006c 4FEA0C4C 		lsl	ip, ip, #16
+ 324 0070 EBE7     		b	.L31
+ 325              	.L32:
+ 326 0072 0A4B     		ldr	r3, .L35+12
+ 327 0074 2344     		add	r3, r3, r4
+ 328 0076 0CF1010C 		add	ip, ip, #1
+ 329 007a 13F8013C 		ldrb	r3, [r3, #-1]	@ zero_extendqisi2
+ 330 007e 6345     		cmp	r3, ip
+ 331 0080 2EBF     		itee	cs
+ 332 0082 4FEA0C4C 		lslcs	ip, ip, #16
+ 333 0086 0134     		addcc	r4, r4, #1
+ 334 0088 4FF4803C 		movcc	ip, #65536
+ 335 008c 0021     		movs	r1, #0
+ 336 008e DCE7     		b	.L31
+ 337              	.L36:
+ 338              		.align	2
+ 339              	.L35:
+ 340 0090 C5B3A291 		.word	-1851608123
+ 341 0094 D34D6210 		.word	274877907
+ 342 0098 89888888 		.word	-2004318071
+ARM GAS  /tmp/ccqnU3Wd.s 			page 7
+
+
+ 343 009c 00000000 		.word	.LANCHOR1
+ 344              		.size	rtcConvertDateTimeToFAT, .-rtcConvertDateTimeToFAT
+ 345              		.section	.rodata.accu_month_len,"a"
+ 346              		.align	2
+ 347              		.set	.LANCHOR0,. + 0
+ 348              		.type	accu_month_len, %object
+ 349              		.size	accu_month_len, 24
+ 350              	accu_month_len:
+ 351 0000 0000     		.short	0
+ 352 0002 1F00     		.short	31
+ 353 0004 3B00     		.short	59
+ 354 0006 5A00     		.short	90
+ 355 0008 7800     		.short	120
+ 356 000a 9700     		.short	151
+ 357 000c B500     		.short	181
+ 358 000e D400     		.short	212
+ 359 0010 F300     		.short	243
+ 360 0012 1101     		.short	273
+ 361 0014 3001     		.short	304
+ 362 0016 4E01     		.short	334
+ 363              		.section	.rodata.month_len,"a"
+ 364              		.align	2
+ 365              		.set	.LANCHOR1,. + 0
+ 366              		.type	month_len, %object
+ 367              		.size	month_len, 12
+ 368              	month_len:
+ 369 0000 1F1C1F1E 		.ascii	"\037\034\037\036\037\036\037\037\036\037\036\037"
+ 369      1F1E1F1F 
+ 369      1E1F1E1F 
+ 370              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccqnU3Wd.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_rtc.c
+     /tmp/ccqnU3Wd.s:15     .text.rtcInit:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:24     .text.rtcInit:0000000000000000 rtcInit
+     /tmp/ccqnU3Wd.s:31     .text.rtcObjectInit:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:39     .text.rtcObjectInit:0000000000000000 rtcObjectInit
+     /tmp/ccqnU3Wd.s:49     .text.rtcObjectInit:0000000000000008 $d
+     /tmp/ccqnU3Wd.s:52     .text.rtcSetTime:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:60     .text.rtcSetTime:0000000000000000 rtcSetTime
+     /tmp/ccqnU3Wd.s:67     .text.rtcGetTime:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:75     .text.rtcGetTime:0000000000000000 rtcGetTime
+     /tmp/ccqnU3Wd.s:82     .text.rtcSetAlarm:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:90     .text.rtcSetAlarm:0000000000000000 rtcSetAlarm
+     /tmp/ccqnU3Wd.s:97     .text.rtcGetAlarm:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:105    .text.rtcGetAlarm:0000000000000000 rtcGetAlarm
+     /tmp/ccqnU3Wd.s:112    .text.rtcSetCallback:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:120    .text.rtcSetCallback:0000000000000000 rtcSetCallback
+     /tmp/ccqnU3Wd.s:127    .text.rtcConvertDateTimeToStructTm:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:135    .text.rtcConvertDateTimeToStructTm:0000000000000000 rtcConvertDateTimeToStructTm
+     /tmp/ccqnU3Wd.s:210    .text.rtcConvertDateTimeToStructTm:00000000000000bc $d
+     /tmp/ccqnU3Wd.s:219    .text.rtcConvertStructTmToDateTime:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:227    .text.rtcConvertStructTmToDateTime:0000000000000000 rtcConvertStructTmToDateTime
+     /tmp/ccqnU3Wd.s:274    .text.rtcConvertDateTimeToFAT:0000000000000000 $t
+     /tmp/ccqnU3Wd.s:282    .text.rtcConvertDateTimeToFAT:0000000000000000 rtcConvertDateTimeToFAT
+     /tmp/ccqnU3Wd.s:340    .text.rtcConvertDateTimeToFAT:0000000000000090 $d
+     /tmp/ccqnU3Wd.s:346    .rodata.accu_month_len:0000000000000000 $d
+     /tmp/ccqnU3Wd.s:350    .rodata.accu_month_len:0000000000000000 accu_month_len
+     /tmp/ccqnU3Wd.s:364    .rodata.month_len:0000000000000000 $d
+     /tmp/ccqnU3Wd.s:368    .rodata.month_len:0000000000000000 month_len
+
+UNDEFINED SYMBOLS
+rtc_lld_init
+_rtc_lld_vmt
+rtc_lld_set_time
+rtc_lld_get_time
+rtc_lld_set_alarm
+rtc_lld_get_alarm
+rtc_lld_set_callback

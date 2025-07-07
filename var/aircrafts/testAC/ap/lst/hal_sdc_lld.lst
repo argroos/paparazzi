@@ -1,0 +1,1130 @@
+ARM GAS  /tmp/ccHLUhLv.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"hal_sdc_lld.c"
+  13              		.text
+  14              		.section	.text.sdc_lld_collect_errors,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	sdc_lld_collect_errors, %function
+  23              	sdc_lld_collect_errors:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 01F00103 		and	r3, r1, #1
+  28 0004 8A07     		lsls	r2, r1, #30
+  29 0006 48BF     		it	mi
+  30 0008 43F00203 		orrmi	r3, r3, #2
+  31 000c 4A07     		lsls	r2, r1, #29
+  32 000e 48BF     		it	mi
+  33 0010 43F00803 		orrmi	r3, r3, #8
+  34 0014 0A07     		lsls	r2, r1, #28
+  35 0016 48BF     		it	mi
+  36 0018 43F00403 		orrmi	r3, r3, #4
+  37 001c CA06     		lsls	r2, r1, #27
+  38 001e 48BF     		it	mi
+  39 0020 43F01003 		orrmi	r3, r3, #16
+  40 0024 8A06     		lsls	r2, r1, #26
+  41 0026 48BF     		it	mi
+  42 0028 43F02003 		orrmi	r3, r3, #32
+  43 002c 8A05     		lsls	r2, r1, #22
+  44 002e 426B     		ldr	r2, [r0, #52]
+  45 0030 48BF     		it	mi
+  46 0032 43F04003 		orrmi	r3, r3, #64
+  47 0036 1343     		orrs	r3, r3, r2
+  48 0038 4363     		str	r3, [r0, #52]
+  49 003a 7047     		bx	lr
+  50              		.size	sdc_lld_collect_errors, .-sdc_lld_collect_errors
+  51              		.section	.text.sdc_lld_error_cleanup,"ax",%progbits
+  52              		.align	1
+  53              		.p2align 4,,15
+  54              		.syntax unified
+  55              		.thumb
+  56              		.thumb_func
+  57              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccHLUhLv.s 			page 2
+
+
+  58              		.type	sdc_lld_error_cleanup, %function
+  59              	sdc_lld_error_cleanup:
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  63 0004 436C     		ldr	r3, [r0, #68]
+  64 0006 866C     		ldr	r6, [r0, #72]
+  65 0008 5C7A     		ldrb	r4, [r3, #9]	@ zero_extendqisi2
+  66 000a D3E9005C 		ldrd	r5, ip, [r3]
+  67 000e 1746     		mov	r7, r2
+  68 0010 3D22     		movs	r2, #61
+  69 0012 A240     		lsls	r2, r2, r4
+  70 0014 8846     		mov	r8, r1
+  71 0016 716B     		ldr	r1, [r6, #52]
+  72 0018 CCF80020 		str	r2, [ip]
+  73 001c 2B68     		ldr	r3, [r5]
+  74 001e 23F01F03 		bic	r3, r3, #31
+  75 0022 2B60     		str	r3, [r5]
+  76              	.L28:
+  77 0024 2C68     		ldr	r4, [r5]
+  78 0026 14F00104 		ands	r4, r4, #1
+  79 002a FBD1     		bne	.L28
+  80 002c 104B     		ldr	r3, .L38
+  81 002e CCF80020 		str	r2, [ip]
+  82 0032 B363     		str	r3, [r6, #56]
+  83 0034 F463     		str	r4, [r6, #60]
+  84 0036 F462     		str	r4, [r6, #44]
+  85 0038 FFF7FEFF 		bl	sdc_lld_collect_errors
+  86 003c B8F1010F 		cmp	r8, #1
+  87 0040 01D8     		bhi	.L36
+  88 0042 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+  89              	.L36:
+  90 0046 836C     		ldr	r3, [r0, #72]
+  91 0048 40F24C42 		movw	r2, #1100
+  92 004c 9C60     		str	r4, [r3, #8]
+  93 004e DA60     		str	r2, [r3, #12]
+  94              	.L30:
+  95 0050 596B     		ldr	r1, [r3, #52]
+  96 0052 11F04502 		ands	r2, r1, #69
+  97 0056 FBD0     		beq	.L30
+  98 0058 11F0050F 		tst	r1, #5
+  99 005c 9A63     		str	r2, [r3, #56]
+ 100 005e 03D1     		bne	.L37
+ 101 0060 5B69     		ldr	r3, [r3, #20]
+ 102 0062 3B60     		str	r3, [r7]
+ 103 0064 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 104              	.L37:
+ 105 0068 BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 106 006c FFF7FEBF 		b	sdc_lld_collect_errors
+ 107              	.L39:
+ 108              		.align	2
+ 109              	.L38:
+ 110 0070 FF07C000 		.word	12584959
+ 111              		.size	sdc_lld_error_cleanup, .-sdc_lld_error_cleanup
+ 112              		.section	.text.sdc_lld_wait_transaction_end,"ax",%progbits
+ 113              		.align	1
+ 114              		.p2align 4,,15
+ARM GAS  /tmp/ccHLUhLv.s 			page 3
+
+
+ 115              		.syntax unified
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.fpu fpv4-sp-d16
+ 119              		.type	sdc_lld_wait_transaction_end, %function
+ 120              	sdc_lld_wait_transaction_end:
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 124 0004 3023     		movs	r3, #48
+ 125 0006 0646     		mov	r6, r0
+ 126 0008 8846     		mov	r8, r1
+ 127 000a 1746     		mov	r7, r2
+ 128              		.syntax unified
+ 129              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 130 000c 83F31188 		MSR basepri, r3
+ 131              	@ 0 "" 2
+ 132              		.thumb
+ 133              		.syntax unified
+ 134 0010 FFF7FEFF 		bl	__stats_start_measure_crit_thd
+ 135 0014 B06C     		ldr	r0, [r6, #72]
+ 136 0016 C36B     		ldr	r3, [r0, #60]
+ 137 0018 DBB9     		cbnz	r3, .L55
+ 138 001a 446B     		ldr	r4, [r0, #52]
+ 139 001c 14F48074 		ands	r4, r4, #256
+ 140 0020 22D0     		beq	.L56
+ 141              	.L42:
+ 142 0022 726C     		ldr	r2, [r6, #68]
+ 143 0024 1568     		ldr	r5, [r2]
+ 144              	.L44:
+ 145 0026 2C68     		ldr	r4, [r5]
+ 146 0028 14F00104 		ands	r4, r4, #1
+ 147 002c FBD1     		bne	.L44
+ 148 002e 517A     		ldrb	r1, [r2, #9]	@ zero_extendqisi2
+ 149 0030 5268     		ldr	r2, [r2, #4]
+ 150 0032 3D23     		movs	r3, #61
+ 151 0034 8B40     		lsls	r3, r3, r1
+ 152 0036 1360     		str	r3, [r2]
+ 153 0038 1A4B     		ldr	r3, .L59
+ 154 003a 8363     		str	r3, [r0, #56]
+ 155 003c C462     		str	r4, [r0, #44]
+ 156 003e FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 157              		.syntax unified
+ 158              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 159 0042 84F31188 		MSR basepri, r4
+ 160              	@ 0 "" 2
+ 161              		.thumb
+ 162              		.syntax unified
+ 163 0046 B8F1010F 		cmp	r8, #1
+ 164 004a 14D8     		bhi	.L57
+ 165 004c 2046     		mov	r0, r4
+ 166              	.L43:
+ 167 004e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 168              	.L55:
+ 169 0052 4FF0FF31 		mov	r1, #-1
+ 170 0056 06F13C00 		add	r0, r6, #60
+ 171 005a FFF7FEFF 		bl	chThdSuspendTimeoutS
+ARM GAS  /tmp/ccHLUhLv.s 			page 4
+
+
+ 172 005e B06C     		ldr	r0, [r6, #72]
+ 173 0060 446B     		ldr	r4, [r0, #52]
+ 174 0062 14F48074 		ands	r4, r4, #256
+ 175 0066 DCD1     		bne	.L42
+ 176              	.L56:
+ 177 0068 FFF7FEFF 		bl	__stats_stop_measure_crit_thd
+ 178              		.syntax unified
+ 179              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 180 006c 84F31188 		MSR basepri, r4
+ 181              	@ 0 "" 2
+ 182              		.thumb
+ 183              		.syntax unified
+ 184 0070 0120     		movs	r0, #1
+ 185 0072 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 186              	.L57:
+ 187 0076 B36C     		ldr	r3, [r6, #72]
+ 188 0078 40F24C42 		movw	r2, #1100
+ 189 007c 9C60     		str	r4, [r3, #8]
+ 190 007e DA60     		str	r2, [r3, #12]
+ 191              	.L45:
+ 192 0080 596B     		ldr	r1, [r3, #52]
+ 193 0082 11F04502 		ands	r2, r1, #69
+ 194 0086 FBD0     		beq	.L45
+ 195 0088 11F00504 		ands	r4, r1, #5
+ 196 008c 9A63     		str	r2, [r3, #56]
+ 197 008e 04D1     		bne	.L58
+ 198 0090 5B69     		ldr	r3, [r3, #20]
+ 199 0092 3B60     		str	r3, [r7]
+ 200 0094 2046     		mov	r0, r4
+ 201 0096 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 202              	.L58:
+ 203 009a 3046     		mov	r0, r6
+ 204 009c FFF7FEFF 		bl	sdc_lld_collect_errors
+ 205 00a0 0120     		movs	r0, #1
+ 206 00a2 D4E7     		b	.L43
+ 207              	.L60:
+ 208              		.align	2
+ 209              	.L59:
+ 210 00a4 FF07C000 		.word	12584959
+ 211              		.size	sdc_lld_wait_transaction_end, .-sdc_lld_wait_transaction_end
+ 212              		.section	.text.Vector104,"ax",%progbits
+ 213              		.align	1
+ 214              		.p2align 4,,15
+ 215              		.global	Vector104
+ 216              		.syntax unified
+ 217              		.thumb
+ 218              		.thumb_func
+ 219              		.fpu fpv4-sp-d16
+ 220              		.type	Vector104, %function
+ 221              	Vector104:
+ 222              		@ args = 0, pretend = 0, frame = 0
+ 223              		@ frame_needed = 0, uses_anonymous_args = 0
+ 224 0000 10B5     		push	{r4, lr}
+ 225 0002 FFF7FEFF 		bl	__stats_increase_irq
+ 226 0006 3023     		movs	r3, #48
+ 227              		.syntax unified
+ 228              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ARM GAS  /tmp/ccHLUhLv.s 			page 5
+
+
+ 229 0008 83F31188 		MSR basepri, r3
+ 230              	@ 0 "" 2
+ 231              		.thumb
+ 232              		.syntax unified
+ 233 000c FFF7FEFF 		bl	__stats_start_measure_crit_isr
+ 234 0010 074B     		ldr	r3, .L63
+ 235 0012 0848     		ldr	r0, .L63+4
+ 236 0014 0024     		movs	r4, #0
+ 237 0016 2146     		mov	r1, r4
+ 238 0018 DC63     		str	r4, [r3, #60]
+ 239 001a FFF7FEFF 		bl	chThdResumeI
+ 240 001e FFF7FEFF 		bl	__stats_stop_measure_crit_isr
+ 241              		.syntax unified
+ 242              	@ 493 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 243 0022 84F31188 		MSR basepri, r4
+ 244              	@ 0 "" 2
+ 245              		.thumb
+ 246              		.syntax unified
+ 247 0026 BDE81040 		pop	{r4, lr}
+ 248 002a FFF7FEBF 		b	__port_irq_epilogue
+ 249              	.L64:
+ 250 002e 00BF     		.align	2
+ 251              	.L63:
+ 252 0030 002C0140 		.word	1073818624
+ 253 0034 3C000000 		.word	.LANCHOR0+60
+ 254              		.size	Vector104, .-Vector104
+ 255              		.section	.text.sdc_lld_init,"ax",%progbits
+ 256              		.align	1
+ 257              		.p2align 4,,15
+ 258              		.global	sdc_lld_init
+ 259              		.syntax unified
+ 260              		.thumb
+ 261              		.thumb_func
+ 262              		.fpu fpv4-sp-d16
+ 263              		.type	sdc_lld_init, %function
+ 264              	sdc_lld_init:
+ 265              		@ args = 0, pretend = 0, frame = 0
+ 266              		@ frame_needed = 0, uses_anonymous_args = 0
+ 267 0000 10B5     		push	{r4, lr}
+ 268 0002 074C     		ldr	r4, .L67
+ 269 0004 2046     		mov	r0, r4
+ 270 0006 FFF7FEFF 		bl	sdcObjectInit
+ 271 000a 064A     		ldr	r2, .L67+4
+ 272 000c 0023     		movs	r3, #0
+ 273 000e C4E91132 		strd	r3, r2, [r4, #68]
+ 274 0012 E363     		str	r3, [r4, #60]
+ 275 0014 0921     		movs	r1, #9
+ 276 0016 BDE81040 		pop	{r4, lr}
+ 277 001a 3120     		movs	r0, #49
+ 278 001c FFF7FEBF 		b	nvicEnableVector
+ 279              	.L68:
+ 280              		.align	2
+ 281              	.L67:
+ 282 0020 00000000 		.word	.LANCHOR0
+ 283 0024 002C0140 		.word	1073818624
+ 284              		.size	sdc_lld_init, .-sdc_lld_init
+ 285              		.section	.text.sdc_lld_start,"ax",%progbits
+ARM GAS  /tmp/ccHLUhLv.s 			page 6
+
+
+ 286              		.align	1
+ 287              		.p2align 4,,15
+ 288              		.global	sdc_lld_start
+ 289              		.syntax unified
+ 290              		.thumb
+ 291              		.thumb_func
+ 292              		.fpu fpv4-sp-d16
+ 293              		.type	sdc_lld_start, %function
+ 294              	sdc_lld_start:
+ 295              		@ args = 0, pretend = 0, frame = 0
+ 296              		@ frame_needed = 0, uses_anonymous_args = 0
+ 297 0000 C36A     		ldr	r3, [r0, #44]
+ 298 0002 10B5     		push	{r4, lr}
+ 299 0004 0446     		mov	r4, r0
+ 300 0006 5BB1     		cbz	r3, .L74
+ 301 0008 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 302 000a 154A     		ldr	r2, .L76
+ 303 000c 2264     		str	r2, [r4, #64]
+ 304 000e 012B     		cmp	r3, #1
+ 305 0010 0DD0     		beq	.L71
+ 306              	.L75:
+ 307 0012 A36C     		ldr	r3, [r4, #72]
+ 308              	.L72:
+ 309 0014 0022     		movs	r2, #0
+ 310 0016 1A60     		str	r2, [r3]
+ 311 0018 5A60     		str	r2, [r3, #4]
+ 312 001a DA62     		str	r2, [r3, #44]
+ 313 001c 5A62     		str	r2, [r3, #36]
+ 314 001e 10BD     		pop	{r4, pc}
+ 315              	.L74:
+ 316 0020 104B     		ldr	r3, .L76+4
+ 317 0022 C362     		str	r3, [r0, #44]
+ 318 0024 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 319 0026 0E4A     		ldr	r2, .L76
+ 320 0028 2264     		str	r2, [r4, #64]
+ 321 002a 012B     		cmp	r3, #1
+ 322 002c F1D1     		bne	.L75
+ 323              	.L71:
+ 324 002e 0023     		movs	r3, #0
+ 325 0030 1A46     		mov	r2, r3
+ 326 0032 0921     		movs	r1, #9
+ 327 0034 0B20     		movs	r0, #11
+ 328 0036 FFF7FEFF 		bl	dmaStreamAllocI
+ 329 003a A36C     		ldr	r3, [r4, #72]
+ 330 003c 0168     		ldr	r1, [r0]
+ 331 003e 6064     		str	r0, [r4, #68]
+ 332 0040 03F18002 		add	r2, r3, #128
+ 333 0044 8A60     		str	r2, [r1, #8]
+ 334 0046 0720     		movs	r0, #7
+ 335 0048 074A     		ldr	r2, .L76+8
+ 336 004a 4861     		str	r0, [r1, #20]
+ 337 004c 516C     		ldr	r1, [r2, #68]
+ 338 004e 41F40061 		orr	r1, r1, #2048
+ 339 0052 5164     		str	r1, [r2, #68]
+ 340 0054 516E     		ldr	r1, [r2, #100]
+ 341 0056 41F40061 		orr	r1, r1, #2048
+ 342 005a 5166     		str	r1, [r2, #100]
+ARM GAS  /tmp/ccHLUhLv.s 			page 7
+
+
+ 343 005c 526E     		ldr	r2, [r2, #100]
+ 344 005e D9E7     		b	.L72
+ 345              	.L77:
+ 346              		.align	2
+ 347              	.L76:
+ 348 0060 2054A308 		.word	144921632
+ 349 0064 00000000 		.word	.LANCHOR1
+ 350 0068 00380240 		.word	1073887232
+ 351              		.size	sdc_lld_start, .-sdc_lld_start
+ 352              		.section	.text.sdc_lld_stop,"ax",%progbits
+ 353              		.align	1
+ 354              		.p2align 4,,15
+ 355              		.global	sdc_lld_stop
+ 356              		.syntax unified
+ 357              		.thumb
+ 358              		.thumb_func
+ 359              		.fpu fpv4-sp-d16
+ 360              		.type	sdc_lld_stop, %function
+ 361              	sdc_lld_stop:
+ 362              		@ args = 0, pretend = 0, frame = 0
+ 363              		@ frame_needed = 0, uses_anonymous_args = 0
+ 364 0000 38B5     		push	{r3, r4, r5, lr}
+ 365 0002 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 366 0004 012B     		cmp	r3, #1
+ 367 0006 00D1     		bne	.L84
+ 368 0008 38BD     		pop	{r3, r4, r5, pc}
+ 369              	.L84:
+ 370 000a 836C     		ldr	r3, [r0, #72]
+ 371 000c 0025     		movs	r5, #0
+ 372 000e 1D60     		str	r5, [r3]
+ 373 0010 0446     		mov	r4, r0
+ 374 0012 406C     		ldr	r0, [r0, #68]
+ 375 0014 5D60     		str	r5, [r3, #4]
+ 376 0016 DD62     		str	r5, [r3, #44]
+ 377 0018 5D62     		str	r5, [r3, #36]
+ 378 001a FFF7FEFF 		bl	dmaStreamFreeI
+ 379 001e 064B     		ldr	r3, .L85
+ 380 0020 6564     		str	r5, [r4, #68]
+ 381 0022 5A6C     		ldr	r2, [r3, #68]
+ 382 0024 22F40062 		bic	r2, r2, #2048
+ 383 0028 5A64     		str	r2, [r3, #68]
+ 384 002a 5A6E     		ldr	r2, [r3, #100]
+ 385 002c 22F40062 		bic	r2, r2, #2048
+ 386 0030 5A66     		str	r2, [r3, #100]
+ 387 0032 5B6E     		ldr	r3, [r3, #100]
+ 388 0034 38BD     		pop	{r3, r4, r5, pc}
+ 389              	.L86:
+ 390 0036 00BF     		.align	2
+ 391              	.L85:
+ 392 0038 00380240 		.word	1073887232
+ 393              		.size	sdc_lld_stop, .-sdc_lld_stop
+ 394              		.section	.text.sdc_lld_start_clk,"ax",%progbits
+ 395              		.align	1
+ 396              		.p2align 4,,15
+ 397              		.global	sdc_lld_start_clk
+ 398              		.syntax unified
+ 399              		.thumb
+ARM GAS  /tmp/ccHLUhLv.s 			page 8
+
+
+ 400              		.thumb_func
+ 401              		.fpu fpv4-sp-d16
+ 402              		.type	sdc_lld_start_clk, %function
+ 403              	sdc_lld_start_clk:
+ 404              		@ args = 0, pretend = 0, frame = 0
+ 405              		@ frame_needed = 0, uses_anonymous_args = 0
+ 406              		@ link register save eliminated.
+ 407 0000 836C     		ldr	r3, [r0, #72]
+ 408 0002 7822     		movs	r2, #120
+ 409 0004 5A60     		str	r2, [r3, #4]
+ 410 0006 1A68     		ldr	r2, [r3]
+ 411 0008 42F00302 		orr	r2, r2, #3
+ 412 000c 1A60     		str	r2, [r3]
+ 413 000e 5A68     		ldr	r2, [r3, #4]
+ 414 0010 42F48072 		orr	r2, r2, #256
+ 415 0014 6420     		movs	r0, #100
+ 416 0016 5A60     		str	r2, [r3, #4]
+ 417 0018 FFF7FEBF 		b	chThdSleep
+ 418              		.size	sdc_lld_start_clk, .-sdc_lld_start_clk
+ 419              		.section	.text.sdc_lld_set_data_clk,"ax",%progbits
+ 420              		.align	1
+ 421              		.p2align 4,,15
+ 422              		.global	sdc_lld_set_data_clk
+ 423              		.syntax unified
+ 424              		.thumb
+ 425              		.thumb_func
+ 426              		.fpu fpv4-sp-d16
+ 427              		.type	sdc_lld_set_data_clk, %function
+ 428              	sdc_lld_set_data_clk:
+ 429              		@ args = 0, pretend = 0, frame = 0
+ 430              		@ frame_needed = 0, uses_anonymous_args = 0
+ 431              		@ link register save eliminated.
+ 432 0000 826C     		ldr	r2, [r0, #72]
+ 433 0002 5368     		ldr	r3, [r2, #4]
+ 434 0004 23F0FF03 		bic	r3, r3, #255
+ 435 0008 5360     		str	r3, [r2, #4]
+ 436 000a 7047     		bx	lr
+ 437              		.size	sdc_lld_set_data_clk, .-sdc_lld_set_data_clk
+ 438              		.section	.text.sdc_lld_stop_clk,"ax",%progbits
+ 439              		.align	1
+ 440              		.p2align 4,,15
+ 441              		.global	sdc_lld_stop_clk
+ 442              		.syntax unified
+ 443              		.thumb
+ 444              		.thumb_func
+ 445              		.fpu fpv4-sp-d16
+ 446              		.type	sdc_lld_stop_clk, %function
+ 447              	sdc_lld_stop_clk:
+ 448              		@ args = 0, pretend = 0, frame = 0
+ 449              		@ frame_needed = 0, uses_anonymous_args = 0
+ 450              		@ link register save eliminated.
+ 451 0000 836C     		ldr	r3, [r0, #72]
+ 452 0002 0022     		movs	r2, #0
+ 453 0004 5A60     		str	r2, [r3, #4]
+ 454 0006 1A60     		str	r2, [r3]
+ 455 0008 7047     		bx	lr
+ 456              		.size	sdc_lld_stop_clk, .-sdc_lld_stop_clk
+ARM GAS  /tmp/ccHLUhLv.s 			page 9
+
+
+ 457 000a 00BF     		.section	.text.sdc_lld_set_bus_mode,"ax",%progbits
+ 458              		.align	1
+ 459              		.p2align 4,,15
+ 460              		.global	sdc_lld_set_bus_mode
+ 461              		.syntax unified
+ 462              		.thumb
+ 463              		.thumb_func
+ 464              		.fpu fpv4-sp-d16
+ 465              		.type	sdc_lld_set_bus_mode, %function
+ 466              	sdc_lld_set_bus_mode:
+ 467              		@ args = 0, pretend = 0, frame = 0
+ 468              		@ frame_needed = 0, uses_anonymous_args = 0
+ 469              		@ link register save eliminated.
+ 470 0000 826C     		ldr	r2, [r0, #72]
+ 471 0002 5368     		ldr	r3, [r2, #4]
+ 472 0004 0129     		cmp	r1, #1
+ 473 0006 23F4C053 		bic	r3, r3, #6144
+ 474 000a 07D0     		beq	.L91
+ 475 000c 0229     		cmp	r1, #2
+ 476 000e 01D0     		beq	.L92
+ 477 0010 11B1     		cbz	r1, .L94
+ 478 0012 7047     		bx	lr
+ 479              	.L92:
+ 480 0014 43F48053 		orr	r3, r3, #4096
+ 481              	.L94:
+ 482 0018 5360     		str	r3, [r2, #4]
+ 483 001a 7047     		bx	lr
+ 484              	.L91:
+ 485 001c 43F40063 		orr	r3, r3, #2048
+ 486 0020 5360     		str	r3, [r2, #4]
+ 487 0022 7047     		bx	lr
+ 488              		.size	sdc_lld_set_bus_mode, .-sdc_lld_set_bus_mode
+ 489              		.section	.text.sdc_lld_send_cmd_none,"ax",%progbits
+ 490              		.align	1
+ 491              		.p2align 4,,15
+ 492              		.global	sdc_lld_send_cmd_none
+ 493              		.syntax unified
+ 494              		.thumb
+ 495              		.thumb_func
+ 496              		.fpu fpv4-sp-d16
+ 497              		.type	sdc_lld_send_cmd_none, %function
+ 498              	sdc_lld_send_cmd_none:
+ 499              		@ args = 0, pretend = 0, frame = 0
+ 500              		@ frame_needed = 0, uses_anonymous_args = 0
+ 501              		@ link register save eliminated.
+ 502 0000 806C     		ldr	r0, [r0, #72]
+ 503 0002 41F48061 		orr	r1, r1, #1024
+ 504 0006 8260     		str	r2, [r0, #8]
+ 505 0008 C160     		str	r1, [r0, #12]
+ 506              	.L96:
+ 507 000a 436B     		ldr	r3, [r0, #52]
+ 508 000c 1B06     		lsls	r3, r3, #24
+ 509 000e FCD5     		bpl	.L96
+ 510 0010 8023     		movs	r3, #128
+ 511 0012 8363     		str	r3, [r0, #56]
+ 512 0014 7047     		bx	lr
+ 513              		.size	sdc_lld_send_cmd_none, .-sdc_lld_send_cmd_none
+ARM GAS  /tmp/ccHLUhLv.s 			page 10
+
+
+ 514 0016 00BF     		.section	.text.sdc_lld_send_cmd_short,"ax",%progbits
+ 515              		.align	1
+ 516              		.p2align 4,,15
+ 517              		.global	sdc_lld_send_cmd_short
+ 518              		.syntax unified
+ 519              		.thumb
+ 520              		.thumb_func
+ 521              		.fpu fpv4-sp-d16
+ 522              		.type	sdc_lld_send_cmd_short, %function
+ 523              	sdc_lld_send_cmd_short:
+ 524              		@ args = 0, pretend = 0, frame = 0
+ 525              		@ frame_needed = 0, uses_anonymous_args = 0
+ 526 0000 10B5     		push	{r4, lr}
+ 527 0002 846C     		ldr	r4, [r0, #72]
+ 528 0004 41F48861 		orr	r1, r1, #1088
+ 529 0008 A260     		str	r2, [r4, #8]
+ 530 000a E160     		str	r1, [r4, #12]
+ 531              	.L100:
+ 532 000c 616B     		ldr	r1, [r4, #52]
+ 533 000e 11F04502 		ands	r2, r1, #69
+ 534 0012 FBD0     		beq	.L100
+ 535 0014 A263     		str	r2, [r4, #56]
+ 536 0016 11F00402 		ands	r2, r1, #4
+ 537 001a 03D1     		bne	.L106
+ 538 001c 6169     		ldr	r1, [r4, #20]
+ 539 001e 1960     		str	r1, [r3]
+ 540 0020 1046     		mov	r0, r2
+ 541 0022 10BD     		pop	{r4, pc}
+ 542              	.L106:
+ 543 0024 FFF7FEFF 		bl	sdc_lld_collect_errors
+ 544 0028 0120     		movs	r0, #1
+ 545 002a 10BD     		pop	{r4, pc}
+ 546              		.size	sdc_lld_send_cmd_short, .-sdc_lld_send_cmd_short
+ 547              		.section	.text.sdc_lld_send_cmd_short_crc,"ax",%progbits
+ 548              		.align	1
+ 549              		.p2align 4,,15
+ 550              		.global	sdc_lld_send_cmd_short_crc
+ 551              		.syntax unified
+ 552              		.thumb
+ 553              		.thumb_func
+ 554              		.fpu fpv4-sp-d16
+ 555              		.type	sdc_lld_send_cmd_short_crc, %function
+ 556              	sdc_lld_send_cmd_short_crc:
+ 557              		@ args = 0, pretend = 0, frame = 0
+ 558              		@ frame_needed = 0, uses_anonymous_args = 0
+ 559 0000 10B5     		push	{r4, lr}
+ 560 0002 846C     		ldr	r4, [r0, #72]
+ 561 0004 41F48861 		orr	r1, r1, #1088
+ 562 0008 A260     		str	r2, [r4, #8]
+ 563 000a E160     		str	r1, [r4, #12]
+ 564              	.L108:
+ 565 000c 616B     		ldr	r1, [r4, #52]
+ 566 000e 11F04502 		ands	r2, r1, #69
+ 567 0012 FBD0     		beq	.L108
+ 568 0014 A263     		str	r2, [r4, #56]
+ 569 0016 11F00502 		ands	r2, r1, #5
+ 570 001a 03D1     		bne	.L114
+ARM GAS  /tmp/ccHLUhLv.s 			page 11
+
+
+ 571 001c 6169     		ldr	r1, [r4, #20]
+ 572 001e 1960     		str	r1, [r3]
+ 573 0020 1046     		mov	r0, r2
+ 574 0022 10BD     		pop	{r4, pc}
+ 575              	.L114:
+ 576 0024 FFF7FEFF 		bl	sdc_lld_collect_errors
+ 577 0028 0120     		movs	r0, #1
+ 578 002a 10BD     		pop	{r4, pc}
+ 579              		.size	sdc_lld_send_cmd_short_crc, .-sdc_lld_send_cmd_short_crc
+ 580              		.section	.text.sdc_lld_send_cmd_long_crc,"ax",%progbits
+ 581              		.align	1
+ 582              		.p2align 4,,15
+ 583              		.global	sdc_lld_send_cmd_long_crc
+ 584              		.syntax unified
+ 585              		.thumb
+ 586              		.thumb_func
+ 587              		.fpu fpv4-sp-d16
+ 588              		.type	sdc_lld_send_cmd_long_crc, %function
+ 589              	sdc_lld_send_cmd_long_crc:
+ 590              		@ args = 0, pretend = 0, frame = 0
+ 591              		@ frame_needed = 0, uses_anonymous_args = 0
+ 592 0000 10B5     		push	{r4, lr}
+ 593 0002 846C     		ldr	r4, [r0, #72]
+ 594 0004 41F49861 		orr	r1, r1, #1216
+ 595 0008 A260     		str	r2, [r4, #8]
+ 596 000a E160     		str	r1, [r4, #12]
+ 597              	.L116:
+ 598 000c 616B     		ldr	r1, [r4, #52]
+ 599 000e 11F04502 		ands	r2, r1, #69
+ 600 0012 FBD0     		beq	.L116
+ 601 0014 A263     		str	r2, [r4, #56]
+ 602 0016 11F03F02 		ands	r2, r1, #63
+ 603 001a 09D1     		bne	.L122
+ 604 001c 216A     		ldr	r1, [r4, #32]
+ 605 001e 1960     		str	r1, [r3]
+ 606 0020 E169     		ldr	r1, [r4, #28]
+ 607 0022 5960     		str	r1, [r3, #4]
+ 608 0024 A169     		ldr	r1, [r4, #24]
+ 609 0026 9960     		str	r1, [r3, #8]
+ 610 0028 6169     		ldr	r1, [r4, #20]
+ 611 002a D960     		str	r1, [r3, #12]
+ 612 002c 1046     		mov	r0, r2
+ 613 002e 10BD     		pop	{r4, pc}
+ 614              	.L122:
+ 615 0030 FFF7FEFF 		bl	sdc_lld_collect_errors
+ 616 0034 0120     		movs	r0, #1
+ 617 0036 10BD     		pop	{r4, pc}
+ 618              		.size	sdc_lld_send_cmd_long_crc, .-sdc_lld_send_cmd_long_crc
+ 619              		.section	.text.sdc_lld_read_special,"ax",%progbits
+ 620              		.align	1
+ 621              		.p2align 4,,15
+ 622              		.global	sdc_lld_read_special
+ 623              		.syntax unified
+ 624              		.thumb
+ 625              		.thumb_func
+ 626              		.fpu fpv4-sp-d16
+ 627              		.type	sdc_lld_read_special, %function
+ARM GAS  /tmp/ccHLUhLv.s 			page 12
+
+
+ 628              	sdc_lld_read_special:
+ 629              		@ args = 4, pretend = 0, frame = 16
+ 630              		@ frame_needed = 0, uses_anonymous_args = 0
+ 631 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 632 0002 1D46     		mov	r5, r3
+ 633 0004 836C     		ldr	r3, [r0, #72]
+ 634 0006 1646     		mov	r6, r2
+ 635 0008 224A     		ldr	r2, .L138
+ 636 000a 5A62     		str	r2, [r3, #36]
+ 637 000c 85B0     		sub	sp, sp, #20
+ 638 000e 0446     		mov	r4, r0
+ 639 0010 0F46     		mov	r7, r1
+ 640 0012 FFF7FEFF 		bl	_sdc_wait_for_transfer_state
+ 641 0016 0028     		cmp	r0, #0
+ 642 0018 30D1     		bne	.L135
+ 643 001a 636C     		ldr	r3, [r4, #68]
+ 644 001c 1B68     		ldr	r3, [r3]
+ 645 001e B208     		lsrs	r2, r6, #2
+ 646 0020 DF60     		str	r7, [r3, #12]
+ 647 0022 5A60     		str	r2, [r3, #4]
+ 648 0024 226C     		ldr	r2, [r4, #64]
+ 649 0026 1A60     		str	r2, [r3]
+ 650 0028 1A68     		ldr	r2, [r3]
+ 651 002a 42F00102 		orr	r2, r2, #1
+ 652 002e 1A60     		str	r2, [r3]
+ 653 0030 A36C     		ldr	r3, [r4, #72]
+ 654 0032 194A     		ldr	r2, .L138+4
+ 655 0034 9A63     		str	r2, [r3, #56]
+ 656 0036 40F22A32 		movw	r2, #810
+ 657 003a DA63     		str	r2, [r3, #60]
+ 658 003c 0F22     		movs	r2, #15
+ 659 003e 9E62     		str	r6, [r3, #40]
+ 660 0040 45F48865 		orr	r5, r5, #1088
+ 661 0044 DA62     		str	r2, [r3, #44]
+ 662 0046 0A9A     		ldr	r2, [sp, #40]
+ 663 0048 9A60     		str	r2, [r3, #8]
+ 664 004a DD60     		str	r5, [r3, #12]
+ 665              	.L126:
+ 666 004c 596B     		ldr	r1, [r3, #52]
+ 667 004e 11F04502 		ands	r2, r1, #69
+ 668 0052 FBD0     		beq	.L126
+ 669 0054 11F0050F 		tst	r1, #5
+ 670 0058 9A63     		str	r2, [r3, #56]
+ 671 005a 0CD1     		bne	.L137
+ 672 005c 5A69     		ldr	r2, [r3, #20]
+ 673 005e 0F4B     		ldr	r3, .L138+8
+ 674 0060 0392     		str	r2, [sp, #12]
+ 675 0062 1340     		ands	r3, r3, r2
+ 676 0064 03AA     		add	r2, sp, #12
+ 677 0066 5BB1     		cbz	r3, .L133
+ 678              	.L125:
+ 679 0068 2046     		mov	r0, r4
+ 680 006a 0121     		movs	r1, #1
+ 681 006c FFF7FEFF 		bl	sdc_lld_error_cleanup
+ 682 0070 0120     		movs	r0, #1
+ 683 0072 05B0     		add	sp, sp, #20
+ 684              		@ sp needed
+ARM GAS  /tmp/ccHLUhLv.s 			page 13
+
+
+ 685 0074 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 686              	.L137:
+ 687 0076 2046     		mov	r0, r4
+ 688 0078 FFF7FEFF 		bl	sdc_lld_collect_errors
+ 689              	.L135:
+ 690 007c 03AA     		add	r2, sp, #12
+ 691 007e F3E7     		b	.L125
+ 692              	.L133:
+ 693 0080 0121     		movs	r1, #1
+ 694 0082 2046     		mov	r0, r4
+ 695 0084 0192     		str	r2, [sp, #4]
+ 696 0086 FFF7FEFF 		bl	sdc_lld_wait_transaction_end
+ 697 008a 019A     		ldr	r2, [sp, #4]
+ 698 008c 0028     		cmp	r0, #0
+ 699 008e EBD1     		bne	.L125
+ 700 0090 05B0     		add	sp, sp, #20
+ 701              		@ sp needed
+ 702 0092 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 703              	.L139:
+ 704              		.align	2
+ 705              	.L138:
+ 706 0094 407E0500 		.word	360000
+ 707 0098 FF07C000 		.word	12584959
+ 708 009c 08E0FFFD 		.word	-33562616
+ 709              		.size	sdc_lld_read_special, .-sdc_lld_read_special
+ 710              		.section	.text.sdc_lld_read_aligned,"ax",%progbits
+ 711              		.align	1
+ 712              		.p2align 4,,15
+ 713              		.global	sdc_lld_read_aligned
+ 714              		.syntax unified
+ 715              		.thumb
+ 716              		.thumb_func
+ 717              		.fpu fpv4-sp-d16
+ 718              		.type	sdc_lld_read_aligned, %function
+ 719              	sdc_lld_read_aligned:
+ 720              		@ args = 0, pretend = 0, frame = 16
+ 721              		@ frame_needed = 0, uses_anonymous_args = 0
+ 722 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 723 0002 1D46     		mov	r5, r3
+ 724 0004 836C     		ldr	r3, [r0, #72]
+ 725 0006 1746     		mov	r7, r2
+ 726 0008 2A4A     		ldr	r2, .L169
+ 727 000a 5A62     		str	r2, [r3, #36]
+ 728 000c 85B0     		sub	sp, sp, #20
+ 729 000e 0446     		mov	r4, r0
+ 730 0010 0E46     		mov	r6, r1
+ 731 0012 FFF7FEFF 		bl	_sdc_wait_for_transfer_state
+ 732 0016 08B1     		cbz	r0, .L167
+ 733              	.L141:
+ 734 0018 05B0     		add	sp, sp, #20
+ 735              		@ sp needed
+ 736 001a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 737              	.L167:
+ 738 001c 636C     		ldr	r3, [r4, #68]
+ 739 001e 226C     		ldr	r2, [r4, #64]
+ 740 0020 1B68     		ldr	r3, [r3]
+ 741 0022 6902     		lsls	r1, r5, #9
+ARM GAS  /tmp/ccHLUhLv.s 			page 14
+
+
+ 742 0024 8808     		lsrs	r0, r1, #2
+ 743 0026 DF60     		str	r7, [r3, #12]
+ 744 0028 5860     		str	r0, [r3, #4]
+ 745 002a 1A60     		str	r2, [r3]
+ 746 002c 1A68     		ldr	r2, [r3]
+ 747 002e 2248     		ldr	r0, .L169+4
+ 748 0030 42F00102 		orr	r2, r2, #1
+ 749 0034 1A60     		str	r2, [r3]
+ 750 0036 236B     		ldr	r3, [r4, #48]
+ 751 0038 A26C     		ldr	r2, [r4, #72]
+ 752 003a DB06     		lsls	r3, r3, #27
+ 753 003c 9063     		str	r0, [r2, #56]
+ 754 003e 40F22A30 		movw	r0, #810
+ 755 0042 D063     		str	r0, [r2, #60]
+ 756 0044 58BF     		it	pl
+ 757 0046 7602     		lslpl	r6, r6, #9
+ 758 0048 9162     		str	r1, [r2, #40]
+ 759 004a 012D     		cmp	r5, #1
+ 760 004c 4FF09B01 		mov	r1, #155
+ 761 0050 D162     		str	r1, [r2, #44]
+ 762 0052 20D9     		bls	.L143
+ 763 0054 40F25243 		movw	r3, #1106
+ 764 0058 9660     		str	r6, [r2, #8]
+ 765 005a D360     		str	r3, [r2, #12]
+ 766              	.L144:
+ 767 005c 516B     		ldr	r1, [r2, #52]
+ 768 005e 11F04503 		ands	r3, r1, #69
+ 769 0062 FBD0     		beq	.L144
+ 770              	.L166:
+ 771 0064 11F0050F 		tst	r1, #5
+ 772 0068 9363     		str	r3, [r2, #56]
+ 773 006a 1DD1     		bne	.L168
+ 774 006c 5269     		ldr	r2, [r2, #20]
+ 775 006e 134B     		ldr	r3, .L169+8
+ 776 0070 0392     		str	r2, [sp, #12]
+ 777 0072 1340     		ands	r3, r3, r2
+ 778 0074 03AA     		add	r2, sp, #12
+ 779 0076 3BB9     		cbnz	r3, .L146
+ 780 0078 2946     		mov	r1, r5
+ 781 007a 2046     		mov	r0, r4
+ 782 007c 0192     		str	r2, [sp, #4]
+ 783 007e FFF7FEFF 		bl	sdc_lld_wait_transaction_end
+ 784 0082 019A     		ldr	r2, [sp, #4]
+ 785 0084 0028     		cmp	r0, #0
+ 786 0086 C7D0     		beq	.L141
+ 787              	.L146:
+ 788 0088 2046     		mov	r0, r4
+ 789 008a 2946     		mov	r1, r5
+ 790 008c FFF7FEFF 		bl	sdc_lld_error_cleanup
+ 791 0090 0120     		movs	r0, #1
+ 792 0092 05B0     		add	sp, sp, #20
+ 793              		@ sp needed
+ 794 0094 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 795              	.L143:
+ 796 0096 40F25143 		movw	r3, #1105
+ 797 009a 9660     		str	r6, [r2, #8]
+ 798 009c D360     		str	r3, [r2, #12]
+ARM GAS  /tmp/ccHLUhLv.s 			page 15
+
+
+ 799              	.L149:
+ 800 009e 516B     		ldr	r1, [r2, #52]
+ 801 00a0 11F04503 		ands	r3, r1, #69
+ 802 00a4 FBD0     		beq	.L149
+ 803 00a6 DDE7     		b	.L166
+ 804              	.L168:
+ 805 00a8 2046     		mov	r0, r4
+ 806 00aa FFF7FEFF 		bl	sdc_lld_collect_errors
+ 807 00ae 03AA     		add	r2, sp, #12
+ 808 00b0 EAE7     		b	.L146
+ 809              	.L170:
+ 810 00b2 00BF     		.align	2
+ 811              	.L169:
+ 812 00b4 407E0500 		.word	360000
+ 813 00b8 FF07C000 		.word	12584959
+ 814 00bc 08E0FFFD 		.word	-33562616
+ 815              		.size	sdc_lld_read_aligned, .-sdc_lld_read_aligned
+ 816              		.section	.text.sdc_lld_write_aligned,"ax",%progbits
+ 817              		.align	1
+ 818              		.p2align 4,,15
+ 819              		.global	sdc_lld_write_aligned
+ 820              		.syntax unified
+ 821              		.thumb
+ 822              		.thumb_func
+ 823              		.fpu fpv4-sp-d16
+ 824              		.type	sdc_lld_write_aligned, %function
+ 825              	sdc_lld_write_aligned:
+ 826              		@ args = 0, pretend = 0, frame = 16
+ 827              		@ frame_needed = 0, uses_anonymous_args = 0
+ 828 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 829 0002 1E46     		mov	r6, r3
+ 830 0004 836C     		ldr	r3, [r0, #72]
+ 831 0006 1446     		mov	r4, r2
+ 832 0008 2E4A     		ldr	r2, .L202
+ 833 000a 5A62     		str	r2, [r3, #36]
+ 834 000c 85B0     		sub	sp, sp, #20
+ 835 000e 0546     		mov	r5, r0
+ 836 0010 0F46     		mov	r7, r1
+ 837 0012 FFF7FEFF 		bl	_sdc_wait_for_transfer_state
+ 838 0016 0190     		str	r0, [sp, #4]
+ 839 0018 08B1     		cbz	r0, .L198
+ 840              	.L172:
+ 841 001a 05B0     		add	sp, sp, #20
+ 842              		@ sp needed
+ 843 001c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 844              	.L198:
+ 845 001e 6B6C     		ldr	r3, [r5, #68]
+ 846 0020 296C     		ldr	r1, [r5, #64]
+ 847 0022 1B68     		ldr	r3, [r3]
+ 848 0024 7202     		lsls	r2, r6, #9
+ 849 0026 41F04001 		orr	r1, r1, #64
+ 850 002a 9008     		lsrs	r0, r2, #2
+ 851 002c DC60     		str	r4, [r3, #12]
+ 852 002e 5860     		str	r0, [r3, #4]
+ 853 0030 1960     		str	r1, [r3]
+ 854 0032 1968     		ldr	r1, [r3]
+ 855 0034 AC6C     		ldr	r4, [r5, #72]
+ARM GAS  /tmp/ccHLUhLv.s 			page 16
+
+
+ 856 0036 41F00101 		orr	r1, r1, #1
+ 857 003a 1960     		str	r1, [r3]
+ 858 003c 2B6B     		ldr	r3, [r5, #48]
+ 859 003e 2249     		ldr	r1, .L202+4
+ 860 0040 A163     		str	r1, [r4, #56]
+ 861 0042 DB06     		lsls	r3, r3, #27
+ 862 0044 40F21A31 		movw	r1, #794
+ 863 0048 58BF     		it	pl
+ 864 004a 7F02     		lslpl	r7, r7, #9
+ 865 004c 012E     		cmp	r6, #1
+ 866 004e E163     		str	r1, [r4, #60]
+ 867 0050 A262     		str	r2, [r4, #40]
+ 868 0052 22D9     		bls	.L174
+ 869 0054 40F25943 		movw	r3, #1113
+ 870 0058 A760     		str	r7, [r4, #8]
+ 871 005a E360     		str	r3, [r4, #12]
+ 872              	.L175:
+ 873 005c 616B     		ldr	r1, [r4, #52]
+ 874 005e 11F04503 		ands	r3, r1, #69
+ 875 0062 FBD0     		beq	.L175
+ 876              	.L197:
+ 877 0064 11F0050F 		tst	r1, #5
+ 878 0068 A363     		str	r3, [r4, #56]
+ 879 006a 26D1     		bne	.L199
+ 880 006c 6269     		ldr	r2, [r4, #20]
+ 881 006e 174B     		ldr	r3, .L202+8
+ 882 0070 0392     		str	r2, [sp, #12]
+ 883 0072 1340     		ands	r3, r3, r2
+ 884 0074 D3B9     		cbnz	r3, .L200
+ 885 0076 9923     		movs	r3, #153
+ 886 0078 03AA     		add	r2, sp, #12
+ 887 007a E362     		str	r3, [r4, #44]
+ 888 007c 3146     		mov	r1, r6
+ 889 007e 2846     		mov	r0, r5
+ 890 0080 0192     		str	r2, [sp, #4]
+ 891 0082 FFF7FEFF 		bl	sdc_lld_wait_transaction_end
+ 892 0086 019A     		ldr	r2, [sp, #4]
+ 893 0088 0028     		cmp	r0, #0
+ 894 008a C6D0     		beq	.L172
+ 895              	.L177:
+ 896 008c 2846     		mov	r0, r5
+ 897 008e 3146     		mov	r1, r6
+ 898 0090 FFF7FEFF 		bl	sdc_lld_error_cleanup
+ 899 0094 0120     		movs	r0, #1
+ 900              	.L201:
+ 901 0096 05B0     		add	sp, sp, #20
+ 902              		@ sp needed
+ 903 0098 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 904              	.L174:
+ 905 009a 4FF48B63 		mov	r3, #1112
+ 906 009e A760     		str	r7, [r4, #8]
+ 907 00a0 E360     		str	r3, [r4, #12]
+ 908              	.L180:
+ 909 00a2 616B     		ldr	r1, [r4, #52]
+ 910 00a4 11F04503 		ands	r3, r1, #69
+ 911 00a8 FBD0     		beq	.L180
+ 912 00aa DBE7     		b	.L197
+ARM GAS  /tmp/ccHLUhLv.s 			page 17
+
+
+ 913              	.L200:
+ 914 00ac 2846     		mov	r0, r5
+ 915 00ae 03AA     		add	r2, sp, #12
+ 916 00b0 3146     		mov	r1, r6
+ 917 00b2 FFF7FEFF 		bl	sdc_lld_error_cleanup
+ 918 00b6 0120     		movs	r0, #1
+ 919 00b8 EDE7     		b	.L201
+ 920              	.L199:
+ 921 00ba 2846     		mov	r0, r5
+ 922 00bc FFF7FEFF 		bl	sdc_lld_collect_errors
+ 923 00c0 03AA     		add	r2, sp, #12
+ 924 00c2 E3E7     		b	.L177
+ 925              	.L203:
+ 926              		.align	2
+ 927              	.L202:
+ 928 00c4 808D5B00 		.word	6000000
+ 929 00c8 FF07C000 		.word	12584959
+ 930 00cc 08E0FFFD 		.word	-33562616
+ 931              		.size	sdc_lld_write_aligned, .-sdc_lld_write_aligned
+ 932              		.section	.text.sdc_lld_read,"ax",%progbits
+ 933              		.align	1
+ 934              		.p2align 4,,15
+ 935              		.global	sdc_lld_read
+ 936              		.syntax unified
+ 937              		.thumb
+ 938              		.thumb_func
+ 939              		.fpu fpv4-sp-d16
+ 940              		.type	sdc_lld_read, %function
+ 941              	sdc_lld_read:
+ 942              		@ args = 0, pretend = 0, frame = 0
+ 943              		@ frame_needed = 0, uses_anonymous_args = 0
+ 944              		@ link register save eliminated.
+ 945 0000 FFF7FEBF 		b	sdc_lld_read_aligned
+ 946              		.size	sdc_lld_read, .-sdc_lld_read
+ 947              		.section	.text.sdc_lld_write,"ax",%progbits
+ 948              		.align	1
+ 949              		.p2align 4,,15
+ 950              		.global	sdc_lld_write
+ 951              		.syntax unified
+ 952              		.thumb
+ 953              		.thumb_func
+ 954              		.fpu fpv4-sp-d16
+ 955              		.type	sdc_lld_write, %function
+ 956              	sdc_lld_write:
+ 957              		@ args = 0, pretend = 0, frame = 0
+ 958              		@ frame_needed = 0, uses_anonymous_args = 0
+ 959              		@ link register save eliminated.
+ 960 0000 FFF7FEBF 		b	sdc_lld_write_aligned
+ 961              		.size	sdc_lld_write, .-sdc_lld_write
+ 962              		.section	.text.sdc_lld_sync,"ax",%progbits
+ 963              		.align	1
+ 964              		.p2align 4,,15
+ 965              		.global	sdc_lld_sync
+ 966              		.syntax unified
+ 967              		.thumb
+ 968              		.thumb_func
+ 969              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccHLUhLv.s 			page 18
+
+
+ 970              		.type	sdc_lld_sync, %function
+ 971              	sdc_lld_sync:
+ 972              		@ args = 0, pretend = 0, frame = 0
+ 973              		@ frame_needed = 0, uses_anonymous_args = 0
+ 974              		@ link register save eliminated.
+ 975 0000 0020     		movs	r0, #0
+ 976 0002 7047     		bx	lr
+ 977              		.size	sdc_lld_sync, .-sdc_lld_sync
+ 978              		.global	SDCD1
+ 979              		.section	.bss.SDCD1,"aw",%nobits
+ 980              		.align	2
+ 981              		.set	.LANCHOR0,. + 0
+ 982              		.type	SDCD1, %object
+ 983              		.size	SDCD1, 588
+ 984              	SDCD1:
+ 985 0000 00000000 		.space	588
+ 985      00000000 
+ 985      00000000 
+ 985      00000000 
+ 985      00000000 
+ 986              		.section	.rodata.sdc_default_cfg,"a"
+ 987              		.align	2
+ 988              		.set	.LANCHOR1,. + 0
+ 989              		.type	sdc_default_cfg, %object
+ 990              		.size	sdc_default_cfg, 1
+ 991              	sdc_default_cfg:
+ 992 0000 01       		.byte	1
+ 993              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/ccHLUhLv.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_sdc_lld.c
+     /tmp/ccHLUhLv.s:15     .text.sdc_lld_collect_errors:0000000000000000 $t
+     /tmp/ccHLUhLv.s:23     .text.sdc_lld_collect_errors:0000000000000000 sdc_lld_collect_errors
+     /tmp/ccHLUhLv.s:52     .text.sdc_lld_error_cleanup:0000000000000000 $t
+     /tmp/ccHLUhLv.s:59     .text.sdc_lld_error_cleanup:0000000000000000 sdc_lld_error_cleanup
+     /tmp/ccHLUhLv.s:110    .text.sdc_lld_error_cleanup:0000000000000070 $d
+     /tmp/ccHLUhLv.s:113    .text.sdc_lld_wait_transaction_end:0000000000000000 $t
+     /tmp/ccHLUhLv.s:120    .text.sdc_lld_wait_transaction_end:0000000000000000 sdc_lld_wait_transaction_end
+     /tmp/ccHLUhLv.s:210    .text.sdc_lld_wait_transaction_end:00000000000000a4 $d
+     /tmp/ccHLUhLv.s:213    .text.Vector104:0000000000000000 $t
+     /tmp/ccHLUhLv.s:221    .text.Vector104:0000000000000000 Vector104
+     /tmp/ccHLUhLv.s:252    .text.Vector104:0000000000000030 $d
+     /tmp/ccHLUhLv.s:256    .text.sdc_lld_init:0000000000000000 $t
+     /tmp/ccHLUhLv.s:264    .text.sdc_lld_init:0000000000000000 sdc_lld_init
+     /tmp/ccHLUhLv.s:282    .text.sdc_lld_init:0000000000000020 $d
+     /tmp/ccHLUhLv.s:286    .text.sdc_lld_start:0000000000000000 $t
+     /tmp/ccHLUhLv.s:294    .text.sdc_lld_start:0000000000000000 sdc_lld_start
+     /tmp/ccHLUhLv.s:348    .text.sdc_lld_start:0000000000000060 $d
+     /tmp/ccHLUhLv.s:353    .text.sdc_lld_stop:0000000000000000 $t
+     /tmp/ccHLUhLv.s:361    .text.sdc_lld_stop:0000000000000000 sdc_lld_stop
+     /tmp/ccHLUhLv.s:392    .text.sdc_lld_stop:0000000000000038 $d
+     /tmp/ccHLUhLv.s:395    .text.sdc_lld_start_clk:0000000000000000 $t
+     /tmp/ccHLUhLv.s:403    .text.sdc_lld_start_clk:0000000000000000 sdc_lld_start_clk
+     /tmp/ccHLUhLv.s:420    .text.sdc_lld_set_data_clk:0000000000000000 $t
+     /tmp/ccHLUhLv.s:428    .text.sdc_lld_set_data_clk:0000000000000000 sdc_lld_set_data_clk
+     /tmp/ccHLUhLv.s:439    .text.sdc_lld_stop_clk:0000000000000000 $t
+     /tmp/ccHLUhLv.s:447    .text.sdc_lld_stop_clk:0000000000000000 sdc_lld_stop_clk
+     /tmp/ccHLUhLv.s:458    .text.sdc_lld_set_bus_mode:0000000000000000 $t
+     /tmp/ccHLUhLv.s:466    .text.sdc_lld_set_bus_mode:0000000000000000 sdc_lld_set_bus_mode
+     /tmp/ccHLUhLv.s:490    .text.sdc_lld_send_cmd_none:0000000000000000 $t
+     /tmp/ccHLUhLv.s:498    .text.sdc_lld_send_cmd_none:0000000000000000 sdc_lld_send_cmd_none
+     /tmp/ccHLUhLv.s:515    .text.sdc_lld_send_cmd_short:0000000000000000 $t
+     /tmp/ccHLUhLv.s:523    .text.sdc_lld_send_cmd_short:0000000000000000 sdc_lld_send_cmd_short
+     /tmp/ccHLUhLv.s:548    .text.sdc_lld_send_cmd_short_crc:0000000000000000 $t
+     /tmp/ccHLUhLv.s:556    .text.sdc_lld_send_cmd_short_crc:0000000000000000 sdc_lld_send_cmd_short_crc
+     /tmp/ccHLUhLv.s:581    .text.sdc_lld_send_cmd_long_crc:0000000000000000 $t
+     /tmp/ccHLUhLv.s:589    .text.sdc_lld_send_cmd_long_crc:0000000000000000 sdc_lld_send_cmd_long_crc
+     /tmp/ccHLUhLv.s:620    .text.sdc_lld_read_special:0000000000000000 $t
+     /tmp/ccHLUhLv.s:628    .text.sdc_lld_read_special:0000000000000000 sdc_lld_read_special
+     /tmp/ccHLUhLv.s:706    .text.sdc_lld_read_special:0000000000000094 $d
+     /tmp/ccHLUhLv.s:711    .text.sdc_lld_read_aligned:0000000000000000 $t
+     /tmp/ccHLUhLv.s:719    .text.sdc_lld_read_aligned:0000000000000000 sdc_lld_read_aligned
+     /tmp/ccHLUhLv.s:812    .text.sdc_lld_read_aligned:00000000000000b4 $d
+     /tmp/ccHLUhLv.s:817    .text.sdc_lld_write_aligned:0000000000000000 $t
+     /tmp/ccHLUhLv.s:825    .text.sdc_lld_write_aligned:0000000000000000 sdc_lld_write_aligned
+     /tmp/ccHLUhLv.s:928    .text.sdc_lld_write_aligned:00000000000000c4 $d
+     /tmp/ccHLUhLv.s:933    .text.sdc_lld_read:0000000000000000 $t
+     /tmp/ccHLUhLv.s:941    .text.sdc_lld_read:0000000000000000 sdc_lld_read
+     /tmp/ccHLUhLv.s:948    .text.sdc_lld_write:0000000000000000 $t
+     /tmp/ccHLUhLv.s:956    .text.sdc_lld_write:0000000000000000 sdc_lld_write
+     /tmp/ccHLUhLv.s:963    .text.sdc_lld_sync:0000000000000000 $t
+     /tmp/ccHLUhLv.s:971    .text.sdc_lld_sync:0000000000000000 sdc_lld_sync
+     /tmp/ccHLUhLv.s:984    .bss.SDCD1:0000000000000000 SDCD1
+     /tmp/ccHLUhLv.s:980    .bss.SDCD1:0000000000000000 $d
+     /tmp/ccHLUhLv.s:987    .rodata.sdc_default_cfg:0000000000000000 $d
+     /tmp/ccHLUhLv.s:991    .rodata.sdc_default_cfg:0000000000000000 sdc_default_cfg
+ARM GAS  /tmp/ccHLUhLv.s 			page 20
+
+
+
+UNDEFINED SYMBOLS
+__stats_start_measure_crit_thd
+__stats_stop_measure_crit_thd
+chThdSuspendTimeoutS
+__stats_increase_irq
+__stats_start_measure_crit_isr
+chThdResumeI
+__stats_stop_measure_crit_isr
+__port_irq_epilogue
+sdcObjectInit
+nvicEnableVector
+dmaStreamAllocI
+dmaStreamFreeI
+chThdSleep
+_sdc_wait_for_transfer_state

@@ -1,0 +1,82 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+
+<flight_plan alt="2725" ground_alt="2575" lat0="47.414098" lon0="10.976841" max_dist_from_home="800" name="Zugspitzplatt_Survey" security_height="150">
+  <header>
+#include "modules/datalink/datalink.h"
+</header>
+  <waypoints>
+    <waypoint lat="47.414098" lon="10.976841" name="HOME"/>
+    <waypoint lat="47.414537" lon="10.975838" name="Profile"/>
+    <waypoint lat="47.414118" lon="10.974336" name="Rise"/>
+    <waypoint alt="2725.0" lat="47.415678" lon="10.977095" name="WP01"/>
+    <waypoint alt="2725.0" lat="47.411339" lon="10.977588" name="WP02"/>
+    <waypoint alt="2730.0" lat="47.411270" lon="10.976460" name="WP03"/>
+    <waypoint alt="2735.0" lat="47.413643" lon="10.976594" name="WP04"/>
+    <waypoint alt="2740.0" lat="47.411146" lon="10.975195" name="WP05"/>
+    <waypoint alt="2750.0" lat="47.411041" lon="10.973889" name="WP06"/>
+    <waypoint alt="2750.0" lat="47.415696" lon="10.976762" name="WP07"/>
+    <waypoint alt="2755.0" lat="47.415876" lon="10.975612" name="WP08"/>
+    <waypoint alt="2770.0" lat="47.410987" lon="10.972522" name="WP09"/>
+    <waypoint alt="2780.0" lat="47.411429" lon="10.971759" name="WP10"/>
+    <waypoint alt="2780.0" lat="47.416128" lon="10.974574" name="WP11"/>
+    <waypoint alt="2780.0" lat="47.416294" lon="10.973469" name="WP12"/>
+    <waypoint alt="2780.0" lat="47.411880" lon="10.971001" name="WP13"/>
+    <waypoint alt="2780.0" lat="47.411646" lon="10.971417" name="WP14"/>
+    <waypoint alt="2780.0" lat="47.416237" lon="10.974036" name="WP15"/>
+    <waypoint alt="2770.0" lat="47.416023" lon="10.975104" name="WP16"/>
+    <waypoint alt="2770.0" lat="47.411220" lon="10.972106" name="WP17"/>
+    <waypoint alt="2760.0" lat="47.410968" lon="10.973113" name="WP18"/>
+    <waypoint alt="2750.0" lat="47.415751" lon="10.976186" name="WP19"/>
+    <waypoint alt="2745.0" lat="47.411068" lon="10.974594" name="WP20"/>
+    <waypoint alt="2740.0" lat="47.413363" lon="10.975608" name="WP21"/>
+    <waypoint alt="2735.0" lat="47.411166" lon="10.975710" name="WP22"/>
+    <waypoint alt="2730.0" lat="47.413505" lon="10.976085" name="WP23"/>
+    <waypoint alt="2725.0" lat="47.411323" lon="10.977021" name="WP24"/>
+    <waypoint alt="2725.0" lat="47.414103" lon="10.977153" name="WP25"/>
+  </waypoints>
+  <exceptions>
+    <exception cond="10.5 > PowerVoltage()" deroute="Standby"/>
+  </exceptions>
+  <blocks>
+    <block name="Wait GPS">
+      <set value="1" var="autopilot.kill_throttle"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+    <block name="Geo init">
+      <while cond="LessThan(NavBlockTime(), 10)"/>
+    </block>
+    <block name="Waiting for Remote Control">
+      <while cond="RCLost()"/>
+    </block>
+    <block name="Holding point">
+      <set value="1" var="autopilot.kill_throttle"/>
+      <attitude roll="0" throttle="0" vmode="throttle"/>
+    </block>
+    <block group="home" key="t" name="Takeoff" strip_button="Takeoff (wp CLIMB)" strip_icon="takeoff.png">
+      <set value="0" var="autopilot.kill_throttle"/>
+      <set value="0" var="autopilot.flight_time"/>
+      <set value="0" var="autopilot.kill_throttle"/>
+    </block>
+    <block name="Climb">
+      <circle pitch="30" radius="-60" throttle="0.8" until="GetPosAlt() > ground_alt + 150" vmode="throttle" wp="Profile"/>
+      <deroute block="Survey"/>
+    </block>
+    <block name="Survey">
+      <go wp="WP01"/>
+      <path approaching_time="3" vmode="glide" wpts="WP01, WP02, WP03, WP04, WP05, WP06, WP07, WP08, WP09, WP10, WP11, WP12, WP13, WP14, WP15, WP16, WP17, WP18, WP19, WP20, WP21, WP22, WP23, WP24, WP25"/>
+      <exception cond="ground_alt+125 > GetPosAlt()" deroute="Up"/>
+      <deroute block="Down"/>
+    </block>
+    <block name="Down">
+      <circle pitch="-5" radius="-60" throttle="0.55" until="ground_alt+50 > GetPosAlt()" vmode="throttle" wp="HOME"/>
+      <deroute block="Standby"/>
+    </block>
+    <block name="Up">
+      <circle pitch="30" radius="-60" throttle="0.80" until="GetPosAlt() > ground_alt + 110" vmode="throttle" wp="Rise"/>
+      <return/>
+    </block>
+    <block group="Standby" key="Ctrl+a" name="Standby" strip_button="Standby" strip_icon="home.png">
+      <circle radius="-60" wp="HOME"/>
+    </block>
+  </blocks>
+</flight_plan>

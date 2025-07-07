@@ -1,0 +1,356 @@
+ARM GAS  /tmp/cc2JlW2N.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"mcu_arch.c"
+  13              		.text
+  14              		.section	.text.__NVIC_SystemReset,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	__NVIC_SystemReset, %function
+  23              	__NVIC_SystemReset:
+  24              		@ Volatile: function does not return.
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28              		.syntax unified
+  29              	@ 879 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  30 0000 BFF34F8F 		dsb 0xF
+  31              	@ 0 "" 2
+  32              		.thumb
+  33              		.syntax unified
+  34 0004 0549     		ldr	r1, .L4
+  35 0006 064B     		ldr	r3, .L4+4
+  36 0008 CA68     		ldr	r2, [r1, #12]
+  37 000a 02F4E062 		and	r2, r2, #1792
+  38 000e 1343     		orrs	r3, r3, r2
+  39 0010 CB60     		str	r3, [r1, #12]
+  40              		.syntax unified
+  41              	@ 879 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+  42 0012 BFF34F8F 		dsb 0xF
+  43              	@ 0 "" 2
+  44              		.thumb
+  45              		.syntax unified
+  46              	.L2:
+  47              		.syntax unified
+  48              	@ 1950 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/core_cm4.h" 1
+  49 0016 00BF     		nop
+  50              	@ 0 "" 2
+  51              		.thumb
+  52              		.syntax unified
+  53 0018 FDE7     		b	.L2
+  54              	.L5:
+  55 001a 00BF     		.align	2
+  56              	.L4:
+  57 001c 00ED00E0 		.word	-536810240
+ARM GAS  /tmp/cc2JlW2N.s 			page 2
+
+
+  58 0020 0400FA05 		.word	100270084
+  59              		.size	__NVIC_SystemReset, .-__NVIC_SystemReset
+  60              		.section	.text.HardFault_Handler,"ax",%progbits
+  61              		.align	1
+  62              		.p2align 4,,15
+  63              		.global	HardFault_Handler
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  67              		.fpu fpv4-sp-d16
+  68              		.type	HardFault_Handler, %function
+  69              	HardFault_Handler:
+  70              		@ Volatile: function does not return.
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73 0000 08B5     		push	{r3, lr}
+  74 0002 024B     		ldr	r3, .L8
+  75 0004 0122     		movs	r2, #1
+  76 0006 1A70     		strb	r2, [r3]
+  77 0008 FFF7FEFF 		bl	__NVIC_SystemReset
+  78              	.L9:
+  79              		.align	2
+  80              	.L8:
+  81 000c 00000000 		.word	.LANCHOR0
+  82              		.size	HardFault_Handler, .-HardFault_Handler
+  83              		.section	.text.NMI_Handler,"ax",%progbits
+  84              		.align	1
+  85              		.p2align 4,,15
+  86              		.global	NMI_Handler
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  90              		.fpu fpv4-sp-d16
+  91              		.type	NMI_Handler, %function
+  92              	NMI_Handler:
+  93              		@ Volatile: function does not return.
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96 0000 08B5     		push	{r3, lr}
+  97 0002 FFF7FEFF 		bl	HardFault_Handler
+  98              		.size	NMI_Handler, .-NMI_Handler
+  99 0006 00BF     		.section	.text.MemManage_Handler,"ax",%progbits
+ 100              		.align	1
+ 101              		.p2align 4,,15
+ 102              		.global	MemManage_Handler
+ 103              		.syntax unified
+ 104              		.thumb
+ 105              		.thumb_func
+ 106              		.fpu fpv4-sp-d16
+ 107              		.type	MemManage_Handler, %function
+ 108              	MemManage_Handler:
+ 109              		@ Volatile: function does not return.
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112 0000 08B5     		push	{r3, lr}
+ 113 0002 FFF7FEFF 		bl	HardFault_Handler
+ 114              		.size	MemManage_Handler, .-MemManage_Handler
+ARM GAS  /tmp/cc2JlW2N.s 			page 3
+
+
+ 115 0006 00BF     		.section	.text.BusFault_Handler,"ax",%progbits
+ 116              		.align	1
+ 117              		.p2align 4,,15
+ 118              		.global	BusFault_Handler
+ 119              		.syntax unified
+ 120              		.thumb
+ 121              		.thumb_func
+ 122              		.fpu fpv4-sp-d16
+ 123              		.type	BusFault_Handler, %function
+ 124              	BusFault_Handler:
+ 125              		@ Volatile: function does not return.
+ 126              		@ args = 0, pretend = 0, frame = 0
+ 127              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128 0000 08B5     		push	{r3, lr}
+ 129 0002 FFF7FEFF 		bl	HardFault_Handler
+ 130              		.size	BusFault_Handler, .-BusFault_Handler
+ 131 0006 00BF     		.section	.text.UsageFault_Handler,"ax",%progbits
+ 132              		.align	1
+ 133              		.p2align 4,,15
+ 134              		.global	UsageFault_Handler
+ 135              		.syntax unified
+ 136              		.thumb
+ 137              		.thumb_func
+ 138              		.fpu fpv4-sp-d16
+ 139              		.type	UsageFault_Handler, %function
+ 140              	UsageFault_Handler:
+ 141              		@ Volatile: function does not return.
+ 142              		@ args = 0, pretend = 0, frame = 0
+ 143              		@ frame_needed = 0, uses_anonymous_args = 0
+ 144 0000 08B5     		push	{r3, lr}
+ 145 0002 FFF7FEFF 		bl	HardFault_Handler
+ 146              		.size	UsageFault_Handler, .-UsageFault_Handler
+ 147 0006 00BF     		.section	.text.mcu_arch_init,"ax",%progbits
+ 148              		.align	1
+ 149              		.p2align 4,,15
+ 150              		.global	mcu_arch_init
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 154              		.fpu fpv4-sp-d16
+ 155              		.type	mcu_arch_init, %function
+ 156              	mcu_arch_init:
+ 157              		@ args = 0, pretend = 0, frame = 0
+ 158              		@ frame_needed = 0, uses_anonymous_args = 0
+ 159 0000 08B5     		push	{r3, lr}
+ 160 0002 FFF7FEFF 		bl	halInit
+ 161 0006 FFF7FEFF 		bl	chSysInit
+ 162 000a 1A49     		ldr	r1, .L29
+ 163 000c 1A4A     		ldr	r2, .L29+4
+ 164 000e 0B6B     		ldr	r3, [r1, #48]
+ 165 0010 43F48023 		orr	r3, r3, #262144
+ 166 0014 0B63     		str	r3, [r1, #48]
+ 167 0016 5368     		ldr	r3, [r2, #4]
+ 168 0018 43F40073 		orr	r3, r3, #512
+ 169 001c 5360     		str	r3, [r2, #4]
+ 170              	.L19:
+ 171 001e 5368     		ldr	r3, [r2, #4]
+ARM GAS  /tmp/cc2JlW2N.s 			page 4
+
+
+ 172 0020 1B07     		lsls	r3, r3, #28
+ 173 0022 FCD5     		bpl	.L19
+ 174 0024 1549     		ldr	r1, .L29+8
+ 175 0026 134A     		ldr	r2, .L29
+ 176 0028 0023     		movs	r3, #0
+ 177 002a 0B70     		strb	r3, [r1]
+ 178 002c 536F     		ldr	r3, [r2, #116]
+ 179 002e 13F08053 		ands	r3, r3, #268435456
+ 180 0032 06D1     		bne	.L20
+ 181 0034 124A     		ldr	r2, .L29+12
+ 182 0036 1370     		strb	r3, [r2]
+ 183 0038 0E4B     		ldr	r3, .L29
+ 184 003a 4FF08072 		mov	r2, #16777216
+ 185 003e 5A67     		str	r2, [r3, #116]
+ 186 0040 08BD     		pop	{r3, pc}
+ 187              	.L20:
+ 188 0042 536F     		ldr	r3, [r2, #116]
+ 189 0044 13F0805F 		tst	r3, #268435456
+ 190 0048 0D4B     		ldr	r3, .L29+12
+ 191 004a 09D0     		beq	.L22
+ 192 004c 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 193 004e 02F0FF00 		and	r0, r2, #255
+ 194 0052 2AB9     		cbnz	r2, .L22
+ 195 0054 1870     		strb	r0, [r3]
+ 196 0056 074B     		ldr	r3, .L29
+ 197 0058 4FF08072 		mov	r2, #16777216
+ 198 005c 5A67     		str	r2, [r3, #116]
+ 199 005e 08BD     		pop	{r3, pc}
+ 200              	.L22:
+ 201 0060 0022     		movs	r2, #0
+ 202 0062 1A70     		strb	r2, [r3]
+ 203 0064 034B     		ldr	r3, .L29
+ 204 0066 0120     		movs	r0, #1
+ 205 0068 4FF08072 		mov	r2, #16777216
+ 206 006c 0870     		strb	r0, [r1]
+ 207 006e 5A67     		str	r2, [r3, #116]
+ 208 0070 08BD     		pop	{r3, pc}
+ 209              	.L30:
+ 210 0072 00BF     		.align	2
+ 211              	.L29:
+ 212 0074 00380240 		.word	1073887232
+ 213 0078 00700040 		.word	1073770496
+ 214 007c 00000000 		.word	.LANCHOR1
+ 215 0080 00000000 		.word	.LANCHOR0
+ 216              		.size	mcu_arch_init, .-mcu_arch_init
+ 217              		.section	.text.mcu_reboot,"ax",%progbits
+ 218              		.align	1
+ 219              		.p2align 4,,15
+ 220              		.global	mcu_reboot
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 224              		.fpu fpv4-sp-d16
+ 225              		.type	mcu_reboot, %function
+ 226              	mcu_reboot:
+ 227              		@ args = 0, pretend = 0, frame = 0
+ 228              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/cc2JlW2N.s 			page 5
+
+
+ 229 0000 0128     		cmp	r0, #1
+ 230 0002 08B5     		push	{r3, lr}
+ 231 0004 17D1     		bne	.L32
+ 232 0006 0D4A     		ldr	r2, .L35
+ 233 0008 0D4B     		ldr	r3, .L35+4
+ 234 000a 1168     		ldr	r1, [r2]
+ 235 000c 21F00301 		bic	r1, r1, #3
+ 236 0010 1160     		str	r1, [r2]
+ 237 0012 1168     		ldr	r1, [r2]
+ 238 0014 41F00D01 		orr	r1, r1, #13
+ 239 0018 1160     		str	r1, [r2]
+ 240 001a 1A69     		ldr	r2, [r3, #16]
+ 241 001c 42F00402 		orr	r2, r2, #4
+ 242 0020 1A61     		str	r2, [r3, #16]
+ 243              		.syntax unified
+ 244              	@ 142 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 245 0022 72B6     		cpsid i
+ 246              	@ 0 "" 2
+ 247              	@ 276 "arch/chibios/mcu_arch.c" 1
+ 248 0024 40BF     		sev
+ 249              	@ 0 "" 2
+ 250              	@ 277 "arch/chibios/mcu_arch.c" 1
+ 251 0026 20BF     		wfe
+ 252              	@ 0 "" 2
+ 253              	@ 278 "arch/chibios/mcu_arch.c" 1
+ 254 0028 20BF     		wfe
+ 255              	@ 0 "" 2
+ 256              	@ 131 "/home/argroos/paparazzi/sw/ext/chibios/os/common/ext/ARM/CMSIS/Core/Include/cmsis_gcc.h" 1
+ 257 002a 62B6     		cpsie i
+ 258              	@ 0 "" 2
+ 259              		.thumb
+ 260              		.syntax unified
+ 261 002c 1A69     		ldr	r2, [r3, #16]
+ 262 002e 22F00402 		bic	r2, r2, #4
+ 263 0032 1A61     		str	r2, [r3, #16]
+ 264 0034 08BD     		pop	{r3, pc}
+ 265              	.L32:
+ 266 0036 FFF7FEFF 		bl	__NVIC_SystemReset
+ 267              	.L36:
+ 268 003a 00BF     		.align	2
+ 269              	.L35:
+ 270 003c 00700040 		.word	1073770496
+ 271 0040 00ED00E0 		.word	-536810240
+ 272              		.size	mcu_reboot, .-mcu_reboot
+ 273              		.section	.text.mcu_energy_save,"ax",%progbits
+ 274              		.align	1
+ 275              		.p2align 4,,15
+ 276              		.global	mcu_energy_save
+ 277              		.syntax unified
+ 278              		.thumb
+ 279              		.thumb_func
+ 280              		.fpu fpv4-sp-d16
+ 281              		.type	mcu_energy_save, %function
+ 282              	mcu_energy_save:
+ 283              		@ args = 0, pretend = 0, frame = 0
+ 284              		@ frame_needed = 0, uses_anonymous_args = 0
+ 285              		@ link register save eliminated.
+ARM GAS  /tmp/cc2JlW2N.s 			page 6
+
+
+ 286 0000 7047     		bx	lr
+ 287              		.size	mcu_energy_save, .-mcu_energy_save
+ 288              		.global	recovering_from_hard_fault
+ 289              		.global	hard_fault
+ 290 0002 00BF     		.section	.bss.recovering_from_hard_fault,"aw",%nobits
+ 291              		.set	.LANCHOR1,. + 0
+ 292              		.type	recovering_from_hard_fault, %object
+ 293              		.size	recovering_from_hard_fault, 1
+ 294              	recovering_from_hard_fault:
+ 295 0000 00       		.space	1
+ 296              		.section	.ram5,"aw"
+ 297              		.align	3
+ 298              		.set	.LANCHOR0,. + 0
+ 299              		.type	hard_fault, %object
+ 300              		.size	hard_fault, 1
+ 301              	hard_fault:
+ 302 0000 00       		.space	1
+ 303              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cc2JlW2N.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mcu_arch.c
+     /tmp/cc2JlW2N.s:15     .text.__NVIC_SystemReset:0000000000000000 $t
+     /tmp/cc2JlW2N.s:23     .text.__NVIC_SystemReset:0000000000000000 __NVIC_SystemReset
+     /tmp/cc2JlW2N.s:57     .text.__NVIC_SystemReset:000000000000001c $d
+     /tmp/cc2JlW2N.s:61     .text.HardFault_Handler:0000000000000000 $t
+     /tmp/cc2JlW2N.s:69     .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/cc2JlW2N.s:81     .text.HardFault_Handler:000000000000000c $d
+     /tmp/cc2JlW2N.s:84     .text.NMI_Handler:0000000000000000 $t
+     /tmp/cc2JlW2N.s:92     .text.NMI_Handler:0000000000000000 NMI_Handler
+     /tmp/cc2JlW2N.s:100    .text.MemManage_Handler:0000000000000000 $t
+     /tmp/cc2JlW2N.s:108    .text.MemManage_Handler:0000000000000000 MemManage_Handler
+     /tmp/cc2JlW2N.s:116    .text.BusFault_Handler:0000000000000000 $t
+     /tmp/cc2JlW2N.s:124    .text.BusFault_Handler:0000000000000000 BusFault_Handler
+     /tmp/cc2JlW2N.s:132    .text.UsageFault_Handler:0000000000000000 $t
+     /tmp/cc2JlW2N.s:140    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
+     /tmp/cc2JlW2N.s:148    .text.mcu_arch_init:0000000000000000 $t
+     /tmp/cc2JlW2N.s:156    .text.mcu_arch_init:0000000000000000 mcu_arch_init
+     /tmp/cc2JlW2N.s:212    .text.mcu_arch_init:0000000000000074 $d
+     /tmp/cc2JlW2N.s:218    .text.mcu_reboot:0000000000000000 $t
+     /tmp/cc2JlW2N.s:226    .text.mcu_reboot:0000000000000000 mcu_reboot
+     /tmp/cc2JlW2N.s:270    .text.mcu_reboot:000000000000003c $d
+     /tmp/cc2JlW2N.s:274    .text.mcu_energy_save:0000000000000000 $t
+     /tmp/cc2JlW2N.s:282    .text.mcu_energy_save:0000000000000000 mcu_energy_save
+     /tmp/cc2JlW2N.s:294    .bss.recovering_from_hard_fault:0000000000000000 recovering_from_hard_fault
+     /tmp/cc2JlW2N.s:301    .ram5:0000000000000000 hard_fault
+     /tmp/cc2JlW2N.s:295    .bss.recovering_from_hard_fault:0000000000000000 $d
+     /tmp/cc2JlW2N.s:297    .ram5:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+halInit
+chSysInit

@@ -1,0 +1,2107 @@
+ARM GAS  /tmp/cce3TTIX.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"gps_ubx.c"
+  13              		.text
+  14              		.section	.text.gps_ubx_parse_rxm_rtcm,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 4,,15
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  22              		.type	gps_ubx_parse_rxm_rtcm, %function
+  23              	gps_ubx_parse_rxm_rtcm:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 164B     		ldr	r3, .L8
+  28 0002 1A7A     		ldrb	r2, [r3, #8]	@ zero_extendqisi2
+  29 0004 022A     		cmp	r2, #2
+  30 0006 00D0     		beq	.L7
+  31              	.L1:
+  32 0008 7047     		bx	lr
+  33              	.L7:
+  34 000a 154A     		ldr	r2, .L8+4
+  35 000c 587A     		ldrb	r0, [r3, #9]	@ zero_extendqisi2
+  36 000e B3F90E10 		ldrsh	r1, [r3, #14]
+  37 0012 DB68     		ldr	r3, [r3, #12]
+  38 0014 1360     		str	r3, [r2]
+  39 0016 40F23543 		movw	r3, #1077
+  40 001a 9942     		cmp	r1, r3
+  41 001c 00F00100 		and	r0, r0, #1
+  42 0020 15D0     		beq	.L3
+  43 0022 40F23F43 		movw	r3, #1087
+  44 0026 9942     		cmp	r1, r3
+  45 0028 0AD0     		beq	.L4
+  46 002a 40F2ED33 		movw	r3, #1005
+  47 002e 9942     		cmp	r1, r3
+  48 0030 EAD1     		bne	.L1
+  49 0032 5168     		ldr	r1, [r2, #4]
+  50 0034 1369     		ldr	r3, [r2, #16]
+  51 0036 0131     		adds	r1, r1, #1
+  52 0038 1844     		add	r0, r0, r3
+  53 003a 5160     		str	r1, [r2, #4]
+  54 003c 1061     		str	r0, [r2, #16]
+  55 003e 7047     		bx	lr
+  56              	.L4:
+  57 0040 D168     		ldr	r1, [r2, #12]
+ARM GAS  /tmp/cce3TTIX.s 			page 2
+
+
+  58 0042 9369     		ldr	r3, [r2, #24]
+  59 0044 0131     		adds	r1, r1, #1
+  60 0046 1844     		add	r0, r0, r3
+  61 0048 D160     		str	r1, [r2, #12]
+  62 004a 9061     		str	r0, [r2, #24]
+  63 004c DCE7     		b	.L1
+  64              	.L3:
+  65 004e 9168     		ldr	r1, [r2, #8]
+  66 0050 5369     		ldr	r3, [r2, #20]
+  67 0052 0131     		adds	r1, r1, #1
+  68 0054 1844     		add	r0, r0, r3
+  69 0056 9160     		str	r1, [r2, #8]
+  70 0058 5061     		str	r0, [r2, #20]
+  71 005a 7047     		bx	lr
+  72              	.L9:
+  73              		.align	2
+  74              	.L8:
+  75 005c 00000000 		.word	.LANCHOR0
+  76 0060 00000000 		.word	rtcm_man
+  77              		.size	gps_ubx_parse_rxm_rtcm, .-gps_ubx_parse_rxm_rtcm
+  78              		.global	__aeabi_i2d
+  79              		.global	__aeabi_dmul
+  80              		.global	__aeabi_d2iz
+  81              		.global	__aeabi_ui2d
+  82              		.global	__aeabi_d2uiz
+  83              		.section	.text.gps_ubx_read_message.part.0,"ax",%progbits
+  84              		.align	1
+  85              		.p2align 4,,15
+  86              		.syntax unified
+  87              		.thumb
+  88              		.thumb_func
+  89              		.fpu fpv4-sp-d16
+  90              		.type	gps_ubx_read_message.part.0, %function
+  91              	gps_ubx_read_message.part.0:
+  92              		@ args = 0, pretend = 0, frame = 0
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+  94 0000 70B5     		push	{r4, r5, r6, lr}
+  95 0002 824C     		ldr	r4, .L66
+  96 0004 94F80832 		ldrb	r3, [r4, #520]	@ zero_extendqisi2
+  97 0008 013B     		subs	r3, r3, #1
+  98 000a 3B2B     		cmp	r3, #59
+  99 000c 53D8     		bhi	.L10
+ 100 000e DFE813F0 		tbh	[pc, r3, lsl #1]
+ 101              	.L13:
+ 102 0012 3C00     		.2byte	(.L23-.L13)/2
+ 103 0014 8E00     		.2byte	(.L22-.L13)/2
+ 104 0016 AC00     		.2byte	(.L21-.L13)/2
+ 105 0018 5200     		.2byte	(.L10-.L13)/2
+ 106 001a 5200     		.2byte	(.L10-.L13)/2
+ 107 001c BB00     		.2byte	(.L20-.L13)/2
+ 108 001e F000     		.2byte	(.L19-.L13)/2
+ 109 0020 8D01     		.2byte	(.L18-.L13)/2
+ 110 0022 5200     		.2byte	(.L10-.L13)/2
+ 111 0024 5200     		.2byte	(.L10-.L13)/2
+ 112 0026 5200     		.2byte	(.L10-.L13)/2
+ 113 0028 5200     		.2byte	(.L10-.L13)/2
+ 114 002a 5200     		.2byte	(.L10-.L13)/2
+ARM GAS  /tmp/cce3TTIX.s 			page 3
+
+
+ 115 002c 5200     		.2byte	(.L10-.L13)/2
+ 116 002e 5200     		.2byte	(.L10-.L13)/2
+ 117 0030 5200     		.2byte	(.L10-.L13)/2
+ 118 0032 AC01     		.2byte	(.L17-.L13)/2
+ 119 0034 C001     		.2byte	(.L16-.L13)/2
+ 120 0036 5200     		.2byte	(.L10-.L13)/2
+ 121 0038 5200     		.2byte	(.L10-.L13)/2
+ 122 003a 5200     		.2byte	(.L10-.L13)/2
+ 123 003c 5200     		.2byte	(.L10-.L13)/2
+ 124 003e 5200     		.2byte	(.L10-.L13)/2
+ 125 0040 5200     		.2byte	(.L10-.L13)/2
+ 126 0042 5200     		.2byte	(.L10-.L13)/2
+ 127 0044 5200     		.2byte	(.L10-.L13)/2
+ 128 0046 5200     		.2byte	(.L10-.L13)/2
+ 129 0048 5200     		.2byte	(.L10-.L13)/2
+ 130 004a 5200     		.2byte	(.L10-.L13)/2
+ 131 004c 5200     		.2byte	(.L10-.L13)/2
+ 132 004e 5200     		.2byte	(.L10-.L13)/2
+ 133 0050 5200     		.2byte	(.L10-.L13)/2
+ 134 0052 5200     		.2byte	(.L10-.L13)/2
+ 135 0054 5200     		.2byte	(.L10-.L13)/2
+ 136 0056 5200     		.2byte	(.L10-.L13)/2
+ 137 0058 5200     		.2byte	(.L10-.L13)/2
+ 138 005a 5200     		.2byte	(.L10-.L13)/2
+ 139 005c 5200     		.2byte	(.L10-.L13)/2
+ 140 005e 5200     		.2byte	(.L10-.L13)/2
+ 141 0060 5200     		.2byte	(.L10-.L13)/2
+ 142 0062 5200     		.2byte	(.L10-.L13)/2
+ 143 0064 5200     		.2byte	(.L10-.L13)/2
+ 144 0066 5200     		.2byte	(.L10-.L13)/2
+ 145 0068 5200     		.2byte	(.L10-.L13)/2
+ 146 006a 5200     		.2byte	(.L10-.L13)/2
+ 147 006c 5200     		.2byte	(.L10-.L13)/2
+ 148 006e 5200     		.2byte	(.L10-.L13)/2
+ 149 0070 FD01     		.2byte	(.L15-.L13)/2
+ 150 0072 5200     		.2byte	(.L10-.L13)/2
+ 151 0074 5200     		.2byte	(.L10-.L13)/2
+ 152 0076 5200     		.2byte	(.L10-.L13)/2
+ 153 0078 5200     		.2byte	(.L10-.L13)/2
+ 154 007a 2902     		.2byte	(.L14-.L13)/2
+ 155 007c 5200     		.2byte	(.L10-.L13)/2
+ 156 007e 5200     		.2byte	(.L10-.L13)/2
+ 157 0080 5200     		.2byte	(.L10-.L13)/2
+ 158 0082 5200     		.2byte	(.L10-.L13)/2
+ 159 0084 5200     		.2byte	(.L10-.L13)/2
+ 160 0086 5200     		.2byte	(.L10-.L13)/2
+ 161 0088 5300     		.2byte	(.L12-.L13)/2
+ 162              		.p2align 1
+ 163              	.L23:
+ 164 008a D4E90212 		ldrd	r1, r2, [r4, #8]
+ 165 008e C4F88812 		str	r1, [r4, #648]
+ 166 0092 C4F82022 		str	r2, [r4, #544]
+ 167 0096 D4E90512 		ldrd	r1, r2, [r4, #20]
+ 168 009a 94F81C32 		ldrb	r3, [r4, #540]	@ zero_extendqisi2
+ 169 009e 2069     		ldr	r0, [r4, #16]
+ 170 00a0 C4F86C22 		str	r2, [r4, #620]
+ 171 00a4 43F00103 		orr	r3, r3, #1
+ARM GAS  /tmp/cce3TTIX.s 			page 4
+
+
+ 172 00a8 C4E98901 		strd	r0, r1, [r4, #548]
+ 173 00ac 84F81C32 		strb	r3, [r4, #540]
+ 174 00b0 0123     		movs	r3, #1
+ 175 00b2 84F81932 		strb	r3, [r4, #537]
+ 176              	.L10:
+ 177 00b6 70BD     		pop	{r4, r5, r6, pc}
+ 178              	.L12:
+ 179 00b8 237A     		ldrb	r3, [r4, #8]	@ zero_extendqisi2
+ 180 00ba 012B     		cmp	r3, #1
+ 181 00bc FBD8     		bhi	.L10
+ 182 00be 94F84430 		ldrb	r3, [r4, #68]	@ zero_extendqisi2
+ 183 00c2 5A07     		lsls	r2, r3, #29
+ 184 00c4 F7D5     		bpl	.L10
+ 185 00c6 C3F3C101 		ubfx	r1, r3, #3, #2
+ 186 00ca C3F34000 		ubfx	r0, r3, #1, #1
+ 187 00ce 03F00102 		and	r2, r3, #1
+ 188 00d2 9B07     		lsls	r3, r3, #30
+ 189 00d4 05D5     		bpl	.L39
+ 190 00d6 0229     		cmp	r1, #2
+ 191 00d8 00F01282 		beq	.L61
+ 192 00dc 0129     		cmp	r1, #1
+ 193 00de 00F0F881 		beq	.L62
+ 194              	.L39:
+ 195 00e2 002A     		cmp	r2, #0
+ 196 00e4 00F00982 		beq	.L42
+ 197 00e8 0323     		movs	r3, #3
+ 198 00ea 84F88332 		strb	r3, [r4, #643]
+ 199              	.L41:
+ 200 00ee 484B     		ldr	r3, .L66+4
+ 201 00f0 94F82A50 		ldrb	r5, [r4, #42]	@ zero_extendqisi2
+ 202 00f4 83F82410 		strb	r1, [r3, #36]
+ 203 00f8 0121     		movs	r1, #1
+ 204 00fa 83F82510 		strb	r1, [r3, #37]
+ 205 00fe 83F82720 		strb	r2, [r3, #39]
+ 206 0102 E168     		ldr	r1, [r4, #12]
+ 207 0104 6289     		ldrh	r2, [r4, #10]
+ 208 0106 1960     		str	r1, [r3]
+ 209 0108 9A80     		strh	r2, [r3, #4]	@ movhi
+ 210 010a D4E90521 		ldrd	r2, r1, [r4, #20]
+ 211 010e 83F82600 		strb	r0, [r3, #38]
+ 212 0112 2069     		ldr	r0, [r4, #16]
+ 213 0114 1961     		str	r1, [r3, #16]
+ 214 0116 C3E90202 		strd	r0, r2, [r3, #8]
+ 215 011a D4E90B01 		ldrd	r0, r1, [r4, #44]
+ 216 011e 228D     		ldrh	r2, [r4, #40]
+ 217 0120 9A82     		strh	r2, [r3, #20]	@ movhi
+ 218 0122 9D75     		strb	r5, [r3, #22]
+ 219 0124 626B     		ldr	r2, [r4, #52]
+ 220 0126 1A62     		str	r2, [r3, #32]
+ 221 0128 C3E90601 		strd	r0, r1, [r3, #24]
+ 222 012c 70BD     		pop	{r4, r5, r6, pc}
+ 223              	.L22:
+ 224 012e D4E90723 		ldrd	r2, r3, [r4, #28]
+ 225 0132 3848     		ldr	r0, .L66+8
+ 226 0134 94F81C12 		ldrb	r1, [r4, #540]	@ zero_extendqisi2
+ 227 0138 A0FB0252 		umull	r5, r2, r0, r2
+ 228 013c 41F02201 		orr	r1, r1, #34
+ARM GAS  /tmp/cce3TTIX.s 			page 5
+
+
+ 229 0140 D208     		lsrs	r2, r2, #3
+ 230 0142 A0FB0303 		umull	r0, r3, r0, r3
+ 231 0146 84F81C12 		strb	r1, [r4, #540]
+ 232 014a 2069     		ldr	r0, [r4, #16]
+ 233 014c C4F87022 		str	r2, [r4, #624]
+ 234 0150 D4E90512 		ldrd	r1, r2, [r4, #20]
+ 235 0154 C4F82C02 		str	r0, [r4, #556]
+ 236 0158 E068     		ldr	r0, [r4, #12]
+ 237 015a C4F84822 		str	r2, [r4, #584]
+ 238 015e DB08     		lsrs	r3, r3, #3
+ 239 0160 C4E98C01 		strd	r0, r1, [r4, #560]
+ 240 0164 C4F87432 		str	r3, [r4, #628]
+ 241 0168 70BD     		pop	{r4, r5, r6, pc}
+ 242              	.L21:
+ 243 016a 237B     		ldrb	r3, [r4, #12]	@ zero_extendqisi2
+ 244 016c 032B     		cmp	r3, #3
+ 245 016e 00F0B481 		beq	.L63
+ 246 0172 022B     		cmp	r3, #2
+ 247 0174 01D8     		bhi	.L26
+ 248              	.L25:
+ 249 0176 84F88332 		strb	r3, [r4, #643]
+ 250              	.L26:
+ 251 017a 637B     		ldrb	r3, [r4, #13]	@ zero_extendqisi2
+ 252 017c A268     		ldr	r2, [r4, #8]
+ 253 017e 84F81732 		strb	r3, [r4, #535]
+ 254 0182 C4F88822 		str	r2, [r4, #648]
+ 255 0186 70BD     		pop	{r4, r5, r6, pc}
+ 256              	.L20:
+ 257 0188 A37C     		ldrb	r3, [r4, #18]	@ zero_extendqisi2
+ 258 018a 032B     		cmp	r3, #3
+ 259 018c 00F0AB81 		beq	.L64
+ 260 0190 022B     		cmp	r3, #2
+ 261 0192 01D8     		bhi	.L29
+ 262              	.L28:
+ 263 0194 84F88332 		strb	r3, [r4, #643]
+ 264              	.L29:
+ 265 0198 A068     		ldr	r0, [r4, #8]
+ 266 019a 94F81C32 		ldrb	r3, [r4, #540]	@ zero_extendqisi2
+ 267 019e C4F88802 		str	r0, [r4, #648]
+ 268 01a2 208A     		ldrh	r0, [r4, #16]
+ 269 01a4 A4F88402 		strh	r0, [r4, #644]	@ movhi
+ 270 01a8 94F83700 		ldrb	r0, [r4, #55]	@ zero_extendqisi2
+ 271 01ac 84F88202 		strb	r0, [r4, #642]
+ 272 01b0 43F00903 		orr	r3, r3, #9
+ 273 01b4 6069     		ldr	r0, [r4, #20]
+ 274 01b6 226A     		ldr	r2, [r4, #32]
+ 275 01b8 C4F82002 		str	r0, [r4, #544]
+ 276 01bc 94ED0A7B 		vldr.64	d7, [r4, #40]	@ int
+ 277 01c0 A069     		ldr	r0, [r4, #24]
+ 278 01c2 84F81C32 		strb	r3, [r4, #540]
+ 279 01c6 0123     		movs	r3, #1
+ 280 01c8 216B     		ldr	r1, [r4, #48]
+ 281 01ca C4F82402 		str	r0, [r4, #548]
+ 282 01ce C4F86C22 		str	r2, [r4, #620]
+ 283 01d2 E069     		ldr	r0, [r4, #28]
+ 284 01d4 A28E     		ldrh	r2, [r4, #52]
+ 285 01d6 84F81932 		strb	r3, [r4, #537]
+ARM GAS  /tmp/cce3TTIX.s 			page 6
+
+
+ 286 01da 636A     		ldr	r3, [r4, #36]
+ 287 01dc C4F82802 		str	r0, [r4, #552]
+ 288 01e0 84ED947B 		vstr.64	d7, [r4, #592]	@ int
+ 289 01e4 C4F87812 		str	r1, [r4, #632]
+ 290 01e8 A4F88022 		strh	r2, [r4, #640]	@ movhi
+ 291 01ec C4F84C32 		str	r3, [r4, #588]
+ 292 01f0 70BD     		pop	{r4, r5, r6, pc}
+ 293              	.L19:
+ 294 01f2 637F     		ldrb	r3, [r4, #29]	@ zero_extendqisi2
+ 295 01f4 9907     		lsls	r1, r3, #30
+ 296 01f6 0FD5     		bpl	.L30
+ 297 01f8 9A09     		lsrs	r2, r3, #6
+ 298 01fa 022A     		cmp	r2, #2
+ 299 01fc 00F07981 		beq	.L65
+ 300 0200 012A     		cmp	r2, #1
+ 301 0202 09D1     		bne	.L30
+ 302 0204 0423     		movs	r3, #4
+ 303 0206 84F88332 		strb	r3, [r4, #643]
+ 304 020a 0BE0     		b	.L32
+ 305              	.L67:
+ 306              		.align	2
+ 307              	.L66:
+ 308 020c 00000000 		.word	.LANCHOR0
+ 309 0210 00000000 		.word	gps_relposned
+ 310 0214 CDCCCCCC 		.word	-858993459
+ 311              	.L30:
+ 312 0218 13F00103 		ands	r3, r3, #1
+ 313 021c 18BF     		it	ne
+ 314 021e 0323     		movne	r3, #3
+ 315 0220 84F88332 		strb	r3, [r4, #643]
+ 316              	.L32:
+ 317 0224 A368     		ldr	r3, [r4, #8]
+ 318 0226 E27B     		ldrb	r2, [r4, #15]	@ zero_extendqisi2
+ 319 0228 A17B     		ldrb	r1, [r4, #14]	@ zero_extendqisi2
+ 320 022a A089     		ldrh	r0, [r4, #12]
+ 321 022c C4F88832 		str	r3, [r4, #648]
+ 322 0230 FFF7FEFF 		bl	gps_week_number
+ 323 0234 0246     		mov	r2, r0
+ 324 0236 A06C     		ldr	r0, [r4, #72]
+ 325 0238 E37F     		ldrb	r3, [r4, #31]	@ zero_extendqisi2
+ 326 023a 616A     		ldr	r1, [r4, #36]
+ 327 023c A4F88422 		strh	r2, [r4, #644]	@ movhi
+ 328 0240 226A     		ldr	r2, [r4, #32]
+ 329 0242 84F88232 		strb	r3, [r4, #642]
+ 330 0246 00EB8000 		add	r0, r0, r0, lsl #2
+ 331 024a A36A     		ldr	r3, [r4, #40]
+ 332 024c C4F83432 		str	r3, [r4, #564]
+ 333 0250 C4E98B12 		strd	r1, r2, [r4, #556]
+ 334 0254 4000     		lsls	r0, r0, #1
+ 335 0256 FFF7FEFF 		bl	__aeabi_i2d
+ 336 025a ABA3     		adr	r3, .L68
+ 337 025c D3E90023 		ldrd	r2, [r3]
+ 338 0260 FFF7FEFF 		bl	__aeabi_dmul
+ 339 0264 0022     		movs	r2, #0
+ 340 0266 AA4B     		ldr	r3, .L68+8
+ 341 0268 FFF7FEFF 		bl	__aeabi_dmul
+ 342 026c FFF7FEFF 		bl	__aeabi_d2iz
+ARM GAS  /tmp/cce3TTIX.s 			page 7
+
+
+ 343 0270 236D     		ldr	r3, [r4, #80]
+ 344 0272 C4F86802 		str	r0, [r4, #616]
+ 345 0276 03EB8303 		add	r3, r3, r3, lsl #2
+ 346 027a 5800     		lsls	r0, r3, #1
+ 347 027c FFF7FEFF 		bl	__aeabi_ui2d
+ 348 0280 A1A3     		adr	r3, .L68
+ 349 0282 D3E90023 		ldrd	r2, [r3]
+ 350 0286 FFF7FEFF 		bl	__aeabi_dmul
+ 351 028a A14B     		ldr	r3, .L68+8
+ 352 028c 0022     		movs	r2, #0
+ 353 028e FFF7FEFF 		bl	__aeabi_dmul
+ 354 0292 FFF7FEFF 		bl	__aeabi_d2uiz
+ 355 0296 94F81C12 		ldrb	r1, [r4, #540]	@ zero_extendqisi2
+ 356 029a 9E4A     		ldr	r2, .L68+12
+ 357 029c 636C     		ldr	r3, [r4, #68]
+ 358 029e C4F87C02 		str	r0, [r4, #636]
+ 359 02a2 41F07201 		orr	r1, r1, #114
+ 360 02a6 84F81C12 		strb	r1, [r4, #540]
+ 361 02aa B4F85410 		ldrh	r1, [r4, #84]
+ 362 02ae E06A     		ldr	r0, [r4, #44]
+ 363 02b0 A4F88012 		strh	r1, [r4, #640]	@ movhi
+ 364 02b4 A16B     		ldr	r1, [r4, #56]
+ 365 02b6 C4F84802 		str	r0, [r4, #584]
+ 366 02ba 82FB0350 		smull	r5, r0, r2, r3
+ 367 02be DB17     		asrs	r3, r3, #31
+ 368 02c0 82FB01C6 		smull	ip, r6, r2, r1
+ 369 02c4 C3EBA003 		rsb	r3, r3, r0, asr #2
+ 370 02c8 256B     		ldr	r5, [r4, #48]
+ 371 02ca 9348     		ldr	r0, .L68+16
+ 372 02cc A4F86432 		strh	r3, [r4, #612]	@ movhi
+ 373 02d0 C917     		asrs	r1, r1, #31
+ 374 02d2 C1EBA601 		rsb	r1, r1, r6, asr #2
+ 375 02d6 C4F85812 		str	r1, [r4, #600]
+ 376 02da A0FB0515 		umull	r1, r5, r0, r5
+ 377 02de D4E90F13 		ldrd	r1, r3, [r4, #60]
+ 378 02e2 666B     		ldr	r6, [r4, #52]
+ 379 02e4 A0FB06C6 		umull	ip, r6, r0, r6
+ 380 02e8 82FB01EC 		smull	lr, ip, r2, r1
+ 381 02ec C917     		asrs	r1, r1, #31
+ 382 02ee C1EBAC01 		rsb	r1, r1, ip, asr #2
+ 383 02f2 C4F85C12 		str	r1, [r4, #604]
+ 384 02f6 82FB0312 		smull	r1, r2, r2, r3
+ 385 02fa DB17     		asrs	r3, r3, #31
+ 386 02fc C3EBA203 		rsb	r3, r3, r2, asr #2
+ 387 0300 ED08     		lsrs	r5, r5, #3
+ 388 0302 F608     		lsrs	r6, r6, #3
+ 389 0304 C4F86032 		str	r3, [r4, #608]
+ 390 0308 C4F87052 		str	r5, [r4, #624]
+ 391 030c C4F87462 		str	r6, [r4, #628]
+ 392 0310 E36C     		ldr	r3, [r4, #76]
+ 393 0312 94F81922 		ldrb	r2, [r4, #537]	@ zero_extendqisi2
+ 394 0316 A0FB0313 		umull	r1, r3, r0, r3
+ 395 031a DB08     		lsrs	r3, r3, #3
+ 396 031c C4F87832 		str	r3, [r4, #632]
+ 397 0320 002A     		cmp	r2, #0
+ 398 0322 7FF4C8AE 		bne	.L10
+ 399 0326 C4F86C52 		str	r5, [r4, #620]
+ARM GAS  /tmp/cce3TTIX.s 			page 8
+
+
+ 400 032a 70BD     		pop	{r4, r5, r6, pc}
+ 401              	.L18:
+ 402 032c 627E     		ldrb	r2, [r4, #25]	@ zero_extendqisi2
+ 403 032e E368     		ldr	r3, [r4, #12]
+ 404 0330 C4F83C32 		str	r3, [r4, #572]
+ 405 0334 012A     		cmp	r2, #1
+ 406 0336 2369     		ldr	r3, [r4, #16]
+ 407 0338 09BF     		itett	eq
+ 408 033a 784A     		ldreq	r2, .L68+20
+ 409 033c C4F83832 		strne	r3, [r4, #568]
+ 410 0340 D218     		addeq	r2, r2, r3
+ 411 0342 C4F83822 		streq	r2, [r4, #568]
+ 412 0346 6369     		ldr	r3, [r4, #20]
+ 413 0348 94F81C22 		ldrb	r2, [r4, #540]	@ zero_extendqisi2
+ 414 034c 217E     		ldrb	r1, [r4, #24]	@ zero_extendqisi2
+ 415 034e 84F84412 		strb	r1, [r4, #580]
+ 416 0352 03EB8303 		add	r3, r3, r3, lsl #2
+ 417 0356 42F02402 		orr	r2, r2, #36
+ 418 035a 5B00     		lsls	r3, r3, #1
+ 419 035c 84F81C22 		strb	r2, [r4, #540]
+ 420 0360 C4F84032 		str	r3, [r4, #576]
+ 421 0364 C4F84832 		str	r3, [r4, #584]
+ 422 0368 70BD     		pop	{r4, r5, r6, pc}
+ 423              	.L17:
+ 424 036a 94F81C32 		ldrb	r3, [r4, #540]	@ zero_extendqisi2
+ 425 036e A168     		ldr	r1, [r4, #8]
+ 426 0370 A269     		ldr	r2, [r4, #24]
+ 427 0372 C4F88812 		str	r1, [r4, #648]
+ 428 0376 94ED047B 		vldr.64	d7, [r4, #16]	@ int
+ 429 037a 43F00803 		orr	r3, r3, #8
+ 430 037e E168     		ldr	r1, [r4, #12]
+ 431 0380 84F81C32 		strb	r3, [r4, #540]
+ 432 0384 84ED947B 		vstr.64	d7, [r4, #592]	@ int
+ 433 0388 C4F84C12 		str	r1, [r4, #588]
+ 434 038c C4F87822 		str	r2, [r4, #632]
+ 435 0390 70BD     		pop	{r4, r5, r6, pc}
+ 436              	.L16:
+ 437 0392 228B     		ldrh	r2, [r4, #24]
+ 438 0394 A38B     		ldrh	r3, [r4, #28]
+ 439 0396 A4F86622 		strh	r2, [r4, #614]	@ movhi
+ 440 039a A4F86432 		strh	r3, [r4, #612]	@ movhi
+ 441 039e 206A     		ldr	r0, [r4, #32]
+ 442 03a0 E168     		ldr	r1, [r4, #12]
+ 443 03a2 D4E90423 		ldrd	r2, r3, [r4, #16]
+ 444 03a6 00EB8000 		add	r0, r0, r0, lsl #2
+ 445 03aa C4E99612 		strd	r1, r2, [r4, #600]
+ 446 03ae C4F86032 		str	r3, [r4, #608]
+ 447 03b2 4000     		lsls	r0, r0, #1
+ 448 03b4 FFF7FEFF 		bl	__aeabi_i2d
+ 449 03b8 53A3     		adr	r3, .L68
+ 450 03ba D3E90023 		ldrd	r2, [r3]
+ 451 03be FFF7FEFF 		bl	__aeabi_dmul
+ 452 03c2 0022     		movs	r2, #0
+ 453 03c4 524B     		ldr	r3, .L68+8
+ 454 03c6 FFF7FEFF 		bl	__aeabi_dmul
+ 455 03ca FFF7FEFF 		bl	__aeabi_d2iz
+ 456 03ce A36A     		ldr	r3, [r4, #40]
+ARM GAS  /tmp/cce3TTIX.s 			page 9
+
+
+ 457 03d0 C4F86802 		str	r0, [r4, #616]
+ 458 03d4 03EB8303 		add	r3, r3, r3, lsl #2
+ 459 03d8 5800     		lsls	r0, r3, #1
+ 460 03da FFF7FEFF 		bl	__aeabi_ui2d
+ 461 03de 4AA3     		adr	r3, .L68
+ 462 03e0 D3E90023 		ldrd	r2, [r3]
+ 463 03e4 FFF7FEFF 		bl	__aeabi_dmul
+ 464 03e8 494B     		ldr	r3, .L68+8
+ 465 03ea 94F81C52 		ldrb	r5, [r4, #540]	@ zero_extendqisi2
+ 466 03ee 0022     		movs	r2, #0
+ 467 03f0 FFF7FEFF 		bl	__aeabi_dmul
+ 468 03f4 FFF7FEFF 		bl	__aeabi_d2uiz
+ 469 03f8 45F05005 		orr	r5, r5, #80
+ 470 03fc A368     		ldr	r3, [r4, #8]
+ 471 03fe 84F81C52 		strb	r5, [r4, #540]
+ 472 0402 C4F87C02 		str	r0, [r4, #636]
+ 473 0406 C4F88832 		str	r3, [r4, #648]
+ 474 040a 70BD     		pop	{r4, r5, r6, pc}
+ 475              	.L15:
+ 476 040c 237B     		ldrb	r3, [r4, #12]	@ zero_extendqisi2
+ 477 040e 282B     		cmp	r3, #40
+ 478 0410 9C46     		mov	ip, r3
+ 479 0412 28BF     		it	cs
+ 480 0414 4FF0280C 		movcs	ip, #40
+ 481 0418 84F88CC2 		strb	ip, [r4, #652]
+ 482 041c 002B     		cmp	r3, #0
+ 483 041e 3FF44AAE 		beq	.L10
+ 484 0422 3F4B     		ldr	r3, .L68+24
+ 485 0424 0020     		movs	r0, #0
+ 486 0426 1A46     		mov	r2, r3
+ 487              	.L37:
+ 488 0428 597C     		ldrb	r1, [r3, #17]	@ zero_extendqisi2
+ 489 042a 82F88E12 		strb	r1, [r2, #654]
+ 490 042e 997C     		ldrb	r1, [r3, #18]	@ zero_extendqisi2
+ 491 0430 82F88F12 		strb	r1, [r2, #655]
+ 492 0434 D97C     		ldrb	r1, [r3, #19]	@ zero_extendqisi2
+ 493 0436 82F89012 		strb	r1, [r2, #656]
+ 494 043a 197D     		ldrb	r1, [r3, #20]	@ zero_extendqisi2
+ 495 043c 82F89112 		strb	r1, [r2, #657]
+ 496 0440 597D     		ldrb	r1, [r3, #21]	@ zero_extendqisi2
+ 497 0442 82F89212 		strb	r1, [r2, #658]
+ 498 0446 DC7D     		ldrb	r4, [r3, #23]	@ zero_extendqisi2
+ 499 0448 997D     		ldrb	r1, [r3, #22]	@ zero_extendqisi2
+ 500 044a 0130     		adds	r0, r0, #1
+ 501 044c 41EA0421 		orr	r1, r1, r4, lsl #8
+ 502 0450 A2F89412 		strh	r1, [r2, #660]	@ movhi
+ 503 0454 C1B2     		uxtb	r1, r0
+ 504 0456 6145     		cmp	r1, ip
+ 505 0458 03F10C03 		add	r3, r3, #12
+ 506 045c 02F10802 		add	r2, r2, #8
+ 507 0460 E2D3     		bcc	.L37
+ 508 0462 70BD     		pop	{r4, r5, r6, pc}
+ 509              	.L14:
+ 510 0464 637B     		ldrb	r3, [r4, #13]	@ zero_extendqisi2
+ 511 0466 227B     		ldrb	r2, [r4, #12]	@ zero_extendqisi2
+ 512 0468 A168     		ldr	r1, [r4, #8]
+ 513 046a C4F88812 		str	r1, [r4, #648]
+ARM GAS  /tmp/cce3TTIX.s 			page 10
+
+
+ 514 046e 282B     		cmp	r3, #40
+ 515 0470 9E46     		mov	lr, r3
+ 516 0472 28BF     		it	cs
+ 517 0474 4FF0280E 		movcs	lr, #40
+ 518 0478 012A     		cmp	r2, #1
+ 519 047a 84F88CE2 		strb	lr, [r4, #652]
+ 520 047e 7FF41AAE 		bne	.L10
+ 521 0482 002B     		cmp	r3, #0
+ 522 0484 3FF417AE 		beq	.L10
+ 523 0488 254B     		ldr	r3, .L68+24
+ 524 048a 0024     		movs	r4, #0
+ 525 048c 1A46     		mov	r2, r3
+ 526              	.L38:
+ 527 048e 587C     		ldrb	r0, [r3, #17]	@ zero_extendqisi2
+ 528 0490 997C     		ldrb	r1, [r3, #18]	@ zero_extendqisi2
+ 529 0492 82F88E02 		strb	r0, [r2, #654]
+ 530 0496 987C     		ldrb	r0, [r3, #18]	@ zero_extendqisi2
+ 531 0498 82F89102 		strb	r0, [r2, #657]
+ 532 049c D87C     		ldrb	r0, [r3, #19]	@ zero_extendqisi2
+ 533 049e 82F89202 		strb	r0, [r2, #658]
+ 534 04a2 93F815C0 		ldrb	ip, [r3, #21]	@ zero_extendqisi2
+ 535 04a6 187D     		ldrb	r0, [r3, #20]	@ zero_extendqisi2
+ 536 04a8 40EA0C20 		orr	r0, r0, ip, lsl #8
+ 537 04ac A2F89402 		strh	r0, [r2, #660]	@ movhi
+ 538 04b0 0134     		adds	r4, r4, #1
+ 539 04b2 01F00700 		and	r0, r1, #7
+ 540 04b6 C1F3C001 		ubfx	r1, r1, #3, #1
+ 541 04ba 82F88F12 		strb	r1, [r2, #655]
+ 542 04be E1B2     		uxtb	r1, r4
+ 543 04c0 7145     		cmp	r1, lr
+ 544 04c2 82F89002 		strb	r0, [r2, #656]
+ 545 04c6 03F10C03 		add	r3, r3, #12
+ 546 04ca 02F10802 		add	r2, r2, #8
+ 547 04ce DED3     		bcc	.L38
+ 548 04d0 70BD     		pop	{r4, r5, r6, pc}
+ 549              	.L62:
+ 550 04d2 0423     		movs	r3, #4
+ 551 04d4 84F88332 		strb	r3, [r4, #643]
+ 552 04d8 09E6     		b	.L41
+ 553              	.L63:
+ 554 04da 94F88322 		ldrb	r2, [r4, #643]	@ zero_extendqisi2
+ 555 04de 022A     		cmp	r2, #2
+ 556 04e0 7FF649AE 		bls	.L25
+ 557 04e4 49E6     		b	.L26
+ 558              	.L64:
+ 559 04e6 94F88322 		ldrb	r2, [r4, #643]	@ zero_extendqisi2
+ 560 04ea 022A     		cmp	r2, #2
+ 561 04ec 7FF652AE 		bls	.L28
+ 562 04f0 52E6     		b	.L29
+ 563              	.L65:
+ 564 04f2 0523     		movs	r3, #5
+ 565 04f4 84F88332 		strb	r3, [r4, #643]
+ 566 04f8 94E6     		b	.L32
+ 567              	.L42:
+ 568 04fa 84F88322 		strb	r2, [r4, #643]
+ 569 04fe F6E5     		b	.L41
+ 570              	.L61:
+ARM GAS  /tmp/cce3TTIX.s 			page 11
+
+
+ 571 0500 0523     		movs	r3, #5
+ 572 0502 84F88332 		strb	r3, [r4, #643]
+ 573 0506 F2E5     		b	.L41
+ 574              	.L69:
+ 575              		.align	3
+ 576              	.L68:
+ 577 0508 399D52A2 		.word	-1571644103
+ 578 050c 46DF913F 		.word	1066524486
+ 579 0510 00002440 		.word	1076101120
+ 580 0514 67666666 		.word	1717986919
+ 581 0518 CDCCCCCC 		.word	-858993459
+ 582 051c 003665C4 		.word	-1000000000
+ 583 0520 00000000 		.word	.LANCHOR0
+ 584              		.size	gps_ubx_read_message.part.0, .-gps_ubx_read_message.part.0
+ 585              		.section	.text.crc24q,"ax",%progbits
+ 586              		.align	1
+ 587              		.p2align 4,,15
+ 588              		.global	crc24q
+ 589              		.syntax unified
+ 590              		.thumb
+ 591              		.thumb_func
+ 592              		.fpu fpv4-sp-d16
+ 593              		.type	crc24q, %function
+ 594              	crc24q:
+ 595              		@ args = 0, pretend = 0, frame = 0
+ 596              		@ frame_needed = 0, uses_anonymous_args = 0
+ 597              		@ link register save eliminated.
+ 598 0000 0029     		cmp	r1, #0
+ 599 0002 15DD     		ble	.L73
+ 600 0004 00F1FF3C 		add	ip, r0, #-1
+ 601 0008 10B4     		push	{r4}
+ 602 000a 0A4C     		ldr	r4, .L79
+ 603 000c 6144     		add	r1, r1, ip
+ 604 000e 0020     		movs	r0, #0
+ 605              	.L72:
+ 606 0010 1CF8012F 		ldrb	r2, [ip, #1]!	@ zero_extendqisi2
+ 607 0014 0302     		lsls	r3, r0, #8
+ 608 0016 82EA1040 		eor	r0, r2, r0, lsr #16
+ 609 001a 23F07F43 		bic	r3, r3, #-16777216
+ 610 001e 54F82000 		ldr	r0, [r4, r0, lsl #2]
+ 611 0022 6145     		cmp	r1, ip
+ 612 0024 80EA0300 		eor	r0, r0, r3
+ 613 0028 F2D1     		bne	.L72
+ 614 002a 5DF8044B 		ldr	r4, [sp], #4
+ 615 002e 7047     		bx	lr
+ 616              	.L73:
+ 617 0030 0020     		movs	r0, #0
+ 618 0032 7047     		bx	lr
+ 619              	.L80:
+ 620              		.align	2
+ 621              	.L79:
+ 622 0034 00000000 		.word	.LANCHOR1
+ 623              		.size	crc24q, .-crc24q
+ 624              		.section	.text.RTCMgetbitu,"ax",%progbits
+ 625              		.align	1
+ 626              		.p2align 4,,15
+ 627              		.global	RTCMgetbitu
+ARM GAS  /tmp/cce3TTIX.s 			page 12
+
+
+ 628              		.syntax unified
+ 629              		.thumb
+ 630              		.thumb_func
+ 631              		.fpu fpv4-sp-d16
+ 632              		.type	RTCMgetbitu, %function
+ 633              	RTCMgetbitu:
+ 634              		@ args = 0, pretend = 0, frame = 0
+ 635              		@ frame_needed = 0, uses_anonymous_args = 0
+ 636 0000 0A44     		add	r2, r2, r1
+ 637 0002 9142     		cmp	r1, r2
+ 638 0004 30B5     		push	{r4, r5, lr}
+ 639 0006 4FF00004 		mov	r4, #0
+ 640 000a 1BDA     		bge	.L81
+ 641              	.L84:
+ 642 000c 0029     		cmp	r1, #0
+ 643 000e 8E46     		mov	lr, r1
+ 644 0010 B8BF     		it	lt
+ 645 0012 01F1070E 		addlt	lr, r1, #7
+ 646 0016 4FEAEE0E 		asr	lr, lr, #3
+ 647 001a 4D42     		rsbs	r5, r1, #0
+ 648 001c 05F00705 		and	r5, r5, #7
+ 649 0020 01F0070C 		and	ip, r1, #7
+ 650 0024 10F80E30 		ldrb	r3, [r0, lr]	@ zero_extendqisi2
+ 651 0028 58BF     		it	pl
+ 652 002a C5F1000C 		rsbpl	ip, r5, #0
+ 653 002e CCF1070C 		rsb	ip, ip, #7
+ 654 0032 43FA0CF3 		asr	r3, r3, ip
+ 655 0036 0131     		adds	r1, r1, #1
+ 656 0038 6400     		lsls	r4, r4, #1
+ 657 003a 03F00103 		and	r3, r3, #1
+ 658 003e 9142     		cmp	r1, r2
+ 659 0040 1C44     		add	r4, r4, r3
+ 660 0042 E3D1     		bne	.L84
+ 661              	.L81:
+ 662 0044 2046     		mov	r0, r4
+ 663 0046 30BD     		pop	{r4, r5, pc}
+ 664              		.size	RTCMgetbitu, .-RTCMgetbitu
+ 665              		.section	.text.gps_ubx_init,"ax",%progbits
+ 666              		.align	1
+ 667              		.p2align 4,,15
+ 668              		.global	gps_ubx_init
+ 669              		.syntax unified
+ 670              		.thumb
+ 671              		.thumb_func
+ 672              		.fpu fpv4-sp-d16
+ 673              		.type	gps_ubx_init, %function
+ 674              	gps_ubx_init:
+ 675              		@ args = 0, pretend = 0, frame = 0
+ 676              		@ frame_needed = 0, uses_anonymous_args = 0
+ 677              		@ link register save eliminated.
+ 678 0000 074B     		ldr	r3, .L89
+ 679 0002 0022     		movs	r2, #0
+ 680 0004 0121     		movs	r1, #1
+ 681 0006 83F80A22 		strb	r2, [r3, #522]
+ 682 000a 1A70     		strb	r2, [r3]
+ 683 000c 83F81922 		strb	r2, [r3, #537]
+ 684 0010 83F81D12 		strb	r1, [r3, #541]
+ARM GAS  /tmp/cce3TTIX.s 			page 13
+
+
+ 685 0014 A3F81422 		strh	r2, [r3, #532]	@ movhi
+ 686 0018 83F81622 		strb	r2, [r3, #534]
+ 687 001c 7047     		bx	lr
+ 688              	.L90:
+ 689 001e 00BF     		.align	2
+ 690              	.L89:
+ 691 0020 00000000 		.word	.LANCHOR0
+ 692              		.size	gps_ubx_init, .-gps_ubx_init
+ 693              		.section	.text.gps_ubx_parse_HITL_UBX,"ax",%progbits
+ 694              		.align	1
+ 695              		.p2align 4,,15
+ 696              		.global	gps_ubx_parse_HITL_UBX
+ 697              		.syntax unified
+ 698              		.thumb
+ 699              		.thumb_func
+ 700              		.fpu fpv4-sp-d16
+ 701              		.type	gps_ubx_parse_HITL_UBX, %function
+ 702              	gps_ubx_parse_HITL_UBX:
+ 703              		@ args = 0, pretend = 0, frame = 0
+ 704              		@ frame_needed = 0, uses_anonymous_args = 0
+ 705 0000 10B5     		push	{r4, lr}
+ 706 0002 0E4C     		ldr	r4, .L95
+ 707 0004 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 708 0006 43B1     		cbz	r3, .L92
+ 709 0008 94F81432 		ldrb	r3, [r4, #532]	@ zero_extendqisi2
+ 710 000c 0122     		movs	r2, #1
+ 711 000e 1344     		add	r3, r3, r2
+ 712 0010 84F81432 		strb	r3, [r4, #532]
+ 713 0014 84F81522 		strb	r2, [r4, #533]
+ 714 0018 10BD     		pop	{r4, pc}
+ 715              	.L92:
+ 716 001a 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 717 001c 84F80932 		strb	r3, [r4, #521]
+ 718 0020 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 719 0022 84F80832 		strb	r3, [r4, #520]
+ 720 0026 C279     		ldrb	r2, [r0, #7]	@ zero_extendqisi2
+ 721 0028 00F10801 		add	r1, r0, #8
+ 722 002c 04F10800 		add	r0, r4, #8
+ 723 0030 FFF7FEFF 		bl	memcpy
+ 724 0034 0123     		movs	r3, #1
+ 725 0036 2370     		strb	r3, [r4]
+ 726 0038 10BD     		pop	{r4, pc}
+ 727              	.L96:
+ 728 003a 00BF     		.align	2
+ 729              	.L95:
+ 730 003c 00000000 		.word	.LANCHOR0
+ 731              		.size	gps_ubx_parse_HITL_UBX, .-gps_ubx_parse_HITL_UBX
+ 732              		.section	.text.gps_ubx_read_message,"ax",%progbits
+ 733              		.align	1
+ 734              		.p2align 4,,15
+ 735              		.global	gps_ubx_read_message
+ 736              		.syntax unified
+ 737              		.thumb
+ 738              		.thumb_func
+ 739              		.fpu fpv4-sp-d16
+ 740              		.type	gps_ubx_read_message, %function
+ 741              	gps_ubx_read_message:
+ARM GAS  /tmp/cce3TTIX.s 			page 14
+
+
+ 742              		@ args = 0, pretend = 0, frame = 0
+ 743              		@ frame_needed = 0, uses_anonymous_args = 0
+ 744              		@ link register save eliminated.
+ 745 0000 074A     		ldr	r2, .L102
+ 746 0002 92F80932 		ldrb	r3, [r2, #521]	@ zero_extendqisi2
+ 747 0006 012B     		cmp	r3, #1
+ 748 0008 08D0     		beq	.L100
+ 749 000a 022B     		cmp	r3, #2
+ 750 000c 00D0     		beq	.L101
+ 751              	.L97:
+ 752 000e 7047     		bx	lr
+ 753              	.L101:
+ 754 0010 92F80832 		ldrb	r3, [r2, #520]	@ zero_extendqisi2
+ 755 0014 322B     		cmp	r3, #50
+ 756 0016 FAD1     		bne	.L97
+ 757 0018 FFF7FEBF 		b	gps_ubx_parse_rxm_rtcm
+ 758              	.L100:
+ 759 001c FFF7FEBF 		b	gps_ubx_read_message.part.0
+ 760              	.L103:
+ 761              		.align	2
+ 762              	.L102:
+ 763 0020 00000000 		.word	.LANCHOR0
+ 764              		.size	gps_ubx_read_message, .-gps_ubx_read_message
+ 765              		.section	.text.gps_ubx_parse,"ax",%progbits
+ 766              		.align	1
+ 767              		.p2align 4,,15
+ 768              		.global	gps_ubx_parse
+ 769              		.syntax unified
+ 770              		.thumb
+ 771              		.thumb_func
+ 772              		.fpu fpv4-sp-d16
+ 773              		.type	gps_ubx_parse, %function
+ 774              	gps_ubx_parse:
+ 775              		@ args = 0, pretend = 0, frame = 0
+ 776              		@ frame_needed = 0, uses_anonymous_args = 0
+ 777              		@ link register save eliminated.
+ 778 0000 444B     		ldr	r3, .L130
+ 779 0002 93F80A22 		ldrb	r2, [r3, #522]	@ zero_extendqisi2
+ 780 0006 062A     		cmp	r2, #6
+ 781 0008 0AD8     		bhi	.L105
+ 782 000a 93F81012 		ldrb	r1, [r3, #528]	@ zero_extendqisi2
+ 783 000e 93F811C2 		ldrb	ip, [r3, #529]	@ zero_extendqisi2
+ 784 0012 0144     		add	r1, r1, r0
+ 785 0014 C9B2     		uxtb	r1, r1
+ 786 0016 8C44     		add	ip, ip, r1
+ 787 0018 83F81012 		strb	r1, [r3, #528]
+ 788 001c 83F811C2 		strb	ip, [r3, #529]
+ 789              	.L105:
+ 790 0020 082A     		cmp	r2, #8
+ 791 0022 73D8     		bhi	.L106
+ 792 0024 DFE802F0 		tbb	[pc, r2]
+ 793              	.L108:
+ 794 0028 15       		.byte	(.L116-.L108)/2
+ 795 0029 1B       		.byte	(.L115-.L108)/2
+ 796 002a 21       		.byte	(.L114-.L108)/2
+ 797 002b 2A       		.byte	(.L113-.L108)/2
+ 798 002c 30       		.byte	(.L112-.L108)/2
+ARM GAS  /tmp/cce3TTIX.s 			page 15
+
+
+ 799 002d 36       		.byte	(.L111-.L108)/2
+ 800 002e 46       		.byte	(.L110-.L108)/2
+ 801 002f 58       		.byte	(.L109-.L108)/2
+ 802 0030 05       		.byte	(.L107-.L108)/2
+ 803 0031 00       		.p2align 1
+ 804              	.L107:
+ 805 0032 93F81122 		ldrb	r2, [r3, #529]	@ zero_extendqisi2
+ 806 0036 8242     		cmp	r2, r0
+ 807 0038 5DD0     		beq	.L127
+ 808              	.L125:
+ 809 003a 0322     		movs	r2, #3
+ 810 003c 83F81522 		strb	r2, [r3, #533]
+ 811              	.L120:
+ 812 0040 93F81422 		ldrb	r2, [r3, #532]	@ zero_extendqisi2
+ 813 0044 0132     		adds	r2, r2, #1
+ 814 0046 83F81422 		strb	r2, [r3, #532]
+ 815              	.L126:
+ 816 004a 0022     		movs	r2, #0
+ 817 004c 83F80A22 		strb	r2, [r3, #522]
+ 818              	.L104:
+ 819 0050 7047     		bx	lr
+ 820              	.L116:
+ 821 0052 B528     		cmp	r0, #181
+ 822 0054 FCD1     		bne	.L104
+ 823 0056 0122     		movs	r2, #1
+ 824 0058 83F80A22 		strb	r2, [r3, #522]
+ 825 005c 7047     		bx	lr
+ 826              	.L115:
+ 827 005e 6228     		cmp	r0, #98
+ 828 0060 42D0     		beq	.L119
+ 829 0062 0522     		movs	r2, #5
+ 830 0064 83F81522 		strb	r2, [r3, #533]
+ 831 0068 EAE7     		b	.L120
+ 832              	.L114:
+ 833 006a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 834 006c 002A     		cmp	r2, #0
+ 835 006e 49D1     		bne	.L128
+ 836 0070 0322     		movs	r2, #3
+ 837 0072 83F80902 		strb	r0, [r3, #521]
+ 838 0076 83F80A22 		strb	r2, [r3, #522]
+ 839 007a 7047     		bx	lr
+ 840              	.L113:
+ 841 007c 0422     		movs	r2, #4
+ 842 007e 83F80802 		strb	r0, [r3, #520]
+ 843 0082 83F80A22 		strb	r2, [r3, #522]
+ 844 0086 7047     		bx	lr
+ 845              	.L112:
+ 846 0088 0522     		movs	r2, #5
+ 847 008a A3F80C02 		strh	r0, [r3, #524]	@ movhi
+ 848 008e 83F80A22 		strb	r2, [r3, #522]
+ 849 0092 7047     		bx	lr
+ 850              	.L111:
+ 851 0094 B3F80C22 		ldrh	r2, [r3, #524]
+ 852 0098 42EA0020 		orr	r0, r2, r0, lsl #8
+ 853 009c B0F5007F 		cmp	r0, #512
+ 854 00a0 A3F80C02 		strh	r0, [r3, #524]	@ movhi
+ 855 00a4 2AD8     		bhi	.L129
+ARM GAS  /tmp/cce3TTIX.s 			page 16
+
+
+ 856 00a6 0021     		movs	r1, #0
+ 857 00a8 0622     		movs	r2, #6
+ 858 00aa A3F80E12 		strh	r1, [r3, #526]	@ movhi
+ 859 00ae 83F80A22 		strb	r2, [r3, #522]
+ 860 00b2 7047     		bx	lr
+ 861              	.L110:
+ 862 00b4 B3F80E22 		ldrh	r2, [r3, #526]
+ 863 00b8 B3F80C12 		ldrh	r1, [r3, #524]
+ 864 00bc 03EB020C 		add	ip, r3, r2
+ 865 00c0 0132     		adds	r2, r2, #1
+ 866 00c2 92B2     		uxth	r2, r2
+ 867 00c4 9142     		cmp	r1, r2
+ 868 00c6 8CF80800 		strb	r0, [ip, #8]
+ 869 00ca A3F80E22 		strh	r2, [r3, #526]	@ movhi
+ 870 00ce BFD8     		bhi	.L104
+ 871 00d0 0722     		movs	r2, #7
+ 872 00d2 83F80A22 		strb	r2, [r3, #522]
+ 873 00d6 7047     		bx	lr
+ 874              	.L109:
+ 875 00d8 93F81022 		ldrb	r2, [r3, #528]	@ zero_extendqisi2
+ 876 00dc 8242     		cmp	r2, r0
+ 877 00de ACD1     		bne	.L125
+ 878 00e0 0822     		movs	r2, #8
+ 879 00e2 83F80A22 		strb	r2, [r3, #522]
+ 880 00e6 7047     		bx	lr
+ 881              	.L119:
+ 882 00e8 0021     		movs	r1, #0
+ 883 00ea 0222     		movs	r2, #2
+ 884 00ec A3F81012 		strh	r1, [r3, #528]	@ movhi
+ 885 00f0 83F80A22 		strb	r2, [r3, #522]
+ 886 00f4 7047     		bx	lr
+ 887              	.L127:
+ 888 00f6 0122     		movs	r2, #1
+ 889 00f8 1A70     		strb	r2, [r3]
+ 890 00fa A6E7     		b	.L126
+ 891              	.L129:
+ 892 00fc 0222     		movs	r2, #2
+ 893 00fe 83F81522 		strb	r2, [r3, #533]
+ 894 0102 9DE7     		b	.L120
+ 895              	.L128:
+ 896 0104 0122     		movs	r2, #1
+ 897 0106 83F81522 		strb	r2, [r3, #533]
+ 898 010a 99E7     		b	.L120
+ 899              	.L106:
+ 900 010c 0422     		movs	r2, #4
+ 901 010e 83F81522 		strb	r2, [r3, #533]
+ 902 0112 95E7     		b	.L120
+ 903              	.L131:
+ 904              		.align	2
+ 905              	.L130:
+ 906 0114 00000000 		.word	.LANCHOR0
+ 907              		.size	gps_ubx_parse, .-gps_ubx_parse
+ 908              		.section	.text.ubx_header,"ax",%progbits
+ 909              		.align	1
+ 910              		.p2align 4,,15
+ 911              		.global	ubx_header
+ 912              		.syntax unified
+ARM GAS  /tmp/cce3TTIX.s 			page 17
+
+
+ 913              		.thumb
+ 914              		.thumb_func
+ 915              		.fpu fpv4-sp-d16
+ 916              		.type	ubx_header, %function
+ 917              	ubx_header:
+ 918              		@ args = 0, pretend = 0, frame = 0
+ 919              		@ frame_needed = 0, uses_anonymous_args = 0
+ 920 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 921 0004 0546     		mov	r5, r0
+ 922 0006 2B4C     		ldr	r4, .L134
+ 923 0008 C069     		ldr	r0, [r0, #28]
+ 924 000a 4FF00009 		mov	r9, #0
+ 925 000e 8846     		mov	r8, r1
+ 926 0010 1746     		mov	r7, r2
+ 927 0012 1E46     		mov	r6, r3
+ 928 0014 B522     		movs	r2, #181
+ 929 0016 6B68     		ldr	r3, [r5, #4]
+ 930 0018 0021     		movs	r1, #0
+ 931 001a 9847     		blx	r3
+ 932 001c E869     		ldr	r0, [r5, #28]
+ 933 001e 6B68     		ldr	r3, [r5, #4]
+ 934 0020 6222     		movs	r2, #98
+ 935 0022 4946     		mov	r1, r9
+ 936 0024 9847     		blx	r3
+ 937 0026 A4F81292 		strh	r9, [r4, #530]	@ movhi
+ 938 002a 4246     		mov	r2, r8
+ 939 002c E869     		ldr	r0, [r5, #28]
+ 940 002e 6B68     		ldr	r3, [r5, #4]
+ 941 0030 4946     		mov	r1, r9
+ 942 0032 9847     		blx	r3
+ 943 0034 94F81212 		ldrb	r1, [r4, #530]	@ zero_extendqisi2
+ 944 0038 94F81332 		ldrb	r3, [r4, #531]	@ zero_extendqisi2
+ 945 003c 8844     		add	r8, r8, r1
+ 946 003e 5FFA88F8 		uxtb	r8, r8
+ 947 0042 84F81282 		strb	r8, [r4, #530]
+ 948 0046 9844     		add	r8, r8, r3
+ 949 0048 84F81382 		strb	r8, [r4, #531]
+ 950 004c 3A46     		mov	r2, r7
+ 951 004e E869     		ldr	r0, [r5, #28]
+ 952 0050 6B68     		ldr	r3, [r5, #4]
+ 953 0052 4946     		mov	r1, r9
+ 954 0054 9847     		blx	r3
+ 955 0056 94F81222 		ldrb	r2, [r4, #530]	@ zero_extendqisi2
+ 956 005a 94F81332 		ldrb	r3, [r4, #531]	@ zero_extendqisi2
+ 957 005e 1744     		add	r7, r7, r2
+ 958 0060 FFB2     		uxtb	r7, r7
+ 959 0062 84F81272 		strb	r7, [r4, #530]
+ 960 0066 1F44     		add	r7, r7, r3
+ 961 0068 84F81372 		strb	r7, [r4, #531]
+ 962 006c F7B2     		uxtb	r7, r6
+ 963 006e 3A46     		mov	r2, r7
+ 964 0070 E869     		ldr	r0, [r5, #28]
+ 965 0072 6B68     		ldr	r3, [r5, #4]
+ 966 0074 4946     		mov	r1, r9
+ 967 0076 9847     		blx	r3
+ 968 0078 94F81222 		ldrb	r2, [r4, #530]	@ zero_extendqisi2
+ 969 007c 1744     		add	r7, r7, r2
+ARM GAS  /tmp/cce3TTIX.s 			page 18
+
+
+ 970 007e 94F81322 		ldrb	r2, [r4, #531]	@ zero_extendqisi2
+ 971 0082 FFB2     		uxtb	r7, r7
+ 972 0084 84F81272 		strb	r7, [r4, #530]
+ 973 0088 1744     		add	r7, r7, r2
+ 974 008a 84F81372 		strb	r7, [r4, #531]
+ 975 008e 360A     		lsrs	r6, r6, #8
+ 976 0090 3246     		mov	r2, r6
+ 977 0092 6B68     		ldr	r3, [r5, #4]
+ 978 0094 E869     		ldr	r0, [r5, #28]
+ 979 0096 4946     		mov	r1, r9
+ 980 0098 9847     		blx	r3
+ 981 009a 94F81222 		ldrb	r2, [r4, #530]	@ zero_extendqisi2
+ 982 009e 94F81332 		ldrb	r3, [r4, #531]	@ zero_extendqisi2
+ 983 00a2 1644     		add	r6, r6, r2
+ 984 00a4 F6B2     		uxtb	r6, r6
+ 985 00a6 3344     		add	r3, r3, r6
+ 986 00a8 84F81262 		strb	r6, [r4, #530]
+ 987 00ac 84F81332 		strb	r3, [r4, #531]
+ 988 00b0 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 989              	.L135:
+ 990              		.align	2
+ 991              	.L134:
+ 992 00b4 00000000 		.word	.LANCHOR0
+ 993              		.size	ubx_header, .-ubx_header
+ 994              		.section	.text.ubx_trailer,"ax",%progbits
+ 995              		.align	1
+ 996              		.p2align 4,,15
+ 997              		.global	ubx_trailer
+ 998              		.syntax unified
+ 999              		.thumb
+ 1000              		.thumb_func
+ 1001              		.fpu fpv4-sp-d16
+ 1002              		.type	ubx_trailer, %function
+ 1003              	ubx_trailer:
+ 1004              		@ args = 0, pretend = 0, frame = 0
+ 1005              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1006 0000 70B5     		push	{r4, r5, r6, lr}
+ 1007 0002 0446     		mov	r4, r0
+ 1008 0004 094D     		ldr	r5, .L138
+ 1009 0006 6368     		ldr	r3, [r4, #4]
+ 1010 0008 95F81222 		ldrb	r2, [r5, #530]	@ zero_extendqisi2
+ 1011 000c C069     		ldr	r0, [r0, #28]
+ 1012 000e 0021     		movs	r1, #0
+ 1013 0010 9847     		blx	r3
+ 1014 0012 E069     		ldr	r0, [r4, #28]
+ 1015 0014 6368     		ldr	r3, [r4, #4]
+ 1016 0016 95F81322 		ldrb	r2, [r5, #531]	@ zero_extendqisi2
+ 1017 001a 0021     		movs	r1, #0
+ 1018 001c 9847     		blx	r3
+ 1019 001e E368     		ldr	r3, [r4, #12]
+ 1020 0020 E069     		ldr	r0, [r4, #28]
+ 1021 0022 0021     		movs	r1, #0
+ 1022 0024 BDE87040 		pop	{r4, r5, r6, lr}
+ 1023 0028 1847     		bx	r3	@ indirect register sibling call
+ 1024              	.L139:
+ 1025 002a 00BF     		.align	2
+ 1026              	.L138:
+ARM GAS  /tmp/cce3TTIX.s 			page 19
+
+
+ 1027 002c 00000000 		.word	.LANCHOR0
+ 1028              		.size	ubx_trailer, .-ubx_trailer
+ 1029              		.section	.text.ubx_send_bytes,"ax",%progbits
+ 1030              		.align	1
+ 1031              		.p2align 4,,15
+ 1032              		.global	ubx_send_bytes
+ 1033              		.syntax unified
+ 1034              		.thumb
+ 1035              		.thumb_func
+ 1036              		.fpu fpv4-sp-d16
+ 1037              		.type	ubx_send_bytes, %function
+ 1038              	ubx_send_bytes:
+ 1039              		@ args = 0, pretend = 0, frame = 0
+ 1040              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1041 0000 E9B1     		cbz	r1, .L148
+ 1042 0002 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1043 0006 0E4D     		ldr	r5, .L151
+ 1044 0008 8046     		mov	r8, r0
+ 1045 000a 1646     		mov	r6, r2
+ 1046 000c 5718     		adds	r7, r2, r1
+ 1047              	.L142:
+ 1048 000e 16F8014B 		ldrb	r4, [r6], #1	@ zero_extendqisi2
+ 1049 0012 D8F80430 		ldr	r3, [r8, #4]
+ 1050 0016 D8F81C00 		ldr	r0, [r8, #28]
+ 1051 001a 2246     		mov	r2, r4
+ 1052 001c 0021     		movs	r1, #0
+ 1053 001e 9847     		blx	r3
+ 1054 0020 95F81222 		ldrb	r2, [r5, #530]	@ zero_extendqisi2
+ 1055 0024 95F81332 		ldrb	r3, [r5, #531]	@ zero_extendqisi2
+ 1056 0028 1444     		add	r4, r4, r2
+ 1057 002a E4B2     		uxtb	r4, r4
+ 1058 002c 2344     		add	r3, r3, r4
+ 1059 002e BE42     		cmp	r6, r7
+ 1060 0030 85F81242 		strb	r4, [r5, #530]
+ 1061 0034 85F81332 		strb	r3, [r5, #531]
+ 1062 0038 E9D1     		bne	.L142
+ 1063 003a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1064              	.L148:
+ 1065 003e 7047     		bx	lr
+ 1066              	.L152:
+ 1067              		.align	2
+ 1068              	.L151:
+ 1069 0040 00000000 		.word	.LANCHOR0
+ 1070              		.size	ubx_send_bytes, .-ubx_send_bytes
+ 1071              		.section	.text.ubx_send_cfg_rst,"ax",%progbits
+ 1072              		.align	1
+ 1073              		.p2align 4,,15
+ 1074              		.global	ubx_send_cfg_rst
+ 1075              		.syntax unified
+ 1076              		.thumb
+ 1077              		.thumb_func
+ 1078              		.fpu fpv4-sp-d16
+ 1079              		.type	ubx_send_cfg_rst, %function
+ 1080              	ubx_send_cfg_rst:
+ 1081              		@ args = 0, pretend = 0, frame = 8
+ 1082              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1083 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ARM GAS  /tmp/cce3TTIX.s 			page 20
+
+
+ 1084 0004 0423     		movs	r3, #4
+ 1085 0006 83B0     		sub	sp, sp, #12
+ 1086 0008 0C46     		mov	r4, r1
+ 1087 000a 1746     		mov	r7, r2
+ 1088 000c 0621     		movs	r1, #6
+ 1089 000e 1A46     		mov	r2, r3
+ 1090 0010 1F4D     		ldr	r5, .L157
+ 1091 0012 0646     		mov	r6, r0
+ 1092 0014 0DF10609 		add	r9, sp, #6
+ 1093 0018 FFF7FEFF 		bl	ubx_header
+ 1094 001c 0DF10808 		add	r8, sp, #8
+ 1095 0020 ADF80640 		strh	r4, [sp, #6]	@ movhi
+ 1096              	.L154:
+ 1097 0024 19F8014B 		ldrb	r4, [r9], #1	@ zero_extendqisi2
+ 1098 0028 7368     		ldr	r3, [r6, #4]
+ 1099 002a F069     		ldr	r0, [r6, #28]
+ 1100 002c 2246     		mov	r2, r4
+ 1101 002e 0021     		movs	r1, #0
+ 1102 0030 9847     		blx	r3
+ 1103 0032 95F81222 		ldrb	r2, [r5, #530]	@ zero_extendqisi2
+ 1104 0036 95F81332 		ldrb	r3, [r5, #531]	@ zero_extendqisi2
+ 1105 003a 1444     		add	r4, r4, r2
+ 1106 003c E4B2     		uxtb	r4, r4
+ 1107 003e 2344     		add	r3, r3, r4
+ 1108 0040 C145     		cmp	r9, r8
+ 1109 0042 85F81242 		strb	r4, [r5, #530]
+ 1110 0046 85F81332 		strb	r3, [r5, #531]
+ 1111 004a EBD1     		bne	.L154
+ 1112 004c 7368     		ldr	r3, [r6, #4]
+ 1113 004e F069     		ldr	r0, [r6, #28]
+ 1114 0050 3A46     		mov	r2, r7
+ 1115 0052 0021     		movs	r1, #0
+ 1116 0054 9847     		blx	r3
+ 1117 0056 95F81222 		ldrb	r2, [r5, #530]	@ zero_extendqisi2
+ 1118 005a 95F81332 		ldrb	r3, [r5, #531]	@ zero_extendqisi2
+ 1119 005e 1744     		add	r7, r7, r2
+ 1120 0060 FFB2     		uxtb	r7, r7
+ 1121 0062 3B44     		add	r3, r3, r7
+ 1122 0064 85F81272 		strb	r7, [r5, #530]
+ 1123 0068 85F81332 		strb	r3, [r5, #531]
+ 1124 006c 0022     		movs	r2, #0
+ 1125 006e F069     		ldr	r0, [r6, #28]
+ 1126 0070 7368     		ldr	r3, [r6, #4]
+ 1127 0072 1146     		mov	r1, r2
+ 1128 0074 9847     		blx	r3
+ 1129 0076 95F81322 		ldrb	r2, [r5, #531]	@ zero_extendqisi2
+ 1130 007a 95F81232 		ldrb	r3, [r5, #530]	@ zero_extendqisi2
+ 1131 007e 3046     		mov	r0, r6
+ 1132 0080 1344     		add	r3, r3, r2
+ 1133 0082 85F81332 		strb	r3, [r5, #531]
+ 1134 0086 03B0     		add	sp, sp, #12
+ 1135              		@ sp needed
+ 1136 0088 BDE8F043 		pop	{r4, r5, r6, r7, r8, r9, lr}
+ 1137 008c FFF7FEBF 		b	ubx_trailer
+ 1138              	.L158:
+ 1139              		.align	2
+ 1140              	.L157:
+ARM GAS  /tmp/cce3TTIX.s 			page 21
+
+
+ 1141 0090 00000000 		.word	.LANCHOR0
+ 1142              		.size	ubx_send_cfg_rst, .-ubx_send_cfg_rst
+ 1143              		.section	.text.gps_ubx_msg,"ax",%progbits
+ 1144              		.align	1
+ 1145              		.p2align 4,,15
+ 1146              		.global	gps_ubx_msg
+ 1147              		.syntax unified
+ 1148              		.thumb
+ 1149              		.thumb_func
+ 1150              		.fpu fpv4-sp-d16
+ 1151              		.type	gps_ubx_msg, %function
+ 1152              	gps_ubx_msg:
+ 1153              		@ args = 0, pretend = 0, frame = 0
+ 1154              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1155 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1156 0002 2E4D     		ldr	r5, .L188
+ 1157 0004 2E4C     		ldr	r4, .L188+4
+ 1158 0006 FFF7FEFF 		bl	get_sys_time_usec
+ 1159 000a 95F80932 		ldrb	r3, [r5, #521]	@ zero_extendqisi2
+ 1160 000e 6268     		ldr	r2, [r4, #4]
+ 1161 0010 C5F8D823 		str	r2, [r5, #984]
+ 1162 0014 012B     		cmp	r3, #1
+ 1163 0016 2268     		ldr	r2, [r4]
+ 1164 0018 C5F8DC23 		str	r2, [r5, #988]
+ 1165 001c 0646     		mov	r6, r0
+ 1166 001e 11D0     		beq	.L183
+ 1167 0020 022B     		cmp	r3, #2
+ 1168 0022 08D0     		beq	.L184
+ 1169              	.L161:
+ 1170 0024 FFF7FEFF 		bl	gps_ubx_ucenter_event
+ 1171 0028 95F80932 		ldrb	r3, [r5, #521]	@ zero_extendqisi2
+ 1172 002c 012B     		cmp	r3, #1
+ 1173 002e 11D0     		beq	.L185
+ 1174              	.L162:
+ 1175 0030 0023     		movs	r3, #0
+ 1176 0032 2B70     		strb	r3, [r5]
+ 1177 0034 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1178              	.L184:
+ 1179 0036 95F80832 		ldrb	r3, [r5, #520]	@ zero_extendqisi2
+ 1180 003a 322B     		cmp	r3, #50
+ 1181 003c F2D1     		bne	.L161
+ 1182 003e FFF7FEFF 		bl	gps_ubx_parse_rxm_rtcm
+ 1183 0042 EFE7     		b	.L161
+ 1184              	.L183:
+ 1185 0044 FFF7FEFF 		bl	gps_ubx_read_message.part.0
+ 1186 0048 FFF7FEFF 		bl	gps_ubx_ucenter_event
+ 1187 004c 95F80932 		ldrb	r3, [r5, #521]	@ zero_extendqisi2
+ 1188 0050 012B     		cmp	r3, #1
+ 1189 0052 EDD1     		bne	.L162
+ 1190              	.L185:
+ 1191 0054 95F80832 		ldrb	r3, [r5, #520]	@ zero_extendqisi2
+ 1192 0058 122B     		cmp	r3, #18
+ 1193 005a 07D0     		beq	.L163
+ 1194 005c 072B     		cmp	r3, #7
+ 1195 005e 05D0     		beq	.L163
+ 1196 0060 062B     		cmp	r3, #6
+ 1197 0062 E5D1     		bne	.L162
+ARM GAS  /tmp/cce3TTIX.s 			page 22
+
+
+ 1198 0064 95F81C32 		ldrb	r3, [r5, #540]	@ zero_extendqisi2
+ 1199 0068 DB06     		lsls	r3, r3, #27
+ 1200 006a E1D4     		bmi	.L162
+ 1201              	.L163:
+ 1202 006c 95F88332 		ldrb	r3, [r5, #643]	@ zero_extendqisi2
+ 1203 0070 022B     		cmp	r3, #2
+ 1204 0072 19D8     		bhi	.L186
+ 1205 0074 134A     		ldr	r2, .L188+8
+ 1206 0076 5369     		ldr	r3, [r2, #20]
+ 1207 0078 83F00203 		eor	r3, r3, #2
+ 1208 007c 5361     		str	r3, [r2, #20]
+ 1209              	.L165:
+ 1210 007e 124B     		ldr	r3, .L188+12
+ 1211 0080 9C6A     		ldr	r4, [r3, #40]
+ 1212 0082 002C     		cmp	r4, #0
+ 1213 0084 D4D0     		beq	.L162
+ 1214 0086 114F     		ldr	r7, .L188+16
+ 1215 0088 04E0     		b	.L168
+ 1216              	.L187:
+ 1217 008a 8342     		cmp	r3, r0
+ 1218 008c 09D0     		beq	.L166
+ 1219              	.L167:
+ 1220 008e A468     		ldr	r4, [r4, #8]
+ 1221 0090 002C     		cmp	r4, #0
+ 1222 0092 CDD0     		beq	.L162
+ 1223              	.L168:
+ 1224 0094 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 1225 0096 FF2B     		cmp	r3, #255
+ 1226 0098 3A46     		mov	r2, r7
+ 1227 009a 3146     		mov	r1, r6
+ 1228 009c 4FF00100 		mov	r0, #1
+ 1229 00a0 F3D1     		bne	.L187
+ 1230              	.L166:
+ 1231 00a2 6368     		ldr	r3, [r4, #4]
+ 1232 00a4 9847     		blx	r3
+ 1233 00a6 F2E7     		b	.L167
+ 1234              	.L186:
+ 1235 00a8 6268     		ldr	r2, [r4, #4]
+ 1236 00aa 064B     		ldr	r3, .L188+8
+ 1237 00ac 2168     		ldr	r1, [r4]
+ 1238 00ae C5F8D023 		str	r2, [r5, #976]
+ 1239 00b2 0222     		movs	r2, #2
+ 1240 00b4 C5F8D413 		str	r1, [r5, #980]
+ 1241 00b8 5A83     		strh	r2, [r3, #26]	@ movhi
+ 1242 00ba E0E7     		b	.L165
+ 1243              	.L189:
+ 1244              		.align	2
+ 1245              	.L188:
+ 1246 00bc 00000000 		.word	.LANCHOR0
+ 1247 00c0 00000000 		.word	sys_time
+ 1248 00c4 00080240 		.word	1073874944
+ 1249 00c8 00000000 		.word	abi_queues
+ 1250 00cc 1C020000 		.word	.LANCHOR0+540
+ 1251              		.size	gps_ubx_msg, .-gps_ubx_msg
+ 1252              		.section	.text.gps_ubx_event,"ax",%progbits
+ 1253              		.align	1
+ 1254              		.p2align 4,,15
+ARM GAS  /tmp/cce3TTIX.s 			page 23
+
+
+ 1255              		.global	gps_ubx_event
+ 1256              		.syntax unified
+ 1257              		.thumb
+ 1258              		.thumb_func
+ 1259              		.fpu fpv4-sp-d16
+ 1260              		.type	gps_ubx_event, %function
+ 1261              	gps_ubx_event:
+ 1262              		@ args = 0, pretend = 0, frame = 0
+ 1263              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1264 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1265 0002 764E     		ldr	r6, .L207
+ 1266 0004 764D     		ldr	r5, .L207+4
+ 1267 0006 08E0     		b	.L192
+ 1268              	.L193:
+ 1269 0008 D5F84432 		ldr	r3, [r5, #580]
+ 1270 000c D5F84C02 		ldr	r0, [r5, #588]
+ 1271 0010 9847     		blx	r3
+ 1272 0012 FFF7FEFF 		bl	gps_ubx_parse
+ 1273 0016 3378     		ldrb	r3, [r6]	@ zero_extendqisi2
+ 1274 0018 ABB9     		cbnz	r3, .L205
+ 1275              	.L192:
+ 1276 001a D5F84032 		ldr	r3, [r5, #576]
+ 1277 001e D5F84C02 		ldr	r0, [r5, #588]
+ 1278 0022 9847     		blx	r3
+ 1279 0024 0446     		mov	r4, r0
+ 1280 0026 0028     		cmp	r0, #0
+ 1281 0028 EED1     		bne	.L193
+ 1282 002a 96F81672 		ldrb	r7, [r6, #534]	@ zero_extendqisi2
+ 1283 002e 4FB1     		cbz	r7, .L190
+ 1284 0030 022F     		cmp	r7, #2
+ 1285 0032 00F0A580 		beq	.L195
+ 1286 0036 032F     		cmp	r7, #3
+ 1287 0038 51D0     		beq	.L196
+ 1288 003a 012F     		cmp	r7, #1
+ 1289 003c 06D0     		beq	.L206
+ 1290 003e 0023     		movs	r3, #0
+ 1291 0040 86F81632 		strb	r3, [r6, #534]
+ 1292              	.L190:
+ 1293 0044 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1294              	.L205:
+ 1295 0046 FFF7FEFF 		bl	gps_ubx_msg
+ 1296 004a E6E7     		b	.L192
+ 1297              	.L206:
+ 1298 004c 0423     		movs	r3, #4
+ 1299 004e 1A46     		mov	r2, r3
+ 1300 0050 6448     		ldr	r0, .L207+8
+ 1301 0052 0621     		movs	r1, #6
+ 1302 0054 FFF7FEFF 		bl	ubx_header
+ 1303 0058 D5F83432 		ldr	r3, [r5, #564]
+ 1304 005c D5F84C02 		ldr	r0, [r5, #588]
+ 1305 0060 2246     		mov	r2, r4
+ 1306 0062 2146     		mov	r1, r4
+ 1307 0064 9847     		blx	r3
+ 1308 0066 96F81322 		ldrb	r2, [r6, #531]	@ zero_extendqisi2
+ 1309 006a 96F81232 		ldrb	r3, [r6, #530]	@ zero_extendqisi2
+ 1310 006e D5F84C02 		ldr	r0, [r5, #588]
+ 1311 0072 1344     		add	r3, r3, r2
+ARM GAS  /tmp/cce3TTIX.s 			page 24
+
+
+ 1312 0074 86F81332 		strb	r3, [r6, #531]
+ 1313 0078 2246     		mov	r2, r4
+ 1314 007a D5F83432 		ldr	r3, [r5, #564]
+ 1315 007e 2146     		mov	r1, r4
+ 1316 0080 9847     		blx	r3
+ 1317 0082 96F81312 		ldrb	r1, [r6, #531]	@ zero_extendqisi2
+ 1318 0086 96F81232 		ldrb	r3, [r6, #530]	@ zero_extendqisi2
+ 1319 008a D5F84C02 		ldr	r0, [r5, #588]
+ 1320 008e 0B44     		add	r3, r3, r1
+ 1321 0090 3A46     		mov	r2, r7
+ 1322 0092 86F81332 		strb	r3, [r6, #531]
+ 1323 0096 2146     		mov	r1, r4
+ 1324 0098 D5F83432 		ldr	r3, [r5, #564]
+ 1325 009c 9847     		blx	r3
+ 1326 009e 96F81232 		ldrb	r3, [r6, #530]	@ zero_extendqisi2
+ 1327 00a2 96F81322 		ldrb	r2, [r6, #531]	@ zero_extendqisi2
+ 1328 00a6 D5F84C02 		ldr	r0, [r5, #588]
+ 1329 00aa 0133     		adds	r3, r3, #1
+ 1330 00ac DBB2     		uxtb	r3, r3
+ 1331 00ae 1A44     		add	r2, r2, r3
+ 1332 00b0 86F81232 		strb	r3, [r6, #530]
+ 1333 00b4 86F81322 		strb	r2, [r6, #531]
+ 1334 00b8 D5F83432 		ldr	r3, [r5, #564]
+ 1335 00bc 2246     		mov	r2, r4
+ 1336 00be 2146     		mov	r1, r4
+ 1337 00c0 9847     		blx	r3
+ 1338 00c2 96F81332 		ldrb	r3, [r6, #531]	@ zero_extendqisi2
+ 1339 00c6 96F81222 		ldrb	r2, [r6, #530]	@ zero_extendqisi2
+ 1340 00ca 4648     		ldr	r0, .L207+8
+ 1341 00cc 1344     		add	r3, r3, r2
+ 1342 00ce 86F81332 		strb	r3, [r6, #531]
+ 1343 00d2 FFF7FEFF 		bl	ubx_trailer
+ 1344 00d6 0023     		movs	r3, #0
+ 1345 00d8 86F81632 		strb	r3, [r6, #534]
+ 1346 00dc B2E7     		b	.L190
+ 1347              	.L196:
+ 1348 00de 0423     		movs	r3, #4
+ 1349 00e0 1A46     		mov	r2, r3
+ 1350 00e2 4048     		ldr	r0, .L207+8
+ 1351 00e4 0621     		movs	r1, #6
+ 1352 00e6 FFF7FEFF 		bl	ubx_header
+ 1353 00ea D5F83432 		ldr	r3, [r5, #564]
+ 1354 00ee D5F84C02 		ldr	r0, [r5, #588]
+ 1355 00f2 FF22     		movs	r2, #255
+ 1356 00f4 2146     		mov	r1, r4
+ 1357 00f6 9847     		blx	r3
+ 1358 00f8 96F81232 		ldrb	r3, [r6, #530]	@ zero_extendqisi2
+ 1359 00fc 96F81322 		ldrb	r2, [r6, #531]	@ zero_extendqisi2
+ 1360 0100 D5F84C02 		ldr	r0, [r5, #588]
+ 1361 0104 013B     		subs	r3, r3, #1
+ 1362 0106 DBB2     		uxtb	r3, r3
+ 1363 0108 1A44     		add	r2, r2, r3
+ 1364 010a 86F81232 		strb	r3, [r6, #530]
+ 1365 010e 86F81322 		strb	r2, [r6, #531]
+ 1366 0112 D5F83432 		ldr	r3, [r5, #564]
+ 1367 0116 FF22     		movs	r2, #255
+ 1368 0118 2146     		mov	r1, r4
+ARM GAS  /tmp/cce3TTIX.s 			page 25
+
+
+ 1369 011a 9847     		blx	r3
+ 1370 011c 96F81232 		ldrb	r3, [r6, #530]	@ zero_extendqisi2
+ 1371 0120 96F81322 		ldrb	r2, [r6, #531]	@ zero_extendqisi2
+ 1372 0124 D5F84C02 		ldr	r0, [r5, #588]
+ 1373 0128 013B     		subs	r3, r3, #1
+ 1374 012a DBB2     		uxtb	r3, r3
+ 1375 012c 1A44     		add	r2, r2, r3
+ 1376 012e 86F81232 		strb	r3, [r6, #530]
+ 1377 0132 86F81322 		strb	r2, [r6, #531]
+ 1378 0136 D5F83432 		ldr	r3, [r5, #564]
+ 1379 013a 0122     		movs	r2, #1
+ 1380 013c 2146     		mov	r1, r4
+ 1381 013e 9847     		blx	r3
+ 1382              	.L204:
+ 1383 0140 96F81232 		ldrb	r3, [r6, #530]	@ zero_extendqisi2
+ 1384 0144 96F81322 		ldrb	r2, [r6, #531]	@ zero_extendqisi2
+ 1385 0148 D5F84C02 		ldr	r0, [r5, #588]
+ 1386 014c 0133     		adds	r3, r3, #1
+ 1387 014e DBB2     		uxtb	r3, r3
+ 1388 0150 1A44     		add	r2, r2, r3
+ 1389 0152 86F81232 		strb	r3, [r6, #530]
+ 1390 0156 86F81322 		strb	r2, [r6, #531]
+ 1391 015a D5F83432 		ldr	r3, [r5, #564]
+ 1392 015e 2246     		mov	r2, r4
+ 1393 0160 2146     		mov	r1, r4
+ 1394 0162 9847     		blx	r3
+ 1395 0164 96F81322 		ldrb	r2, [r6, #531]	@ zero_extendqisi2
+ 1396 0168 96F81232 		ldrb	r3, [r6, #530]	@ zero_extendqisi2
+ 1397 016c 1D48     		ldr	r0, .L207+8
+ 1398 016e 1344     		add	r3, r3, r2
+ 1399 0170 86F81332 		strb	r3, [r6, #531]
+ 1400 0174 FFF7FEFF 		bl	ubx_trailer
+ 1401 0178 0023     		movs	r3, #0
+ 1402 017a 86F81632 		strb	r3, [r6, #534]
+ 1403 017e 61E7     		b	.L190
+ 1404              	.L195:
+ 1405 0180 0423     		movs	r3, #4
+ 1406 0182 1A46     		mov	r2, r3
+ 1407 0184 1748     		ldr	r0, .L207+8
+ 1408 0186 0621     		movs	r1, #6
+ 1409 0188 FFF7FEFF 		bl	ubx_header
+ 1410 018c D5F83432 		ldr	r3, [r5, #564]
+ 1411 0190 D5F84C02 		ldr	r0, [r5, #588]
+ 1412 0194 2146     		mov	r1, r4
+ 1413 0196 0122     		movs	r2, #1
+ 1414 0198 9847     		blx	r3
+ 1415 019a 96F81232 		ldrb	r3, [r6, #530]	@ zero_extendqisi2
+ 1416 019e 96F81322 		ldrb	r2, [r6, #531]	@ zero_extendqisi2
+ 1417 01a2 D5F84C02 		ldr	r0, [r5, #588]
+ 1418 01a6 0133     		adds	r3, r3, #1
+ 1419 01a8 DBB2     		uxtb	r3, r3
+ 1420 01aa 1A44     		add	r2, r2, r3
+ 1421 01ac 86F81232 		strb	r3, [r6, #530]
+ 1422 01b0 86F81322 		strb	r2, [r6, #531]
+ 1423 01b4 D5F83432 		ldr	r3, [r5, #564]
+ 1424 01b8 2246     		mov	r2, r4
+ 1425 01ba 2146     		mov	r1, r4
+ARM GAS  /tmp/cce3TTIX.s 			page 26
+
+
+ 1426 01bc 9847     		blx	r3
+ 1427 01be 96F81322 		ldrb	r2, [r6, #531]	@ zero_extendqisi2
+ 1428 01c2 96F81232 		ldrb	r3, [r6, #530]	@ zero_extendqisi2
+ 1429 01c6 D5F83472 		ldr	r7, [r5, #564]
+ 1430 01ca D5F84C02 		ldr	r0, [r5, #588]
+ 1431 01ce 1344     		add	r3, r3, r2
+ 1432 01d0 86F81332 		strb	r3, [r6, #531]
+ 1433 01d4 2146     		mov	r1, r4
+ 1434 01d6 0122     		movs	r2, #1
+ 1435 01d8 B847     		blx	r7
+ 1436 01da B1E7     		b	.L204
+ 1437              	.L208:
+ 1438              		.align	2
+ 1439              	.L207:
+ 1440 01dc 00000000 		.word	.LANCHOR0
+ 1441 01e0 00000000 		.word	uart4
+ 1442 01e4 30020000 		.word	uart4+560
+ 1443              		.size	gps_ubx_event, .-gps_ubx_event
+ 1444              		.section	.text.gps_ublox_write,"ax",%progbits
+ 1445              		.align	1
+ 1446              		.p2align 4,,15
+ 1447              		.global	gps_ublox_write
+ 1448              		.syntax unified
+ 1449              		.thumb
+ 1450              		.thumb_func
+ 1451              		.fpu fpv4-sp-d16
+ 1452              		.type	gps_ublox_write, %function
+ 1453              	gps_ublox_write:
+ 1454              		@ args = 0, pretend = 0, frame = 0
+ 1455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1456 0000 70B5     		push	{r4, r5, r6, lr}
+ 1457 0002 0546     		mov	r5, r0
+ 1458 0004 4AB1     		cbz	r2, .L210
+ 1459 0006 4C1E     		subs	r4, r1, #1
+ 1460 0008 A618     		adds	r6, r4, r2
+ 1461              	.L211:
+ 1462 000a 14F8012F 		ldrb	r2, [r4, #1]!	@ zero_extendqisi2
+ 1463 000e 6B68     		ldr	r3, [r5, #4]
+ 1464 0010 E869     		ldr	r0, [r5, #28]
+ 1465 0012 0021     		movs	r1, #0
+ 1466 0014 9847     		blx	r3
+ 1467 0016 B442     		cmp	r4, r6
+ 1468 0018 F7D1     		bne	.L211
+ 1469              	.L210:
+ 1470 001a EB68     		ldr	r3, [r5, #12]
+ 1471 001c E869     		ldr	r0, [r5, #28]
+ 1472 001e 0021     		movs	r1, #0
+ 1473 0020 BDE87040 		pop	{r4, r5, r6, lr}
+ 1474 0024 1847     		bx	r3	@ indirect register sibling call
+ 1475              		.size	gps_ublox_write, .-gps_ublox_write
+ 1476 0026 00BF     		.section	.text.gps_inject_data,"ax",%progbits
+ 1477              		.align	1
+ 1478              		.p2align 4,,15
+ 1479              		.global	gps_inject_data
+ 1480              		.syntax unified
+ 1481              		.thumb
+ 1482              		.thumb_func
+ARM GAS  /tmp/cce3TTIX.s 			page 27
+
+
+ 1483              		.fpu fpv4-sp-d16
+ 1484              		.type	gps_inject_data, %function
+ 1485              	gps_inject_data:
+ 1486              		@ args = 0, pretend = 0, frame = 8
+ 1487              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1488 0000 01B9     		cbnz	r1, .L245
+ 1489 0002 7047     		bx	lr
+ 1490              	.L245:
+ 1491 0004 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1492 0008 83B0     		sub	sp, sp, #12
+ 1493 000a 1446     		mov	r4, r2
+ 1494 000c 0E46     		mov	r6, r1
+ 1495 000e FFF7FEFF 		bl	gps_ubx_ucenter_get_status
+ 1496 0012 0028     		cmp	r0, #0
+ 1497 0014 61D1     		bne	.L217
+ 1498 0016 013E     		subs	r6, r6, #1
+ 1499 0018 631C     		adds	r3, r4, #1
+ 1500 001a 484D     		ldr	r5, .L249
+ 1501 001c DFF824B1 		ldr	fp, .L249+8
+ 1502 0020 DFF82481 		ldr	r8, .L249+12
+ 1503 0024 53FA86F6 		uxtab	r6, r3, r6
+ 1504 0028 40F20547 		movw	r7, #1029
+ 1505 002c 09E0     		b	.L231
+ 1506              	.L246:
+ 1507 002e 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 1508 0030 D32B     		cmp	r3, #211
+ 1509 0032 03D1     		bne	.L221
+ 1510 0034 0123     		movs	r3, #1
+ 1511 0036 2B60     		str	r3, [r5]
+ 1512 0038 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 1513 003a 2B72     		strb	r3, [r5, #8]
+ 1514              	.L221:
+ 1515 003c 0134     		adds	r4, r4, #1
+ 1516 003e A642     		cmp	r6, r4
+ 1517 0040 4BD0     		beq	.L217
+ 1518              	.L231:
+ 1519 0042 2B68     		ldr	r3, [r5]
+ 1520 0044 002B     		cmp	r3, #0
+ 1521 0046 F2D0     		beq	.L246
+ 1522 0048 BB42     		cmp	r3, r7
+ 1523 004a 41D8     		bhi	.L222
+ 1524 004c 5A1C     		adds	r2, r3, #1
+ 1525 004e 2A60     		str	r2, [r5]
+ 1526 0050 2B44     		add	r3, r3, r5
+ 1527 0052 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1528 0054 1972     		strb	r1, [r3, #8]
+ 1529 0056 032A     		cmp	r2, #3
+ 1530 0058 42D0     		beq	.L247
+ 1531 005a 6B68     		ldr	r3, [r5, #4]
+ 1532 005c 03F1030A 		add	r10, r3, #3
+ 1533 0060 5245     		cmp	r2, r10
+ 1534 0062 EBD1     		bne	.L221
+ 1535 0064 002B     		cmp	r3, #0
+ 1536 0066 66DD     		ble	.L232
+ 1537 0068 05EB030C 		add	ip, r5, r3
+ 1538 006c 3448     		ldr	r0, .L249+4
+ 1539 006e 0CF1070C 		add	ip, ip, #7
+ARM GAS  /tmp/cce3TTIX.s 			page 28
+
+
+ 1540 0072 0022     		movs	r2, #0
+ 1541              	.L227:
+ 1542 0074 10F8011F 		ldrb	r1, [r0, #1]!	@ zero_extendqisi2
+ 1543 0078 81EA1241 		eor	r1, r1, r2, lsr #16
+ 1544 007c 1202     		lsls	r2, r2, #8
+ 1545 007e 58F82110 		ldr	r1, [r8, r1, lsl #2]
+ 1546 0082 22F07F42 		bic	r2, r2, #-16777216
+ 1547 0086 8445     		cmp	ip, r0
+ 1548 0088 82EA0102 		eor	r2, r2, r1
+ 1549 008c F2D1     		bne	.L227
+ 1550              	.L226:
+ 1551 008e DB00     		lsls	r3, r3, #3
+ 1552 0090 03F1180C 		add	ip, r3, #24
+ 1553 0094 0020     		movs	r0, #0
+ 1554              	.L229:
+ 1555 0096 002B     		cmp	r3, #0
+ 1556 0098 1946     		mov	r1, r3
+ 1557 009a B8BF     		it	lt
+ 1558 009c D91D     		addlt	r1, r3, #7
+ 1559 009e 05EBE101 		add	r1, r5, r1, asr #3
+ 1560 00a2 D3F10009 		rsbs	r9, r3, #0
+ 1561 00a6 09F00709 		and	r9, r9, #7
+ 1562 00aa 03F0070E 		and	lr, r3, #7
+ 1563 00ae 097A     		ldrb	r1, [r1, #8]	@ zero_extendqisi2
+ 1564 00b0 58BF     		it	pl
+ 1565 00b2 C9F1000E 		rsbpl	lr, r9, #0
+ 1566 00b6 CEF1070E 		rsb	lr, lr, #7
+ 1567 00ba 41FA0EF1 		asr	r1, r1, lr
+ 1568 00be 0133     		adds	r3, r3, #1
+ 1569 00c0 4000     		lsls	r0, r0, #1
+ 1570 00c2 01F00101 		and	r1, r1, #1
+ 1571 00c6 6345     		cmp	r3, ip
+ 1572 00c8 0844     		add	r0, r0, r1
+ 1573 00ca E4D1     		bne	.L229
+ 1574 00cc 8242     		cmp	r2, r0
+ 1575 00ce 1AD0     		beq	.L248
+ 1576              	.L222:
+ 1577 00d0 0134     		adds	r4, r4, #1
+ 1578 00d2 0023     		movs	r3, #0
+ 1579 00d4 A642     		cmp	r6, r4
+ 1580 00d6 2B60     		str	r3, [r5]
+ 1581 00d8 B3D1     		bne	.L231
+ 1582              	.L217:
+ 1583 00da 03B0     		add	sp, sp, #12
+ 1584              		@ sp needed
+ 1585 00dc BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1586              	.L247:
+ 1587 00e0 0E22     		movs	r2, #14
+ 1588 00e2 0020     		movs	r0, #0
+ 1589              	.L224:
+ 1590 00e4 05EBE203 		add	r3, r5, r2, asr #3
+ 1591 00e8 D143     		mvns	r1, r2
+ 1592 00ea 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 1593 00ec 01F00701 		and	r1, r1, #7
+ 1594 00f0 0B41     		asrs	r3, r3, r1
+ 1595 00f2 0132     		adds	r2, r2, #1
+ 1596 00f4 03F00103 		and	r3, r3, #1
+ARM GAS  /tmp/cce3TTIX.s 			page 29
+
+
+ 1597 00f8 182A     		cmp	r2, #24
+ 1598 00fa 03EB4000 		add	r0, r3, r0, lsl #1
+ 1599 00fe F1D1     		bne	.L224
+ 1600 0100 0330     		adds	r0, r0, #3
+ 1601 0102 6860     		str	r0, [r5, #4]
+ 1602 0104 9AE7     		b	.L221
+ 1603              	.L248:
+ 1604 0106 0E4B     		ldr	r3, .L249+4
+ 1605 0108 0196     		str	r6, [sp, #4]
+ 1606 010a 9946     		mov	r9, r3
+ 1607              	.L230:
+ 1608 010c 4E46     		mov	r6, r9
+ 1609 010e 063E     		subs	r6, r6, #6
+ 1610 0110 19F8012F 		ldrb	r2, [r9, #1]!	@ zero_extendqisi2
+ 1611 0114 DBF84C02 		ldr	r0, [fp, #588]
+ 1612 0118 DBF83432 		ldr	r3, [fp, #564]
+ 1613 011c 0021     		movs	r1, #0
+ 1614 011e 761B     		subs	r6, r6, r5
+ 1615 0120 9847     		blx	r3
+ 1616 0122 B245     		cmp	r10, r6
+ 1617 0124 F2D8     		bhi	.L230
+ 1618 0126 DBF83C32 		ldr	r3, [fp, #572]
+ 1619 012a DBF84C02 		ldr	r0, [fp, #588]
+ 1620 012e 019E     		ldr	r6, [sp, #4]
+ 1621 0130 0021     		movs	r1, #0
+ 1622 0132 9847     		blx	r3
+ 1623 0134 CCE7     		b	.L222
+ 1624              	.L232:
+ 1625 0136 0022     		movs	r2, #0
+ 1626 0138 A9E7     		b	.L226
+ 1627              	.L250:
+ 1628 013a 00BF     		.align	2
+ 1629              	.L249:
+ 1630 013c 00000000 		.word	.LANCHOR2
+ 1631 0140 07000000 		.word	.LANCHOR2+7
+ 1632 0144 00000000 		.word	uart4
+ 1633 0148 00000000 		.word	.LANCHOR1
+ 1634              		.size	gps_inject_data, .-gps_inject_data
+ 1635              		.global	rtcm
+ 1636              		.global	gps_ubx
+ 1637              		.section	.bss.gps_ubx,"aw",%nobits
+ 1638              		.align	3
+ 1639              		.set	.LANCHOR0,. + 0
+ 1640              		.type	gps_ubx, %object
+ 1641              		.size	gps_ubx, 1000
+ 1642              	gps_ubx:
+ 1643 0000 00000000 		.space	1000
+ 1643      00000000 
+ 1643      00000000 
+ 1643      00000000 
+ 1643      00000000 
+ 1644              		.section	.bss.rtcm,"aw",%nobits
+ 1645              		.align	2
+ 1646              		.set	.LANCHOR2,. + 0
+ 1647              		.type	rtcm, %object
+ 1648              		.size	rtcm, 1040
+ 1649              	rtcm:
+ARM GAS  /tmp/cce3TTIX.s 			page 30
+
+
+ 1650 0000 00000000 		.space	1040
+ 1650      00000000 
+ 1650      00000000 
+ 1650      00000000 
+ 1650      00000000 
+ 1651              		.section	.rodata.tbl_CRC24Q,"a"
+ 1652              		.align	2
+ 1653              		.set	.LANCHOR1,. + 0
+ 1654              		.type	tbl_CRC24Q, %object
+ 1655              		.size	tbl_CRC24Q, 1024
+ 1656              	tbl_CRC24Q:
+ 1657 0000 00000000 		.word	0
+ 1658 0004 FB4C8600 		.word	8801531
+ 1659 0008 0DD58A00 		.word	9098509
+ 1660 000c F6990C00 		.word	825846
+ 1661 0010 E1E69300 		.word	9692897
+ 1662 0014 1AAA1500 		.word	1419802
+ 1663 0018 EC331900 		.word	1651692
+ 1664 001c 177F9F00 		.word	10452759
+ 1665 0020 3981A100 		.word	10584377
+ 1666 0024 C2CD2700 		.word	2608578
+ 1667 0028 34542B00 		.word	2839604
+ 1668 002c CF18AD00 		.word	11344079
+ 1669 0030 D8673200 		.word	3303384
+ 1670 0034 232BB400 		.word	11807523
+ 1671 0038 D5B2B800 		.word	12104405
+ 1672 003c 2EFE3E00 		.word	4128302
+ 1673 0040 894EC500 		.word	12930697
+ 1674 0044 72024300 		.word	4391538
+ 1675 0048 849B4F00 		.word	5217156
+ 1676 004c 7FD7C900 		.word	13227903
+ 1677 0050 68A85600 		.word	5679208
+ 1678 0054 93E4D000 		.word	13690003
+ 1679 0058 657DDC00 		.word	14450021
+ 1680 005c 9E315A00 		.word	5910942
+ 1681 0060 B0CF6400 		.word	6606768
+ 1682 0064 4B83E200 		.word	14844747
+ 1683 0068 BD1AEE00 		.word	15604413
+ 1684 006c 46566800 		.word	6837830
+ 1685 0070 5129F700 		.word	16197969
+ 1686 0074 AA657100 		.word	7431594
+ 1687 0078 5CFC7D00 		.word	8256604
+ 1688 007c A7B0FB00 		.word	16494759
+ 1689 0080 E9D10C00 		.word	840169
+ 1690 0084 129D8A00 		.word	9084178
+ 1691 0088 E4048600 		.word	8783076
+ 1692 008c 1F480000 		.word	18463
+ 1693 0090 08379F00 		.word	10434312
+ 1694 0094 F37B1900 		.word	1670131
+ 1695 0098 05E21500 		.word	1434117
+ 1696 009c FEAE9300 		.word	9678590
+ 1697 00a0 D050AD00 		.word	11358416
+ 1698 00a4 2B1C2B00 		.word	2825259
+ 1699 00a8 DD852700 		.word	2590173
+ 1700 00ac 26C9A100 		.word	10602790
+ 1701 00b0 31B63E00 		.word	4109873
+ 1702 00b4 CAFAB800 		.word	12122826
+ARM GAS  /tmp/cce3TTIX.s 			page 31
+
+
+ 1703 00b8 3C63B400 		.word	11821884
+ 1704 00bc C72F3200 		.word	3289031
+ 1705 00c0 609FC900 		.word	13213536
+ 1706 00c4 9BD34F00 		.word	5231515
+ 1707 00c8 6D4A4300 		.word	4409965
+ 1708 00cc 9606C500 		.word	12912278
+ 1709 00d0 81795A00 		.word	5929345
+ 1710 00d4 7A35DC00 		.word	14431610
+ 1711 00d8 8CACD000 		.word	13675660
+ 1712 00dc 77E05600 		.word	5693559
+ 1713 00e0 591E6800 		.word	6823513
+ 1714 00e4 A252EE00 		.word	15618722
+ 1715 00e8 54CBE200 		.word	14863188
+ 1716 00ec AF876400 		.word	6588335
+ 1717 00f0 B8F8FB00 		.word	16513208
+ 1718 00f4 43B47D00 		.word	8238147
+ 1719 00f8 B52D7100 		.word	7417269
+ 1720 00fc 4E61F700 		.word	16212302
+ 1721 0100 D2A31900 		.word	1680338
+ 1722 0104 29EF9F00 		.word	10481449
+ 1723 0108 DF769300 		.word	9664223
+ 1724 010c 243A1500 		.word	1391140
+ 1725 0110 33458A00 		.word	9061683
+ 1726 0114 C8090C00 		.word	788936
+ 1727 0118 3E900000 		.word	36926
+ 1728 011c C5DC8600 		.word	8838341
+ 1729 0120 EB22B800 		.word	12067563
+ 1730 0124 106E3E00 		.word	4091408
+ 1731 0128 E6F73200 		.word	3340262
+ 1732 012c 1DBBB400 		.word	11844381
+ 1733 0130 0AC42B00 		.word	2868234
+ 1734 0134 F188AD00 		.word	11372785
+ 1735 0138 0711A100 		.word	10555655
+ 1736 013c FC5D2700 		.word	2579964
+ 1737 0140 5BEDDC00 		.word	14478683
+ 1738 0144 A0A15A00 		.word	5939616
+ 1739 0148 56385600 		.word	5650518
+ 1740 014c AD74D000 		.word	13661357
+ 1741 0150 BA0B4F00 		.word	5180346
+ 1742 0154 4147C900 		.word	13190977
+ 1743 0158 B7DEC500 		.word	12967607
+ 1744 015c 4C924300 		.word	4428364
+ 1745 0160 626C7D00 		.word	8219746
+ 1746 0164 9920FB00 		.word	16457881
+ 1747 0168 6FB9F700 		.word	16234863
+ 1748 016c 94F57100 		.word	7468436
+ 1749 0170 838AEE00 		.word	15633027
+ 1750 0174 78C66800 		.word	6866552
+ 1751 0178 8E5F6400 		.word	6578062
+ 1752 017c 7513E200 		.word	14816117
+ 1753 0180 3B721500 		.word	1405499
+ 1754 0184 C03E9300 		.word	9649856
+ 1755 0188 36A79F00 		.word	10463030
+ 1756 018c CDEB1900 		.word	1698765
+ 1757 0190 DA948600 		.word	8819930
+ 1758 0194 21D80000 		.word	55329
+ 1759 0198 D7410C00 		.word	803287
+ARM GAS  /tmp/cce3TTIX.s 			page 32
+
+
+ 1760 019c 2C0D8A00 		.word	9047340
+ 1761 01a0 02F3B400 		.word	11858690
+ 1762 01a4 F9BF3200 		.word	3325945
+ 1763 01a8 0F263E00 		.word	4072975
+ 1764 01ac F46AB800 		.word	12086004
+ 1765 01b0 E3152700 		.word	2561507
+ 1766 01b4 1859A100 		.word	10574104
+ 1767 01b8 EEC0AD00 		.word	11387118
+ 1768 01bc 158C2B00 		.word	2853909
+ 1769 01c0 B23CD000 		.word	13647026
+ 1770 01c4 49705600 		.word	5664841
+ 1771 01c8 BFE95A00 		.word	5958079
+ 1772 01cc 44A5DC00 		.word	14460228
+ 1773 01d0 53DA4300 		.word	4446803
+ 1774 01d4 A896C500 		.word	12949160
+ 1775 01d8 5E0FC900 		.word	13176670
+ 1776 01dc A5434F00 		.word	5194661
+ 1777 01e0 8BBD7100 		.word	7454091
+ 1778 01e4 70F1F700 		.word	16249200
+ 1779 01e8 8668FB00 		.word	16476294
+ 1780 01ec 7D247D00 		.word	8201341
+ 1781 01f0 6A5BE200 		.word	14834538
+ 1782 01f4 91176400 		.word	6559633
+ 1783 01f8 678E6800 		.word	6852199
+ 1784 01fc 9CC2EE00 		.word	15647388
+ 1785 0200 A4473300 		.word	3360676
+ 1786 0204 5F0BB500 		.word	11864927
+ 1787 0208 A992B900 		.word	12161705
+ 1788 020c 52DE3F00 		.word	4185682
+ 1789 0210 45A1A000 		.word	10527045
+ 1790 0214 BEED2600 		.word	2551230
+ 1791 0218 48742A00 		.word	2782280
+ 1792 021c B338AC00 		.word	11286707
+ 1793 0220 9DC69200 		.word	9619101
+ 1794 0224 668A1400 		.word	1346150
+ 1795 0228 90131800 		.word	1577872
+ 1796 022c 6B5F9E00 		.word	10379115
+ 1797 0230 7C200100 		.word	73852
+ 1798 0234 876C8700 		.word	8875143
+ 1799 0238 71F58B00 		.word	9172337
+ 1800 023c 8AB90D00 		.word	899466
+ 1801 0240 2D09F600 		.word	16124205
+ 1802 0244 D6457000 		.word	7357910
+ 1803 0248 20DC7C00 		.word	8182816
+ 1804 024c DB90FA00 		.word	16421083
+ 1805 0250 CCEF6500 		.word	6680524
+ 1806 0254 37A3E300 		.word	14918455
+ 1807 0258 C13AEF00 		.word	15678145
+ 1808 025c 3A766900 		.word	6911546
+ 1809 0260 14885700 		.word	5736468
+ 1810 0264 EFC4D100 		.word	13747439
+ 1811 0268 195DDD00 		.word	14507289
+ 1812 026c E2115B00 		.word	5968354
+ 1813 0270 F56EC400 		.word	12873461
+ 1814 0274 0E224200 		.word	4334094
+ 1815 0278 F8BB4E00 		.word	5159928
+ 1816 027c 03F7C800 		.word	13170435
+ARM GAS  /tmp/cce3TTIX.s 			page 33
+
+
+ 1817 0280 4D963F00 		.word	4167245
+ 1818 0284 B6DAB900 		.word	12180150
+ 1819 0288 4043B500 		.word	11879232
+ 1820 028c BB0F3300 		.word	3346363
+ 1821 0290 AC70AC00 		.word	11301036
+ 1822 0294 573C2A00 		.word	2767959
+ 1823 0298 A1A52600 		.word	2532769
+ 1824 029c 5AE9A000 		.word	10545498
+ 1825 02a0 74179E00 		.word	10360692
+ 1826 02a4 8F5B1800 		.word	1596303
+ 1827 02a8 79C21400 		.word	1360505
+ 1828 02ac 828E9200 		.word	9604738
+ 1829 02b0 95F10D00 		.word	913813
+ 1830 02b4 6EBD8B00 		.word	9157998
+ 1831 02b8 98248700 		.word	8856728
+ 1832 02bc 63680100 		.word	92259
+ 1833 02c0 C4D8FA00 		.word	16439492
+ 1834 02c4 3F947C00 		.word	8164415
+ 1835 02c8 C90D7000 		.word	7343561
+ 1836 02cc 3241F600 		.word	16138546
+ 1837 02d0 253E6900 		.word	6897189
+ 1838 02d4 DE72EF00 		.word	15692510
+ 1839 02d8 28EBE300 		.word	14936872
+ 1840 02dc D3A76500 		.word	6662099
+ 1841 02e0 FD595B00 		.word	5986813
+ 1842 02e4 0615DD00 		.word	14488838
+ 1843 02e8 F08CD100 		.word	13733104
+ 1844 02ec 0BC05700 		.word	5750795
+ 1845 02f0 1CBFC800 		.word	13156124
+ 1846 02f4 E7F34E00 		.word	5174247
+ 1847 02f8 116A4200 		.word	4352529
+ 1848 02fc EA26C400 		.word	12855018
+ 1849 0300 76E42A00 		.word	2810998
+ 1850 0304 8DA8AC00 		.word	11315341
+ 1851 0308 7B31A000 		.word	10498427
+ 1852 030c 807D2600 		.word	2522496
+ 1853 0310 9702B900 		.word	12124823
+ 1854 0314 6C4E3F00 		.word	4148844
+ 1855 0318 9AD73300 		.word	3397530
+ 1856 031c 619BB500 		.word	11901793
+ 1857 0320 4F658B00 		.word	9135439
+ 1858 0324 B4290D00 		.word	862644
+ 1859 0328 42B00100 		.word	110658
+ 1860 032c B9FC8700 		.word	8912057
+ 1861 0330 AE831800 		.word	1606574
+ 1862 0334 55CF9E00 		.word	10407765
+ 1863 0338 A3569200 		.word	9590435
+ 1864 033c 581A1400 		.word	1317464
+ 1865 0340 FFAAEF00 		.word	15706879
+ 1866 0344 04E66900 		.word	6940164
+ 1867 0348 F27F6500 		.word	6651890
+ 1868 034c 0933E300 		.word	14889737
+ 1869 0350 1E4C7C00 		.word	8145950
+ 1870 0354 E500FA00 		.word	16384229
+ 1871 0358 1399F600 		.word	16161043
+ 1872 035c E8D57000 		.word	7394792
+ 1873 0360 C62B4E00 		.word	5123014
+ARM GAS  /tmp/cce3TTIX.s 			page 34
+
+
+ 1874 0364 3D67C800 		.word	13133629
+ 1875 0368 CBFEC400 		.word	12910283
+ 1876 036c 30B24200 		.word	4370992
+ 1877 0370 27CDDD00 		.word	14535975
+ 1878 0374 DC815B00 		.word	5997020
+ 1879 0378 2A185700 		.word	5707818
+ 1880 037c D154D100 		.word	13718737
+ 1881 0380 9F352600 		.word	2504095
+ 1882 0384 6479A000 		.word	10516836
+ 1883 0388 92E0AC00 		.word	11329682
+ 1884 038c 69AC2A00 		.word	2796649
+ 1885 0390 7ED3B500 		.word	11916158
+ 1886 0394 859F3300 		.word	3383173
+ 1887 0398 73063F00 		.word	4130419
+ 1888 039c 884AB900 		.word	12143240
+ 1889 03a0 A6B48700 		.word	8893606
+ 1890 03a4 5DF80100 		.word	129117
+ 1891 03a8 AB610D00 		.word	876971
+ 1892 03ac 502D8B00 		.word	9121104
+ 1893 03b0 47521400 		.word	1331783
+ 1894 03b4 BC1E9200 		.word	9576124
+ 1895 03b8 4A879E00 		.word	10389322
+ 1896 03bc B1CB1800 		.word	1625009
+ 1897 03c0 167BE300 		.word	14908182
+ 1898 03c4 ED376500 		.word	6633453
+ 1899 03c8 1BAE6900 		.word	6925851
+ 1900 03cc E0E2EF00 		.word	15721184
+ 1901 03d0 F79D7000 		.word	7380471
+ 1902 03d4 0CD1F600 		.word	16175372
+ 1903 03d8 FA48FA00 		.word	16402682
+ 1904 03dc 01047C00 		.word	8127489
+ 1905 03e0 2FFA4200 		.word	4389423
+ 1906 03e4 D4B6C400 		.word	12891860
+ 1907 03e8 222FC800 		.word	13119266
+ 1908 03ec D9634E00 		.word	5137369
+ 1909 03f0 CE1CD100 		.word	13704398
+ 1910 03f4 35505700 		.word	5722165
+ 1911 03f8 C3C95B00 		.word	6015427
+ 1912 03fc 3885DD00 		.word	14517560
+ 1913              		.ident	"GCC: (15:10.3-2021.07-4) 10.3.1 20210621 (release)"
+ARM GAS  /tmp/cce3TTIX.s 			page 35
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 gps_ubx.c
+     /tmp/cce3TTIX.s:15     .text.gps_ubx_parse_rxm_rtcm:0000000000000000 $t
+     /tmp/cce3TTIX.s:23     .text.gps_ubx_parse_rxm_rtcm:0000000000000000 gps_ubx_parse_rxm_rtcm
+     /tmp/cce3TTIX.s:75     .text.gps_ubx_parse_rxm_rtcm:000000000000005c $d
+     /tmp/cce3TTIX.s:84     .text.gps_ubx_read_message.part.0:0000000000000000 $t
+     /tmp/cce3TTIX.s:91     .text.gps_ubx_read_message.part.0:0000000000000000 gps_ubx_read_message.part.0
+     /tmp/cce3TTIX.s:102    .text.gps_ubx_read_message.part.0:0000000000000012 $d
+     /tmp/cce3TTIX.s:162    .text.gps_ubx_read_message.part.0:000000000000008a $t
+     /tmp/cce3TTIX.s:308    .text.gps_ubx_read_message.part.0:000000000000020c $d
+     /tmp/cce3TTIX.s:312    .text.gps_ubx_read_message.part.0:0000000000000218 $t
+     /tmp/cce3TTIX.s:577    .text.gps_ubx_read_message.part.0:0000000000000508 $d
+     /tmp/cce3TTIX.s:586    .text.crc24q:0000000000000000 $t
+     /tmp/cce3TTIX.s:594    .text.crc24q:0000000000000000 crc24q
+     /tmp/cce3TTIX.s:622    .text.crc24q:0000000000000034 $d
+     /tmp/cce3TTIX.s:625    .text.RTCMgetbitu:0000000000000000 $t
+     /tmp/cce3TTIX.s:633    .text.RTCMgetbitu:0000000000000000 RTCMgetbitu
+     /tmp/cce3TTIX.s:666    .text.gps_ubx_init:0000000000000000 $t
+     /tmp/cce3TTIX.s:674    .text.gps_ubx_init:0000000000000000 gps_ubx_init
+     /tmp/cce3TTIX.s:691    .text.gps_ubx_init:0000000000000020 $d
+     /tmp/cce3TTIX.s:694    .text.gps_ubx_parse_HITL_UBX:0000000000000000 $t
+     /tmp/cce3TTIX.s:702    .text.gps_ubx_parse_HITL_UBX:0000000000000000 gps_ubx_parse_HITL_UBX
+     /tmp/cce3TTIX.s:730    .text.gps_ubx_parse_HITL_UBX:000000000000003c $d
+     /tmp/cce3TTIX.s:733    .text.gps_ubx_read_message:0000000000000000 $t
+     /tmp/cce3TTIX.s:741    .text.gps_ubx_read_message:0000000000000000 gps_ubx_read_message
+     /tmp/cce3TTIX.s:763    .text.gps_ubx_read_message:0000000000000020 $d
+     /tmp/cce3TTIX.s:766    .text.gps_ubx_parse:0000000000000000 $t
+     /tmp/cce3TTIX.s:774    .text.gps_ubx_parse:0000000000000000 gps_ubx_parse
+     /tmp/cce3TTIX.s:794    .text.gps_ubx_parse:0000000000000028 $d
+     /tmp/cce3TTIX.s:906    .text.gps_ubx_parse:0000000000000114 $d
+     /tmp/cce3TTIX.s:909    .text.ubx_header:0000000000000000 $t
+     /tmp/cce3TTIX.s:917    .text.ubx_header:0000000000000000 ubx_header
+     /tmp/cce3TTIX.s:992    .text.ubx_header:00000000000000b4 $d
+     /tmp/cce3TTIX.s:995    .text.ubx_trailer:0000000000000000 $t
+     /tmp/cce3TTIX.s:1003   .text.ubx_trailer:0000000000000000 ubx_trailer
+     /tmp/cce3TTIX.s:1027   .text.ubx_trailer:000000000000002c $d
+     /tmp/cce3TTIX.s:1030   .text.ubx_send_bytes:0000000000000000 $t
+     /tmp/cce3TTIX.s:1038   .text.ubx_send_bytes:0000000000000000 ubx_send_bytes
+     /tmp/cce3TTIX.s:1069   .text.ubx_send_bytes:0000000000000040 $d
+     /tmp/cce3TTIX.s:1072   .text.ubx_send_cfg_rst:0000000000000000 $t
+     /tmp/cce3TTIX.s:1080   .text.ubx_send_cfg_rst:0000000000000000 ubx_send_cfg_rst
+     /tmp/cce3TTIX.s:1141   .text.ubx_send_cfg_rst:0000000000000090 $d
+     /tmp/cce3TTIX.s:1144   .text.gps_ubx_msg:0000000000000000 $t
+     /tmp/cce3TTIX.s:1152   .text.gps_ubx_msg:0000000000000000 gps_ubx_msg
+     /tmp/cce3TTIX.s:1246   .text.gps_ubx_msg:00000000000000bc $d
+     /tmp/cce3TTIX.s:1253   .text.gps_ubx_event:0000000000000000 $t
+     /tmp/cce3TTIX.s:1261   .text.gps_ubx_event:0000000000000000 gps_ubx_event
+     /tmp/cce3TTIX.s:1440   .text.gps_ubx_event:00000000000001dc $d
+     /tmp/cce3TTIX.s:1445   .text.gps_ublox_write:0000000000000000 $t
+     /tmp/cce3TTIX.s:1453   .text.gps_ublox_write:0000000000000000 gps_ublox_write
+     /tmp/cce3TTIX.s:1477   .text.gps_inject_data:0000000000000000 $t
+     /tmp/cce3TTIX.s:1485   .text.gps_inject_data:0000000000000000 gps_inject_data
+     /tmp/cce3TTIX.s:1630   .text.gps_inject_data:000000000000013c $d
+     /tmp/cce3TTIX.s:1649   .bss.rtcm:0000000000000000 rtcm
+     /tmp/cce3TTIX.s:1642   .bss.gps_ubx:0000000000000000 gps_ubx
+     /tmp/cce3TTIX.s:1638   .bss.gps_ubx:0000000000000000 $d
+     /tmp/cce3TTIX.s:1645   .bss.rtcm:0000000000000000 $d
+ARM GAS  /tmp/cce3TTIX.s 			page 36
+
+
+     /tmp/cce3TTIX.s:1652   .rodata.tbl_CRC24Q:0000000000000000 $d
+     /tmp/cce3TTIX.s:1656   .rodata.tbl_CRC24Q:0000000000000000 tbl_CRC24Q
+     /tmp/cce3TTIX.s:803    .text.gps_ubx_parse:0000000000000031 $d
+     /tmp/cce3TTIX.s:803    .text.gps_ubx_parse:0000000000000032 $t
+
+UNDEFINED SYMBOLS
+rtcm_man
+__aeabi_i2d
+__aeabi_dmul
+__aeabi_d2iz
+__aeabi_ui2d
+__aeabi_d2uiz
+gps_relposned
+gps_week_number
+memcpy
+get_sys_time_usec
+gps_ubx_ucenter_event
+sys_time
+abi_queues
+uart4
+gps_ubx_ucenter_get_status
