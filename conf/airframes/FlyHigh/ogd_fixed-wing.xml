@@ -74,6 +74,10 @@
     </module>
 
     <module name="nav" type="launcher"/>
+    
+    <module name="trisonica">
+      <configure name="TRISONICA_UART" value="UART6"/>
+    </module>
 
   </firmware>
 
